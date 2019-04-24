@@ -1,78 +1,71 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <meta charset="UTF-8" />
     <title>Crediti</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+    <link rel="stylesheet" th:href="@{/css/ap.css}">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
-    <div class="container">
-        <a class="navbar-brand" href="#">
-            <img src="../static/images/logo.jpg" alt="">
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Services</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
-<img src="../static/images/logo.jpg" alt="">
-
-
+<h1>Invoerformulier voor opdrachtgevers</h1>
+<div class="container">
 <form>
+
     <label for="summary">Omschrijving opdracht:</label>
-    <input name="summaryInput" id="summary" type="text"><br>
-    <label for="start">Begindatum:</label>
+    <textarea name="summary" id="summary" rows="10" cols="30"></textarea><br>
+
+
+    <label for="start">Begindatum:</label><br>
     <input name="startInput" id="start" type="date"><br>
-    <label for="end">Einddatum:</label>
-    <input name="endInput" id="end" type="date"><br>
+
+    <label for="end">Einddatum:</label><br>
+    <input name="endInput" id="end" type="date"><br><br>
+
     <label for="lector">Door lector:</label>
     <input name="lectorInput" id="lector" type="text"><br>
+
     <label for="responsible">Projectverantwoordelijke:</label>
     <input name="responsibleInput"  id="responsible"type="text"><br>
+
     <label for="name">Naam bedrijf:</label>
     <input name="nameInput" id="name" type="text"><br>
+
     <label for="address">Adres:</label>
-    <input name="addressInput" id="adress" type="text"><br>
+    <input name="addressInput" id="address" type="text"><br>
+
     <label for="city">Gemeente:</label>
     <input name="cityInput" id="city" type="text"><br>
+
     <label for="postal">Postcode:</label>
-    <input name="postalInput" id="postal" type="text"><br>
-    <label>Tags</label><br>
-    <input type="checkbox" name="firstCheck" id="firstCheckbox">Eerste</input>
-    <input type="checkbox" name="secondCheck" id="secondCheckbox">Tweede</input>
-    <input type="checkbox" name="thirdCheck" id="thirdCheckbox">Derde</input>
+    <input name="postalInput" id="postal" type="text">
 
-    <button type="submit" class="btn btn-primary">Opdracht aanmaken</button>
+    <p>Tags:</p>
+
+    <div>
+        <input type="checkbox" id="firstCheckbox" name="first">
+        <label for="firstCheckbox">first</label>
+    </div>
+
+    <div>
+        <input type="checkbox" id="secondCheckbox" name="second">
+        <label for="secondCheckbox">second</label>
+    </div>
+
+
+    <input type="SUBMIT" value="Opdracht aanmaken">
+
 </form>
-
-
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
+</div>
 </body>
-
+<footer>
+    <div class="footer-bot">
+        <div class="container">
+            <div class="left col-sm-6 col-xs-12">
+                <p>Ontworpen door studenten Toegepaste Informatica</p>
+            </div>
+            <div class="right col-sm-6 col-xs-12">
+                <p>© 2019 All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
 </html>

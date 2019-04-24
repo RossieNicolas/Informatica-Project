@@ -1,0 +1,221 @@
+#summary{
+    display:block;
+    width:100%;
+}
+body{
+    padding:50px;
+    padding-top:5px;
+    backface-visibility:hidden;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    font-weight:400;
+    font-size:17px;
+    line-height:1.42;
+    color:#232226;
+    background-color:#fff;
+    max-width:100%;
+    overflow-x:hidden
+}
+body,h1,h2{
+    font-family:foco,Helvetica,Arial,sans-serif
+}
+body,h1{
+    font-style:normal
+}
+html{
+    font-size:10px;
+    -webkit-tap-highlight-color:transparent
+}
+html{
+    font-family:sans-serif;
+    -ms-text-size-adjust:100%;
+    -webkit-text-size-adjust:100%
+}
+*,:after,:before{
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    box-sizing:border-box
+}
+::selection{
+    background-color:#e60005;
+    color:#fff
+}
+body{
+    font-family:foco,Helvetica,Arial,sans-serif
+}
+body{
+    font-style:normal
+}
+html{
+    font-size:10px;
+    -webkit-tap-highlight-color:transparent
+}
+html{
+    font-family:sans-serif;
+    -ms-text-size-adjust:100%;
+    -webkit-text-size-adjust:100%
+}
+input[type=checkbox]:checked+label:after{
+    font-family:icomoon!important;
+    speak:none;
+    font-style:normal;
+    font-weight:400;
+    font-variant:normal;
+    text-transform:none;
+    line-height:1;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale
+}
+h5{
+    letter-spacing:.06em
+}
+input{
+    font-family:inherit;
+    font-size:inherit;
+    line-height:inherit
+}
+html input[type=submit]{
+    -webkit-appearance:button;
+    cursor:pointer;
+    font-family: foco,Helvetica,Arial,sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 18px;
+    padding: 11px 25px 14px;
+    background-color: #000;
+    color: #fff;
+}
+input{
+    color:inherit;
+    font:inherit;
+    margin:0
+}
+*,:after,:before{
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    box-sizing:border-box
+}
+input[type=file i]::-webkit-file-upload-button,input[type=reset i],input[type=submit i]{
+    padding:1px 6px
+}
+input[type=file i]::-webkit-file-upload-button,input[type=reset i],input[type=submit i]{
+    align-items:flex-start;
+    text-align:center;
+    cursor:default;
+    color:buttontext;
+    background-color:buttonface;
+    box-sizing:border-box;
+    padding:2px 6px 3px;
+    border-width:2px;
+    border-style:outset;
+    border-color:buttonface;
+    border-image:initial
+}
+
+input[type=text]{
+    display: block;
+    width: 100%;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    background-color: #f0f0f0;
+    height: 50px;
+    font-family: foco,Helvetica,Arial,sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    font-size: 18px;
+    color: #6f6f6f;
+    padding: 0 15px;
+}
+
+button, input, select, textarea {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+button, input, optgroup, select, textarea {
+    color: inherit;
+    font: inherit;
+    margin: 0;
+}
+
+input {
+    padding: 1px 0px;
+}
+
+input {
+    background-color: white;
+    -webkit-rtl-ordering: logical;
+    padding: 1px;
+    border-width: 2px;
+    border-style: inset;
+    border-color: initial;
+    border-image: initial;
+}
+user agent stylesheet
+input, textarea, select, button {
+    text-rendering: auto;
+    color: initial;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    margin: 0em;
+    font: 400 13.3333px Arial;
+}
+user agent stylesheet
+input, textarea, select, button, meter, progress {
+    -webkit-writing-mode: horizontal-tb !important;
+}
+
+div {
+    display: block;
+}
+
+.container {
+    width: 500px;
+    clear: both;
+}
+.container input[type=date]{
+    width: 30%;
+    clear: both;
+}
+
+footer {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #fff;
+    width:100%;
+}
+
+footer .footer-bot {
+    font-size: 16px;
+    padding: 20px 0;
+    background-color: #b30005
+}
+
+footer .footer-bot a {
+    display: inline-block;
+    color: #fff
+}
+
+footer .footer-bot .left span {
+    display: inline-block;
+    color: #ffacae
+}
+
+footer .footer-bot .right {
+    text-align: right;
+    padding-right: 40px
+}
+
+@media (max-width:767px) {
+    footer .footer-bot .right {
+        padding-right: 0;
+        text-align: left;
+        padding-top: 5px
+    }
+}
