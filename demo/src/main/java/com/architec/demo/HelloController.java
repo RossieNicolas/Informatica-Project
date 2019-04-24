@@ -8,6 +8,11 @@ public class HelloController {
 
     @RequestMapping("/")
     public String index() {
-        return "index";
+        return "";
+    }
+
+    @RequestMapping("/index")
+    public String test() {
+        return "CreateAssignmentForm";
     }
 }
