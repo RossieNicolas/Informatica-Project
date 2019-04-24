@@ -11,7 +11,7 @@ public class HelloController {
         return "Greetings from SpringBoot";
     }
 
-    @RequestMapping("/index")
+    @RequestMapping("/assignment")
     public String test() {
         return "CreateAssignmentForm";
     }
