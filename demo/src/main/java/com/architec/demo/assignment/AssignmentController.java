@@ -32,6 +32,7 @@ public class AssignmentController {
         String test = assignments.get(0).getTitel();
 
         model.addAttribute("titel", test);
+        model.addAttribute("all", assignments);
         return "assignments";
     }
 }
