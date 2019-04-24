@@ -10,4 +10,9 @@ public class HelloController {
     public String index() {
         return "Greetings from SpringBoot";
     }
+
+    @RequestMapping("/index")
+    public String test() {
+        return "CreateAssignmentForm";
+    }
 }
