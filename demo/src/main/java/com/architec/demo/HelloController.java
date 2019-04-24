@@ -11,9 +11,4 @@ public class HelloController {
         return "Greetings from Spring Boot!";
     }
 
-    @RequestMapping("/assignments")
-    public String assignments() {
-        return "assignments";
-    }
-
 }
