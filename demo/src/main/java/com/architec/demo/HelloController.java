@@ -10,9 +10,4 @@ public class HelloController {
     public String index() {
         return "";
     }
-
-    @RequestMapping("/index")
-    public String test() {
-        return "CreateAssignmentForm";
-    }
 }
