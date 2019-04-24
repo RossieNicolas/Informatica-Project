@@ -3,7 +3,10 @@ package com.architec.demo.controller;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 import javax.sql.DataSource;
 
 import com.architec.demo.models.Fiche;;
@@ -76,17 +79,41 @@ public class JDBCcontroller {
         String output = "<table><tr><th>Nummer</th><th>Opdrachtgever</th><th>type</th><th>Begin</th><th>Einde</th><th>Gevalideerd</th><th>Volzet</th></tr>";
 
         try {
-            int teller = 0;
 
-            do {
-                output += "<tr><td>" + input.getInt(1) + "</td></tr>";
+            ResultSetMetaData metadata = input.getMetaData();
+            int numberOfColumns = metadata.getColumnCount();
 
-            } while (input.next());
+            ArrayList<String> arrayList = new ArrayList<String>();
+            while (input.next()) {
+                int i = 1;
+                while (i <= numberOfColumns) {
+                    arrayList.add(input.getString(i++));
+                }
+            }
+
+            for (int i = 0; i <= numberOfColumns; i++) {
+                output += "<tr><td>" + input.getInt(1) + "</td><td>" + input.getString(14) + "</td><td>"
+                        + input.getString(3) + "</td><td>" + input.getDate(9) + "</td><td>" + input.getDate(10)
+                        + "</td>";
+
+                if (input.getByte(12) == 1) {
+                    output += "<td>Ja</td>";
+                } else {
+                    output += "<td>Nee</td>";
+                }
+
+                if (input.getInt(7) > input.getInt(8)) {
+                    output += "<td>Ja</td>";
+                } else {
+                    output += "<td>Nee</td>";
+                }
+
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return output + "</table>";
+        return output + "</tr></table>";
     }
 }
