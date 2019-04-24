@@ -1,4 +1,4 @@
-package com.architec.demo;
+package com.architec.demo.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +14,7 @@ public class HelloController {
 
     @GetMapping("/assignment")
     public String getAllAssingments() {
+
         return "listAllAssignments";
     }
 
