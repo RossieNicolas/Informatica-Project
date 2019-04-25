@@ -42,15 +42,14 @@ public class Assignment {
     @Column(name = "extra_info", nullable = false)
     private String extraInfo;
 
-    //TODO: Foreign Key
-    @Column(name = "assigner_user_id", nullable = false)
-    private String assignerUserId;
+    @ManyToOne(targetEntity = User.class, fetch=FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    @JoinColumn(name = "assigner_user_id", referencedColumnName = "user_id")
+    private User assignerUserId;
 
     public Assignment() {
     }
 
-    public Assignment(long assignmentId, String title, String type, String task, int amountHours, int amountStudents, int maxStudents, String startDate, String endDate, boolean archived, boolean validated, String extraInfo, String assignerUserId) {
-        this.assignmentId = assignmentId;
+    public Assignment(String title, String type, String task, int amountHours, int amountStudents, int maxStudents, String startDate, String endDate, boolean archived, boolean validated, String extraInfo, User assignerUserId) {
         this.title = title;
         this.type = type;
         this.task = task;
@@ -113,7 +112,7 @@ public class Assignment {
         return extraInfo;
     }
 
-    public String getAssignerUserId() {
+    public User getAssignerUserId() {
         return assignerUserId;
     }
 
@@ -165,7 +164,7 @@ public class Assignment {
         this.extraInfo = extraInfo;
     }
 
-    public void setAssignerUserId(String assignerUserId) {
+    public void setAssignerUserId(User assignerUserId) {
         this.assignerUserId = assignerUserId;
     }
 }
