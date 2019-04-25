@@ -1,4 +1,4 @@
-package com.architec.demo.Repositories;
+package com.architec.demo.repositories;
 
 import com.architec.demo.models.User;
 

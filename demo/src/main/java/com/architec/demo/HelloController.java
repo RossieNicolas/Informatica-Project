@@ -2,8 +2,8 @@ package com.architec.demo;
 
 import java.util.List;
 
-import com.architec.demo.Repositories.AssignmentRepository;
-import com.architec.demo.Repositories.UserRepository;
+import com.architec.demo.repositories.AssignmentRepository;
+import com.architec.demo.repositories.UserRepository;
 import com.architec.demo.models.Assignment;
 import com.architec.demo.models.User;
 
