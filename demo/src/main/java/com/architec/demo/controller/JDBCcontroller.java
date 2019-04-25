@@ -1,6 +1,7 @@
 package com.architec.demo.controller;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -57,7 +58,7 @@ public class JDBCcontroller {
         Connection conn = null;
         String output = "";
         try {
-            conn = dataSource.getConnection();
+            conn = DriverManager.getConnection("192.168.84.92");
             PreparedStatement ps = conn.prepareStatement(sql);
             output = toHTML(ps.executeQuery());
             ps.close();

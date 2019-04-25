@@ -16,8 +16,14 @@ public class HelloController {
         return "Greetings from Spring Boot!";
     }
 
+    @GetMapping("/error")
+    public String error() {
+        return "error";
+    }
+
     @GetMapping("/allassignments")
     public String getAllAssingments(@RequestParam(name = "input", required = false) String input, Model model) {
+        connectie = new JDBCcontroller();
         input = connectie.findAll();
         model.addAttribute("name", input);
         return "listAllAssignments";
