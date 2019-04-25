@@ -1,5 +1,6 @@
-package com.architec.demo.assignment;
+package com.architec.demo.controllers;
 
+import com.architec.demo.models.Assignment;
 import com.architec.demo.repositories.AssignmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -7,8 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
