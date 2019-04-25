@@ -1,4 +1,4 @@
-package com.architec.demo.jpa;
+package com.architec.demo.models;
 import javax.persistence.*;
 
 @Entity
