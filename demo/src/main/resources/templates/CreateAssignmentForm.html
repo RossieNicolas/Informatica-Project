@@ -1,61 +1,125 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <title>Crediti</title>
-    <link rel="stylesheet" th:href="@{/css/ap.css}">
+    <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
-<body>
-<h1>Invoerformulier voor opdrachtgevers</h1>
-<div class="container">
-<form>
+<body class="background">
+<!--<div class="background">-->
+    <header>
+        <div class="nav-main navbackground">
+            <div class="container">
+                <div class="wrap-all col-xs-12">
+                    <div class="left">
+                        <a class="logo" href="">
+                            <img th:src="@{/images/logo-ap.svg}">
+                        </a>
+                    </div>
+                    <div class="right">
+                        <div class="region-header-menu">
+                            <nav>
+                                <ul class="nav">
+                                    <li>
+                                        <div class="dropdown dropdownleft">
+                                            <span>Opdrachten</span>
+                                            <div class="dropdown-content">
+                                                <a href="">Lopende taken</a>
+                                                <a href="">Taak toevoegen</a>
+                                                <a href="">Mijn taken</a>
+                                                <a href="">Taak bewerken</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="dropdown">
+                                            <span>Profiel</span>
+                                            <div class="dropdown-content">
+                                                <a href="">Mijn profiel</a>
+                                                <a href="">Mijn portfolio</a>
+                                                <a href="">Portfolios</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <a href="">
+                                            <span>Documentatie</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="dropdown">
+                                            <span>Coördinator</span>
+                                            <div class="dropdown-content">
+                                                <a href="">Tag toevoegen</a>
+                                                <a href="">Tag bewerken</a>
+                                                <a href="">Archief</a>
+                                            </div>
+                                        </div>
+                                    </li>
 
-    <label for="summary">Omschrijving opdracht:</label>
-    <textarea name="summary" id="summary" rows="10" cols="30"></textarea><br>
+                                </ul>
+                            </nav>
 
+                        </div>
 
-    <label for="start">Begindatum:</label><br>
-    <input name="startInput" id="start" type="date"><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="block">
+        <section class="find-edu card">
+            <div class="container ">
+                <div class="wrap-all col-xs-12 ">
 
-    <label for="end">Einddatum:</label><br>
-    <input name="endInput" id="end" type="date"><br><br>
+                    <h2>Invoerformulier voor opdrachtgevers</h2>
+                    <form class="standard-form">
 
-    <label for="lector">Door lector:</label>
-    <input name="lectorInput" id="lector" type="text"><br>
+                        <label for="title">Titel:</label>
+                        <input name="title" id="title" type="text"><br>
 
-    <label for="responsible">Projectverantwoordelijke:</label>
-    <input name="responsibleInput"  id="responsible"type="text"><br>
+                        <label for="type">Type:</label>
+                        <input name="type" id="type" type="text"><br>
 
-    <label for="name">Naam bedrijf:</label>
-    <input name="nameInput" id="name" type="text"><br>
+                        <label for="summary">Omschrijving opdracht:</label>
+                        <textarea name="summary" id="summary" rows="10" cols="30"></textarea><br>
 
-    <label for="address">Adres:</label>
-    <input name="addressInput" id="address" type="text"><br>
+                        <label for="start">Begindatum:</label><br>
+                        <input name="startInput" id="start" type="date"><br>
 
-    <label for="city">Gemeente:</label>
-    <input name="cityInput" id="city" type="text"><br>
+                        <label for="end">Einddatum:</label><br>
+                        <input name="endInput" id="end" type="date"><br><br>
 
-    <label for="postal">Postcode:</label>
-    <input name="postalInput" id="postal" type="text">
+                        <label for="credit">Credit:</label>
+                        <input name="credit" id="credit" type="text"><br>
 
-    <p>Tags:</p>
+                        <label for="totaal_uur">Totaal uur:</label>
+                        <input name="totaal_uur" id="totaal_uur" type="text"><br>
 
-    <div>
-        <input type="checkbox" id="firstCheckbox" name="first">
-        <label for="firstCheckbox">first</label>
+                        <label for="max_students">Max Studenten:</label>
+                        <input name="max_students" id="max_students" type="text"><br>
+
+                        <label for="extra_info">Extra info:</label>
+                        <textarea name="extra_info" id="extra_info" rows="10" cols="30"></textarea><br>
+
+                        <p>Tags:</p>
+
+                        <input type="checkbox" id="firstCheckbox" name="first">
+                        <label for="firstCheckbox">first</label>
+
+                        <br/>
+                        <input type="checkbox" id="secondCheckbox" name="second">
+                        <label for="secondCheckbox">second</label>
+
+                        <br/>
+                        <input class="button" type="SUBMIT" value="Opdracht aanmaken">
+
+                    </form>
+                </div>
+            </div>
+        </section>
     </div>
-
-    <div>
-        <input type="checkbox" id="secondCheckbox" name="second">
-        <label for="secondCheckbox">second</label>
-    </div>
-
-
-    <input type="SUBMIT" value="Opdracht aanmaken">
-
-</form>
-</div>
-</body>
+<!--</div>-->
 <footer>
     <div class="footer-bot">
         <div class="container">
@@ -68,4 +132,5 @@
         </div>
     </div>
 </footer>
+</body>
 </html>
