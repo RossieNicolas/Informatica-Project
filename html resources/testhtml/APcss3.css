@@ -162,7 +162,7 @@ html input[disabled] {
 	cursor: default
 }
 .background {
-	background-image: url("achtergrond2.jpg");
+	background-image: url("achtergrond.png");
 	height: 100%;
 }
 .card{
