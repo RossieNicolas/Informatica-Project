@@ -203,10 +203,10 @@ html input[disabled] {
 	display: block;
 }
 table {
-	width:80%;
+	width:84%;
 	height: 20%;
 	margin-bottom:1rem;
-	margin-left: 7%;
+	margin-left: 8%;
 	color:#212529;
 	border:1px solid rgba(0,0,0,.125);
 	background-clip:border-box;
@@ -221,13 +221,44 @@ th{
 	padding-left: 2px;
 }
 
-td{
+.tablebackground {
 	color:#212529;
+	background-color:hsla(0,100%,100%,0.6);
 	max-width: 550px;
 }
 
 .extra {
 	margin-top: 20px;
+}
+
+form {
+	padding-left: 2rem;
+	padding-top: 2rem;
+	padding-bottom: 2rem;
+	background-color:hsla(0,100%,100%,0.6);	
+	margin-bottom: 4rem;	
+	box-sizing: border-box;
+	border-radius: 4px;
+}
+
+input[type=text], input[type=email], input[type=password] {
+  width: 50%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+label {
+  padding: 10px 10px 10px 0;
+  display: inline-block;
+  width: 15%;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
 

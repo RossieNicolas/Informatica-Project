@@ -7,26 +7,31 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import org.springframework.scheduling.config.Task;
+
 @Entity
 public class Fiche {
 	@Id
 	@GeneratedValue
-	private int ficheID;
+	private long ficheID;
 
 	@Column
-	private int binnenland;
+	private String type;
 
 	@Column
-	private String Title;
+	private String title;
 
 	@Column
-	private String Description;
+	private String task;
 
 	@Column
 	private int amount_hours;
 
 	@Column
 	private int amount_students;
+
+	@Column
+	private int max_students;
 
 	@Column
 	private Date start_date;
@@ -37,6 +42,12 @@ public class Fiche {
 	@Column
 	private String given_by;
 
+	@Column
+	private Boolean Validated;
+
+	@Column
+	private Boolean Archived;
+
 	public Fiche() {
 	}
 
@@ -45,36 +56,28 @@ public class Fiche {
 
 	}
 
-	public int getFicheID() {
-		return ficheID;
+	public String getType() {
+		return type;
 	}
 
-	public void setFicheID(int ficheID) {
-		this.ficheID = ficheID;
-	}
-
-	public int getBinnenland() {
-		return binnenland;
-	}
-
-	public void setBinnenland(int binnenland) {
-		this.binnenland = binnenland;
+	public void setType(String binnenland) {
+		this.type = binnenland;
 	}
 
 	public String getTitle() {
-		return Title;
+		return title;
 	}
 
 	public void setTitle(String title) {
-		Title = title;
+		this.title = title;
 	}
 
-	public String getDescription() {
-		return Description;
+	public String getTask() {
+		return task;
 	}
 
-	public void setDescription(String description) {
-		Description = description;
+	public void setTask(String description) {
+		this.task = description;
 	}
 
 	public int getAmount_hours() {
@@ -115,6 +118,37 @@ public class Fiche {
 
 	public void setGiven_by(String given_by) {
 		this.given_by = given_by;
+	}
+
+	public int getMax_students() {
+		return max_students;
+	}
+
+	public void setMax_students(int max_students) {
+		this.max_students = max_students;
+	}
+
+	public Boolean getValidated() {
+		return Validated;
+	}
+
+	public void setValidated(Boolean validated) {
+		Validated = validated;
+	}
+
+	public Boolean getArchived() {
+		return Archived;
+	}
+
+	public void setArchived(Boolean archived) {
+		Archived = archived;
+	}
+
+	/**
+	 * @return the ficheID
+	 */
+	public long getFicheID() {
+		return ficheID;
 	}
 
 }
