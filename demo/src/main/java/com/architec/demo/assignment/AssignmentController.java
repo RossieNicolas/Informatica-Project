@@ -24,7 +24,6 @@ public class AssignmentController {
 
         assignments = assignmentRepository.findAll();
         System.out.println(assignments);
-        System.out.println(assignments.get(0).getTitle());
 
         model.addAttribute("assignments", assignments);
 //        String test = assignments.get(0).getTitle();
