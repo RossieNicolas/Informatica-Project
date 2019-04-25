@@ -7,12 +7,12 @@
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
 <body class="background">
-    <header>
+<header>
         <div class="nav-main navbackground">
             <div class="container">
                 <div class="wrap-all col-xs-12">
                     <div class="left">
-                        <a class="logo" href="">
+                        <a class="logo" href="/">
                             <img th:src="@{/images/logo-ap.svg}">
                         </a>
                     </div>
@@ -21,15 +21,15 @@
                             <nav>
                                 <ul class="nav">
                                     <li>
-                                    <div class="dropdown dropdownleft">
-                                        <span>Opdrachten</span>
-                                        <div class="dropdown-content">
-                                            <a href="">Lopende taken</a>
-                                            <a href="">Taak toevoegen</a>
-                                            <a href="">Mijn taken</a>
-                                            <a href="">Taak bewerken</a>
+                                        <div class="dropdown dropdownleft">
+                                            <span>Opdrachten</span>
+                                            <div class="dropdown-content">
+                                                <a href="/assignments">Lopende taken</a>
+                                                <a href="/assignment">Taak toevoegen</a>
+                                                <a href="/myassignments">Mijn taken</a>
+                                                <a href="">Taak bewerken</a>
+                                            </div>
                                         </div>
-                                    </div>
                                     </li>
                                     <li>
                                         <div class="dropdown">
@@ -50,7 +50,7 @@
                                         <div class="dropdown">
                                             <span>Coördinator</span>
                                             <div class="dropdown-content">
-                                                <a href="">Tag toevoegen</a>
+                                                <a href="/tag">Tag toevoegen</a>
                                                 <a href="">Tag bewerken</a>
                                                 <a href="">Archief</a>
                                             </div>
@@ -67,6 +67,7 @@
             </div>
         </div>
     </header>
+
 
 		
 		<div class="container ">
@@ -90,7 +91,7 @@
 					<td th:text="${a.getFicheID()}"></td>
 					<td th:text="${a.getGiven_by()}"></td>
 					<td th:text="${a.getType()}"></td>
-					<td th:text="${a.getTask()}"></td>
+					<td th:text="${a.getTask()}" class = "cell"></td>
 					<td th:text="${a.getStart_date()}"></td>
 					<td th:text="${a.getEnd_date()}"></td>
 					<td th:text="${a.getValidated()}"></td>
