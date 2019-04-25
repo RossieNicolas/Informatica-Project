@@ -5,19 +5,45 @@ import javax.persistence.*;
 @Entity
 @Table(name = "assignments")
 public class Assignment {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long assignmentId;
 
+    @Column(name = "title", nullable = false)
     private String title;
-    private String type;
+
+    @Column(name = "type", nullable = false)
+    private String type; //TODO: misschien enum maken met 2 opties (ZAP, Mobility)
+
+    @Column(name = "task", nullable = false)
     private String task;
+
+    @Column(name = "amount_hours", nullable = false)
     private int amountHours;
+
+    @Column(name = "amount_students")
     private int amountStudents;
+
+    @Column(name = "max_students", nullable = false)
     private int maxStudents;
+
+    @Column(name = "start_date", nullable = false)
     private String startDate;
+
+    @Column(name = "end_date", nullable = false)
     private String endDate;
+
+    @Column(name = "archived", nullable = false)
     private boolean archived;
+
+    @Column(name = "validated", nullable = false)
     private boolean validated;
+
+    @Column(name = "extra_info", nullable = false)
     private String extraInfo;
+
+    //TODO: Foreign Key
+    @Column(name = "assigner_user_id", nullable = false)
     private String assignerUserId;
 
     public Assignment() {
@@ -39,69 +65,54 @@ public class Assignment {
         this.assignerUserId = assignerUserId;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     public long getAssignmentId() {
         return assignmentId;
     }
 
-    @Column(name = "title", nullable = false)
     public String getTitle() {
         return title;
     }
 
-    @Column(name = "type", nullable = false)
     public String getType() {
         return type;
     }
 
-    @Column(name = "task", nullable = false)
     public String getTask() {
         return task;
     }
 
-    @Column(name = "amount_hours", nullable = false)
     public int getAmountHours() {
         return amountHours;
     }
 
-    @Column(name = "amount_students", nullable = false)
     public int getAmountStudents() {
         return amountStudents;
     }
 
-    @Column(name = "max_students", nullable = false)
     public int getMaxStudents() {
         return maxStudents;
     }
 
-    @Column(name = "start_date", nullable = false)
     public String getStartDate() {
         return startDate;
     }
 
-    @Column(name = "end_date", nullable = false)
     public String getEndDate() {
         return endDate;
     }
 
-    @Column(name = "archived", nullable = false)
     public boolean isArchived() {
         return archived;
     }
 
-    @Column(name = "validated", nullable = false)
     public boolean isValidated() {
         return validated;
     }
 
-    @Column(name = "extra_info", nullable = false)
     public String getExtraInfo() {
         return extraInfo;
     }
 
-    //TODO: Foreign Key
-    @Column(name = "assigner_user_id", nullable = false)
     public String getAssignerUserId() {
         return assignerUserId;
     }
