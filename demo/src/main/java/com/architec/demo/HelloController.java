@@ -3,9 +3,10 @@ package com.architec.demo;
 import java.util.List;
 
 import com.architec.demo.Repositories.AssignmentRepository;
-import com.architec.demo.models.Fiche;
+import com.architec.demo.Repositories.UserRepository;
+import com.architec.demo.models.Assignment;
+import com.architec.demo.models.User;
 
-import org.hibernate.annotations.SourceType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,9 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HelloController {
 
     @Autowired
-    private AssignmentRepository conn;
+    private AssignmentRepository AssignmentRepo;
 
-    private List<Fiche> fiches;
+    @Autowired
+    private UserRepository userRepo;
+
+    private List<Assignment> fiches;
+    private List<User> users;
 
     @RequestMapping("/")
     public String index() {
@@ -32,10 +37,11 @@ public class HelloController {
 
     @GetMapping("/allassignments")
     public String getAllAssingments(Model model) {
-        fiches = conn.findAll();
-        System.out.println(fiches.get(0).getFicheID());
+        fiches = AssignmentRepo.findAll();
+        users = userRepo.findAll();
 
         model.addAttribute("assignments", fiches);
+        model.addAttribute("user", users);
 
         return "listAllAssignments";
     }
