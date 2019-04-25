@@ -2,47 +2,47 @@ package com.architec.demo.controller;
 
 import com.architec.demo.jpa.Assignment;
 import com.architec.demo.jpa.AssignmentRepo;
+import com.architec.demo.jpa.Tag;
+import com.architec.demo.jpa.TagRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
 import java.sql.*;
+import java.util.List;
 
 @Controller
 public class AssignmentController {
 
     @Autowired
-    AssignmentRepo assignmentRepo;
+    TagRepo tagRepo;
 
-    @RequestMapping("/")
-    public String index() {
-        return "Greetings from SpringBoot";
-    }
+    @Autowired
+    AssignmentRepo assignmentRepo;
 
     @RequestMapping("/assignment")
     public String assignment() {
-        getConnectionToDb();
         return "assignment";
     }
 
-    @PostMapping("/assignment")
-    public Assignment createAssignment(@Valid Assignment assignment){
-        return assignmentRepo.save(assignment);
+    @RequestMapping(value = "/assignment", method = RequestMethod.GET)
+    public String tag(Model model) /*throws SQLException*/ {
+
+        List<Tag> updatetag = tagRepo.findAll();
+
+
+        model.addAttribute("updatetag", updatetag);
+        return "assignment";
     }
 
-    public Connection getConnectionToDb() {
-        try {
-            Connection c = DriverManager.getConnection("jdbc:sqlserver://192.168.84.92;databaseName=crediti;username=sa;password=Zxcvb0123");
-            System.out.println("connected");
 
-            return c;
-
-        } catch (Exception ex) {
-            System.out.println(ex);
-            return null;
-        }
+    @PostMapping("/assignment")
+    public Assignment createAssignment(@Valid Assignment assignment) {
+        return assignmentRepo.save(assignment);
     }
 
 }

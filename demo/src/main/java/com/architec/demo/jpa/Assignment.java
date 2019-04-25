@@ -1,6 +1,10 @@
 package com.architec.demo.jpa;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import java.util.Date;
+
 
 @Entity
 @Table(name = "assignment")
@@ -20,10 +24,12 @@ public class Assignment {
     private String summary;
 
     @Column(name = "start_date")
-    private String startDate;
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private Date startDate;
 
     @Column(name = "end_date")
-    private String endDate;
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private Date endDate;
 
     @Column(name = "credit")
     private int credit;
@@ -69,19 +75,19 @@ public class Assignment {
         this.summary = summary;
     }
 
-    public String getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public String getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
@@ -125,7 +131,7 @@ public class Assignment {
         this.type = type;
     }
 
-    public Assignment(String title, String type, String summary, String startDate, String endDate, int credit, int total_hours, int max_students, String extra_info) {
+    public Assignment(String title, String type, String summary, Date startDate, Date endDate, int credit, int total_hours, int max_students, String extra_info) {
         this.title = title;
         this.type = type;
         this.summary = summary;

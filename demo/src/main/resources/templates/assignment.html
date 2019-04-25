@@ -7,118 +7,123 @@
 </head>
 <body class="background">
 <!--<div class="background">-->
-    <header>
-        <div class="nav-main navbackground">
-            <div class="container">
-                <div class="wrap-all col-xs-12">
-                    <div class="left">
-                        <a class="logo" href="">
-                            <img th:src="@{/images/logo-ap.svg}">
-                        </a>
-                    </div>
-                    <div class="right">
-                        <div class="region-header-menu">
-                            <nav>
-                                <ul class="nav">
-                                    <li>
-                                        <div class="dropdown dropdownleft">
-                                            <span>Opdrachten</span>
-                                            <div class="dropdown-content">
-                                                <a href="">Lopende taken</a>
-                                                <a href="">Taak toevoegen</a>
-                                                <a href="">Mijn taken</a>
-                                                <a href="">Taak bewerken</a>
-                                            </div>
+<header>
+    <div class="nav-main navbackground">
+        <div class="container">
+            <div class="wrap-all col-xs-12">
+                <div class="left">
+                    <a class="logo" href="">
+                        <img th:src="@{/images/logo-ap.svg}">
+                    </a>
+                </div>
+                <div class="right">
+                    <div class="region-header-menu">
+                        <nav>
+                            <ul class="nav">
+                                <li>
+                                    <div class="dropdown dropdownleft">
+                                        <span>Opdrachten</span>
+                                        <div class="dropdown-content">
+                                            <a href="">Lopende taken</a>
+                                            <a href="">Taak toevoegen</a>
+                                            <a href="">Mijn taken</a>
+                                            <a href="">Taak bewerken</a>
                                         </div>
-                                    </li>
-                                    <li>
-                                        <div class="dropdown">
-                                            <span>Profiel</span>
-                                            <div class="dropdown-content">
-                                                <a href="">Mijn profiel</a>
-                                                <a href="">Mijn portfolio</a>
-                                                <a href="">Portfolios</a>
-                                            </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="dropdown">
+                                        <span>Profiel</span>
+                                        <div class="dropdown-content">
+                                            <a href="">Mijn profiel</a>
+                                            <a href="">Mijn portfolio</a>
+                                            <a href="">Portfolios</a>
                                         </div>
-                                    </li>
-                                    <li>
-                                        <a href="">
-                                            <span>Documentatie</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <div class="dropdown">
-                                            <span>Coördinator</span>
-                                            <div class="dropdown-content">
-                                                <a href="">Tag toevoegen</a>
-                                                <a href="">Tag bewerken</a>
-                                                <a href="">Archief</a>
-                                            </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <span>Documentatie</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <div class="dropdown">
+                                        <span>Coördinator</span>
+                                        <div class="dropdown-content">
+                                            <a href="">Tag toevoegen</a>
+                                            <a href="">Tag bewerken</a>
+                                            <a href="">Archief</a>
                                         </div>
-                                    </li>
+                                    </div>
+                                </li>
 
-                                </ul>
-                            </nav>
-
-                        </div>
+                            </ul>
+                        </nav>
 
                     </div>
+
                 </div>
             </div>
         </div>
-    </header>
-    <div class="block">
-        <section class="find-edu card">
-            <div class="container ">
-                <div class="wrap-all col-xs-12 ">
-
-                    <h2>Invoerformulier voor opdrachtgevers</h2>
-                    <form th:action='@{/assignment}' method='POST' class="standard-form">
-
-                        <label for="title">Titel:</label>
-                        <input name="title" id="title" type="text"><br>
-
-                        <label for="type">Type:</label>
-                        <input name="type" id="type" type="text"><br>
-
-                        <label for="summary">Omschrijving opdracht:</label>
-                        <textarea name="summary" id="summary" rows="10" cols="30"></textarea><br>
-
-                        <label for="start">Begindatum:</label><br>
-                        <input name="startInput" id="start" type="date"><br>
-
-                        <label for="end">Einddatum:</label><br>
-                        <input name="endInput" id="end" type="date"><br><br>
-
-                        <label for="credit">Credit:</label>
-                        <input name="credit" id="credit" type="text"><br>
-
-                        <label for="totaal_uur">Totaal uur:</label>
-                        <input name="totaal_uur" id="totaal_uur" type="text"><br>
-
-                        <label for="max_students">Max Studenten:</label>
-                        <input name="max_students" id="max_students" type="text"><br>
-
-                        <label for="extra_info">Extra info:</label>
-                        <textarea name="extra_info" id="extra_info" rows="10" cols="30"></textarea><br>
-
-                        <p>Tags:</p>
-
-                        <input type="checkbox" id="firstCheckbox" name="first">
-                        <label for="firstCheckbox">first</label>
-
-                        <br/>
-                        <input type="checkbox" id="secondCheckbox" name="second">
-                        <label for="secondCheckbox">second</label>
-
-                        <br/>
-                        <input class="button" type="SUBMIT" value="Opdracht aanmaken">
-
-                    </form>
-                </div>
-            </div>
-        </section>
     </div>
+</header>
+<div class="block">
+    <section class="find-edu card">
+        <div class="container ">
+            <div class="wrap-all col-xs-12 ">
+
+                <h2>Invoerformulier voor opdrachtgevers</h2>
+                <form th:action='@{/assignment}' method='POST' class="standard-form">
+
+                    <label for="title">Titel:</label>
+                    <input name="title" id="title" type="text"><br>
+
+                    <label for="type">Type:</label>
+                    <input name="type" id="type" type="text"><br>
+
+                    <label for="summary">Omschrijving opdracht:</label>
+                    <textarea name="summary" id="summary" rows="10" cols="30"></textarea><br>
+
+                    <label for="start_date">Begindatum:</label><br>
+                    <input name="start_date" id="start_date" type="date"><br>
+
+                    <label for="end_date">Einddatum:</label><br>
+                    <input name="end_date" id="end_date" type="date"><br><br>
+
+                    <label for="credit">Credit:</label>
+                    <input name="credit" id="credit" type="text"><br>
+
+                    <label for="totaal_uur">Totaal uur:</label>
+                    <input name="totaal_uur" id="totaal_uur" type="text"><br>
+
+                    <label for="max_students">Max Studenten:</label>
+                    <input name="max_students" id="max_students" type="text"><br>
+
+                    <label for="extra_info">Extra info:</label>
+                    <textarea name="extra_info" id="extra_info" rows="10" cols="30"></textarea><br>
+
+                    <table class="tags">
+                        <tr>
+                            <th>Tags</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <th:block th:each="tag : ${updatetag}">
+                                    <input type="checkbox"/>
+                                    <label th:text="${tag.getTag_name()}"></label>
+                                </th:block>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <br/>
+                    <input class="button" type="SUBMIT" value="Opdracht aanmaken">
+
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
 <!--</div>-->
 <footer>
     <div class="footer-bot">
