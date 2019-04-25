@@ -16,18 +16,18 @@ public class AssignmentController {
     @Autowired
     private AssignmentRepository assignmentRepository;
 
-    @RequestMapping(value = "/assignments", method = RequestMethod.GET)
+    @RequestMapping(value = "/myassignments", method = RequestMethod.GET)
     public String assignments(Model model) /*throws SQLException*/ {
 
         List<Assignment> assignments = assignmentRepository.findAll();
         System.out.println(assignments);
 
         model.addAttribute("assignments", assignments);
-        return "assignments";
+        return "myassignments";
     }
 
-    @PostMapping("/assignments")
-    public Assignment createAssignment(@Valid @RequestBody Assignment assignemnt) {
-        return assignmentRepository.save(assignemnt);
-    }
+//    @PostMapping("/myassignments")
+//    public Assignment createAssignment(@Valid @RequestBody Assignment assignemnt) {
+//        return assignmentRepository.save(assignemnt);
+//    }
 }

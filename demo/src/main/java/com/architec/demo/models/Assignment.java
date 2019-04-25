@@ -13,7 +13,7 @@ public class Assignment {
     private String title;
 
     @Column(name = "type", nullable = false)
-    private String type; //TODO: misschien enum maken met 2 opties (ZAP, Mobility)
+    private String type;
 
     @Column(name = "task", nullable = false)
     private String task;
@@ -28,7 +28,7 @@ public class Assignment {
     private int maxStudents;
 
     @Column(name = "start_date", nullable = false)
-    private String startDate;
+    private String startDate; //todo date
 
     @Column(name = "end_date", nullable = false)
     private String endDate;
