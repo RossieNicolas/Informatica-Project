@@ -77,6 +77,7 @@ public class JDBCcontroller {
 
     private String toHTML(ResultSet input) {
         String output = "<table><tr><th>Nummer</th><th>Opdrachtgever</th><th>type</th><th>Begin</th><th>Einde</th><th>Gevalideerd</th><th>Volzet</th></tr>";
+        output += "<tr><td><input type='submit' value='Edit' class = 'button'><br><br><input type='submit' value='Delete' class='button'></td>";
 
         try {
 
@@ -92,7 +93,7 @@ public class JDBCcontroller {
             }
 
             for (int i = 0; i <= numberOfColumns; i++) {
-                output += "<tr><td>" + input.getInt(1) + "</td><td>" + input.getString(14) + "</td><td>"
+                output += "<td>" + input.getInt(1) + "</td><td>" + input.getString(14) + "</td><td>"
                         + input.getString(3) + "</td><td>" + input.getDate(9) + "</td><td>" + input.getDate(10)
                         + "</td>";
 
