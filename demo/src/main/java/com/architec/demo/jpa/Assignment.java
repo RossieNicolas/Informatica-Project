@@ -1,13 +1,12 @@
 package com.architec.demo.jpa;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "assignment")
 public class Assignment {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "assignment_id")
     private int id;
 
@@ -21,10 +20,10 @@ public class Assignment {
     private String summary;
 
     @Column(name = "start_date")
-    private Date startDate;
+    private String startDate;
 
     @Column(name = "end_date")
-    private Date endDate;
+    private String endDate;
 
     @Column(name = "credit")
     private int credit;
@@ -70,19 +69,19 @@ public class Assignment {
         this.summary = summary;
     }
 
-    public Date getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 
@@ -115,6 +114,26 @@ public class Assignment {
     }
 
     public void setExtra_info(String extra_info) {
+        this.extra_info = extra_info;
+    }
+
+    public Assignment() {
+    }
+
+    public Assignment(String title, String type) {
+        this.title = title;
+        this.type = type;
+    }
+
+    public Assignment(String title, String type, String summary, String startDate, String endDate, int credit, int total_hours, int max_students, String extra_info) {
+        this.title = title;
+        this.type = type;
+        this.summary = summary;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.credit = credit;
+        this.total_hours = total_hours;
+        this.max_students = max_students;
         this.extra_info = extra_info;
     }
 }

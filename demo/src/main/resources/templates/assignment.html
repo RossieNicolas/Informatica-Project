@@ -73,7 +73,7 @@
                 <div class="wrap-all col-xs-12 ">
 
                     <h2>Invoerformulier voor opdrachtgevers</h2>
-                    <form class="standard-form">
+                    <form th:action='@{/assignment}' method='POST' class="standard-form">
 
                         <label for="title">Titel:</label>
                         <input name="title" id="title" type="text"><br>

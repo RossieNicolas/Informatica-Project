@@ -1,12 +1,20 @@
-package com.architec.demo;
+package com.architec.demo.controller;
 
+import com.architec.demo.jpa.Assignment;
+import com.architec.demo.jpa.AssignmentRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.validation.Valid;
 import java.sql.*;
 
 @Controller
-public class HelloController {
+public class AssignmentController {
+
+    @Autowired
+    AssignmentRepo assignmentRepo;
 
     @RequestMapping("/")
     public String index() {
@@ -14,9 +22,14 @@ public class HelloController {
     }
 
     @RequestMapping("/assignment")
-    public String test() {
+    public String assignment() {
         getConnectionToDb();
-        return "CreateAssignmentForm";
+        return "assignment";
+    }
+
+    @PostMapping("/assignment")
+    public Assignment createAssignment(@Valid Assignment assignment){
+        return assignmentRepo.save(assignment);
     }
 
     public Connection getConnectionToDb() {
