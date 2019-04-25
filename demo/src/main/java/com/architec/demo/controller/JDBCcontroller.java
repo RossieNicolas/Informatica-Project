@@ -58,7 +58,7 @@ public class JDBCcontroller {
         Connection conn = null;
         String output = "";
         try {
-            conn = DriverManager.getConnection("192.168.84.92");
+            conn = DriverManager.getConnection("jdbc:sqlserver://192.168.84.92:1433", "sa", "Zxcvb0123");
             PreparedStatement ps = conn.prepareStatement(sql);
             output = toHTML(ps.executeQuery());
             ps.close();
@@ -84,33 +84,36 @@ public class JDBCcontroller {
 
             ResultSetMetaData metadata = input.getMetaData();
             int numberOfColumns = metadata.getColumnCount();
+            ResultSetMetaData rsmd = input.getMetaData();
+            int columnsNumber = rsmd.getColumnCount();
 
-            ArrayList<String> arrayList = new ArrayList<String>();
             while (input.next()) {
-                int i = 1;
-                while (i <= numberOfColumns) {
-                    arrayList.add(input.getString(i++));
+                for (int i = 1; i <= columnsNumber; i++) {
+                    if (i > 1)
+                        System.out.print(",  ");
+                    String columnValue = input.getString(i);
+                    System.out.print(columnValue + " " + rsmd.getColumnName(i));
                 }
+                System.out.println("");
             }
-
-            for (int i = 0; i <= numberOfColumns; i++) {
-                output += "<td>" + input.getInt(1) + "</td><td>" + input.getString(14) + "</td><td>"
-                        + input.getString(3) + "</td><td>" + input.getDate(9) + "</td><td>" + input.getDate(10)
-                        + "</td>";
-
-                if (input.getByte(12) == 1) {
-                    output += "<td>Ja</td>";
-                } else {
-                    output += "<td>Nee</td>";
-                }
-
-                if (input.getInt(7) > input.getInt(8)) {
-                    output += "<td>Ja</td>";
-                } else {
-                    output += "<td>Nee</td>";
-                }
-
-            }
+            /*
+             * ArrayList<String> arrayList = new ArrayList<String>(); while (input.next()) {
+             * int i = 1; while (i <= numberOfColumns) {
+             * arrayList.add(input.getString(i++)); } }
+             * 
+             * for (int i = 0; i <= numberOfColumns; i++) { output += "<td>" +
+             * input.getInt(1) + "</td><td>" + input.getString(14) + "</td><td>" +
+             * input.getString(3) + "</td><td>" + input.getDate(9) + "</td><td>" +
+             * input.getDate(10) + "</td>";
+             * 
+             * if (input.getByte(12) == 1) { output += "<td>Ja</td>"; } else { output +=
+             * "<td>Nee</td>"; }
+             * 
+             * if (input.getInt(7) > input.getInt(8)) { output += "<td>Ja</td>"; } else {
+             * output += "<td>Nee</td>"; }
+             * 
+             * }
+             */
 
         } catch (SQLException e) {
             e.printStackTrace();

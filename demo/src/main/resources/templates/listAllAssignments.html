@@ -1,19 +1,19 @@
-	<!DOCTYPE HTML>
-	<html xmlns:th='http://www.thymeleaf.org'>
-	<head>
-	<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>	
-	<link rel='stylesheet' type="text/css" href='./APcss3.css'>
-	<title>List of all assignments</title>
-	</head>
-
-	<body>
-<header class ="background">
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>AddTagForm</title>
+    <link rel="stylesheet" th:href="@{/css/APcss2.css}">
+    <link rel="stylesheet" th:href="@{/css/APcss3.css}">
+</head>
+<body class="background">
+    <header>
         <div class="nav-main navbackground">
             <div class="container">
                 <div class="wrap-all col-xs-12">
                     <div class="left">
                         <a class="logo" href="">
-                            <img src="logo-ap.svg">
+                            <img th:src="@{/images/logo-ap.svg}">
                         </a>
                     </div>
                     <div class="right">
@@ -69,11 +69,11 @@
     </header>
 
 		
-		<div class="container extra">
-			<h2>Alle opdrachten</h2>
+		<div class="container ">
+			<h2 class = "extra">Alle opdrachten</h2>
         </div>
-		<div>
-			${input}
+		<div id='overview'>
+			"]{input}"
 		</div>
 
 
