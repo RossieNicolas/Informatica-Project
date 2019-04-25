@@ -20,7 +20,6 @@ public class AssignmentController {
     public String assignments(Model model) /*throws SQLException*/ {
 
         List<Assignment> assignments = assignmentRepository.findAll();
-        System.out.println(assignments);
 
         model.addAttribute("assignments", assignments);
         return "myassignments";
