@@ -82,7 +82,7 @@
                         <input type='text' name='tag_description' id='summary' maxlength="250"
                                placeholder="korte beschrijving">
                         <br/>
-                        <input type='submit' value='Voeg toe' class="button">
+                        <input type='submit' value='Voeg toe' class="button" onclick='submission()'>
 
                     </form>
                 </div>
@@ -103,6 +103,10 @@
         </div>
     </div>
 </footer>
-
+<script>
+    function submission(){
+        return alert("tag toegevoegd");
+    }
+</script>
 </body>
 </html>
