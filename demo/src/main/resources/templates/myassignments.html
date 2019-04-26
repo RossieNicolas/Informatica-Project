@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/ap_stylesheet.css}" />
+
+    <title>Mijn opdrachten</title>
+</head>
+<body>
+
+<div class="block">
+
+    <section class="title">
+        <div class="container">
+            <h2>Mijn opdrachten</h2>
+            <p>Lijst van al uw opdrachten. Klik op een opdracht voor meer informatie.</p>
+        </div>
+    </section>
+
+
+    <div class="container">
+
+        <div class="article no-img img-left wrap col-xs-12">
+            <div class="txt-wrap col-sm-12 col-xs-12">
+
+                <table>
+                    <tr>
+                        <th>ID</th>
+                        <th>Titel</th>
+                    </tr>
+                    <tr th:each="a : ${assignments}" class = "notfirst">
+                        <td th:text="${a.getAssignmentId()}"></td>
+                        <td th:text="${a.getTitle()}"></td>
+
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+</body>
+</html>

@@ -1,145 +1,170 @@
 package com.architec.demo.models;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
-import java.util.Date;
-
 
 @Entity
-@Table(name = "assignment")
+@Table(name = "assignments")
 public class Assignment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "assignment_id")
-    private int id;
+    private long assignmentId;
 
-    @Column(name = "title")
+    @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "type")
+    @Column(name = "type", nullable = false)
     private String type;
 
-    @Column(name = "task")
-    private String summary;
+    @Column(name = "task", nullable = false)
+    private String task;
 
-    @Column(name = "start_date")
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    private Date startDate;
+    @Column(name = "amount_hours", nullable = false)
+    private int amountHours;
 
-    @Column(name = "end_date")
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    private Date endDate;
+    @Column(name = "amount_students")
+    private int amountStudents;
 
-    @Column(name = "credit")
-    private int credit;
+    @Column(name = "max_students", nullable = false)
+    private int maxStudents;
 
-    @Column(name = "amount_hours")
-    private int total_hours;
+    @Column(name = "start_date", nullable = false)
+    private String startDate; //todo date
 
-    @Column(name = "max_students")
-    private int max_students;
+    @Column(name = "end_date", nullable = false)
+    private String endDate;
 
-    @Column(name = "extra_info")
-    private String extra_info;
+    @Column(name = "archived", nullable = false)
+    private boolean archived;
 
-    public int getId() {
-        return id;
+    @Column(name = "validated", nullable = false)
+    private boolean validated;
+
+    @Column(name = "extra_info", nullable = false)
+    private String extraInfo;
+
+    @ManyToOne(targetEntity = User.class, fetch=FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    @JoinColumn(name = "assigner_user_id", referencedColumnName = "user_id")
+    private User assignerUserId;
+
+    public Assignment() {
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public Assignment(String title, String type, String task, int amountHours, int amountStudents, int maxStudents, String startDate, String endDate, boolean archived, boolean validated, String extraInfo, User assignerUserId) {
+        this.title = title;
+        this.type = type;
+        this.task = task;
+        this.amountHours = amountHours;
+        this.amountStudents = amountStudents;
+        this.maxStudents = maxStudents;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.archived = archived;
+        this.validated = validated;
+        this.extraInfo = extraInfo;
+        this.assignerUserId = assignerUserId;
+    }
+
+    public long getAssignmentId() {
+        return assignmentId;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getType() {
         return type;
+    }
+
+    public String getTask() {
+        return task;
+    }
+
+    public int getAmountHours() {
+        return amountHours;
+    }
+
+    public int getAmountStudents() {
+        return amountStudents;
+    }
+
+    public int getMaxStudents() {
+        return maxStudents;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public boolean isArchived() {
+        return archived;
+    }
+
+    public boolean isValidated() {
+        return validated;
+    }
+
+    public String getExtraInfo() {
+        return extraInfo;
+    }
+
+    public User getAssignerUserId() {
+        return assignerUserId;
+    }
+
+    public void setAssignmentId(long assignmentId) {
+        this.assignmentId = assignmentId;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public void setType(String type) {
         this.type = type;
     }
 
-    public String getSummary() {
-        return summary;
+    public void setTask(String task) {
+        this.task = task;
     }
 
-    public void setSummary(String summary) {
-        this.summary = summary;
+    public void setAmountHours(int amountHours) {
+        this.amountHours = amountHours;
     }
 
-    public Date getStartDate() {
-        return startDate;
+    public void setAmountStudents(int amountStudents) {
+        this.amountStudents = amountStudents;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setMaxStudents(int maxStudents) {
+        this.maxStudents = maxStudents;
+    }
+
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 
-    public int getCredit() {
-        return credit;
+    public void setArchived(boolean archived) {
+        this.archived = archived;
     }
 
-    public void setCredit(int credit) {
-        this.credit = credit;
+    public void setValidated(boolean validated) {
+        this.validated = validated;
     }
 
-    public int getTotal_hours() {
-        return total_hours;
+    public void setExtraInfo(String extraInfo) {
+        this.extraInfo = extraInfo;
     }
 
-    public void setTotal_hours(int total_hours) {
-        this.total_hours = total_hours;
-    }
-
-    public int getMax_students() {
-        return max_students;
-    }
-
-    public void setMax_students(int max_students) {
-        this.max_students = max_students;
-    }
-
-    public String getExtra_info() {
-        return extra_info;
-    }
-
-    public void setExtra_info(String extra_info) {
-        this.extra_info = extra_info;
-    }
-
-    public Assignment() {
-    }
-
-    public Assignment(String title, String type) {
-        this.title = title;
-        this.type = type;
-    }
-
-    public Assignment(String title, String type, String summary, Date startDate, Date endDate, int credit, int total_hours, int max_students, String extra_info) {
-        this.title = title;
-        this.type = type;
-        this.summary = summary;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.credit = credit;
-        this.total_hours = total_hours;
-        this.max_students = max_students;
-        this.extra_info = extra_info;
+    public void setAssignerUserId(User assignerUserId) {
+        this.assignerUserId = assignerUserId;
     }
 }
