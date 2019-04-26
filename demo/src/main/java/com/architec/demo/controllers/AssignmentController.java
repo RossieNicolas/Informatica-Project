@@ -1,8 +1,8 @@
-package com.architec.demo.controller;
+package com.architec.demo.controllers;
 
 import com.architec.demo.models.Assignment;
-import com.architec.demo.repositories.AssignmentRepo;
 import com.architec.demo.models.Tag;
+import com.architec.demo.repositories.AssignmentRepository;
 import com.architec.demo.repositories.TagRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +21,7 @@ public class AssignmentController {
     TagRepo tagRepo;
 
     @Autowired
-    AssignmentRepo assignmentRepo;
+    AssignmentRepository assignmentRepo;
 
     @RequestMapping("/assignment")
     public String assignment() {
