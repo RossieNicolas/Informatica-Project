@@ -19,14 +19,15 @@ public class User {
     @Column(name = "role", nullable = false)
     private String role;
 
+    public User() {
+    }
+
     public User(String firstname, String lastname, String email, String role) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.role = role;
     }
-
-    public User(){}
 
     public long getUserId() {
         return userId;

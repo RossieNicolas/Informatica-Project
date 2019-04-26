@@ -27,12 +27,10 @@
                     <tr>
                         <th>ID</th>
                         <th>Titel</th>
-                        <th>Type</th>
                     </tr>
                     <tr th:each="a : ${assignments}" class = "notfirst">
                         <td th:text="${a.getAssignmentId()}"></td>
                         <td th:text="${a.getTitle()}"></td>
-                        <td th:text="${a.getType()}"></td>
 
                     </tr>
                 </table>
