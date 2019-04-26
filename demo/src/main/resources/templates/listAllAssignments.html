@@ -87,7 +87,7 @@
 					<th>Volzet</th>
 				</tr>
 				<tr th:each="a : ${assignments}" class="tablebackground">
-					<td><input type="submit" value="Bewerk" class = "button"><br><br><input type="submit" value="Verwijder" class="button"></td>
+                    <td><input type="submit" value = "✏️" class = "button">&nbsp;&nbsp;&nbsp;<input type="submit" value = "🗑️" class="button"></td>
 					<td th:text="${a.getAssignmentId()}"></td>
 					<td th:text="${a.getAssignerUserId()}"></td>
 					<td th:text="${a.getType()}"></td>
