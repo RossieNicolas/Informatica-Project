@@ -45,8 +45,6 @@ public class AssignmentController {
         return assignmentRepo.save(assignment);
     }
 
-    private AssignmentRepository AssignmentRepo;
-
 
     private List<Assignment> fiches;
 
@@ -57,7 +55,7 @@ public class AssignmentController {
 
     @GetMapping("/allassignments")
     public String getAllAssingments(Model model) {
-        fiches = AssignmentRepo.findAll();
+        fiches = assignmentRepo.findAll();
         model.addAttribute("assignments", fiches);
 
         return "listAllAssignments";
