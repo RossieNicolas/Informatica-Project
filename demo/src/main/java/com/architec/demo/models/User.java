@@ -3,7 +3,7 @@ package com.architec.demo.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name="users")
+@Table(name = "users")
 public class User {
     @Id
     @Column(name = "user_id")

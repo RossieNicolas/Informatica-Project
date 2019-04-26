@@ -7,6 +7,7 @@ import com.architec.demo.repositories.TagRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -44,4 +45,21 @@ public class AssignmentController {
         return assignmentRepo.save(assignment);
     }
 
+    private AssignmentRepository AssignmentRepo;
+
+
+    private List<Assignment> fiches;
+
+    @GetMapping("/error")
+    public String error() {
+        return "error";
+    }
+
+    @GetMapping("/allassignments")
+    public String getAllAssingments(Model model) {
+        fiches = AssignmentRepo.findAll();
+        model.addAttribute("assignments", fiches);
+
+        return "listAllAssignments";
+    }
 }
