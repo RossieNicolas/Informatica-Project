@@ -13,13 +13,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-public class AssignmentController {
+public class MyAssignmentController {
 
     @Autowired
     private AssignmentRepository assignmentRepository;
-
-    @Autowired
-    private UserRepository userRepository;
 
     @RequestMapping(value = "/myassignments", method = RequestMethod.GET)
     public String assignments(Model model) {
