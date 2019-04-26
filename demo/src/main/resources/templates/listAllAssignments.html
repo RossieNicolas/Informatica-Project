@@ -2,14 +2,12 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>AddTagForm</title>
+    <title>Alle opdrachten</title>
     <link rel="stylesheet" th:href="@{/css/APcss2.css}">
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
-<body>
-<div class="background">
-
-    <header>
+<body class="background">
+<header>
         <div class="nav-main navbackground">
             <div class="container">
                 <div class="wrap-all col-xs-12">
@@ -69,44 +67,51 @@
             </div>
         </div>
     </header>
-    <div class="block">
-        <section class="find-edu card">
-            <div class="container ">
-                <div class="wrap-all col-xs-12 ">
-                    <h2>Tag toevoegen</h2>
-                    <form th:action='@{/tag}' method='POST'>
-                        <label for='tag'>Tag: </label>
-                        <input type='text' name='tag_name' id='tag' maxlength="50" placeholder="tagnaam">
-                        <br/><br />
-                        <label for='summary'>Beschrijving: </label>
-                        <input type='text' name='tag_description' id='summary' maxlength="250"
-                               placeholder="korte beschrijving">
-                        <br/>
-                        <input type='submit' value='Voeg toe' class="button" onclick='submission()'>
 
-                    </form>
-                </div>
-            </div>
-        </section>
-    </div>
 
-</div>
-<footer>
-    <div class="footer-bot">
-        <div class="container">
-            <div class="left col-sm-6 col-xs-12">
-                <p>Ontworpen door studenten Toegepaste Informatica</p>
-            </div>
-            <div class="right col-sm-6 col-xs-12">
-                <p>© 2019 All rights reserved.</p>
-            </div>
+		
+		<div class="container ">
+			<h2 class = "extra">Alle opdrachten</h2>
         </div>
-    </div>
-</footer>
-<script>
-    function submission(){
-        return alert("tag toegevoegd");
-    }
-</script>
-</body>
-</html>
+		<div id='overview'>
+			<table>
+				<tr>
+					<th></th>
+					<th>Nr</th>
+					<th>Opdrachtgever</th>
+					<th>Type</th>
+					<th>Taak</th>
+					<th>Begin</th>
+					<th>Einde</th>
+					<th>Gevalideerd</th>
+					<th>Volzet</th>
+				</tr>
+				<tr th:each="a : ${assignments}" class="tablebackground">
+					<td><input type="submit" value="Bewerk" class = "button"><br><br><input type="submit" value="Verwijder" class="button"></td>
+					<td th:text="${a.getAssignmentId()}"></td>
+					<td th:text="${a.getAssignerUserId()}"></td>
+					<td th:text="${a.getType()}"></td>
+					<td th:text="${a.getTask()}" class = "cell"></td>
+					<td th:text="${a.getStartDate()}"></td>
+					<td th:text="${a.getEndDate()}"></td>
+					<td th:text="${a.isValidated()}"></td>
+					<td th:text="${a.isArchived()}"></td>
+				</tr>
+			</table>
+		</div>
+
+
+		<footer>
+			<div class="footer-bot">
+				<div class="container">
+					<div class="left col-sm-6 col-xs-12">
+						<p>Ontworpen door studenten Toegepaste Informatica</p>
+					</div>
+					<div class="right col-sm-6 col-xs-12">
+						<p>© 2019 All rights reserved.</p>
+					</div>
+				</div>
+			</div>
+		</footer>
+	</body>
+	</html>
