@@ -1,6 +1,7 @@
 package com.architec.demo.models;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "assignments")
@@ -28,9 +29,11 @@ public class Assignment {
 	private int maxStudents;
 
 	@Column(name = "start_date", nullable = false)
-	private String startDate; // todo date
+//    @Temporal(TemporalType.DATE)
+	private String startDate;
 
 	@Column(name = "end_date", nullable = false)
+//    @Temporal(TemporalType.DATE)
 	private String endDate;
 
 	@Column(name = "archived", nullable = false)
@@ -51,7 +54,7 @@ public class Assignment {
 	}
 
 	public Assignment(String title, String type, String task, int amountHours, int amountStudents, int maxStudents,
-			String startDate, String endDate, boolean archived, boolean validated, String extraInfo,
+                      String startDate, String endDate, boolean archived, boolean validated, String extraInfo,
 			User assignerUserId) {
 		this.title = title;
 		this.type = type;
