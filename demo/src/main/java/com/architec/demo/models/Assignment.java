@@ -1,4 +1,4 @@
-package com.architec.demo.jpa;
+package com.architec.demo.models;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
