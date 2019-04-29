@@ -266,6 +266,36 @@ label {
   clear: both;
 }
 
+p {
+	margin: 0 0 5px
+}
+.alert {
+	padding: 20px;
+	background-color: #00ff00;
+	color: white;
+	margin-left: 8.7%;
+	margin-right: 8.7%;
+}
+
+.closebtn {
+	margin-left: 15px;
+	color: white;
+	font-weight: bold;
+	float: right;
+	font-size: 22px;
+	line-height: 20px;
+	cursor: pointer;
+	transition: 0.3s;
+
+}
+
+.closebtn:hover {
+	color: black;
+}
+#panel {
+	display: none;
+}
+
 
 
 

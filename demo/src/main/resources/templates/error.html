@@ -7,66 +7,66 @@
     <link rel="stylesheet" href="APcss2.css">
 </head>
 <body class="background">
-    <header>
-        <div class="nav-main navbackground">
-            <div class="container">
-                <div class="wrap-all col-xs-12">
-                    <div class="left">
-                        <a class="logo" href="">
-                            <img src="logo-ap.svg">
-                        </a>
-                    </div>
-                    <div class="right">
-                        <div class="region-header-menu">
-                            <nav>
-                                <ul class="nav">
-                                    <li>
+<header>
+    <div class="nav-main navbackground">
+        <div class="container">
+            <div class="wrap-all col-xs-12">
+                <div class="left">
+                    <a class="logo" href="/">
+                        <img th:src="@{/images/logo-ap.svg}">
+                    </a>
+                </div>
+                <div class="right">
+                    <div class="region-header-menu">
+                        <nav>
+                            <ul class="nav">
+                                <li>
                                     <div class="dropdown dropdownleft">
                                         <span>Opdrachten</span>
                                         <div class="dropdown-content">
-                                            <a href="">Lopende taken</a>
-                                            <a href="">Taak toevoegen</a>
-                                            <a href="">Mijn taken</a>
+                                            <a href="/allassignments">Lopende taken</a>
+                                            <a href="/assignment">Taak toevoegen</a>
+                                            <a href="/myassignments">Mijn taken</a>
                                             <a href="">Taak bewerken</a>
                                         </div>
                                     </div>
-                                    </li>
-                                    <li>
-                                        <div class="dropdown">
-                                            <span>Profiel</span>
-                                            <div class="dropdown-content">
-                                                <a href="">Mijn profiel</a>
-                                                <a href="">Mijn portfolio</a>
-                                                <a href="">Portfolios</a>
-                                            </div>
+                                </li>
+                                <li>
+                                    <div class="dropdown">
+                                        <span>Profiel</span>
+                                        <div class="dropdown-content">
+                                            <a href="">Mijn profiel</a>
+                                            <a href="">Mijn portfolio</a>
+                                            <a href="">Portfolios</a>
                                         </div>
-                                    </li>
-                                    <li>
-                                        <a href="">
-                                            <span>Documentatie</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <div class="dropdown">
-                                            <span>Coördinator</span>
-                                            <div class="dropdown-content">
-                                                <a href="">Tag toevoegen</a>
-                                                <a href="">Tag bewerken</a>
-                                                <a href="">Archief</a>
-                                            </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <span>Documentatie</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <div class="dropdown">
+                                        <span>Coördinator</span>
+                                        <div class="dropdown-content">
+                                            <a href="/tag">Tag toevoegen</a>
+                                            <a href="">Tag bewerken</a>
+                                            <a href="">Archief</a>
                                         </div>
-                                    </li>
+                                    </div>
+                                </li>
 
-                                </ul>
-                            </nav>
-
-                        </div>
+                            </ul>
+                        </nav>
 
                     </div>
+
                 </div>
             </div>
         </div>
-    </header>
+    </div>
+</header>
 <div class="block">
     <div class="container ">
         <h2>Er ging iets fout<h2>

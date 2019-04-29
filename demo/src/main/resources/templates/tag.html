@@ -26,7 +26,7 @@
                                         <div class="dropdown dropdownleft">
                                             <span>Opdrachten</span>
                                             <div class="dropdown-content">
-                                                <a href="/assignments">Lopende taken</a>
+                                                <a href="/allassignments">Lopende taken</a>
                                                 <a href="/assignment">Taak toevoegen</a>
                                                 <a href="/myassignments">Mijn taken</a>
                                                 <a href="">Taak bewerken</a>
@@ -70,7 +70,7 @@
         </div>
     </header>
     <div class="block">
-        <section class="find-edu card">
+        <section class="find-edu">
             <div class="container ">
                 <div class="wrap-all col-xs-12 ">
                     <h2>Tag toevoegen</h2>
@@ -86,6 +86,10 @@
 
                     </form>
                 </div>
+            </div>
+            <div class="alert" id="panel">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                Tag toegevoegd.
             </div>
         </section>
     </div>
@@ -105,7 +109,7 @@
 </footer>
 <script>
     function submission(){
-        return alert("tag toegevoegd");
+        document.getElementById("panel").style.display = "block";
     }
 </script>
 </body>
