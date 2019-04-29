@@ -21,10 +21,13 @@ public class MyAssignmentController {
     @RequestMapping(value = "/myassignments", method = RequestMethod.GET)
     public String assignments(Model model) {
 
-        //List<Assignment> myAssignments = assignmentRepository.findByAssignerUserId();
         List<Assignment> assignments = assignmentRepository.findAll();
+        List<Assignment> filter = assignmentRepository.findByMaxStudents(2);
+        List<Assignment> users = assignmentRepository.findByAssignerUserId(1);
 
         model.addAttribute("assignments", assignments);
+        model.addAttribute("filter", filter);
+        model.addAttribute("users", users);
         //model.addAttribute("myAssignments", myAssignments);
         return "myassignments";
     }

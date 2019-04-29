@@ -85,6 +85,30 @@
 
             </tr>
         </table>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Titel</th>
+        </tr>
+        <tr th:each="f : ${filter}" class = "tablebackground">
+            <td th:text="${f.getAssignmentId()}"></td>
+            <td th:text="${f.getTitle()}"></td>
+
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Titel</th>
+        </tr>
+        <tr th:each="u : ${users}" class = "tablebackground">
+            <td th:text="${u.getAssignmentId()}"></td>
+            <td th:text="${u.getTitle()}"></td>
+
+        </tr>
+    </table>
 </div>
 
 <footer>
