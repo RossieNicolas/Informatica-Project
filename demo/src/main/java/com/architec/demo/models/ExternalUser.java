@@ -13,8 +13,14 @@ public class ExternalUser {
     @Column(name = "company", nullable = false)
     private String company;
 
-    @Column(name = "extra_info", nullable = false)
-    private String extraInfo;
+    @Column(name = "adress", nullable = false)
+    private String adress;
+
+    @Column(name = "postalcode", nullable = false)
+    private String postal;
+
+    @Column(name = "city", nullable = false)
+    private String city;
 
     @Column(name = "password", nullable = false)
     private String password;
@@ -27,9 +33,44 @@ public class ExternalUser {
     public ExternalUser() {
     }
 
-    public ExternalUser(String company, String extraInfo, String password) {
+    public ExternalUser(String company, String adress, String postal, String city, String password) {
         this.company = company;
-        this.extraInfo = extraInfo;
+        this.adress = adress;
+        this.postal = postal;
+        this.city = city;
         this.password = password;
     }
+
+    public long getExternId() {
+        return externId;
+    }
+
+    public void setExternId(long externId) {
+        this.externId = externId;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public User getUserId() {
+        return userId;
+    }
+
+    public void setUserId(User userId) {
+        this.userId = userId;
+    }
+
 }

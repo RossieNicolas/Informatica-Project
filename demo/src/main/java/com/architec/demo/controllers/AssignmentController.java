@@ -30,21 +30,18 @@ public class AssignmentController {
     }
 
     @RequestMapping(value = "/assignment", method = RequestMethod.GET)
-    public String tag(Model model) /*throws SQLException*/ {
+    public String tag(Model model) /* throws SQLException */ {
 
         List<Tag> updatetag = tagRepo.findAll();
-
 
         model.addAttribute("updatetag", updatetag);
         return "assignment";
     }
 
-
     @PostMapping("/assignment")
     public Assignment createAssignment(@Valid Assignment assignment) {
         return assignmentRepo.save(assignment);
     }
-
 
     private List<Assignment> fiches;
 

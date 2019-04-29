@@ -1,6 +1,8 @@
-<html lang="en"><head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
-    <title>Profiel aanmaken</title>
+    <title>Crediti - Log In</title>
     <link rel="stylesheet" th:href="@{/css/APcss2.css}">
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
@@ -11,7 +13,7 @@
                 <div class="wrap-all col-xs-12">
                     <div class="left">
                         <a class="logo" href="">
-                        <img th:src="@{/images/logo-ap.svg}">
+                            <img src="logo-ap.svg">
                         </a>
                     </div>
                     <div class="right">
@@ -21,11 +23,11 @@
                                     <li>
                                     <div class="dropdown dropdownleft">
                                         <span>Opdrachten</span>
-                                        <div class="dropdown-content">
-                                            <a href="/allassignments">Lopende taken</a>
-                                            <a href="/assignment">Taak toevoegen</a>
-                                            <a href="/myassignments">Mijn taken</a>
-                                            <a href="">Taak bewerken</a>
+                                            <div class="dropdown-content">
+                                                <a href="/assignments">Lopende taken</a>
+                                                <a href="/assignment">Taak toevoegen</a>
+                                                <a href="/myassignments">Mijn taken</a>
+                                                <a href="">Taak bewerken</a>
                                         </div>
                                     </div>
                                     </li>
@@ -68,38 +70,24 @@
 <div class="block">
     <div class="container ">
         <div class="wrap-all col-xs-12 ">
-        <h2 class="extra">Profiel aanmaken</h2>
-        <form th:action='@{/createexternal}' method='POST'>
-			<label for="name">Naam:</label>
-			<input name="name" type="text"><br><br>
-
-			<label for="firstName">Voornaam:</label>
-			<input name="firstName" type="text"><br><br>
-
-			<label for="nameCompany">Naam bedrijf:</label>
-			<input name="company" type="text"><br><br>
-
-			<label for="adress">Adres:</label>
-			<input name="adress" type="text"><br><br>
-
-			<label for="postal">Postcode:</label>
-			<input name="postal" type="text"><br><br>
-
-			<label for="city">Gemeente:</label>
-			<input name="city" type="text"><br><br>
-
-			<label for="mail">E-mail:</label>
-			<input name="mail" type="email"><br><br>
-
-			<label for="password">Wachtwoord:</label>
-			<input name="password" type="password"><br><br>
-
-			<label></label>
-			<input value="Registreer" type="SUBMIT" class="button">
-		</form>
+        <h2 class="extra">Log In</h2>
+        <form>
+    <label for='eMail'>Email: </label>
+    <input type='email' name='eMailInput' id='eMail'>
+    <br/><br/>
+    <label for='password'>Wachtwoord: </label>
+    <input type='password' name='passwordInput' id='password'>
+    <br/><br>
+    <input type='SUBMIT' value='Login' class='button'>
+	<br><br>
+    <a href="">Wachtwoord vergeten?</a>
+    <br/>
+    <p>Nieuwe gebruiker? Klik <a href="">hier</a> om u te registreren.</p>
+</form>
         </div>
     </div>
 </div>
+<div style="height: 37%"></div>
     <footer>
         <div class="footer-bot">
             <div class="container">
@@ -112,5 +100,5 @@
             </div>
         </div>
     </footer>
-
-</body></html>
+</body>
+</html>
