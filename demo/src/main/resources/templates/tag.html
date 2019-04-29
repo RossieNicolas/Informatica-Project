@@ -26,7 +26,7 @@
                                         <div class="dropdown dropdownleft">
                                             <span>Opdrachten</span>
                                             <div class="dropdown-content">
-                                                <a href="/assignments">Lopende taken</a>
+                                                <a href="/allassignments">Lopende taken</a>
                                                 <a href="/assignment">Taak toevoegen</a>
                                                 <a href="/myassignments">Mijn taken</a>
                                                 <a href="">Taak bewerken</a>
@@ -74,7 +74,7 @@
             <div class="container ">
                 <div class="wrap-all col-xs-12 ">
                     <h2>Tag toevoegen</h2>
-                    <form th:action='@{/tag}' method='POST' class="standard-form">
+                    <form th:action='@{/tag}' method='POST'>
                         <label for='tag'>Tag: </label>
                         <input type='text' name='tag_name' id='tag' maxlength="50" placeholder="tagnaam">
                         <br/><br />
