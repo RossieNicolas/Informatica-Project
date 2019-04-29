@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Crediti - Opdracht bewerken</title>
+    <link rel="stylesheet" th:href="@{/css/APcss2.css}">
+    <link rel="stylesheet" th:href="@{/css/APcss3.css}">
+</head>
+<body>
+<div class="background">
+
+    <header>
+        <div class="nav-main navbackground">
+            <div class="container">
+                <div class="wrap-all col-xs-12">
+                    <div class="left">
+                        <a class="logo" href="/">
+                            <img th:src="@{/images/logo-ap.svg}">
+                        </a>
+                    </div>
+                    <div class="right">
+                        <div class="region-header-menu">
+                            <nav>
+                                <ul class="nav">
+                                    <li>
+                                        <div class="dropdown dropdownleft">
+                                            <span>Opdrachten</span>
+                                            <div class="dropdown-content">
+                                                <a href="/allassignments">Lopende taken</a>
+                                                <a href="/assignment">Taak toevoegen</a>
+                                                <a href="/myassignments">Mijn taken</a>
+                                                <a href="">Taak bewerken</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="dropdown">
+                                            <span>Profiel</span>
+                                            <div class="dropdown-content">
+                                                <a href="">Mijn profiel</a>
+                                                <a href="">Mijn portfolio</a>
+                                                <a href="">Portfolios</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <a href="">
+                                            <span>Documentatie</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="dropdown">
+                                            <span>Coördinator</span>
+                                            <div class="dropdown-content">
+                                                <a href="/tag">Tag toevoegen</a>
+                                                <a href="">Tag bewerken</a>
+                                                <a href="">Archief</a>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                </ul>
+                            </nav>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="block">
+        <section class="find-edu">
+            <div class="container ">
+                <div class="wrap-all col-xs-12 ">
+                    <h2>Opdracht bewerken</h2>
+
+
+
+                    <form th:each="a: ${externalUsers}" class="standard-form">
+                        <fieldset disabled="disabled" id="externalInfo">
+                            <label for='lastname'>Naam: </label>
+                            <input type='text' name='lastname' id='lastname' maxlength="50" placeholder="lastname" th:value="*{a.getLastname()}">
+                            <br/>
+                            <label for='firstname'>Voornaam: </label>
+                            <input type='text' name='firstname' id='firstname' maxlength="50" placeholder="firstname" th:value="*{a.getFirstname()}">
+                            <br/>
+                            <label for='company'>Bedrijf: </label>
+                            <input type='text' name='company' id='company' maxlength="50" placeholder="company"  th:value="*{a.getCompany()}">
+                            <br/>
+                            <label for='phone'>Telefoonnummer: </label>
+                            <input type='text' name='phone' id='phone' maxlength="50" placeholder="phone"  th:value="*{a.getPhone()}">
+                            <br/>
+                            <label for='adress'>Adres: </label>
+                            <input type='text' name='adress' id='adress' maxlength="50" placeholder="adress"  th:value="*{a.getAddress()}">
+                            <br/>
+                            <label for='email'>Email: </label>
+                            <input type='text' name='email' id='email' maxlength="50" placeholder="email" th:value="*{a.getEmail()}">
+                            <br/>
+                            <label for='password'>Wachtwoord: </label>
+                            <input type='text' name='password' id='password' maxlength="50" placeholder="password" th:value="*{a.getPassword()}">
+                            <br/>
+                        </fieldset>
+                        <br/>
+                        <input type="button" value = "✏️PROFIEL BEWERKEN" class = "button" onclick="toggleForm();">&nbsp;&nbsp;&nbsp;<input type="submit" value = "💾 AANPASSINGEN BEWAREN" class="button" id="save" style="visibility: hidden;">
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+
+</div>
+<footer>
+    <div class="footer-bot">
+        <div class="container">
+            <div class="left col-sm-6 col-xs-12">
+                <p>Ontworpen door studenten Toegepaste Informatica</p>
+            </div>
+            <div class="right col-sm-6 col-xs-12">
+                <p>© 2019 All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+<script>
+    function toggleForm() {
+        document.getElementById('externalInfo').removeAttribute('disabled');
+        document.getElementById("save").style.visibility="visible";;
+    }
+</script>
+</body>
+</html>

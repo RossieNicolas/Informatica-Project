@@ -57,4 +57,21 @@ public class AssignmentController {
 
         return "listAllAssignments";
     }
+    @RequestMapping(value = "/updateassignment", method = RequestMethod.GET)
+    public String updateAssignment(Model model) {
+
+        List<Assignment> assignments = assignmentRepo.findByAssignmentId(1);
+
+        model.addAttribute("assignments", assignments);
+        return "updateAssignment";
+    }
+    @RequestMapping(value = "/updatemyassignment", method = RequestMethod.GET)
+    public String updateMyAssignment(Model model) {
+
+        List<Assignment> assignments = assignmentRepo.findByAssignmentId(1);
+
+        model.addAttribute("assignments", assignments);
+        return "updateMyAssignment";
+    }
+
 }
