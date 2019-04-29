@@ -9,7 +9,7 @@ public class Tag {
     @Column(name = "tag_id")
     private int tag_id;
 
-    @Column(name = "tag_name")
+    @Column(name = "tag_name", nullable = false)
     private String tag_name;
     @Column(name = "tag_description")
     private String tag_description;
