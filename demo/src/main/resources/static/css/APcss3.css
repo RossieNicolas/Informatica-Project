@@ -15146,3 +15146,8 @@ ul.meta2 li.twitter a:hover:before {
 	font-weight: 700;
 	font-size: 13px
 }
+
+#summary{
+	width: 600px;
+	height: 150px;
+}
