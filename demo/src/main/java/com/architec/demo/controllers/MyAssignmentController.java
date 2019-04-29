@@ -21,6 +21,7 @@ public class MyAssignmentController {
     @RequestMapping(value = "/myassignments", method = RequestMethod.GET)
     public String assignments(Model model) {
 
+        //List<Assignment> myAssignments = assignmentRepository.findByAssignerUserId();
         List<Assignment> assignments = assignmentRepository.findAll();
         List<Assignment> filter = assignmentRepository.findByMaxStudents(2);
         List<Assignment> users = assignmentRepository.findByAssignerUserId(1);

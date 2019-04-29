@@ -8,20 +8,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
-import java.sql.Connection;
-import java.sql.DriverManager;
 
 @Controller
 public class TagController {
     @Autowired
     TagRepo tagRepo;
+
     @RequestMapping("/tag")
     public String assignment() {
         return "tag";
     }
 
     @PostMapping("/tag")
-    public Tag createTag(@Valid Tag tag){
+    public Tag createTag(@Valid Tag tag) {
         return tagRepo.save(tag);
     }
 }

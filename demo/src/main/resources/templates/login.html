@@ -1,21 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AddTagForm</title>
+    <title>Crediti - Log In</title>
     <link rel="stylesheet" th:href="@{/css/APcss2.css}">
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
-<body>
-<div class="background">
-
+<body class="background">
     <header>
         <div class="nav-main navbackground">
             <div class="container">
                 <div class="wrap-all col-xs-12">
                     <div class="left">
-                        <a class="logo" href="/">
-                            <img th:src="@{/images/logo-ap.svg}">
+                        <a class="logo" href="">
+                            <img src="logo-ap.svg">
                         </a>
                     </div>
                     <div class="right">
@@ -23,15 +21,15 @@
                             <nav>
                                 <ul class="nav">
                                     <li>
-                                        <div class="dropdown dropdownleft">
-                                            <span>Opdrachten</span>
+                                    <div class="dropdown dropdownleft">
+                                        <span>Opdrachten</span>
                                             <div class="dropdown-content">
-                                                <a href="/allassignments">Lopende taken</a>
+                                                <a href="/assignments">Lopende taken</a>
                                                 <a href="/assignment">Taak toevoegen</a>
                                                 <a href="/myassignments">Mijn taken</a>
                                                 <a href="">Taak bewerken</a>
-                                            </div>
                                         </div>
+                                    </div>
                                     </li>
                                     <li>
                                         <div class="dropdown">
@@ -69,48 +67,38 @@
             </div>
         </div>
     </header>
-    <div class="block">
-        <section class="find-edu">
-            <div class="container ">
-                <div class="wrap-all col-xs-12 ">
-                    <h2>Tag toevoegen</h2>
-                    <form th:action='@{/tag}' method='POST'>
-                        <label for='tag'>Tag: </label>
-                        <input type='text' name='tag_name' id='tag' maxlength="50" placeholder="tagnaam">
-                        <br/><br />
-                        <label for='summary'>Beschrijving: </label>
-                        <input type='text' name='tag_description' id='summary' maxlength="250"
-                               placeholder="korte beschrijving">
-                        <br/>
-                        <input type='submit' value='Voeg toe' class="button" onclick='submission()'>
-
-                    </form>
-                </div>
-            </div>
-            <div class="alert" id="panel">
-                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-                Tag toegevoegd.
-            </div>
-        </section>
-    </div>
-
-</div>
-<footer>
-    <div class="footer-bot">
-        <div class="container">
-            <div class="left col-sm-6 col-xs-12">
-                <p>Ontworpen door studenten Toegepaste Informatica</p>
-            </div>
-            <div class="right col-sm-6 col-xs-12">
-                <p>© 2019 All rights reserved.</p>
-            </div>
+<div class="block">
+    <div class="container ">
+        <div class="wrap-all col-xs-12 ">
+        <h2 class="extra">Log In</h2>
+        <form>
+    <label for='eMail'>Email: </label>
+    <input type='email' name='eMailInput' id='eMail'>
+    <br/><br/>
+    <label for='password'>Wachtwoord: </label>
+    <input type='password' name='passwordInput' id='password'>
+    <br/><br>
+    <input type='SUBMIT' value='Login' class='button'>
+	<br><br>
+    <a href="">Wachtwoord vergeten?</a>
+    <br/>
+    <p>Nieuwe gebruiker? Klik <a href="">hier</a> om u te registreren.</p>
+</form>
         </div>
     </div>
-</footer>
-<script>
-    function submission(){
-        document.getElementById("panel").style.display = "block";
-    }
-</script>
+</div>
+<div style="height: 37%"></div>
+    <footer>
+        <div class="footer-bot">
+            <div class="container">
+                <div class="left col-sm-6 col-xs-12">
+                    <p>Ontworpen door studenten Toegepaste Informatica</p>
+                </div>
+                <div class="right col-sm-6 col-xs-12">
+                    <p>© 2019 All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

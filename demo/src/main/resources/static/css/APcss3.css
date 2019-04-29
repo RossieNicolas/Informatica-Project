@@ -1593,7 +1593,6 @@ ul.opleidingen-zoek-menu li a:before,
 ul.opleidingen-zoek-menu li.event a>span:before,
 ul.social>li>a:before {
 	font-family: icomoon!important;
-	speak: none;
 	font-style: normal;
 	font-weight: 400;
 	font-variant: normal;
@@ -1623,7 +1622,6 @@ ul.labels>li>a:before,
 ul.social>li.instagram a:before,
 ul.social>li.linkedin a:before {
 	font-family: icomoon2!important;
-	speak: none;
 	font-style: normal;
 	font-weight: 400;
 	font-variant: normal;
@@ -1645,7 +1643,6 @@ ul.social>li.linkedin a:before {
 .opleidingen .filters-multi-wrap ul.filters>li input[type=checkbox]+label.icon>span:before,
 .opleidingen .view-grid .content ul.results>li .header ul.icons>li>span:before {
 	font-family: icomoon3!important;
-	speak: none;
 	font-style: normal;
 	font-weight: 400;
 	font-variant: normal;
@@ -2417,10 +2414,6 @@ ul li {
 	z-index: 0;
 	-webkit-backface-visibility: hidden;
 	backface-visibility: hidden
-}
-
-.swiper-container-coverflow .swiper-wrapper {
-	-ms-perspective: 1200px
 }
 
 input[type=text],
@@ -5625,7 +5618,6 @@ ul.info-links li a:after {
 .testimonials ul.swiper-wrapper li.swiper-slide .pic-wrap {
 	position: relative;
 	display: inline-block;
-	float: left;
 	width: 35%;
 	height: inherit
 }
@@ -5669,7 +5661,6 @@ ul.info-links li a:after {
 .testimonials ul.swiper-wrapper li.swiper-slide .txt-wrap {
 	position: relative;
 	display: inline-block;
-	float: left;
 	width: 65%;
 	height: inherit;
 	z-index: 3
@@ -5759,7 +5750,6 @@ ul.info-links li a:after {
 	display: inline-block;
 	width: 50%;
 	height: 100%;
-	float: left
 }
 
 @media (max-width:1023px) {
@@ -7529,7 +7519,6 @@ ul.social>li.linkedin a:before {
 	display: inline-block;
 	width: 20%;
 	padding-bottom: 18%;
-	float: left;
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: cover
@@ -8520,7 +8509,6 @@ ul.social>li.linkedin a:before {
 }
 
 .opleidingen .filters-multi-wrap>.header a.reset {
-	float: right;
 	display: inline-block;
 	font-family: league-gothic, Helvetica, Arial, sans-serif;
 	font-weight: 400;
@@ -11328,7 +11316,6 @@ form.standard-form textarea {
 	width: 40%;
 	border: 2px solid transparent;
 	border-radius: 6px;
-	background-color: #f0f0f0;
 	height: 50px;
 	font-family: foco, Helvetica, Arial, sans-serif;
 	font-weight: 300;
@@ -12657,7 +12644,6 @@ section.gallery-overlay ul.gallery li {
 }
 
 section.gallery-overlay ul.gallery>li {
-	float: left;
 	position: relative;
 	display: inline-block;
 	padding-top: 100px;
@@ -14599,7 +14585,6 @@ ul li:before {
 	display: inline-block;
 	height: 50px;
 	margin-left: -3px;
-	float: right;
 	margin-top: 0;
 	width: 15%
 }
@@ -14857,7 +14842,7 @@ ul.meta2 li.twitter a:hover:before {
 }
 
 .sidebar .container .webform-submission-form fieldset {
-	boder: 1px solid #e2e2e2
+	border: 1px solid #e2e2e2
 }
 
 .aparts-button {

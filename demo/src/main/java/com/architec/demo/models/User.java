@@ -12,10 +12,13 @@ public class User {
 
     @Column(name = "firstname", nullable = false)
     private String firstname;
+
     @Column(name = "lastname", nullable = false)
     private String lastname;
+
     @Column(name = "email", nullable = false)
     private String email;
+
     @Column(name = "role", nullable = false)
     private String role;
 

@@ -1,7 +1,6 @@
 package com.architec.demo.models;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "assignments")
@@ -29,11 +28,11 @@ public class Assignment {
 	private int maxStudents;
 
 	@Column(name = "start_date", nullable = false)
-//    @Temporal(TemporalType.DATE)
+	// @Temporal(TemporalType.DATE)
 	private String startDate;
 
 	@Column(name = "end_date", nullable = false)
-//    @Temporal(TemporalType.DATE)
+	// @Temporal(TemporalType.DATE)
 	private String endDate;
 
 	@Column(name = "archived", nullable = false)
@@ -45,17 +44,17 @@ public class Assignment {
 	@Column(name = "extra_info", nullable = false)
 	private String extraInfo;
 
-//	@ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
-//			CascadeType.REMOVE })
-//	@JoinColumn(name = "assigner_user_id", referencedColumnName = "user_id")
-	private long assignerUserId;
+	@ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
+			CascadeType.REMOVE })
+	@JoinColumn(name = "assigner_user_id", referencedColumnName = "user_id")
+	private User assignerUserId;
 
 	public Assignment() {
 	}
 
 	public Assignment(String title, String type, String task, int amountHours, int amountStudents, int maxStudents,
-                      String startDate, String endDate, boolean archived, boolean validated, String extraInfo,
-			long assignerUserId) {
+			String startDate, String endDate, boolean archived, boolean validated, String extraInfo,
+			User assignerUserId) {
 		this.title = title;
 		this.type = type;
 		this.task = task;
@@ -118,6 +117,9 @@ public class Assignment {
 		return extraInfo;
 	}
 
+	public long getAssignerUserId() {
+		return assignerUserId.getUserId();
+	}
 
 	public void setAssignmentId(long assignmentId) {
 		this.assignmentId = assignmentId;
@@ -167,11 +169,7 @@ public class Assignment {
 		this.extraInfo = extraInfo;
 	}
 
-	public long getAssignerUserId() {
-		return assignerUserId;
-	}
-
-	public void setAssignerUserId(long assignerUserId) {
+	public void setAssignerUserId(User assignerUserId) {
 		this.assignerUserId = assignerUserId;
 	}
 }
