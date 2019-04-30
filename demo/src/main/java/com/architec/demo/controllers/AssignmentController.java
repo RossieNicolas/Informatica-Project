@@ -7,10 +7,7 @@ import com.architec.demo.repositories.TagRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -72,6 +69,18 @@ public class AssignmentController {
 
         model.addAttribute("assignments", assignments);
         return "updateMyAssignment";
+    }
+    @PostMapping("/updateassignment")
+    public String updateAssignment(@Valid Assignment assignment) {
+
+        assignmentRepo.save(assignment);
+        return "listAllAssignments";
+    }
+    @PostMapping("/updatemyassignment")
+    public String updateMyAssignment(@Valid Assignment assignment) {
+
+        assignmentRepo.save(assignment);
+        return "listAllAssignments";
     }
 
 }

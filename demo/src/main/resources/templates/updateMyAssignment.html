@@ -6,109 +6,120 @@
     <link rel="stylesheet" th:href="@{/css/APcss2.css}">
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
-<body>
-<div class="background">
-
-    <header>
-        <div class="nav-main navbackground">
-            <div class="container">
-                <div class="wrap-all col-xs-12">
-                    <div class="left">
-                        <a class="logo" href="/">
-                            <img th:src="@{/images/logo-ap.svg}">
-                        </a>
-                    </div>
-                    <div class="right">
-                        <div class="region-header-menu">
-                            <nav>
-                                <ul class="nav">
-                                    <li>
-                                        <div class="dropdown dropdownleft">
-                                            <span>Opdrachten</span>
-                                            <div class="dropdown-content">
-                                                <a href="/allassignments">Lopende taken</a>
-                                                <a href="/assignment">Taak toevoegen</a>
-                                                <a href="/myassignments">Mijn taken</a>
-                                                <a href="">Taak bewerken</a>
-                                            </div>
+<body class="background">
+<header>
+    <div class="nav-main navbackground">
+        <div class="container">
+            <div class="wrap-all col-xs-12">
+                <div class="left">
+                    <a class="logo" href="/">
+                        <img th:src="@{/images/logo-ap.svg}">
+                    </a>
+                </div>
+                <div class="right">
+                    <div class="region-header-menu">
+                        <nav>
+                            <ul class="nav">
+                                <li>
+                                    <div class="dropdown dropdownleft">
+                                        <span>Opdrachten</span>
+                                        <div class="dropdown-content">
+                                            <a href="/allassignments">Lopende taken</a>
+                                            <a href="/assignment">Taak toevoegen</a>
+                                            <a href="/myassignments">Mijn taken</a>
+                                            <a href="">Taak bewerken</a>
                                         </div>
-                                    </li>
-                                    <li>
-                                        <div class="dropdown">
-                                            <span>Profiel</span>
-                                            <div class="dropdown-content">
-                                                <a href="">Mijn profiel</a>
-                                                <a href="">Mijn portfolio</a>
-                                                <a href="">Portfolios</a>
-                                            </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="dropdown">
+                                        <span>Profiel</span>
+                                        <div class="dropdown-content">
+                                            <a href="">Mijn profiel</a>
+                                            <a href="">Mijn portfolio</a>
+                                            <a href="">Portfolios</a>
                                         </div>
-                                    </li>
-                                    <li>
-                                        <a href="">
-                                            <span>Documentatie</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <div class="dropdown">
-                                            <span>Coördinator</span>
-                                            <div class="dropdown-content">
-                                                <a href="/tag">Tag toevoegen</a>
-                                                <a href="">Tag bewerken</a>
-                                                <a href="">Archief</a>
-                                            </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <span>Documentatie</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <div class="dropdown">
+                                        <span>Coördinator</span>
+                                        <div class="dropdown-content">
+                                            <a href="/tag">Tag toevoegen</a>
+                                            <a href="">Tag bewerken</a>
+                                            <a href="">Archief</a>
                                         </div>
-                                    </li>
+                                    </div>
+                                </li>
 
-                                </ul>
-                            </nav>
-
-                        </div>
+                            </ul>
+                        </nav>
 
                     </div>
+
                 </div>
             </div>
         </div>
-    </header>
-    <div class="block">
-        <section class="find-edu">
-            <div class="container ">
-                <div class="wrap-all col-xs-12 ">
-                    <h2>Opdracht bewerken</h2>
-
-
-
-                    <form th:each="a: ${externalUsers}" class="standard-form">
-                        <fieldset disabled="disabled" id="externalInfo">
-                            <label for='lastname'>Naam: </label>
-                            <input type='text' name='lastname' id='lastname' maxlength="50" placeholder="lastname" th:value="*{a.getLastname()}">
-                            <br/>
-                            <label for='firstname'>Voornaam: </label>
-                            <input type='text' name='firstname' id='firstname' maxlength="50" placeholder="firstname" th:value="*{a.getFirstname()}">
-                            <br/>
-                            <label for='company'>Bedrijf: </label>
-                            <input type='text' name='company' id='company' maxlength="50" placeholder="company"  th:value="*{a.getCompany()}">
-                            <br/>
-                            <label for='phone'>Telefoonnummer: </label>
-                            <input type='text' name='phone' id='phone' maxlength="50" placeholder="phone"  th:value="*{a.getPhone()}">
-                            <br/>
-                            <label for='adress'>Adres: </label>
-                            <input type='text' name='adress' id='adress' maxlength="50" placeholder="adress"  th:value="*{a.getAddress()}">
-                            <br/>
-                            <label for='email'>Email: </label>
-                            <input type='text' name='email' id='email' maxlength="50" placeholder="email" th:value="*{a.getEmail()}">
-                            <br/>
-                            <label for='password'>Wachtwoord: </label>
-                            <input type='text' name='password' id='password' maxlength="50" placeholder="password" th:value="*{a.getPassword()}">
-                            <br/>
-                        </fieldset>
-                        <br/>
-                        <input type="button" value = "✏️PROFIEL BEWERKEN" class = "button" onclick="toggleForm();">&nbsp;&nbsp;&nbsp;<input type="submit" value = "💾 AANPASSINGEN BEWAREN" class="button" id="save" style="visibility: hidden;">
-                    </form>
-                </div>
-            </div>
-        </section>
     </div>
+</header>
+<div class="block">
+    <section class="find-edu">
+        <div class="container ">
+            <div class="wrap-all col-xs-12 ">
+                <h2>Opdracht bewerken</h2>
 
+
+
+                <form th:each="a: ${assignments}" class="standard-form">
+                    <fieldset disabled="disabled" id="assignmentInfo">
+                        <label for="title">Titel:</label>
+                        <input name="title" id="title" type="text" th:value="*{a.getTitle()}"><br>
+
+                        <label for="type">Type:</label>
+                        <input name="type" id="type" type="text" th:value="*{a.getType()}"><br>
+
+                        <label for="summary">Omschrijving opdracht:</label>
+                        <input name="summary" id="summary" th:value="*{a.getTask()}"><br>
+
+                        <label for="start_date">Begindatum:</label><br>
+                        <input name="start_date" id="start_date" type="date" th:value="*{a.getStartDate()}"><br>
+
+                        <label for="end_date">Einddatum:</label><br>
+                        <input name="end_date" id="end_date" type="date" th:value="*{a.getEndDate()}"><br><br>
+
+                        <label for="totaal_uur">Totaal uur:</label>
+                        <input name="totaal_uur" id="totaal_uur" type="text" th:value="*{a.getAmountHours()}"><br>
+
+                        <label for="max_students">Max Studenten:</label>
+                        <input name="max_students" id="max_students" type="text" th:value="*{a.getMaxStudents()}"><br>
+
+                        <table class="tags">
+                            <tr>
+                                <th>Tags</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <th:block th:each="tag : ${updatetag}">
+                                        <input type="checkbox"/>
+                                        <label th:text="${tag.getTag_name()}"></label>
+                                    </th:block>
+                                </td>
+                            </tr>
+                        </table>
+                    </fieldset>
+                    <br/>
+                    <input type="button" value = "✏️OPDRACHT BEWERKEN" class = "button" onclick="toggleForm();">
+                    &nbsp;&nbsp;&nbsp;
+                    <input type="submit" value = "💾 AANPASSINGEN BEWAREN" class="button" id="save" style="visibility: hidden;">
+                </form>
+            </div>
+        </div>
+    </section>
 </div>
 <footer>
     <div class="footer-bot">
@@ -124,7 +135,7 @@
 </footer>
 <script>
     function toggleForm() {
-        document.getElementById('externalInfo').removeAttribute('disabled');
+        document.getElementById('assignmentInfo').removeAttribute('disabled');
         document.getElementById("save").style.visibility="visible";;
     }
 </script>

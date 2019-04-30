@@ -12,5 +12,5 @@ import java.util.List;
 public interface AssignmentRepository extends JpaRepository<Assignment, Long> {
     List<Assignment> findByMaxStudents(int maxStudents);
     List<Assignment> findByAssignerUserId(long assignerUserId);
-    List<Assignment> findByAssignmentId(int assignmentId);
+    List<Assignment> findByAssignmentId(long assignmentId);
 }
