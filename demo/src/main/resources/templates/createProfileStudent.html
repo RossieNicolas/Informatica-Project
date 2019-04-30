@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html xmlns:th='http://www.thymeleaf.org'>
+<head>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>	
+    <link rel="stylesheet" th:href="@{/css/APcss3.css}">
+<title>Profiel aanmaken</title>
+</head>
+
+<body class="background">
+<header>
+        <div class="nav-main navbackground">
+            <div class="container">
+                <div class="wrap-all col-xs-12">
+                    <div class="left">
+                        <a class="logo" href="">
+                        <img th:src="@{/images/logo-ap.svg}">
+                        </a>
+                    </div>
+                    <div class="right">
+                        <div class="region-header-menu">
+                            <nav>
+                                <ul class="nav">
+                                    <li>
+                                    <div class="dropdown dropdownleft">
+                                        <span>Opdrachten</span>
+                                        <div class="dropdown-content">
+                                            <a href="">Lopende taken</a>
+                                            <a href="">Taak toevoegen</a>
+                                            <a href="">Mijn taken</a>
+                                            <a href="">Taak bewerken</a>
+                                        </div>
+                                    </div>
+                                    </li>
+                                    <li>
+                                        <div class="dropdown">
+                                            <span>Profiel</span>
+                                            <div class="dropdown-content">
+                                                <a href="">Mijn profiel</a>
+                                                <a href="">Mijn portfolio</a>
+                                                <a href="">Portfolios</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <a href="">
+                                            <span>Documentatie</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="dropdown">
+                                            <span>Coördinator</span>
+                                            <div class="dropdown-content">
+                                                <a href="">Tag toevoegen</a>
+                                                <a href="">Tag bewerken</a>
+                                                <a href="">Archief</a>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                </ul>
+                            </nav>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+		
+		<div class="container">
+			<h2 class="extra">Profiel</h2>
+			<form>
+				<label for='studentId' class="col-25 label">Studentennummer: </label>
+				<input type='text' name='studentIdInput' id='studentId' class="col-75 input" />
+				<br><br>
+				<label for='studentId'>Voornaam: </label>
+				<input type='text' name='firstnameInput' id='firstname'/>
+				<br><br>
+				<label for='studentId'>Achternaam: </label>
+				<input type='text' name='lastnameInput' id='lastname'/>
+				<br><br>
+				<label for='studentId'>E-mail: </label>
+				<input type='text' name='emailInput' id='email'/>
+				<br><br>
+				<label for='studentId'>GSM-nummer: </label>
+				<input type='text' name='gsmInput' id='gsm'/>
+				<br><br>
+				<label for='studentId'>Opleiding: </label>
+				<input type='text' name='opleidingInput' id='opleiding'/>
+				<br>
+				<br/>
+				<label></label>
+				<input type='SUBMIT' class="button" value='Profiel aanmaken'>
+			</form>
+		</div>
+	
+		
+		
+		<footer>
+			<div class="footer-bot">
+				<div class="container">
+					<div class="left col-sm-6 col-xs-12">
+						<p>Ontworpen door studenten Toegepaste Informatica</p>
+					</div>
+					<div class="right col-sm-6 col-xs-12">
+						<p>© 2019 All rights reserved.</p>
+					</div>
+				</div>
+			</div>
+		</footer>
+	</body>
+	</html>
