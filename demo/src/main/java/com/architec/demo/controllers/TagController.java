@@ -14,11 +14,13 @@ public class TagController {
     @Autowired
     TagRepo tagRepo;
 
+    // get the form to make a tag
     @RequestMapping("/tag")
     public String assignment() {
         return "tag";
     }
 
+    // save the tag in the database
     @PostMapping("/tag")
     public Tag createTag(@Valid Tag tag) {
         return tagRepo.save(tag);
