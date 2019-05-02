@@ -1,4 +1,4 @@
-package com.architec.demo;
+package com.architec.crediti;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;

@@ -1,7 +1,7 @@
-package com.architec.demo.controllers;
+package com.architec.crediti.controllers;
 
-import com.architec.demo.models.Tag;
-import com.architec.demo.repositories.TagRepo;
+import com.architec.crediti.models.Tag;
+import com.architec.crediti.repositories.TagRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;

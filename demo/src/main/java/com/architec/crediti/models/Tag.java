@@ -1,4 +1,4 @@
-package com.architec.demo.models;
+package com.architec.crediti.models;
 import javax.persistence.*;
 
 @Entity

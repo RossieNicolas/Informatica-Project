@@ -1,11 +1,9 @@
-package com.architec.demo.controllers;
+package com.architec.crediti.controllers;
 
-import javax.validation.Valid;
-
-import com.architec.demo.models.ExternalUser;
-import com.architec.demo.models.User;
-import com.architec.demo.repositories.ExternalUserRepository;
-import com.architec.demo.repositories.UserRepository;
+import com.architec.crediti.models.ExternalUser;
+import com.architec.crediti.models.User;
+import com.architec.crediti.repositories.ExternalUserRepository;
+import com.architec.crediti.repositories.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
