@@ -5,44 +5,45 @@ import javax.persistence.*;
 @Table(name = "tags")
 public class Tag {
     @Id
-    @GeneratedValue
-    @Column(name = "tag_id")
-    private int tag_id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "tagId")
+    private int tagId;
 
-    @Column(name = "tag_name")
-    private String tag_name;
-    @Column(name = "tag_description")
-    private String tag_description;
+    @Column(name = "tagName", nullable = false)
+    private String tagName;
 
-    public int getTag_id() {
-        return tag_id;
+    @Column(name = "tagDescription")
+    private String tagDescription;
+
+    public int getTagId() {
+        return tagId;
     }
 
-    public void setTag_id(int tag_id) {
-        this.tag_id = tag_id;
-    }
-    public String getTag_name() {
-        return tag_name;
+    public void setTagId(int tagId) {
+        this.tagId = tagId;
     }
 
-    public void setTag_name(String tag_name) {
-        this.tag_name = tag_name;
+    public String getTagName() {
+        return tagName;
     }
 
-    public String getTag_description() {
-        return tag_description;
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
     }
 
-    public void setTag_description(String tag_description) {
-        this.tag_description = tag_description;
+    public String getTagDescription() {
+        return tagDescription;
     }
 
-    public Tag(String tag_name, String tag_description) {
-        this.tag_name = tag_name;
-        this.tag_description = tag_description;
+    public void setTagDescription(String tagDescription) {
+        this.tagDescription = tagDescription;
     }
-    public Tag(){
 
+    public Tag() {
+    }
+
+    public Tag(String tagName, String tagDescription) {
+        this.tagName = tagName;
+        this.tagDescription = tagDescription;
     }
 }
-
