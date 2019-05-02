@@ -102,19 +102,34 @@
                     <label for="extra_info">Extra info:</label>
                     <textarea name="extra_info" id="extra_info" rows="10" cols="30"></textarea><br>
 
-                    <table class="tags">
+                    <table class="tagsAssignments">
+                        <tr>
+                            <th>Tags</th>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <th:block th:each="tag : ${updatetag}">
+                                    <input th:id="${tag.getTagId()}" type="checkbox" th:field="*{updatetag}" th:value="${tag}"/>
+                                    <label th:for="${tag.getTagId()}"
+                                           th:text="${tag.getTagName()}"></label>
+                                </th:block>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <!--<table class="tags">
                         <tr>
                             <th>Tags</th>
                         </tr>
                         <tr>
                             <td>
                                 <th:block th:each="tag : ${updatetag}">
-                                    <input type="checkbox"/>
-                                    <label th:text="${tag.getTag_name()}"></label>
+                                    <label th:text="${tag.getTagName()}"><input type="checkbox"></label>
                                 </th:block>
                             </td>
                         </tr>
-                    </table>
+                    </table>-->
 
                     <br/>
                     <input class="button" type="SUBMIT" value="Opdracht aanmaken">
