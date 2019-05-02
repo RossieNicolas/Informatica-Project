@@ -83,20 +83,20 @@
                             <label for="type">Type:</label>
                             <input name="type" id="type" type="text" th:value="*{a.getType()}"><br>
 
-                            <label for="summary">Omschrijving opdracht:</label>
-                            <input name="summary" id="summary" th:value="*{a.getTask()}"><br>
+                            <label for="task">Omschrijving opdracht:</label>
+                            <textarea name="task" id="task" rows="10" cols="30" th:value="*{a.getTask()}"></textarea><br>
 
-                            <label for="start_date">Begindatum:</label><br>
-                            <input name="start_date" id="start_date" type="date" th:value="*{a.getStartDate()}"><br>
+                            <label for="startDate">Begindatum:</label><br>
+                            <input name="startDate" id="startDate" type="date" th:value="*{a.getStartDate()}"><br>
 
-                            <label for="end_date">Einddatum:</label><br>
-                            <input name="end_date" id="end_date" type="date" th:value="*{a.getEndDate()}"><br><br>
+                            <label for="endDate">Einddatum:</label><br>
+                            <input name="endDate" id="endDate" type="date" th:value="*{a.getEndDate()}"><br><br>
 
-                            <label for="totaal_uur">Totaal uur:</label>
-                            <input name="totaal_uur" id="totaal_uur" type="text" th:value="*{a.getAmountHours()}"><br>
+                            <label for="amountHours">Totaal uur:</label>
+                            <input name="amountHours" id="amountHours" type="text" th:value="*{a.getAmountHours()}"><br>
 
-                            <label for="max_students">Max Studenten:</label>
-                            <input name="max_students" id="max_students" type="text" th:value="*{a.getMaxStudents()}"><br>
+                            <label for="maxStudents">Max Studenten:</label>
+                            <input name="maxStudents" id="maxStudents" type="text" th:value="*{a.getMaxStudents()}"><br>
 
                             <table class="tags">
                                 <tr>
@@ -105,8 +105,8 @@
                                 <tr>
                                     <td>
                                         <th:block th:each="tag : ${updatetag}">
-                                            <input type="checkbox"/>
-                                            <label th:text="${tag.getTag_name()}"></label>
+                                            <input type="checkbox" id="tagCheckBox"/>
+                                            <label for="tagCheckBox" th:text="${tag.getTag_name()}"></label>
                                         </th:block>
                                     </td>
                                 </tr>

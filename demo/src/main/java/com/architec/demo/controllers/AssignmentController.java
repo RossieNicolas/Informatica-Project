@@ -40,8 +40,6 @@ public class AssignmentController {
         return assignmentRepo.save(assignment);
     }
 
-    private List<Assignment> fiches;
-
     @GetMapping("/error")
     public String error() {
         return "error";
@@ -49,7 +47,7 @@ public class AssignmentController {
 
     @GetMapping("/allassignments")
     public String getAllAssingments(Model model) {
-        fiches = assignmentRepo.findAll();
+        List<Assignment> fiches = assignmentRepo.findAll();
         model.addAttribute("assignments", fiches);
 
         return "listAllAssignments";
@@ -58,6 +56,9 @@ public class AssignmentController {
     public String updateAssignment(Model model) {
 
         List<Assignment> assignments = assignmentRepo.findByAssignmentId(1);
+        List<Tag> updatetag = tagRepo.findAll();
+
+        model.addAttribute("updatetag", updatetag);
 
         model.addAttribute("assignments", assignments);
         return "updateAssignment";
@@ -66,12 +67,16 @@ public class AssignmentController {
     public String updateMyAssignment(Model model) {
 
         List<Assignment> assignments = assignmentRepo.findByAssignmentId(1);
+        List<Tag> updatetag = tagRepo.findAll();
+
+        model.addAttribute("updatetag", updatetag);
 
         model.addAttribute("assignments", assignments);
         return "updateMyAssignment";
     }
     @PostMapping("/updateassignment")
     public String updateAssignment(@Valid Assignment assignment) {
+
 
         assignmentRepo.save(assignment);
         return "listAllAssignments";
@@ -82,5 +87,6 @@ public class AssignmentController {
         assignmentRepo.save(assignment);
         return "listAllAssignments";
     }
+
 
 }

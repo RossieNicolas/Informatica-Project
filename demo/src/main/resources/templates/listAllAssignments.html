@@ -89,11 +89,11 @@
 				<tr th:each="a : ${assignments}" class="tablebackground">
                     <td><input type="submit" value = "✏️" class = "button">&nbsp;&nbsp;&nbsp;<input type="submit" value = "🗑️" class="button"></td>
 					<td th:text="${a.getAssignmentId()}"></td>
-					<td th:text="${a.getAssignerUserId()}"></td>
+					<!--<td th:text="${a.getAssignerUserId()}"></td>-->
 					<td th:text="${a.getType()}"></td>
 					<td th:text="${a.getTask()}" class = "cell"></td>
 					<td th:text="${a.getStartDate()}"></td>
-					<td th:text="${a.getEndDate()}"></td>
+					<td th:text="${a.getEnd_date()}"></td>
 					<td th:text="${a.isValidated()}"></td>
 					<td th:text="${a.isArchived()}"></td>
 				</tr>

@@ -87,7 +87,7 @@
                         <input name="summary" id="summary" th:value="*{a.getTask()}"><br>
 
                         <label for="start_date">Begindatum:</label><br>
-                        <input name="start_date" id="start_date" type="date" th:value="*{a.getStartDate()}"><br>
+                        <input name="start_date" id="start_date" type="date" th:value="*{a.getStart_date()}"><br>
 
                         <label for="end_date">Einddatum:</label><br>
                         <input name="end_date" id="end_date" type="date" th:value="*{a.getEndDate()}"><br><br>
@@ -105,8 +105,8 @@
                             <tr>
                                 <td>
                                     <th:block th:each="tag : ${updatetag}">
-                                        <input type="checkbox"/>
-                                        <label th:text="${tag.getTag_name()}"></label>
+                                        <input type="checkbox" id="tagCheckBox"/>
+                                        <label for="tagCheckBox" th:text="${tag.getTag_name()}"></label>
                                     </th:block>
                                 </td>
                             </tr>
