@@ -57,4 +57,13 @@ public class AssignmentController {
 
         return "listAllAssignments";
     }
+
+    @RequestMapping(value = "/myassignments", method = RequestMethod.GET)
+    public String assignments(Model model) {
+        List<Assignment> assignments = assignmentRepo.findAll();
+
+        model.addAttribute("assignments", assignments);
+
+        return "myassignments";
+    }
 }
