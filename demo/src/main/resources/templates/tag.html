@@ -75,11 +75,11 @@
                 <div class="wrap-all col-xs-12 ">
                     <h2>Tag toevoegen</h2>
                     <form th:action='@{/tag}' method='POST'>
-                        <label for='tag'>Tag: </label>
-                        <input type='text' name='tag_name' id='tag' maxlength="50" placeholder="tagnaam">
+                        <label for='tagName'>Tag: </label>
+                        <input type='text' name='tagName' id='tagName' maxlength="50" placeholder="tagnaam">
                         <br/><br />
-                        <label for='summary'>Beschrijving: </label>
-                        <input type='text' name='tag_description' id='summary' maxlength="250"
+                        <label for='tagDescription'>Beschrijving: </label>
+                        <input type='text' name='tagDescription' id='tagDescription' maxlength="250"
                                placeholder="korte beschrijving">
                         <br/>
                         <input type='submit' value='Voeg toe' class="button" onclick='submission()'>
