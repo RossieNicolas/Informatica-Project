@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Crediti - Alle opdrachten</title>
-    <link rel="stylesheet" th:href="@{/css/APcss2.css}">
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
 <body class="background">
@@ -51,8 +50,8 @@
                                         <span>Coördinator</span>
                                         <div class="dropdown-content">
                                             <a href="/tag">Tag toevoegen</a>
-                                            <a href="">Tag bewerken</a>
-                                            <a href="">Archief</a>
+                                            <a href="/updatetag">Tag bewerken</a>
+                                            <a href="/archive">Archief</a>
                                         </div>
                                     </div>
                                 </li>
@@ -86,13 +85,10 @@
 					<th>Gevalideerd</th>
 					<th>Volzet</th>
 				</tr>
-				<tr th:each="a : ${assignments}" class="tablebackground">
-                    <td>
-                        <a class="button">✏️</a>
-                        <a class="button">🗑️</a>
-                    </td>
+			<tr th:each="a : ${assignments}" class="tablebackground">
+                    <td><input type="submit" value = "Detail" class = "button"></td>
 					<td th:text="${a.getAssignmentId()}"></td>
-					<td th:text="${a.getAssignerUserId()}"></td>
+					<td></td> <!-- th:text="${a.getAssignerUserId()}" -->
 					<td th:text="${a.getType()}"></td>
 					<td th:text="${a.getTask()}" class = "cell"></td>
 					<td th:text="${a.getStartDate()}"></td>
@@ -102,8 +98,6 @@
 				</tr>
 			</table>
 		</div>
-
-
 		<footer>
 			<div class="footer-bot">
 				<div class="container">

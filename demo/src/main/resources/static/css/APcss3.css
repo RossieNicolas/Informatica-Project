@@ -2187,7 +2187,6 @@ button.swiper-pagination-bullet {
 .swiper-scrollbar {
 	border-radius: 10px;
 	position: relative;
-	-ms-touch-action: none;
 	background: rgba(0, 0, 0, .1)
 }
 
@@ -2271,12 +2270,6 @@ button.swiper-pagination-bullet {
 	background-position: 50%;
 	background-size: 100%;
 	background-repeat: no-repeat
-}
-
-.button:after,
-button:after,
-ul li:before {
-	content: "î¤‰"
 }
 
 .swiper-lazy-preloader-white:after {
@@ -12955,7 +12948,6 @@ table .views-field.views-field-field-campuses ul li:before {
 
 .departments ul.blocks li>a h4 span.title {
 	-webkit-text-fill-color: transparent;
-	-webkit-background-clip: text;
 	display: block;
 	background-position: center
 }
@@ -13010,10 +13002,6 @@ textarea {
 	border: 1px solid #BEBEBE;
 	padding: 7px;
 	margin: 0;
-	-webkit-transition: all .3s ease-in-out;
-	-moz-transition: all .3s ease-in-out;
-	-ms-transition: all .3s ease-in-out;
-	-o-transition: all .3s ease-in-out;
 	outline: 0
 }
 

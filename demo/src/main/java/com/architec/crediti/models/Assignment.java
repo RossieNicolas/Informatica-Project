@@ -41,9 +41,6 @@ public class Assignment {
 	@Column(name = "validated", nullable = false)
 	private boolean validated;
 
-	@Column(name = "extra_info", nullable = false)
-	private String extraInfo;
-
 	@ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.REMOVE })
 	@JoinColumn(name = "assigner_user_id", referencedColumnName = "user_id")
@@ -53,8 +50,7 @@ public class Assignment {
 	}
 
 	public Assignment(String title, String type, String task, int amountHours, int amountStudents, int maxStudents,
-			String startDate, String endDate, boolean archived, boolean validated, String extraInfo,
-			User assignerUserId) {
+			String startDate, String endDate, boolean archived, boolean validated, User assignerUserId) {
 		this.title = title;
 		this.type = type;
 		this.task = task;
@@ -65,7 +61,6 @@ public class Assignment {
 		this.endDate = endDate;
 		this.archived = archived;
 		this.validated = validated;
-		this.extraInfo = extraInfo;
 		this.assignerUserId = assignerUserId;
 	}
 
@@ -111,10 +106,6 @@ public class Assignment {
 
 	public boolean isValidated() {
 		return validated;
-	}
-
-	public String getExtraInfo() {
-		return extraInfo;
 	}
 
 	public long getAssignerUserId() {
@@ -163,10 +154,6 @@ public class Assignment {
 
 	public void setValidated(boolean validated) {
 		this.validated = validated;
-	}
-
-	public void setExtraInfo(String extraInfo) {
-		this.extraInfo = extraInfo;
 	}
 
 	public void setAssignerUserId(User assignerUserId) {

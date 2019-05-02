@@ -13,10 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class AssignmentController {
+
+    private List<Assignment> fiches;
 
     @Autowired
     TagRepo tagRepo;
@@ -43,8 +47,6 @@ public class AssignmentController {
         return assignmentRepo.save(assignment);
     }
 
-    private List<Assignment> fiches;
-
     @GetMapping("/error")
     public String error() {
         return "error";
@@ -65,5 +67,42 @@ public class AssignmentController {
         model.addAttribute("assignments", assignments);
 
         return "myassignments";
+    }
+
+    @GetMapping("/unvalidatedassignments")
+    public String getUnvalidatedAssingments(Model model) {
+        fiches = assignmentRepo.findAll();
+        List<Assignment> unvalidatedFiches = new ArrayList<>();
+
+        for (Assignment item : fiches) {
+            if (!item.isValidated()) {
+                unvalidatedFiches.add(item);
+            }
+        }
+
+        model.addAttribute("assignments", unvalidatedFiches);
+
+        return "listUnvalidatedAssignments";
+    }
+
+    @GetMapping("/detailfiche")
+    public String getDetailFiche(Model model) {
+        fiches = assignmentRepo.findAll();
+
+        Assignment output = new Assignment();
+        for (Assignment item : fiches) {
+            if (item.getAssignmentId() == 81) {
+                output = item;
+            }
+        }
+
+        model.addAttribute("assignments", output);
+
+        return "detailFiche";
+    }
+
+    @PostMapping("/goedkeuren")
+    public String ficheGoedkeuren() {
+        return "";
     }
 }
