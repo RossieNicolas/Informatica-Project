@@ -23,9 +23,9 @@
 		
 		<div class="container">
 			<h2 class="extra">Profiel</h2>
-			<form>
+			<form th:action='@{/createstudentprofile}' method='POST'>
 				<label for='student_id' class="col-25 label">Studentennummer: </label>
-				<input type='text' name='student_id' class="col-75 input" />
+				<input type='text' name='student_id' />
 				<br><br>
 				<label for='firstname'>Voornaam: </label>
 				<input type='text' name='firstname'/>
@@ -33,8 +33,8 @@
 				<label for='lastname'>Achternaam: </label>
 				<input type='text' name='lastname'/>
 				<br><br>
-				<label for='email'>E-mail: </label>
-				<input type='text' name='emailInput'/>
+				<label for='mail'>E-mail: </label>
+				<input type='email' name='mail'/>
 				<br><br>
 				<label for='gsm'>GSM-nummer: </label>
 				<input type='text' name='gsm' />

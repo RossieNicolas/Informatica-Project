@@ -25,20 +25,18 @@ public class StudentController {
     }
 
     @PostMapping("/createstudentprofile")
-    public String createUser(@RequestParam("student_id") String studentId, @RequestParam("firstName") String firstname,
-            @RequestParam("lastname") String lastname, @RequestParam("email") String email,
+    public String createUser(@RequestParam("student_id") String studentId, @RequestParam("firstname") String firstname,
+            @RequestParam("lastname") String lastname, @RequestParam("mail") String email,
             @RequestParam("gsm") String gsm, @RequestParam("class") String s_class) {
 
-        // create an external user
-        Student externalUser = new Student(studentId, s_class, gsm);
-        // create a internal user
+        Student student = new Student(studentId, s_class, gsm);
         User user = new User(firstname, lastname, email, "Student");
         // set the foreign key
-        externalUser.setUserId(user);
+        student.setUserId(user);
 
         if (!userRepo.existsByEmail(user.getEmail())) {
             userRepo.save(user);
-            studentRepo.save(externalUser);
+            studentRepo.save(student);
         }
 
         /*
