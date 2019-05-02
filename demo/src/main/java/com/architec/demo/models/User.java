@@ -22,6 +22,9 @@ public class User {
     @Column(name = "role", nullable = false)
     private String role;
 
+    @Column(name = "login_count", nullable = false)
+    private int loginCount;
+
     public User() {
     }
 
@@ -30,6 +33,7 @@ public class User {
         this.lastname = lastname;
         this.email = email;
         this.role = role;
+        this.loginCount = 0;
     }
 
     public long getUserId() {

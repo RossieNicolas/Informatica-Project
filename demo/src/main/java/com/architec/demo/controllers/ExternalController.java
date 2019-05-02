@@ -21,14 +21,12 @@ public class ExternalController {
     @Autowired
     ExternalUserRepository externalUserRepo;
 
-    // get the register form
     @GetMapping("/createexternaluser")
     public String getCreateUser() {
 
         return "createExternal";
     }
 
-    // create the external user
     @PostMapping("/createexternal")
     public String createUser(@RequestParam("name") String lastname, @RequestParam("firstName") String firstname,
             @RequestParam("company") String company, @RequestParam("adress") String adress,
@@ -52,5 +50,10 @@ public class ExternalController {
          * the person isn't registered yet, he'll get a comfirmation mail
          */
         return "redirect:/registersucces";
+    }
+
+    @GetMapping("/registersucces")
+    public String getSucces() {
+        return "registerSucces";
     }
 }

@@ -12,6 +12,9 @@ public class Student {
     @Column(name = "class", nullable = false)
     private String studentClass;
 
+    @Column(name = "gsm", nullable = false)
+    private String gsmNumber;
+
     @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.REMOVE })
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
@@ -20,9 +23,10 @@ public class Student {
     public Student() {
     }
 
-    public Student(String studentID, String s_class) {
+    public Student(String studentID, String s_class, String gsmnr) {
         this.studentId = studentID;
         this.studentClass = s_class;
+        this.gsmNumber = gsmnr;
     }
 
     public String getStudentId() {
