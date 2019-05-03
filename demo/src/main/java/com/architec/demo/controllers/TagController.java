@@ -69,9 +69,22 @@ public class TagController {
     //update specific tag
     @PostMapping(value = "/listAllTags/{tagId}")
     public String saveTag(@PathVariable("tagId") int tagId, @Valid Tag tag) {
-
+        boolean added;
         tag.setTagId(tagId);
-        tagRepo.save(tag);
+        for(Tag t : tagRepo.findAll()){
+            if(tag.getTagName().equalsIgnoreCase("")){
+                added = false;
+            }
+            else if (tag.getTagName().equalsIgnoreCase(t.getTagName())) {
+                tagRepo.delete(t);
+                tagRepo.save(tag);
+                added = false;
+            }
+            else {
+                added= true;
+                tagRepo.save(tag);
+            }
+        }
         return "redirect:/listAllTags";
     }
 
