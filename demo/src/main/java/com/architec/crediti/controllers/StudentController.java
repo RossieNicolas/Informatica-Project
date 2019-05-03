@@ -1,9 +1,10 @@
-package com.architec.demo.controllers;
+package com.architec.crediti.controllers;
 
-import com.architec.demo.models.Student;
-import com.architec.demo.models.User;
-import com.architec.demo.repositories.StudentRepository;
-import com.architec.demo.repositories.UserRepository;
+import com.architec.crediti.repositories.UserRepository;
+import com.architec.crediti.models.Student;
+import com.architec.crediti.models.User;
+import com.architec.crediti.repositories.StudentRepository;
+import com.architec.crediti.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

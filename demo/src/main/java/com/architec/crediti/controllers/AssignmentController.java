@@ -58,6 +58,17 @@ public class AssignmentController {
         return "listAllAssignments";
     }
 
+    //all my assignments
+    @RequestMapping(value = "/myassignments", method = RequestMethod.GET)
+    public String assignments(Model model) {
+        List<Assignment> assignments = assignmentRepo.findAll();
+
+        model.addAttribute("assignments", assignments);
+
+        return "myassignments";
+    }
+
+
     //find specific assignment to edit out of all assignments
     @RequestMapping(value = "/allassignments/{assignmentId}", method = RequestMethod.GET)
     public String getAssignmentsToUpdate(@PathVariable("assignmentId") int assignmentId, Model model) {

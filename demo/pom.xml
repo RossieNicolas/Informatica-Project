@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.architec</groupId>
-	<artifactId>demo</artifactId>
+	<artifactId>crediti</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>demo</name>
+	<name>crediti</name>
 	<description>Crediti application</description>
 
 	<properties>
