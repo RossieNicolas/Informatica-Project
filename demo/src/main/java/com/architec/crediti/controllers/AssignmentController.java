@@ -39,8 +39,9 @@ public class AssignmentController {
 
     //add assignment
     @PostMapping("/assignment")
-    public Assignment createAssignment(@Valid Assignment assignment) {
-        return assignmentRepo.save(assignment);
+    public String createAssignment(@Valid Assignment assignment) {
+         assignmentRepo.save(assignment);
+         return "redirect:/listAllAssignments";
     }
 
     //error page
