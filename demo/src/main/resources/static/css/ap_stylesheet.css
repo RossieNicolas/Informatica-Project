@@ -119,9 +119,8 @@ p {
         width: 1024px;
     }
 }
- @media (min-width: 768px) {
-     .container {
-         width: 768px;
-     }
- }
-
+@media (min-width: 768px) {
+    .container {
+        width: 768px;
+    }
+}

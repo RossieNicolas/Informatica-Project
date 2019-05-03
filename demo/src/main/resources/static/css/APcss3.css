@@ -154,7 +154,7 @@ html input[type=button],
 input[type=reset],
 input[type=submit] {
 	-webkit-appearance: button;
-	cursor: pointer	
+	cursor: pointer
 }
 
 button[disabled],
@@ -240,30 +240,30 @@ form {
 	padding-left: 2rem;
 	padding-top: 2rem;
 	padding-bottom: 2rem;
-	background-color:hsla(0,100%,100%,0.6);	
-	margin-bottom: 4rem;	
+	background-color:hsla(0,100%,100%,0.6);
+	margin-bottom: 4rem;
 	box-sizing: border-box;
 	border-radius: 4px;
 }
 
 input[type=text], input[type=email], input[type=password] {
-  width: 50%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  resize: vertical;
+	width: 50%;
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	resize: vertical;
 }
 
 label {
-  padding: 10px 10px 10px 0;
-  display: inline-block;
-  width: 15%;
+	padding: 10px 10px 10px 0;
+	display: inline-block;
+	width: 15%;
 }
 
 .row:after {
-  content: "";
-  display: table;
-  clear: both;
+	content: "";
+	display: table;
+	clear: both;
 }
 
 p {
