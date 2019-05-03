@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8"/>
-    <title>Crediti - Opdracht aanmaken</title>
+    <meta charset="UTF-8">
+    <title>UpdateTagForm</title>
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
-<body class="background">
-<!--<div class="background">-->
+<body>
 <header>
     <div class="nav-main navbackground">
         <div class="container">
             <div class="wrap-all col-xs-12">
                 <div class="left">
-                    <a class="logo" href="/">
+                    <a class="logo" href="">
                         <img th:src="@{/images/logo-ap.svg}">
                     </a>
                 </div>
@@ -24,9 +23,9 @@
                                     <div class="dropdown dropdownleft">
                                         <span>Opdrachten</span>
                                         <div class="dropdown-content">
-                                            <a href="/allassignments">Lopende taken</a>
-                                            <a href="/assignment">Taak toevoegen</a>
-                                            <a href="/myassignments">Mijn taken</a>
+                                            <a href="">Lopende taken</a>
+                                            <a href="">Taak toevoegen</a>
+                                            <a href="">Mijn taken</a>
                                             <a href="">Taak bewerken</a>
                                         </div>
                                     </div>
@@ -50,7 +49,7 @@
                                     <div class="dropdown">
                                         <span>Coördinator</span>
                                         <div class="dropdown-content">
-                                            <a href="/tag">Tag toevoegen</a>
+                                            <a href="">Tag toevoegen</a>
                                             <a href="">Tag bewerken</a>
                                             <a href="">Archief</a>
                                         </div>
@@ -67,58 +66,25 @@
         </div>
     </div>
 </header>
-<div class="block">
-    <section class="find-edu card">
-        <div class="container">
-            <div class="wrap-all col-xs-12 ">
-
-                <h2>Invoerformulier voor opdrachtgevers</h2>
-                <form th:action='@{/assignment}' method='POST' class="standard-form">
-
-                    <label for="title">Titel:</label>
-                    <input name="title" id="title" type="text"><br>
-
-                    <label for="type">Type:</label>
-                    <input name="type" id="type" type="text"><br>
-
-                    <label for="task">Omschrijving opdracht:</label>
-                    <textarea name="task" id="task" rows="10" cols="30"></textarea><br>
-
-                    <label for="start_date">Begindatum:</label><br>
-                    <input name="start_date" id="start_date" type="date"><br>
-
-                    <label for="end_date">Einddatum:</label><br>
-                    <input name="end_date" id="end_date" type="date"><br><br>
-
-                    <label for="amountHours">Totaal uur:</label>
-                    <input name="amountHours" id="amountHours" type="text"><br>
-
-                    <label for="maxStudents">Max Studenten:</label>
-                    <input name="maxStudents" id="maxStudents" type="text"><br>
-
-                    <table class="tags">
-                        <tr>
-                            <th>Tags</th>
-                        </tr>
-                        <tr>
-                            <td>
-                                <th:block th:each="tag : ${updatetag}">
-                                    <input type="checkbox" id="tagCheckBox"/>
-                                    <label for="tagCheckBox" th:text="${tag.getTagName()}"></label>
-                                </th:block>
-                            </td>
-                        </tr>
-                    </table>
-
+<div class="block background">
+    <div class="container ">
+        <div class="wrap-all col-xs-12 ">
+            <h2 class="extra">Tag aanpassen</h2>
+            <form th:each="a: ${tags}" method="POST" class="standard-form">
+                <fieldset disabled="disabled" id="externalInfo">
+                    <label for='tagName'>Tag: </label>
+                    <input id='tagName' type='text' th:value="*{a.getTagName()}" name="tagName" maxlength="50"/>
+                    <br/><br>
+                    <label for='tagDescription'>Beschrijving: </label>
+                    <input id='tagDescription' type='text' th:value="*{a.getTagDescription()}" name="tagDescription"  maxlength="250"/>
                     <br/>
-                    <input class="button" type="SUBMIT" value="Opdracht aanmaken">
-
-                </form>
-            </div>
+                </fieldset><br>
+                <input type="button" value="✏️TAG BEWERKEN" class="button" onclick="toggleForm();">&nbsp;&nbsp;&nbsp;
+                <input type="submit" value="💾 AANPASSINGEN BEWAREN" class="button" id="save" style="visibility: hidden;">
+            </form>
         </div>
-    </section>
+    </div>
 </div>
-<!--</div>-->
 <footer>
     <div class="footer-bot">
         <div class="container">
@@ -131,5 +97,12 @@
         </div>
     </div>
 </footer>
+<script>
+    function toggleForm() {
+        document.getElementById('externalInfo').removeAttribute('disabled');
+        document.getElementById("save").style.visibility = "visible";
+        ;
+    }
+</script>
 </body>
 </html>

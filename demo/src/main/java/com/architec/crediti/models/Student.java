@@ -1,4 +1,4 @@
-package com.architec.crediti.models;
+package com.architec.demo.models;
 
 import javax.persistence.*;
 

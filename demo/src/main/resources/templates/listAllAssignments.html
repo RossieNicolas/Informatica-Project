@@ -87,13 +87,15 @@
 					<th>Volzet</th>
 				</tr>
 				<tr th:each="a : ${assignments}" class="tablebackground">
-                    <td><input type="submit" value = "✏️" class = "button">&nbsp;&nbsp;&nbsp;<input type="submit" value = "🗑️" class="button"></td>
+                    <td><a th:href="${'/allassignments/' + a.getAssignmentId()}" class="button">✏️</a>
+                        &nbsp;&nbsp;&nbsp;
+                        <a th:href="@{/deleteassignment/{id} (id=${a.assignmentId})}" class="button">🗑️</a></td>
 					<td th:text="${a.getAssignmentId()}"></td>
-					<td th:text="${a.getAssignerUserId()}"></td>
+					<!--<td th:text="${a.getAssignerUserId()}"></td>-->
 					<td th:text="${a.getType()}"></td>
 					<td th:text="${a.getTask()}" class = "cell"></td>
 					<td th:text="${a.getStartDate()}"></td>
-					<td th:text="${a.getEndDate()}"></td>
+					<td th:text="${a.getEnd_date()}"></td>
 					<td th:text="${a.isValidated()}"></td>
 					<td th:text="${a.isArchived()}"></td>
 				</tr>

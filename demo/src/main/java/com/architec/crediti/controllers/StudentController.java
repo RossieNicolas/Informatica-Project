@@ -1,9 +1,9 @@
-package com.architec.crediti.controllers;
+package com.architec.demo.controllers;
 
-import com.architec.crediti.models.Student;
-import com.architec.crediti.models.User;
-import com.architec.crediti.repositories.UserRepository;
-import com.architec.crediti.repositories.StudentRepository;
+import com.architec.demo.models.Student;
+import com.architec.demo.models.User;
+import com.architec.demo.repositories.StudentRepository;
+import com.architec.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,8 +26,8 @@ public class StudentController {
 
     @PostMapping("/createstudentprofile")
     public String createUser(@RequestParam("student_id") String studentId, @RequestParam("firstname") String firstname,
-            @RequestParam("lastname") String lastname, @RequestParam("mail") String email,
-            @RequestParam("gsm") String gsm, @RequestParam("class") String s_class) {
+                             @RequestParam("lastname") String lastname, @RequestParam("mail") String email,
+                             @RequestParam("gsm") String gsm, @RequestParam("class") String s_class) {
 
         Student student = new Student(studentId, s_class, gsm);
         User user = new User(firstname, lastname, email, "Student");

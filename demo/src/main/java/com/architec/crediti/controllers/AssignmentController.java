@@ -7,10 +7,7 @@ import com.architec.crediti.repositories.TagRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -24,11 +21,13 @@ public class AssignmentController {
     @Autowired
     AssignmentRepository assignmentRepo;
 
+    //get assignment form (if no tags)
     @RequestMapping("/assignment")
     public String assignment() {
         return "assignment";
     }
 
+    //get assignment form
     @RequestMapping(value = "/assignment", method = RequestMethod.GET)
     public String tag(Model model) /* throws SQLException */ {
 
@@ -38,32 +37,83 @@ public class AssignmentController {
         return "assignment";
     }
 
+    //add assignment
     @PostMapping("/assignment")
     public Assignment createAssignment(@Valid Assignment assignment) {
         return assignmentRepo.save(assignment);
     }
 
-    private List<Assignment> fiches;
-
+    //error page
     @GetMapping("/error")
     public String error() {
         return "error";
     }
 
+    //list all assignments
     @GetMapping("/allassignments")
     public String getAllAssingments(Model model) {
-        fiches = assignmentRepo.findAll();
+        List<Assignment> fiches = assignmentRepo.findAll();
         model.addAttribute("assignments", fiches);
 
         return "listAllAssignments";
     }
 
-    @RequestMapping(value = "/myassignments", method = RequestMethod.GET)
-    public String assignments(Model model) {
-        List<Assignment> assignments = assignmentRepo.findAll();
+    //find specific assignment to edit out of all assignments
+    @RequestMapping(value = "/allassignments/{assignmentId}", method = RequestMethod.GET)
+    public String getAssignmentsToUpdate(@PathVariable("assignmentId") int assignmentId, Model model) {
 
-        model.addAttribute("assignments", assignments);
+        List<Assignment> fiches = assignmentRepo.findByAssignmentId(assignmentId);
 
-        return "myassignments";
+        model.addAttribute("assignments", fiches);
+        return "updateAssignment";
     }
+
+    //update specific assignment
+    @PostMapping(value = "/allassignments/{assignmentId}")
+    public String updateAssignment(@PathVariable("assignmentId") int assignmentId, @Valid Assignment assignment) {
+
+        assignment.setAssignmentId(assignmentId);
+        assignmentRepo.save(assignment);
+        return "redirect:/allassignments";
+    }
+
+    //find specific assignment to edit out of all assignments
+    @RequestMapping(value = "/myassignments/{assignmentId}", method = RequestMethod.GET)
+    public String getMyAssignmentsToUpdate(@PathVariable("assignmentId") int assignmentId, Model model) {
+
+        List<Assignment> fiches = assignmentRepo.findByAssignmentId(assignmentId);
+
+        model.addAttribute("assignments", fiches);
+        return "updateMyAssignment";
+    }
+
+    //update specific assignment
+    @PostMapping(value = "/myassignments/{assignmentId}")
+    public String updateMyAssignment(@PathVariable("assignmentId") int assignmentId, @Valid Assignment assignment) {
+
+        assignment.setAssignmentId(assignmentId);
+        assignmentRepo.save(assignment);
+        return "redirect:/myassignments";
+    }
+
+    //delete specific assignment
+    @GetMapping("/deleteassignment/{assignmentId}")
+    public String deleteAssignment(@PathVariable("assignmentId") int assignmentId, Model model) {
+        Assignment assignment = assignmentRepo.findById((long) assignmentId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid assignment Id:" + assignmentId));
+        assignmentRepo.delete(assignment);
+        model.addAttribute("assignments", assignmentRepo.findAll());
+        return "redirect:/allassignments";
+    }
+
+    //delete specific assignment
+    @GetMapping("/deletemyassignment/{assignmentId}")
+    public String deleteMyAssignment(@PathVariable("assignmentId") int assignmentId, Model model) {
+        Assignment assignment = assignmentRepo.findById((long) assignmentId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid assignment Id:" + assignmentId));
+        assignmentRepo.delete(assignment);
+        model.addAttribute("assignments", assignmentRepo.findAll());
+        return "redirect:/myassignments";
+    }
+
 }

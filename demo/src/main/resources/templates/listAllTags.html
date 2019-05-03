@@ -2,19 +2,18 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Crediti - Tag toevoegen</title>
-    <link rel="stylesheet" th:href="@{/css/APcss2.css}">
+    <title>AllTagsForm</title>
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
-<body>
-<div class="background">
+<body class="background">
 
+<div class="background">
     <header>
         <div class="nav-main navbackground">
             <div class="container">
                 <div class="wrap-all col-xs-12">
                     <div class="left">
-                        <a class="logo" href="/">
+                        <a class="logo" href="">
                             <img th:src="@{/images/logo-ap.svg}">
                         </a>
                     </div>
@@ -26,9 +25,9 @@
                                         <div class="dropdown dropdownleft">
                                             <span>Opdrachten</span>
                                             <div class="dropdown-content">
-                                                <a href="/allassignments">Lopende taken</a>
-                                                <a href="/assignment">Taak toevoegen</a>
-                                                <a href="/myassignments">Mijn taken</a>
+                                                <a href="">Lopende taken</a>
+                                                <a href="">Taak toevoegen</a>
+                                                <a href="">Mijn taken</a>
                                                 <a href="">Taak bewerken</a>
                                             </div>
                                         </div>
@@ -52,7 +51,7 @@
                                         <div class="dropdown">
                                             <span>Coördinator</span>
                                             <div class="dropdown-content">
-                                                <a href="/tag">Tag toevoegen</a>
+                                                <a href="">Tag toevoegen</a>
                                                 <a href="">Tag bewerken</a>
                                                 <a href="">Archief</a>
                                             </div>
@@ -70,31 +69,34 @@
         </div>
     </header>
     <div class="block">
-        <section class="find-edu">
+        <section class="find-edu card">
             <div class="container ">
                 <div class="wrap-all col-xs-12 ">
-                    <h2>Tag toevoegen</h2>
-                    <form th:action='@{/tag}' method='POST'>
-                        <label for='tagName'>Tag: </label>
-                        <input type='text' name='tagName' id='tagName' maxlength="50" placeholder="tagnaam">
-                        <br/><br />
-                        <label for='tagDescription'>Beschrijving: </label>
-                        <input type='text' name='tagDescription' id='tagDescription' maxlength="250"
-                               placeholder="korte beschrijving">
-                        <br/>
-                        <input type='submit' value='Voeg toe' class="button">
-
+                    <h2>Tags bekijken</h2>
+                    <form class="standard-form">
+                        <table>
+                            <tr>
+                                <th></th>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th></th>
+                            </tr>
+                            <tr th:each="a : ${listAllTags}" class = "notfirst">
+                                <td><a th:href="${'/listAllTags/' + a.tagId}" class="button">✏️</a></td>
+                                <td id="tagId" th:text="${a.getTagId()}"></td>
+                                <td id="tagName" th:text="${a.getTagName()}"></td>
+                                <td id="tagDescription" th:text="${a.getTagDescription()}"></td>
+                                <td><a th:href="@{/deletetag/{id}(id=${a.tagId})}" class="button">🗑️ </a></td>
+                            </tr>
+                        </table>
                     </form>
                 </div>
             </div>
-            <div class="alert" id="panel">
-                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-                Tag toegevoegd.
-            </div>
         </section>
     </div>
-
 </div>
+<div style="height: 37%"></div>
 <footer>
     <div class="footer-bot">
         <div class="container">
@@ -107,10 +109,6 @@
         </div>
     </div>
 </footer>
-<script>
-    function submission(){
-        document.getElementById("panel").style.display = "block";
-    }
-</script>
+
 </body>
 </html>

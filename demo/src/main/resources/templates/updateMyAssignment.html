@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8"/>
-    <title>Crediti - Opdracht aanmaken</title>
+    <meta charset="UTF-8">
+    <title>Crediti - Opdracht bewerken</title>
+    <link rel="stylesheet" th:href="@{/css/APcss2.css}">
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
 <body class="background">
-<!--<div class="background">-->
 <header>
     <div class="nav-main navbackground">
         <div class="container">
@@ -68,57 +68,59 @@
     </div>
 </header>
 <div class="block">
-    <section class="find-edu card">
-        <div class="container">
+    <section class="find-edu">
+        <div class="container ">
             <div class="wrap-all col-xs-12 ">
+                <h2>Opdracht bewerken</h2>
 
-                <h2>Invoerformulier voor opdrachtgevers</h2>
-                <form th:action='@{/assignment}' method='POST' class="standard-form">
 
-                    <label for="title">Titel:</label>
-                    <input name="title" id="title" type="text"><br>
 
-                    <label for="type">Type:</label>
-                    <input name="type" id="type" type="text"><br>
+                <form th:each="a: ${assignments}" class="standard-form" method="post">
+                    <fieldset disabled="disabled" id="assignmentInfo">
+                        <label for="title">Titel:</label>
+                        <input name="title" id="title" type="text" th:value="*{a.getTitle()}"><br>
 
-                    <label for="task">Omschrijving opdracht:</label>
-                    <textarea name="task" id="task" rows="10" cols="30"></textarea><br>
+                        <label for="type">Type:</label>
+                        <input name="type" id="type" type="text" th:value="*{a.getType()}"><br>
 
-                    <label for="start_date">Begindatum:</label><br>
-                    <input name="start_date" id="start_date" type="date"><br>
+                        <label for="task">Omschrijving opdracht:</label>
+                        <input name="task" id="task" th:value="*{a.getTask()}" type="text"><br>
 
-                    <label for="end_date">Einddatum:</label><br>
-                    <input name="end_date" id="end_date" type="date"><br><br>
+                        <label for="start_date">Begindatum:</label><br>
+                        <input name="start_date" id="start_date" type="date" th:value="*{a.getStartDate()}"><br>
 
-                    <label for="amountHours">Totaal uur:</label>
-                    <input name="amountHours" id="amountHours" type="text"><br>
+                        <label for="end_date">Einddatum:</label><br>
+                        <input name="end_date" id="end_date" type="date" th:value="*{a.getEnd_date()}"><br><br>
 
-                    <label for="maxStudents">Max Studenten:</label>
-                    <input name="maxStudents" id="maxStudents" type="text"><br>
+                        <label for="amountHours">Totaal uur:</label>
+                        <input name="amountHours" id="amountHours" type="text" th:value="*{a.getAmountHours()}"><br>
 
-                    <table class="tags">
-                        <tr>
-                            <th>Tags</th>
-                        </tr>
-                        <tr>
-                            <td>
-                                <th:block th:each="tag : ${updatetag}">
-                                    <input type="checkbox" id="tagCheckBox"/>
-                                    <label for="tagCheckBox" th:text="${tag.getTagName()}"></label>
-                                </th:block>
-                            </td>
-                        </tr>
-                    </table>
+                        <label for="maxStudents">Max Studenten:</label>
+                        <input name="maxStudents" id="maxStudents" type="text" th:value="*{a.getMaxStudents()}"><br>
 
+                        <table class="tags">
+                            <tr>
+                                <th>Tags</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <th:block th:each="tag : ${updatetag}">
+                                        <input type="checkbox" id="tagCheckBox"/>
+                                        <label for="tagCheckBox" th:text="${tag.getTagName()}"></label>
+                                    </th:block>
+                                </td>
+                            </tr>
+                        </table>
+                    </fieldset>
                     <br/>
-                    <input class="button" type="SUBMIT" value="Opdracht aanmaken">
-
+                    <input type="button" value = "✏️OPDRACHT BEWERKEN" class = "button" onclick="toggleForm();">
+                    &nbsp;&nbsp;&nbsp;
+                    <input type="submit" value = "💾 AANPASSINGEN BEWAREN" class="button" id="save" style="visibility: hidden;">
                 </form>
             </div>
         </div>
     </section>
 </div>
-<!--</div>-->
 <footer>
     <div class="footer-bot">
         <div class="container">
@@ -131,5 +133,12 @@
         </div>
     </div>
 </footer>
+<script>
+    function toggleForm() {
+        document.getElementById('assignmentInfo').removeAttribute('disabled');
+        document.getElementById("save").style.visibility="visible";;
+    }
+</script>
 </body>
 </html>
+

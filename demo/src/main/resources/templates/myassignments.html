@@ -80,6 +80,10 @@
                 <th>Titel</th>
             </tr>
             <tr th:each="a : ${assignments}" class = "tablebackground">
+                <td><a th:href="${'/allassignments/' + a.getAssignmentId()}" class="button">✏️</a>
+                    &nbsp;&nbsp;&nbsp;
+                    <a th:href="@{/deleteassignment/{id} (id=${a.assignmentId})}" class="button">🗑️</a></td>
+                <td th:text="${a.getAssignmentId()}"></td>
                 <td th:text="${a.getAssignmentId()}"></td>
                 <td th:text="${a.getTitle()}"></td>
 
