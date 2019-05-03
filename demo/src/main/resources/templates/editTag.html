@@ -2,17 +2,16 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Crediti - Alle opdrachten</title>
-    <link rel="stylesheet" th:href="@{/css/APcss2.css}">
+    <title>UpdateTagForm</title>
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
-<body class="background">
+<body>
 <header>
     <div class="nav-main navbackground">
         <div class="container">
             <div class="wrap-all col-xs-12">
                 <div class="left">
-                    <a class="logo" href="/">
+                    <a class="logo" href="">
                         <img th:src="@{/images/logo-ap.svg}">
                     </a>
                 </div>
@@ -24,9 +23,9 @@
                                     <div class="dropdown dropdownleft">
                                         <span>Opdrachten</span>
                                         <div class="dropdown-content">
-                                            <a href="/allassignments">Lopende taken</a>
-                                            <a href="/assignment">Taak toevoegen</a>
-                                            <a href="/myassignments">Mijn taken</a>
+                                            <a href="">Lopende taken</a>
+                                            <a href="">Taak toevoegen</a>
+                                            <a href="">Mijn taken</a>
                                             <a href="">Taak bewerken</a>
                                         </div>
                                     </div>
@@ -50,7 +49,7 @@
                                     <div class="dropdown">
                                         <span>Coördinator</span>
                                         <div class="dropdown-content">
-                                            <a href="/tag">Tag toevoegen</a>
+                                            <a href="">Tag toevoegen</a>
                                             <a href="">Tag bewerken</a>
                                             <a href="">Archief</a>
                                         </div>
@@ -67,53 +66,43 @@
         </div>
     </div>
 </header>
-
-
-		
-		<div class="container ">
-			<h2 class = "extra">Alle opdrachten</h2>
+<div class="block background">
+    <div class="container ">
+        <div class="wrap-all col-xs-12 ">
+            <h2 class="extra">Tag aanpassen</h2>
+            <form th:each="a: ${tags}" method="POST" class="standard-form">
+                <fieldset disabled="disabled" id="externalInfo">
+                    <label for='tagName'>Tag: </label>
+                    <input id='tagName' type='text' th:value="*{a.getTagName()}" name="tagName" maxlength="50"/>
+                    <br/><br>
+                    <label for='tagDescription'>Beschrijving: </label>
+                    <input id='tagDescription' type='text' th:value="*{a.getTagDescription()}" name="tagDescription"  maxlength="250"/>
+                    <br/>
+                </fieldset><br>
+                <input type="button" value="✏️TAG BEWERKEN" class="button" onclick="toggleForm();">&nbsp;&nbsp;&nbsp;
+                <input type="submit" value="💾 AANPASSINGEN BEWAREN" class="button" id="save" style="visibility: hidden;">
+            </form>
         </div>
-		<div id='overview'>
-			<table>
-				<tr>
-					<th></th>
-					<th>Nr</th>
-					<th>Opdrachtgever</th>
-					<th>Type</th>
-					<th>Taak</th>
-					<th>Begin</th>
-					<th>Einde</th>
-					<th>Gevalideerd</th>
-					<th>Volzet</th>
-				</tr>
-				<tr th:each="a : ${assignments}" class="tablebackground">
-                    <td><a th:href="${'/allassignments/' + a.getAssignmentId()}" class="button">✏️</a>
-                        &nbsp;&nbsp;&nbsp;
-                        <a th:href="@{/deleteassignment/{id} (id=${a.assignmentId})}" class="button">🗑️</a></td>
-					<td th:text="${a.getAssignmentId()}"></td>
-					<!--<td th:text="${a.getAssignerUserId()}"></td>-->
-					<td th:text="${a.getType()}"></td>
-					<td th:text="${a.getTask()}" class = "cell"></td>
-					<td th:text="${a.getStartDate()}"></td>
-					<td th:text="${a.getEnd_date()}"></td>
-					<td th:text="${a.isValidated()}"></td>
-					<td th:text="${a.isArchived()}"></td>
-				</tr>
-			</table>
-		</div>
-
-
-		<footer>
-			<div class="footer-bot">
-				<div class="container">
-					<div class="left col-sm-6 col-xs-12">
-						<p>Ontworpen door studenten Toegepaste Informatica</p>
-					</div>
-					<div class="right col-sm-6 col-xs-12">
-						<p>© 2019 All rights reserved.</p>
-					</div>
-				</div>
-			</div>
-		</footer>
-	</body>
-	</html>
+    </div>
+</div>
+<footer>
+    <div class="footer-bot">
+        <div class="container">
+            <div class="left col-sm-6 col-xs-12">
+                <p>Ontworpen door studenten Toegepaste Informatica</p>
+            </div>
+            <div class="right col-sm-6 col-xs-12">
+                <p>© 2019 All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+<script>
+    function toggleForm() {
+        document.getElementById('externalInfo').removeAttribute('disabled');
+        document.getElementById("save").style.visibility = "visible";
+        ;
+    }
+</script>
+</body>
+</html>

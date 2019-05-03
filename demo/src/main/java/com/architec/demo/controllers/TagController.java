@@ -6,24 +6,26 @@ import org.aspectj.bridge.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.security.auth.message.MessageInfo;
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class TagController {
     @Autowired
     TagRepo tagRepo;
 
+    //get create tag page
     @RequestMapping("/tag")
     public String assignment() {
         return "tag";
     }
 
+    //make a new tag
     @PostMapping("/tag")
-    public void createTag(@Valid Tag tag, Model model) {
+    public String createTag(@Valid Tag tag, Model model) {
         boolean added = false;
         for(Tag t : tagRepo.findAll()){
             if(tag.getTagName().equalsIgnoreCase("")){
@@ -42,9 +44,48 @@ public class TagController {
                 model.addAttribute("status", "added");
             }
         }
-        if (!added){
-
-        }
-
+        return "redirect:/listAllTags";
     }
+
+    //list all tags
+    @RequestMapping(value = "/listAllTags", method = RequestMethod.GET)
+    public String listAllTags(Model model) /* throws SQLException*/ {
+
+        List<Tag> listAllTags = tagRepo.findAll();
+        model.addAttribute("listAllTags", listAllTags);
+        return "listAllTags";
+    }
+
+    //list specific tag
+    @RequestMapping(value = "/listAllTags/{tag_id}", method = RequestMethod.GET)
+    public String tags(@PathVariable("tag_id") int tag_id, Model model) {
+
+        List<Tag> tags = tagRepo.findBytagId(tag_id);
+
+        model.addAttribute("tags", tags);
+        return "editTag";
+    }
+
+    //update specific tag
+    @PostMapping(value = "/listAllTags/{tagId}")
+    public String saveTag(@PathVariable("tagId") int tagId, @Valid Tag tag) {
+
+        tag.setTagId(tagId);
+        tagRepo.save(tag);
+        return "redirect:/listAllTags";
+    }
+
+    //delete specific tag
+    @GetMapping("/deletetag/{id}")
+    public String deleteTag(@PathVariable("id") int id, Model model) {
+        Tag tag = tagRepo.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid tag Id:" + id));
+        tagRepo.delete(tag);
+        model.addAttribute("tags", tagRepo.findAll());
+        return "redirect:/listAllTags";
+    }
+
+
+
+
 }

@@ -18,13 +18,13 @@ public class Assignment {
 	@Column(name = "task", nullable = false)
 	private String task;
 
-	@Column(name = "amount_hours", nullable = false)
+	@Column(name = "amountHours", nullable = false)
 	private int amountHours;
 
-	@Column(name = "amount_students")
+	@Column(name = "amountStudents")
 	private int amountStudents;
 
-	@Column(name = "max_students", nullable = false)
+	@Column(name = "maxStudents", nullable = false)
 	private int maxStudents;
 
 	@Column(name = "start_date")
