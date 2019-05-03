@@ -296,6 +296,31 @@ p {
 	display: none;
 }
 
+.pagination { 
+	display:-ms-flexbox;
+	display:flex;
+	padding-left:0;
+	list-style:none;
+	border-radius:.25rem
+}
+
+.justify-content-center {
+	-ms-flex-pack:center!important;
+	justify-content:center!important
+}
+
+.page-item.disabled .page-link {
+	color:#6c757d;
+	pointer-events:none;
+	cursor:auto;
+	border-color:#dee2e6
+}
+
+.page-item.active .page-link {
+	z-index:1;
+	background-color:#007bff;
+	border-color:#007bff
+}
 
 
 

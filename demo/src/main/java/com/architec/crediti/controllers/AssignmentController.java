@@ -1,10 +1,15 @@
 package com.architec.crediti.controllers;
 
 import com.architec.crediti.models.Assignment;
+import com.architec.crediti.models.Page;
 import com.architec.crediti.models.Tag;
 import com.architec.crediti.repositories.AssignmentRepository;
 import com.architec.crediti.repositories.TagRepo;
+import com.architec.crediti.service.PageService;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.expression.spel.ast.Assign;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +21,8 @@ import javax.validation.Valid;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Controller
 public class AssignmentController {
@@ -27,11 +34,6 @@ public class AssignmentController {
 
     @Autowired
     AssignmentRepository assignmentRepo;
-
-    @RequestMapping("/assignment")
-    public String assignment() {
-        return "assignment";
-    }
 
     @RequestMapping(value = "/assignment", method = RequestMethod.GET)
     public String tag(Model model) /* throws SQLException */ {
@@ -54,8 +56,20 @@ public class AssignmentController {
 
     @GetMapping("/allassignments")
     public String getAllAssingments(Model model) {
+        final int currentPage = 1;
+        final int pageSize = 20;
+
         fiches = assignmentRepo.findAll();
         model.addAttribute("assignments", fiches);
+
+        Page<Assignment> assignmentPage = PageService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
+        model.addAttribute("assPage", assignmentPage);
+
+        int totalPages = assignmentPage.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
 
         return "listAllAssignments";
     }
