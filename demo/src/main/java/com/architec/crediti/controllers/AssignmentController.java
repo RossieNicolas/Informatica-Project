@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Null;
 import java.util.List;
 
 @Controller
@@ -85,7 +86,10 @@ public class AssignmentController {
     public String updateAssignment(@PathVariable("assignmentId") int assignmentId, @Valid Assignment assignment) {
 
         assignment.setAssignmentId(assignmentId);
-        assignmentRepo.save(assignment);
+        if (!(assignment.getTitle().equalsIgnoreCase("") || assignment.getType().equalsIgnoreCase("") || assignment.getTask().equalsIgnoreCase(""))){
+            assignmentRepo.save(assignment);
+        }
+
         return "redirect:/allassignments";
     }
 
@@ -104,7 +108,9 @@ public class AssignmentController {
     public String updateMyAssignment(@PathVariable("assignmentId") int assignmentId, @Valid Assignment assignment) {
 
         assignment.setAssignmentId(assignmentId);
-        assignmentRepo.save(assignment);
+        if (!(assignment.getTitle().equalsIgnoreCase("") || assignment.getType().equalsIgnoreCase("") || assignment.getTask().equalsIgnoreCase(""))){
+            assignmentRepo.save(assignment);
+        }
         return "redirect:/myassignments";
     }
 
