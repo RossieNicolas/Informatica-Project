@@ -271,8 +271,9 @@ p {
 }
 .alert {
 	padding: 20px;
-	background-color: #00ff00;
-	color: white;
+	background-color: #dff0d8;
+	color: #3c763d;
+	border-color:#d6e9c6;
 	margin-left: 8.7%;
 	margin-right: 8.7%;
 }
