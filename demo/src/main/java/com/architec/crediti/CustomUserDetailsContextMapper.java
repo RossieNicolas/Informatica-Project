@@ -24,8 +24,13 @@ public class CustomUserDetailsContextMapper extends LdapUserDetailsMapper implem
     public LdapUserDetails mapUserFromContext(DirContextOperations ctx, String username, Collection<? extends GrantedAuthority> authorities) {
 
         LdapUserDetailsImpl details = (LdapUserDetailsImpl) super.mapUserFromContext(ctx, username, authorities);
-        log.info("DN from ctx: " + ctx.getDn());
+        log.info("--- START ATTRIBUTES ---");
         log.info("Firstname: " + ctx.getStringAttribute("givenName"));
+        log.info("Lastname: " + ctx.getStringAttribute("description").substring(ctx.getStringAttribute("givenName").length() + 1));
+        log.info("Email: " + ctx.getStringAttribute("userPrincipalName"));
+        log.info("Departement: " + ctx.getStringAttribute("department"));
+        log.info("Role: " + ctx.getStringAttribute("extensionAttribute1"));
+        log.info("--- END ATTRIBUTES ---");
 
         return new CustomUserDetails(details);
     }
