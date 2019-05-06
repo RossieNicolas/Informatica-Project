@@ -2,14 +2,15 @@ package com.architec.crediti.controllers;
 
 import com.architec.crediti.models.Assignment;
 import com.architec.crediti.models.Tag;
+import com.architec.crediti.models.User;
 import com.architec.crediti.repositories.AssignmentRepository;
 import com.architec.crediti.repositories.TagRepo;
+import com.architec.crediti.repositories.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,6 +32,9 @@ public class AssignmentController {
     @Autowired
     AssignmentRepository assignmentRepo;
 
+    @Autowired
+    UserRepository userRepo;
+
     @RequestMapping(value = "/assignment", method = RequestMethod.GET)
     public String tag(Model model) /* throws SQLException */ {
 
@@ -41,8 +45,12 @@ public class AssignmentController {
     }
 
     @PostMapping("/assignment")
-    public Assignment createAssignment(@Valid Assignment assignment) {
-        return assignmentRepo.save(assignment);
+    public String createAssignment(@Valid Assignment assignment) {
+        User usr = userRepo.findByEmail("s100603@ap.be");
+        assignment.setAssignerUserId(usr);
+        assignmentRepo.save(assignment);
+
+        return "redirect:/allassignments";
     }
 
     @GetMapping("/error")
