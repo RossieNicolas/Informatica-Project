@@ -32,7 +32,7 @@ public class PasswordRecoveryController {
             model.addAttribute("status", "U hebt met succes een wachtwoordherstel aangevraagd. Er is een email verstuurd naar het opgegeven emailadres.");
         }
         else{
-            return model.addAttribute("status", "Het gegeven emailadres werd niet gevonden.") + "passwordRecovery";
+            model.addAttribute("status", "Het gegeven emailadres werd niet gevonden.");
         }
 
         return "verificationSucces";
