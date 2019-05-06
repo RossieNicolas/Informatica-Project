@@ -1,8 +1,10 @@
 package com.architec.crediti;
 
-import com.architec.crediti.repositories.CustomUserDetails;
+import com.architec.crediti.models.User;
+import com.architec.crediti.repositories.UserRepository;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.ldap.core.DirContextAdapter;
 import org.springframework.ldap.core.DirContextOperations;
@@ -20,6 +22,9 @@ public class CustomUserDetailsContextMapper extends LdapUserDetailsMapper implem
 
     private Log log = LogFactory.getLog(this.getClass());
 
+    @Autowired
+    UserRepository userRepo;
+
     @Override
     public LdapUserDetails mapUserFromContext(DirContextOperations ctx, String username, Collection<? extends GrantedAuthority> authorities) {
 
@@ -31,6 +36,21 @@ public class CustomUserDetailsContextMapper extends LdapUserDetailsMapper implem
         log.info("Departement: " + ctx.getStringAttribute("department"));
         log.info("Role: " + ctx.getStringAttribute("extensionAttribute1"));
         log.info("--- END ATTRIBUTES ---");
+
+        String firstname = ctx.getStringAttribute("givenName");
+        String lastname = ctx.getStringAttribute("description").substring(ctx.getStringAttribute("givenName").length() + 1);
+        String email = ctx.getStringAttribute("userPrincipalName");
+        String department = ctx.getStringAttribute("department");
+        String role = ctx.getStringAttribute("extensionAttribute1");
+
+
+            if (userRepo.findByEmail(ctx.getStringAttribute("userPrincipalName")) == null) {
+                User user = new User(firstname, lastname, email, role, true);
+                userRepo.save(user);
+            } else {
+
+            }
+
 
         return new CustomUserDetails(details);
     }

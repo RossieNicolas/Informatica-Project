@@ -34,7 +34,7 @@ public class ExternalController {
         // create an external user
         ExternalUser externalUser = new ExternalUser(company, adress, postalcode, city, password);
         // create a internal user
-        User user = new User(firstname, lastname, mail, "Externe opdrachtgever");
+        User user = new User(firstname, lastname, mail, "Externe opdrachtgever", false);
         // set the foreign key
         externalUser.setUserId(user);
 

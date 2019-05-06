@@ -1,4 +1,4 @@
-package com.architec.crediti.repositories;
+package com.architec.crediti;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.ldap.userdetails.LdapUserDetails;
@@ -12,6 +12,10 @@ public class CustomUserDetails implements LdapUserDetails {
 
     public CustomUserDetails(LdapUserDetails details) {
         this.details = details;
+    }
+
+    public CustomUserDetails(String firstname) {
+        this.firstname = firstname;
     }
 
     public String getFirstname() {

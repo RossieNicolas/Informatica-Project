@@ -22,17 +22,21 @@ public class User {
     @Column(name = "role", nullable = false)
     private String role;
 
+    @Column(name = "first_login", nullable = false)
+    private boolean firstLogin;
+
     @Column(name = "login_count")
     private int loginCount;
 
     public User() {
     }
 
-    public User(String firstname, String lastname, String email, String role) {
+    public User(String firstname, String lastname, String email, String role, boolean firstLogin) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.role = role;
+        this.firstLogin = firstLogin;
     }
 
     public long getUserId() {
