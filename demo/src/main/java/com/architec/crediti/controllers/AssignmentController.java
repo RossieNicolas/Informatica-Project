@@ -67,7 +67,7 @@ public class AssignmentController {
     public ModelAndView showPersonsPage(@RequestParam("page") Optional<Integer> page) {
         ModelAndView modelAndView = new ModelAndView("listAllAssignments");
         fiches = assignmentRepo.findAll();
-        int initialPage = 0;
+        int initialPage = 1;
         int pageSize = 20;
 
         int buttons = (int) assignmentRepo.count() / pageSize;
@@ -81,10 +81,10 @@ public class AssignmentController {
         // param. decreased by 1.
         int evalPage = (page.orElse(0) < 1) ? initialPage : page.get() - 1;
 
-        Page<Assignment> persons = assignmentRepo.findAll(PageRequest.of(evalPage, pageSize));
-        Pager pager = new Pager(persons.getTotalPages(), persons.getNumber(), buttons);
+        Page<Assignment> fiches = assignmentRepo.findAll(PageRequest.of(evalPage, pageSize));
+        Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
 
-        modelAndView.addObject("persons", persons);
+        modelAndView.addObject("persons", fiches);
         modelAndView.addObject("assignments", fiches);
         modelAndView.addObject("selectedPageSize", pageSize);
         modelAndView.addObject("pager", pager);
