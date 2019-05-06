@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import sun.awt.ModalExclude;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -119,6 +120,17 @@ public class AssignmentController {
         Assignment assignment = assignmentRepo.findById((long) assignmentId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid assignment Id:" + assignmentId));
         assignmentRepo.delete(assignment);
+        model.addAttribute("assignments", assignmentRepo.findAll());
+        return "redirect:/allassignments";
+    }
+
+    //validate specific assignment
+    @GetMapping("/validateassignment/{assignmentId}")
+    public  String validateAssignment(@PathVariable("assignmentId") int assignmentId, Model model){
+        Assignment assignment = assignmentRepo.findById((long) assignmentId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid assignment Id:" + assignmentId));
+        assignment.setValidated(true);
+        assignmentRepo.save(assignment);
         model.addAttribute("assignments", assignmentRepo.findAll());
         return "redirect:/allassignments";
     }

@@ -79,25 +79,27 @@
 					<th>Nr</th>
 					<th>Opdrachtgever</th>
 					<th>Type</th>
-					<th>Taak</th>
+					<th>Naam</th>
 					<th>Begin</th>
 					<th>Einde</th>
 					<th>Gevalideerd</th>
 					<th>Volzet</th>
+                    <th></th>
 				</tr>
 				<tr th:each="a : ${assignments}" class="tablebackground">
                     <td><a th:href="${'/allassignments/' + a.getAssignmentId()}" class="button">✏️</a>
-                        &nbsp;&nbsp;&nbsp;
-                        <a th:href="@{/deleteassignment/{id} (id=${a.assignmentId})}" class="button">🗑️</a></td>
 					<td th:text="${a.getAssignmentId()}"></td>
                     <td></td>
                     <!--TODO-->
 					<!--<td th:text="${a.getAssignerUserId()}"></td>-->
 					<td th:text="${a.getType()}"></td>
-					<td th:text="${a.getTask()}" class = "cell"></td>
+					<td th:text="${a.getTitle()}" class = "cell"></td>
 					<td th:text="${a.getStartDate()}"></td>
 					<td th:text="${a.getEnd_date()}"></td>
-					<td th:text="${a.isValidated()}"></td>
+                    <td align="center">
+                        <span th:if="${a.isValidated()}">✔️</span>
+                        <span th:unless="${a.isValidated()}">❌</span>
+                    </td>
 					<td th:text="${a.isArchived()}"></td>
 				</tr>
 			</table>

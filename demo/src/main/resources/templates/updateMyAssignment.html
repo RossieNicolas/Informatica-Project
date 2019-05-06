@@ -112,9 +112,9 @@
                         </table>
                     </fieldset>
                     <br/>
-                    <input type="button" value = "✏️OPDRACHT BEWERKEN" class = "button" onclick="toggleForm();">
+                    <input type="button" value = "✏️BEWERKEN" class = "button" onclick="toggleForm();">
                     &nbsp;&nbsp;&nbsp;
-                    <input type="submit" value = "💾 AANPASSINGEN BEWAREN" class="button" id="save" style="visibility: hidden;">
+                    <input type="submit" value = "💾 BEWAREN" class="button" id="save" disabled>
                 </form>
             </div>
         </div>
@@ -135,7 +135,7 @@
 <script>
     function toggleForm() {
         document.getElementById('assignmentInfo').removeAttribute('disabled');
-        document.getElementById("save").style.visibility="visible";;
+        document.getElementById("save").disabled = false;
     }
     const numInputs = document.querySelectorAll('input[type=number]')
 
