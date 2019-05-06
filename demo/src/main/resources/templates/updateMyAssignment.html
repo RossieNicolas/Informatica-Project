@@ -92,10 +92,10 @@
                         <input name="end_date" id="end_date" type="date" th:value="*{a.getEnd_date()}"><br><br>
 
                         <label for="amountHours">Totaal uur:</label>
-                        <input name="amountHours" id="amountHours" type="text" th:value="*{a.getAmountHours()}"><br>
+                        <input name="amountHours" id="amountHours" type="number" th:value="*{a.getAmountHours()}" min="1"><br>
 
                         <label for="maxStudents">Max Studenten:</label>
-                        <input name="maxStudents" id="maxStudents" type="text" th:value="*{a.getMaxStudents()}"><br>
+                        <input name="maxStudents" id="maxStudents" type="number" th:value="*{a.getMaxStudents()}" min="1"><br>
 
                         <table class="tags">
                             <tr>
@@ -137,6 +137,15 @@
         document.getElementById('assignmentInfo').removeAttribute('disabled');
         document.getElementById("save").style.visibility="visible";;
     }
+    const numInputs = document.querySelectorAll('input[type=number]')
+
+    numInputs.forEach(function (input) {
+        input.addEventListener('change', function (e) {
+            if (e.target.value == '') {
+                e.target.value = 0
+            }
+        })
+    })
 </script>
 </body>
 </html>
