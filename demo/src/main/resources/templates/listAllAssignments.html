@@ -75,7 +75,7 @@
 		<div id='overview'>
 			<table>
 				<tr>
-					<th></th>
+					<th style="padding-left: 2.5%">Info</th>
 					<th>Nr</th>
 					<th>Opdrachtgever</th>
 					<th>Type</th>
@@ -84,10 +84,9 @@
 					<th>Einde</th>
 					<th>Gevalideerd</th>
 					<th>Volzet</th>
-                    <th></th>
 				</tr>
 				<tr th:each="a : ${assignments}" class="tablebackground">
-                    <td><a th:href="${'/allassignments/' + a.getAssignmentId()}" class="button">✏️</a>
+                    <td><a th:href="${'/allassignments/' + a.getAssignmentId()}" class="button">📃</a>
 					<td th:text="${a.getAssignmentId()}"></td>
                     <td></td>
                     <!--TODO-->
@@ -96,7 +95,7 @@
 					<td th:text="${a.getTitle()}" class = "cell"></td>
 					<td th:text="${a.getStartDate()}"></td>
 					<td th:text="${a.getEnd_date()}"></td>
-                    <td align="center">
+                    <td style="padding-left: 2.5%">
                         <span th:if="${a.isValidated()}">✔️</span>
                         <span th:unless="${a.isValidated()}">❌</span>
                     </td>

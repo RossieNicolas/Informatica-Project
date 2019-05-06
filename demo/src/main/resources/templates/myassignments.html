@@ -75,16 +75,26 @@
         </div>
         <table>
             <tr>
-                <th>ID</th>
-                <th>Titel</th>
+                <th style="padding-left: 2.5%">Info</th>
+                <th>Nr</th>
+                <th>Type</th>
+                <th>Naam</th>
+                <th>Begin</th>
+                <th>Einde</th>
+                <th>Gevalideerd</th>
             </tr>
             <tr th:each="a : ${assignments}" class = "tablebackground">
-                <td><a th:href="${'/myassignments/' + a.getAssignmentId()}" class="button">✏️</a>
+                <td><a th:href="${'/myassignments/' + a.getAssignmentId()}" class="button">📃</a>
                     &nbsp;&nbsp;&nbsp;
                 <td th:text="${a.getAssignmentId()}"></td>
-                <td th:text="${a.getAssignmentId()}"></td>
-                <td th:text="${a.getTitle()}"></td>
-
+                <td th:text="${a.getType()}"></td>
+                <td th:text="${a.getTitle()}" class = "cell"></td>
+                <td th:text="${a.getStartDate()}"></td>
+                <td th:text="${a.getEnd_date()}"></td>
+                <td style="padding-left: 2.5%">
+                    <span th:if="${a.isValidated()}">✔️</span>
+                    <span th:unless="${a.isValidated()}">❌</span>
+                </td>
             </tr>
         </table>
 </div>

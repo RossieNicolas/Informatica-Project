@@ -112,9 +112,9 @@
                             </table>
                         </fieldset>
                         <br/>
-                        <input type="button" value = "✏️BEWERKEN" class = "button" onclick="toggleForm();">
+                        <input th:if="${!a.isValidated()}" type="button" value = "✏️BEWERKEN" class = "button" onclick="toggleForm();">
                         &nbsp;&nbsp;&nbsp;
-                        <input type="submit" value = "💾 BEWAREN" class="button" id="save" disabled>
+                        <input th:if="${!a.isValidated()}" type="submit" value = "💾 BEWAREN" class="button" id="save" disabled>
                         &nbsp;&nbsp;&nbsp;
                         <a th:href="@{/deleteassignment/{id} (id=${a.assignmentId})}" class="button">🗑️ VERWIJDEREN</a>
                         &nbsp;&nbsp;&nbsp;
