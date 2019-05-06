@@ -10,4 +10,9 @@ public class HelloController {
     public String index() {
         return "home";
     }
+    @RequestMapping("/main")
+    public String main() {
+        return "main";
+    }
 }
+
