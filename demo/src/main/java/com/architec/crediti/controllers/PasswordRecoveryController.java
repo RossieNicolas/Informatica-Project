@@ -2,40 +2,39 @@ package com.architec.crediti.controllers;
 
 import com.architec.crediti.models.User;
 import com.architec.crediti.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class PasswordRecoveryController {
+    @Autowired
+    UserRepository userRepo;
 
     @GetMapping("/passwordRecovery")
     public String getPassword() {
         return "passwordRecovery";
     }
 
-    @RequestMapping (value="/confirm-account", method= {RequestMethod.GET, RequestMethod.POST})
-    public ModelAndView confirmUserAccount(ModelAndView modelAndView, @RequestParam("token")String confirmationToken)
-    {
-        ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(confirmationToken);
+    @PostMapping("/passwordRecovery")
+    public String confirmUserAccount(Model model , @RequestParam("email") String email) {
 
-        if(token != null)
-        {
-            User user = UserRepository.findByEmailIdIgnoreCase(token.getUser().getEmailId());
-            user.setEnabled(true);
-            UserRepository.save(user);
-            modelAndView.setViewName("accountVerified");
-        }
-        else
-        {
-            modelAndView.addObject("message","The link is invalid or broken!");
-            modelAndView.setViewName("error");
+        boolean check = false;
+        for (User u : userRepo.findAll()) {
+            System.out.println(u.getEmail());
+            if (u.getEmail().equals(email.toLowerCase())) {
+                check = true;
+            }
         }
 
-        return modelAndView;
+        if(check){
+            model.addAttribute("status", "U hebt met succes een wachtwoordherstel aangevraagd. Er is een email verstuurd naar het opgegeven emailadres.");
+        }
+        else{
+            return model.addAttribute("status", "Het gegeven emailadres werd niet gevonden.") + "passwordRecovery";
+        }
+
+        return "verificationSucces";
     }
-
 }
