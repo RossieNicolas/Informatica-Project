@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                     .loginPage("/login")
                     .failureUrl("/login?error")
-                    .defaultSuccessUrl("/allassignments", true)
+                    .defaultSuccessUrl("/dashboard", true)
                     .permitAll()
                 .and()
                 .logout()
@@ -53,15 +53,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             auth
                     .ldapAuthentication()
                     .contextSource()
-                    .url(ldapUrls + ldapBaseDn)
-                    .managerDn(ldapSecurityPrincipal)
-                    .managerPassword(ldapPrincipalPassword)
+                        .url(ldapUrls + ldapBaseDn)
+                        .managerDn(ldapSecurityPrincipal)
+                        .managerPassword(ldapPrincipalPassword)
                     .and()
-                    .userDnPatterns(ldapUserDnPattern)
-                    .userSearchFilter("userPrincipalName={0}")
-                    .userSearchBase("OU=Users,OU=DWAP")
-                    .groupSearchBase("OU=Distribution groups,OU=Groups,OU=DWAP")
-                    .groupRoleAttribute("CN")
-                    .groupSearchFilter("memberOf={0}");
+                        .userDnPatterns(ldapUserDnPattern)
+                        .userSearchFilter("userPrincipalName={0}")
+                        .userSearchBase("OU=Users,OU=DWAP")
+                        .groupSearchBase("OU=Distribution groups,OU=Groups,OU=DWAP")
+                        .groupRoleAttribute("CN")
+                        .groupSearchFilter("memberOf={0}");
     }
+
+
+
 }
