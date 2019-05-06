@@ -18,8 +18,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private String ldapPrincipalPassword;
     @Value("${ldap.user.dn.pattern}")
     private String ldapUserDnPattern;
-    @Value("${ldap.enabled}")
-    private String ldapEnabled;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -41,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                     .loginPage("/login")
                     .failureUrl("/login?error")
-                    .defaultSuccessUrl("/allassignments", false)
+                    .defaultSuccessUrl("/allassignments", true)
                     .permitAll()
                 .and()
                 .logout()
@@ -52,7 +50,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        if (Boolean.parseBoolean(ldapEnabled)) {
             auth
                     .ldapAuthentication()
                     .contextSource()
@@ -62,15 +59,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .and()
                     .userDnPatterns(ldapUserDnPattern)
                     .userSearchFilter("userPrincipalName={0}")
-                    .userSearchBase("OU=Studenten,OU=Users,OU=DWAP")
+                    .userSearchBase("OU=Users,OU=DWAP")
                     .groupSearchBase("OU=Distribution groups,OU=Groups,OU=DWAP")
-                    .groupRoleAttribute("CN");
-        } else {
-            auth
-                    .inMemoryAuthentication()
-                    .withUser("user").password("password").roles("USER")
-                    .and()
-                    .withUser("admin").password("admin").roles("ADMIN");
-        }
+                    .groupRoleAttribute("CN")
+                    .groupSearchFilter("memberOf={0}");
     }
 }
