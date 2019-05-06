@@ -8,6 +8,8 @@ import com.architec.crediti.repositories.TagRepo;
 import com.architec.crediti.repositories.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +26,6 @@ import java.util.List;
 public class AssignmentController {
 
     private List<Assignment> fiches;
-    private List<Assignment> subFiches;
 
     @Autowired
     TagRepo tagRepo;
@@ -60,10 +61,8 @@ public class AssignmentController {
 
     @GetMapping("/allassignments")
     public String getAllAssingments(Model model) {
-        fiches = assignmentRepo.findAll();
-        subFiches = fiches.subList(0, 10);
-
-        model.addAttribute("assignments", subFiches);
+        Page<Assignment> lijst = assignmentRepo.findAll(PageRequest.of(0, 20));
+        model.addAttribute("assignments", lijst);
 
         return "listAllAssignments";
     }

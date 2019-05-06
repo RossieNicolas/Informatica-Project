@@ -90,10 +90,10 @@
                     <input name="endDate" id="endDate" type="date"><br><br>
 
                     <label for="amountHours">Totaal uur:</label>
-                    <input name="amountHours" id="amountHours" type="text"><br>
+                    <input name="amountHours" id="amountHours" type="number"><br>
 
                     <label for="maxStudents">Aantal studenten:</label>
-                    <input name="maxStudents" id="maxStudents" type="text"><br>
+                    <input name="maxStudents" id="maxStudents" type="number"><br>
 
                     <table class="tags">
                         <tr>
@@ -130,5 +130,18 @@
         </div>
     </div>
 </footer>
+
+<script>
+    const numInputs = document.querySelectorAll('input[type=number]')
+
+    numInputs.forEach(function (input) {
+        input.addEventListener('change', function (e) {
+            if (e.target.value == '') {
+                e.target.value = 0
+            }
+        })
+    })
+</script>
+
 </body>
 </html>
