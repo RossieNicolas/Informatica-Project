@@ -79,39 +79,14 @@
                 <th>Titel</th>
             </tr>
             <tr th:each="a : ${assignments}" class = "tablebackground">
-                <td><a th:href="${'/allassignments/' + a.getAssignmentId()}" class="button">✏️</a>
+                <td><a th:href="${'/myassignments/' + a.getAssignmentId()}" class="button">✏️</a>
                     &nbsp;&nbsp;&nbsp;
-                    <a th:href="@{/deleteassignment/{id} (id=${a.assignmentId})}" class="button">🗑️</a></td>
                 <td th:text="${a.getAssignmentId()}"></td>
                 <td th:text="${a.getAssignmentId()}"></td>
                 <td th:text="${a.getTitle()}"></td>
 
             </tr>
         </table>
-<!--
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Titel</th>
-        </tr>
-        <tr th:each="f : ${filter}" class = "tablebackground">
-            <td th:text="${f.getAssignmentId()}"></td>
-            <td th:text="${f.getTitle()}"></td>
-
-        </tr>
-    </table>
-
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Titel</th>
-        </tr>
-        <tr th:each="u : ${users}" class = "tablebackground">
-            <td th:text="${u.getAssignmentId()}"></td>
-            <td th:text="${u.getTitle()}"></td>
-
-        </tr>
-    </table>-->
 </div>
 
 <footer>

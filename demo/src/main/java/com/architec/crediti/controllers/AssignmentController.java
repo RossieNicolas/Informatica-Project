@@ -123,14 +123,4 @@ public class AssignmentController {
         return "redirect:/allassignments";
     }
 
-    //delete specific assignment
-    @GetMapping("/deletemyassignment/{assignmentId}")
-    public String deleteMyAssignment(@PathVariable("assignmentId") int assignmentId, Model model) {
-        Assignment assignment = assignmentRepo.findById((long) assignmentId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid assignment Id:" + assignmentId));
-        assignmentRepo.delete(assignment);
-        model.addAttribute("assignments", assignmentRepo.findAll());
-        return "redirect:/myassignments";
-    }
-
 }
