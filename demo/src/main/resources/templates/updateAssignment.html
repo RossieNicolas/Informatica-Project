@@ -115,6 +115,7 @@
                         <input th:if="${!a.isValidated()}" type="button" value = "✏️BEWERKEN" class = "button" onclick="toggleForm();">
                         &nbsp;&nbsp;&nbsp;
                         <input th:if="${!a.isValidated()}" type="submit" value = "💾 BEWAREN" class="button" id="save" disabled>
+                        <a th:if="${a.isValidated()}" th:href="@{/studentenroll/{id} (id=${a.assignmentId})}" class="button">➕ Inschrijven</a>
                         &nbsp;&nbsp;&nbsp;
                         <a th:href="@{/deleteassignment/{id} (id=${a.assignmentId})}" class="button">🗑️ VERWIJDEREN</a>
                         &nbsp;&nbsp;&nbsp;
