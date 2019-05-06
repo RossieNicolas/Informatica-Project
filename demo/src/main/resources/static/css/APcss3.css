@@ -14404,7 +14404,14 @@ ul.meta2 li.twitter a:hover:before {
 	font-size: 13px
 }
 
-#summary{
+#task{
 	width: 600px;
 	height: 150px;
+}
+
+#tag {
+	display: block;
+	float: left;
+	margin-top: 12px;
+	margin-right: 11px;
 }
