@@ -321,6 +321,11 @@ p {
 	background-color:#007bff;
 	border-color:#007bff
 }
+#zoekKnop{
+	float:right ; 
+	margin-right: 5px;
+}
+
 
 
 
