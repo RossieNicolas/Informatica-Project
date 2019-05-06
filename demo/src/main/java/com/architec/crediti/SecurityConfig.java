@@ -23,22 +23,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+        String[] staticResources  =  {
+                "/css/**",
+                "/images/**",
+        };
+
+
         http
                 .authorizeRequests()
-                .antMatchers("/login**").permitAll()
-                .antMatchers("/assignment/","/allassignments", "/myassignments", "/tag", "/listAllTags").fullyAuthenticated()
-                .antMatchers("/").permitAll()
+                    //pagina's die niet-ingelogde gebruikers zien
+                    .antMatchers(staticResources).permitAll()
+                    .antMatchers("/login", "/").permitAll()
+                    //Alle andere pagina's blokkeren
+                    .anyRequest().fullyAuthenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login")
-                .failureUrl("/login?error")
-                .defaultSuccessUrl("/assignment", false)
-                .permitAll()
+                    .loginPage("/login")
+                    .failureUrl("/login?error")
+                    .defaultSuccessUrl("/allassignments", false)
+                    .permitAll()
                 .and()
                 .logout()
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID")
-                .permitAll();
+                    .invalidateHttpSession(true)
+                    .deleteCookies("JSESSIONID")
+                    .permitAll();
     }
 
     @Override
