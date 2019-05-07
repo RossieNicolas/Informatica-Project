@@ -24,7 +24,13 @@
     <div class="container ">
         <div class="wrap-all col-xs-12 ">
             <h2 class="extra">Wachtwoord recovery</h2>
-            <td th:text='${status}' />
+            <div th:if="${succes}">
+                <div><td th:text='${succes}' /></div>
+            </div>
+            <div th:unless="${succes}">
+                <div><td th:text='${fail}' />
+                    <a th:href="@{'/passwordRecovery'}"/>Klik hier om opnieuw te proberen.</div>
+            </div>
         </div>
     </div>
 </div>

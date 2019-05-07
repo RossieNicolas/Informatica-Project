@@ -29,10 +29,10 @@ public class PasswordRecoveryController {
         }
 
         if(check){
-            model.addAttribute("status", "U hebt met succes een wachtwoordherstel aangevraagd. Er is een email verstuurd naar het opgegeven emailadres.");
+            model.addAttribute("succes", "U hebt met succes een wachtwoordherstel aangevraagd. Er is een email verstuurd naar het opgegeven emailadres.");
         }
         else{
-            model.addAttribute("status", "Het gegeven emailadres werd niet gevonden.");
+            model.addAttribute("fail", "Het gegeven emailadres werd niet gevonden.");
         }
 
         return "verificationSucces";
