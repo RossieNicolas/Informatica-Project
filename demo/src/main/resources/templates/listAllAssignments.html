@@ -105,9 +105,8 @@
             </tbody>
         </table>
 
-        <section class="title">
-        <div class="container">
-            <div th:if="${persons.totalPages != 1}">
+        <div class="container nav-table">
+            <div th:if="${persons.totalPages != 1}" >
                 <ul class="pagination">
                     <li th:class="${persons.number == 0} ? disabled">
                         <a th:href="@{/allassignments/(page=${persons.number})}">&laquo;</a>
@@ -123,7 +122,6 @@
                 </ul>
             </div>
         </div>
-        </section>
 
 		<footer>
 			<div class="footer-bot">

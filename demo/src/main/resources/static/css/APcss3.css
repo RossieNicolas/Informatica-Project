@@ -350,6 +350,11 @@ p {
     pointer-events: none;
 }
 
+.nav-table {
+	color:#212529;
+	background-color:hsla(0,100%,100%,0.6);
+}
+
 
 
 
