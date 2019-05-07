@@ -112,9 +112,16 @@
                             </table>
                         </fieldset>
                         <br/>
-                        <input type="button" value = "✏️OPDRACHT BEWERKEN" class = "button" onclick="toggleForm();">
+                        <input th:if="${!a.isValidated()}" type="button" value = "✏️BEWERKEN" class = "button" onclick="toggleForm();">
                         &nbsp;&nbsp;&nbsp;
-                        <input type="submit" value = "💾 AANPASSINGEN BEWAREN" class="button" id="save" style="visibility: hidden;">
+                        <input th:if="${!a.isValidated()}" type="submit" value = "💾 BEWAREN" class="button" id="save" disabled>
+                        <a th:if="${a.isValidated()}" th:href="@{/studentenroll/{id} (id=${a.assignmentId})}" class="button">➕ Inschrijven</a>
+                        &nbsp;&nbsp;&nbsp;
+                        <a th:href="@{/deleteassignment/{id} (id=${a.assignmentId})}" class="button">🗑️ VERWIJDEREN</a>
+                        &nbsp;&nbsp;&nbsp;
+                        <a th:href="@{/validateassignment/{id} (id=${a.assignmentId})}" class="button">✔️VALIDEREN</a>
+                        &nbsp;&nbsp;&nbsp;
+                        <a th:href="@{/archiveassignment/{id} (id=${a.assignmentId})}" class="button">🗄️ ARCHIVEREN</a>
                     </form>
                 </div>
             </div>
@@ -135,7 +142,7 @@
 <script>
     function toggleForm() {
         document.getElementById('assignmentInfo').removeAttribute('disabled');
-        document.getElementById("save").style.visibility="visible";;
+        document.getElementById("save").disabled = false;
     }
     const numInputs = document.querySelectorAll('input[type=number]')
 

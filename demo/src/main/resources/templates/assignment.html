@@ -75,35 +75,37 @@
                 <form th:action='@{/assignment}' method='POST' class="standard-form">
 
                     <label for="title">Titel:</label>
-                    <input name="title" id="title" type="text"><br>
+                    <input name="title" id="title" type="text" required="required"><br>
 
                     <label for="type">Type:</label>
-                    <input name="type" id="type" type="text"><br>
+                    <input name="type" id="type" type="text" required="required"><br>
 
                     <label for="task">Omschrijving opdracht:</label>
-                    <textarea name="task" id="task" rows="10" cols="30"></textarea><br>
+                    <textarea name="task" id="task" rows="10" cols="30" required="required"></textarea><br>
 
-                    <label for="startDate">Begindatum:</label><br>
-                    <input name="startDate" id="startDate" type="date"><br>
+                    <label for="start_date">Begindatum:</label><br>
+                    <input name="start_date" id="start_date" type="date" onchange="SDate()" required="required"><br>
 
-                    <label for="endDate">Einddatum:</label><br>
-                    <input name="endDate" id="endDate" type="date"><br><br>
+                    <label for="end_date">Einddatum:</label><br>
+                    <input name="end_date" id="end_date" type="date" onchange="TDate()" required="required"><br><br>
 
                     <label for="amountHours">Totaal uur:</label>
-                    <input name="amountHours" id="amountHours" type="number"><br>
+                    <input name="amountHours" id="amountHours" type="number" required="required" min="1"><br>
 
-                    <label for="maxStudents">Aantal studenten:</label>
-                    <input name="maxStudents" id="maxStudents" type="number"><br>
+                    <label for="maxStudents">Max Studenten:</label>
+                    <input name="maxStudents" id="maxStudents" type="number" required="required" min="1"><br>
 
-                    <table class="tags">
+                    <table class="tagsAssignments">
                         <tr>
                             <th>Tags</th>
                         </tr>
                         <tr>
                             <td>
-                                <th:block th:each="tag : ${updatetag}">
-                                    <input type="checkbox" id="tagCheckBox"/>
-                                    <label for="tagCheckBox" th:text="${tag.getTagName()}"></label>
+
+                                <th:block th:each='tag: ${updatetag}'>
+                                    <input type="checkbox" id="tag" name="tag" th:tr='${tag.getTagName()}'
+                                           th:value='${tag.getTagId()}'/>
+                                    <label for="tag" th:text='${tag.getTagName()}'></label>
                                 </th:block>
                             </td>
                         </tr>
@@ -130,17 +132,33 @@
         </div>
     </div>
 </footer>
-
 <script>
-    const numInputs = document.querySelectorAll('input[type=number]')
-
-    numInputs.forEach(function (input) {
-        input.addEventListener('change', function (e) {
-            if (e.target.value == '') {
-                e.target.value = 0
+    function TDate() {
+        var startDate = document.getElementById("start_date").value;
+        var endDate = document.getElementById("end_date").value;
+        if (startDate != null && endDate != null) {
+            if (startDate >= endDate) {
+                alert("De startdatum moet kleiner zijn dan de einddatum van uw opdracht!");
+                document.getElementById('end_date').value = "";
+                return false;
             }
-        })
-    })
+            return true;
+        }
+    }
+
+    function SDate() {
+        var startDate = document.getElementById("start_date").value;
+        var currentDate = new Date().toISOString().split('T')[0];
+
+        if (startDate != null) {
+            if (startDate < currentDate) {
+                alert("De startdatum moet groter of gelijk zijn aan de datum van vandaag!");
+                document.getElementById('start_date').value = "";
+                return false;
+            }
+            return true
+        }
+    }
 </script>
 
 </body>

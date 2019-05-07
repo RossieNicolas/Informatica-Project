@@ -22,9 +22,6 @@ public class User {
     @Column(name = "role", nullable = false)
     private String role;
 
-    @Column(name = "login_count")
-    private int loginCount;
-
     public User() {
     }
 

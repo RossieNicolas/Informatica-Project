@@ -4,6 +4,7 @@ import com.architec.crediti.models.Assignment;
 import com.architec.crediti.models.Pager;
 import com.architec.crediti.models.Tag;
 import com.architec.crediti.repositories.AssignmentRepository;
+import com.architec.crediti.repositories.Methods;
 import com.architec.crediti.repositories.TagRepo;
 import com.architec.crediti.repositories.UserRepository;
 
@@ -12,18 +13,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 
 @Controller
 public class AssignmentController {
@@ -39,6 +36,7 @@ public class AssignmentController {
     @Autowired
     UserRepository userRepo;
 
+    //get assignment form
     @RequestMapping(value = "/assignment", method = RequestMethod.GET)
     public String tag(Model model) /* throws SQLException */ {
 
@@ -48,25 +46,95 @@ public class AssignmentController {
         return "assignment";
     }
 
+    //add assignment
     @PostMapping("/assignment")
-    public String createAssignment(@Valid Assignment assignment) {
-         assignmentRepo.save(assignment);
-        return "redirect:/allassignments";
+    public String createAssignment(@Valid Assignment assignment, @RequestParam(required = false, value = "tag") int[] tags) {
+        ArrayList<Tag> list = new ArrayList<>();
+        ArrayList<String> list2 = new ArrayList<>();
+
+        if (tags != null) {
+            for (int item : tags) {
+                Tag tag = tagRepo.findBytagId(item);
+                list.add(tag);
+            }
+
+            for (Tag item : list) {
+                list2.add(item.getTagName());
+            }
+
+            assignment.setTagAssign(list2.toString());
+        }
+        assignmentRepo.save(assignment);
+        return "successfullAssignment";
     }
 
+    //error page
     @GetMapping("/error")
     public String error() {
         return "error";
     }
 
+    //list all assignments
     @GetMapping("/allassignments")
     public ModelAndView showPersonsPage(@RequestParam("page") Optional<Integer> page) {
         ModelAndView modelAndView = new ModelAndView("listAllAssignments");
-        fiches = assignmentRepo.findAll();
         int initialPage = 1;
         int pageSize = 20;
 
         int buttons = (int) assignmentRepo.count() / pageSize;
+
+        if (assignmentRepo.count() % pageSize != 0) {
+            buttons++;
+        }
+
+        // Evaluate page. If requested parameter is null or less than 0 (to
+        // prevent exception), return initial size. Otherwise, return value of
+        // param. decreased by 1.
+        int evalPage = (page.orElse(0) < 1) ? initialPage : page.get() - 1;
+
+        Page<Assignment> fiches = assignmentRepo.findAll(PageRequest.of(evalPage, pageSize));
+        Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
+
+        modelAndView.addObject("persons", fiches);
+        modelAndView.addObject("assignments", Methods.removeFullAssignments(assignmentRepo.findByTitleContainingAndArchived("" , false)));
+        modelAndView.addObject("selectedPageSize", pageSize);
+        modelAndView.addObject("pager", pager);
+        return modelAndView;
+    }
+
+    //list all unvalidated assignments
+    @GetMapping("/unvalidatedassignments")
+    public String getUnvalidatedAssingments(Model model) {
+        fiches = assignmentRepo.findAll();
+        List<Assignment> unvalidatedFiches = new ArrayList<>();
+
+        for (Assignment item : fiches) {
+            if (!item.isValidated()) {
+                unvalidatedFiches.add(item);
+            }
+        }
+
+        model.addAttribute("assignments", unvalidatedFiches);
+
+        return "listUnvalidatedAssignments";
+    }
+
+    //search assignments
+    @PostMapping("/allassignments")
+    public String getAssignment(@RequestParam("searchbar") String name,
+                         Model model){
+
+        try {
+            Assignment a = assignmentRepo.findByAssignmentId((Integer.parseInt(name)));
+            if(a.getAmountStudents() != a.getMaxStudents() && !a.isArchived()){
+                model.addAttribute("assignments" ,  a);
+            }
+
+        } catch (Exception e) {
+            model.addAttribute("assignments",  Methods.removeFullAssignments(assignmentRepo.findByTitleContainingAndArchived(name , false)));
+        }
+
+
 
         if (assignmentRepo.count() % pageSize != 0) {
             buttons++;
@@ -96,40 +164,75 @@ public class AssignmentController {
         return "myassignments";
     }
 
-    @GetMapping("/unvalidatedassignments")
-    public String getUnvalidatedAssingments(Model model) {
-        fiches = assignmentRepo.findAll();
-        List<Assignment> unvalidatedFiches = new ArrayList<>();
+    //find specific assignment to edit out of all assignments
+    @RequestMapping(value = "/allassignments/{assignmentId}", method = RequestMethod.GET)
+    public String getAssignmentsToUpdate(@PathVariable("assignmentId") int assignmentId, Model model) {
 
-        for (Assignment item : fiches) {
-            if (!item.isValidated()) {
-                unvalidatedFiches.add(item);
+        try{
+            Assignment a = assignmentRepo.findByAssignmentId(assignmentId);
+            if(a.getAmountStudents() != a.getMaxStudents() && !a.isArchived()){
+                model.addAttribute("assignments" ,  a);
             }
         }
-
-        model.addAttribute("assignments", unvalidatedFiches);
-
-        return "listUnvalidatedAssignments";
+        catch(Exception ex) {
+            // als er geen assignment is met ingegeven id dan wordt er een lege pagina weergegeven,
+            //zonder catch krijgt gebruiker een error wat niet de bedoeling is
+        }
+            return "updateAssignment";
     }
 
-    @GetMapping("/detailfiche")
-    public String getDetailFiche(Model model) {
-        fiches = assignmentRepo.findAll();
+    //update specific assignment
+    @PostMapping(value = "/allassignments/{assignmentId}")
+    public String updateAssignment(@PathVariable("assignmentId") int assignmentId, @Valid Assignment assignment) {
 
-        Assignment output = new Assignment();
-        for (Assignment item : fiches) {
-            if (item.getAssignmentId() == 81) {
-                output = item;
-            }
+        assignment.setAssignmentId(assignmentId);
+        if (!(assignment.getTitle().equalsIgnoreCase("") || assignment.getType().equalsIgnoreCase("") || assignment.getTask().equalsIgnoreCase(""))){
+            assignmentRepo.save(assignment);
         }
 
-        model.addAttribute("assignments", output);
-
-        return "detailFiche";
+        return "redirect:/allassignments";
     }
 
-    @PostMapping("/goedkeuren")
-    public String ficheGoedkeuren() {
-        return "";
+    //find specific assignment to edit out of all assignments
+    @RequestMapping(value = "/myassignments/{assignmentId}", method = RequestMethod.GET)
+    public String getMyAssignmentsToUpdate(@PathVariable("assignmentId") int assignmentId, Model model) {
+
+        Assignment fiches = assignmentRepo.findByAssignmentId(assignmentId);
+
+        model.addAttribute("assignments", fiches);
+        return "updateMyAssignment";
     }
+
+    //update specific assignment
+    @PostMapping(value = "/myassignments/{assignmentId}")
+    public String updateMyAssignment(@PathVariable("assignmentId") int assignmentId, @Valid Assignment assignment) {
+
+        assignment.setAssignmentId(assignmentId);
+        if (!(assignment.getTitle().equalsIgnoreCase("") || assignment.getType().equalsIgnoreCase("") || assignment.getTask().equalsIgnoreCase(""))){
+            assignmentRepo.save(assignment);
+        }
+        return "redirect:/myassignments";
+    }
+
+    //delete specific assignment
+    @GetMapping("/deleteassignment/{assignmentId}")
+    public String deleteAssignment(@PathVariable("assignmentId") int assignmentId, Model model) {
+        Assignment assignment = assignmentRepo.findById((long) assignmentId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid assignment Id:" + assignmentId));
+        assignmentRepo.delete(assignment);
+        model.addAttribute("assignments", assignmentRepo.findAll());
+        return "redirect:/allassignments";
+    }
+
+    //validate specific assignment
+    @GetMapping("/validateassignment/{assignmentId}")
+    public  String validateAssignment(@PathVariable("assignmentId") int assignmentId, Model model){
+        Assignment assignment = assignmentRepo.findById((long) assignmentId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid assignment Id:" + assignmentId));
+        assignment.setValidated(true);
+        assignmentRepo.save(assignment);
+        model.addAttribute("assignments", assignmentRepo.findAll());
+        return "redirect:/allassignments";
+    }
+
 }

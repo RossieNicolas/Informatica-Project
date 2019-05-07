@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
 <head>
     <meta charset="UTF-8">
-    <title>Crediti - Alle opdrachten</title>
-    <link rel="stylesheet" th:href="@{/css/APcss2.css}">
+    <title>Crediti - Success</title>
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
 <body class="background">
@@ -27,6 +26,7 @@
                                             <a href="/allassignments">Lopende taken</a>
                                             <a href="/assignment">Taak toevoegen</a>
                                             <a href="/myassignments">Mijn taken</a>
+                                            <a href="">Taak bewerken</a>
                                         </div>
                                     </div>
                                 </li>
@@ -50,7 +50,7 @@
                                         <span>Coördinator</span>
                                         <div class="dropdown-content">
                                             <a href="/tag">Tag toevoegen</a>
-                                            <a href="/listAllTags">Lijst van tags</a>
+                                            <a href="">Tag bewerken</a>
                                             <a href="">Archief</a>
                                         </div>
                                     </div>
@@ -66,70 +66,13 @@
         </div>
     </div>
 </header>
-
-
-		
-		<div class="container ">
-			<h2 class = "extra">Alle opdrachten</h2>
-        </div>
-		<div id='overview'>
-            <form th:action='@{/allassignments}' method='POST' class="standard-form">
-                <table  class ="tableAsssignment">
-                    <th><label for='searchbar'>Naam: </label></th>
-                    <th><input type='search' class='form-control' name='searchbar' id='searchbar'></th>
-                    <th><input type='SUBMIT' id = "zoekKnop" value = "Zoek" class="button"/></th>
-
-                </table>
-            </form>
-                <table>
-				<tr>
-					<th style="padding-left: 2.5%">Info</th>
-					<th>Nr</th>
-					<th>Opdrachtgever</th>
-					<th>Type</th>
-					<th>Naam</th>
-					<th>Begin</th>
-					<th>Einde</th>
-					<th>Gevalideerd</th>
-					<th>Gearchiveerd</th>
-				</tr>
-				<tr th:each="a : ${assignments}" class="tablebackground">
-                    <td><a th:href="${'/allassignments/' + a.getAssignmentId()}" class="button">📃</a>
-					<td th:text="${a.getAssignmentId()}"></td>
-                    <!--TODO-->
-					<!--<td th:text="${a.getAssignerUserId()}"></td>-->
-                    <td>opdrachtgever</td>
-					<td th:text="${a.getType()}"></td>
-					<td th:text="${a.getTitle()}" class = "cell"></td>
-					<td th:text="${a.getStartDate()}"></td>
-					<td th:text="${a.getEnd_date()}"></td>
-                    <td style="padding-left: 2.5%">
-                        <span th:if="${a.isValidated()}">✔️</span>
-                        <span th:unless="${a.isValidated()}">❌</span>
-                    </td>
-					<td th:text="${a.isArchived()}"></td>
-				</tr>
-			</table>
-		</div>
-<div class="container">
-    <div th:if="${persons.totalPages != 1}">
-        <ul class="pagination">
-            <li th:class="${persons.number == 0} ? disabled">
-                <a th:href="@{/allassignments/(page=${persons.number})}">&laquo;</a>
-            </li>
-            <li th:class="${persons.number == (page - 1)} ? 'active pointer-disabled'"
-                th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
-                <a th:href="@{/allassignments/(page=${page})}"
-                   th:text="${page}"></a>
-            </li>
-            <li th:class="${persons.number + 1 == persons.totalPages} ? disabled">
-                <a th:href="@{/allassignments/(page=${persons.number + 2})}">&raquo;</a>
-            </li>
-        </ul>
+<div class="block">
+    <div class="container extra">
+        <h2>Opdracht is aangemaakt!</h2>
+        <p>Nieuwe opdracht aanmaken? Klik <a th:href="@{/assignment}"><u>hier.</u></a></p>
     </div>
 </div>
-
-
+<div style="height: 65%"></div>
 <footer>
     <div class="footer-bot">
         <div class="container">

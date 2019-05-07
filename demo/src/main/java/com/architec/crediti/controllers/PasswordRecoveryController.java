@@ -37,4 +37,8 @@ public class PasswordRecoveryController {
 
         return "verificationSucces";
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/NicoSprint2.2
