@@ -338,7 +338,7 @@ p {
 
 .pagination {
 	text-align: center;
-	display: blcok;
+	display: block;
 }
 
 .disabled {
@@ -350,14 +350,10 @@ p {
     pointer-events: none;
 }
 
-.nav-table {
+.navtable {
 	color:#212529;
 	background-color:hsla(0,100%,100%,0.6);
 }
-
-
-
-
 
 .pagination {
 	display:-ms-flexbox;
@@ -384,6 +380,7 @@ p {
 	background-color:#007bff;
 	border-color:#007bff
 }
+
 #zoekKnop{
 	float:right ;
 	margin-right: 5px;

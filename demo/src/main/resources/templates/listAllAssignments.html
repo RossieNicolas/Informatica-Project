@@ -5,7 +5,7 @@
     <title>Crediti - Alle opdrachten</title>
     <link rel="stylesheet" th:href="@{/css/APcss2.css}">
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
-    
+
 </head>
 <body class="background">
 <header>
@@ -69,71 +69,71 @@
 </header>
 
 
-		
-		<div class="container ">
-			<h2 class = "extra">Alle opdrachten</h2>
-        </div>
-        <table>
-            <thead>
-				<tr>
-					<th></th>
-					<th>Nr</th>
-					<th>Opdrachtgever</th>
-					<th>Type</th>
-					<th>Taak</th>
-					<th>Begin</th>
-					<th>Einde</th>
-					<th>Gevalideerd</th>
-					<th>Volzet</th>
-				</tr>
-            </thead>
-            <tbody>
-				<tr th:each="a : ${assignments}" class="tablebackground">
-                    <td>
-                        <a class="button">✏️</a>
-                        <a class="button">🗑️</a>
-                    </td>
-					<td th:text="${a.getAssignmentId()}"></td>
-					<td th:text="${a.getAssignerUserId()}"></td>
-					<td th:text="${a.getType()}"></td>
-					<td th:text="${a.getTask()}" class = "cell"></td>
-					<td th:text="${a.getStartDate()}"></td>
-					<td th:text="${a.getEndDate()}"></td>
-					<td th:text="${a.isValidated()}"></td>
-					<td th:text="${a.isArchived()}"></td>
-				</tr>
-            </tbody>
-        </table>
 
-        <div class="container nav-table">
-            <div th:if="${persons.totalPages != 1}" >
-                <ul class="pagination">
-                    <li th:class="${persons.number == 0} ? disabled">
-                        <a th:href="@{/allassignments/(page=${persons.number})}">&laquo;</a>
-                    </li>
-                    <li th:class="${persons.number == (page - 1)} ? 'active pointer-disabled'"
-                        th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
-                        <a th:href="@{/allassignments/(page=${page})}"
-                        th:text="${page}"></a>
-                    </li>
-                    <li th:class="${persons.number + 1 == persons.totalPages} ? disabled">
-                        <a th:href="@{/allassignments/(page=${persons.number + 2})}">&raquo;</a>
-                    </li>
-                </ul>
+<div class="container ">
+    <h2 class = "extra">Alle opdrachten</h2>
+</div>
+<table>
+    <thead>
+    <tr>
+        <th></th>
+        <th>Nr</th>
+        <th>Opdrachtgever</th>
+        <th>Type</th>
+        <th>Taak</th>
+        <th>Begin</th>
+        <th>Einde</th>
+        <th>Gevalideerd</th>
+        <th>Volzet</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="a : ${assignments}" class="tablebackground">
+        <td>
+            <a class="button">✏️</a>
+            <a class="button">🗑️</a>
+        </td>
+        <td th:text="${a.getAssignmentId()}"></td>
+        <td th:text="${a.getAssignerUserId()}"></td>
+        <td th:text="${a.getType()}"></td>
+        <td th:text="${a.getTask()}" class = "cell"></td>
+        <td th:text="${a.getStartDate()}"></td>
+        <td th:text="${a.getEndDate()}"></td>
+        <td th:text="${a.isValidated()}"></td>
+        <td th:text="${a.isArchived()}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="container">
+    <div th:if="${persons.totalPages != 1}">
+        <ul class="pagination">
+            <li th:class="${persons.number == 0} ? disabled">
+                <a th:href="@{/allassignments/(page=${persons.number})}">&laquo;</a>
+            </li>
+            <li th:class="${persons.number == (page - 1)} ? 'active pointer-disabled'"
+                th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
+                <a th:href="@{/allassignments/(page=${page})}"
+                   th:text="${page}"></a>
+            </li>
+            <li th:class="${persons.number + 1 == persons.totalPages} ? disabled">
+                <a th:href="@{/allassignments/(page=${persons.number + 2})}">&raquo;</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-bot">
+        <div class="container">
+            <div class="left col-sm-6 col-xs-12">
+                <p>Ontworpen door studenten Toegepaste Informatica</p>
+            </div>
+            <div class="right col-sm-6 col-xs-12">
+                <p>© 2019 All rights reserved.</p>
             </div>
         </div>
-
-		<footer>
-			<div class="footer-bot">
-				<div class="container">
-					<div class="left col-sm-6 col-xs-12">
-						<p>Ontworpen door studenten Toegepaste Informatica</p>
-					</div>
-					<div class="right col-sm-6 col-xs-12">
-						<p>© 2019 All rights reserved.</p>
-					</div>
-				</div>
-			</div>
-		</footer>
-	</body>
-	</html>
+    </div>
+</footer>
+</body>
+</html>
