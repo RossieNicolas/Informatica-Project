@@ -2,13 +2,11 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Crediti - Tag toevoegen</title>
+    <title>Crediti - Opdracht bewerken</title>
     <link rel="stylesheet" th:href="@{/css/APcss2.css}">
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
-<body>
-<div class="background">
-
+<body class="background">
     <header>
         <div class="nav-main navbackground">
             <div class="container">
@@ -72,28 +70,56 @@
         <section class="find-edu">
             <div class="container ">
                 <div class="wrap-all col-xs-12 ">
-                    <h2>Tag toevoegen</h2>
-                    <form th:action='@{/tag}' method='POST'>
-                        <label for='tagName'>Tag: </label>
-                        <input type='text' name='tagName' id='tagName' maxlength="50" placeholder="tagnaam">
-                        <br/><br />
-                        <label for='tagDescription'>Beschrijving: </label>
-                        <input type='text' name='tagDescription' id='tagDescription' maxlength="250"
-                               placeholder="korte beschrijving">
-                        <br/>
-                        <input type='submit' value='Voeg toe' class="button">
+                    <h2>Opdracht bewerken</h2>
 
+
+
+                    <form th:each="a: ${assignments}" class="standard-form" method="post">
+                        <fieldset disabled="disabled" id="assignmentInfo">
+                            <label for="title">Titel:</label>
+                            <input name="title" id="title" type="text" th:value="*{a.getTitle()}"><br>
+
+                            <label for="type">Type:</label>
+                            <input name="type" id="type" type="text" th:value="*{a.getType()}"><br>
+
+                            <label for="task">Omschrijving opdracht:</label>
+                            <input name="task" id="task" th:value="*{a.getTask()}" type="text"><br>
+
+                            <label for="start_date">Begindatum:</label><br>
+                            <input name="start_date" id="start_date" type="date" th:value="*{a.getStartDate()}"><br>
+
+                            <label for="end_date">Einddatum:</label><br>
+                            <input name="end_date" id="end_date" type="date" th:value="*{a.getEnd_date()}"><br><br>
+
+                            <label for="amountHours">Totaal uur:</label>
+                            <input name="amountHours" id="amountHours" type="number" th:value="*{a.getAmountHours()}" min="1"><br>
+
+                            <label for="maxStudents">Max Studenten:</label>
+                            <input name="maxStudents" id="maxStudents" type="number" th:value="*{a.getMaxStudents()}" min="1"><br>
+
+                            <table class="tags">
+                                <tr>
+                                    <th>Tags</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <th:block th:each="tag : ${listAllTags}">
+                                            <input type="checkbox" id="tagCheckBox"/>
+                                            <label for="tagCheckBox" th:text="${tag.getTagName()}"></label>
+                                        </th:block>
+                                    </td>
+                                </tr>
+                            </table>
+                        </fieldset>
+                        <br/>
+                        <input type="button" value = "✏️OPDRACHT BEWERKEN" class = "button" onclick="toggleForm();">
+                        &nbsp;&nbsp;&nbsp;
+                        <input type="submit" value = "💾 AANPASSINGEN BEWAREN" class="button" id="save" style="visibility: hidden;">
                     </form>
                 </div>
             </div>
-            <div class="alert" id="panel">
-                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-                Tag toegevoegd.
-            </div>
         </section>
     </div>
-
-</div>
 <footer>
     <div class="footer-bot">
         <div class="container">
@@ -107,9 +133,20 @@
     </div>
 </footer>
 <script>
-    function submission(){
-        document.getElementById("panel").style.display = "block";
+    function toggleForm() {
+        document.getElementById('assignmentInfo').removeAttribute('disabled');
+        document.getElementById("save").style.visibility="visible";;
     }
+    const numInputs = document.querySelectorAll('input[type=number]')
+
+    numInputs.forEach(function (input) {
+        input.addEventListener('change', function (e) {
+            if (e.target.value == '') {
+                e.target.value = 0
+            }
+        })
+    })
 </script>
 </body>
 </html>
+

@@ -12,4 +12,5 @@ public interface AssignmentRepository extends PagingAndSortingRepository<Assignm
     List<Assignment> findByMaxStudents(int maxStudents);
 
     List<Assignment> findByAssignerUserId(long assignerUserId);
+    List<Assignment> findByAssignmentId(long assignmentId);
 }

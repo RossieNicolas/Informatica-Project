@@ -21,19 +21,19 @@ public class Assignment {
 	@Column(name = "amountHours", nullable = false)
 	private int amountHours;
 
-	@Column(name = "amount_students")
+	@Column(name = "amountStudents")
 	private int amountStudents;
 
-	@Column(name = "max_students", nullable = false)
+	@Column(name = "maxStudents", nullable = false)
 	private int maxStudents;
 
-	@Column(name = "start_date", nullable = false)
+	@Column(name = "start_date")
 	// @Temporal(TemporalType.DATE)
-	private String startDate;
+	private String start_date;
 
-	@Column(name = "end_date", nullable = false)
+	@Column(name = "end_date")
 	// @Temporal(TemporalType.DATE)
-	private String endDate;
+	private String end_date;
 
 	@Column(name = "archived", nullable = false)
 	private boolean archived;
@@ -50,15 +50,15 @@ public class Assignment {
 	}
 
 	public Assignment(String title, String type, String task, int amountHours, int amountStudents, int maxStudents,
-			String startDate, String endDate, boolean archived, boolean validated, User assignerUserId) {
+					  String start_date, String end_date, boolean archived, boolean validated, User assignerUserId) {
 		this.title = title;
 		this.type = type;
 		this.task = task;
 		this.amountHours = amountHours;
 		this.amountStudents = amountStudents;
 		this.maxStudents = maxStudents;
-		this.startDate = startDate;
-		this.endDate = endDate;
+		this.start_date = start_date;
+		this.end_date = end_date;
 		this.archived = archived;
 		this.validated = validated;
 		this.assignerUserId = assignerUserId;
@@ -93,11 +93,11 @@ public class Assignment {
 	}
 
 	public String getStartDate() {
-		return startDate;
+		return start_date;
 	}
 
-	public String getEndDate() {
-		return endDate;
+	public String getEnd_date() {
+		return end_date;
 	}
 
 	public boolean isArchived() {
@@ -140,12 +140,12 @@ public class Assignment {
 		this.maxStudents = maxStudents;
 	}
 
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
+	public void setStart_date(String start_date) {
+		this.start_date = start_date;
 	}
 
-	public void setEndDate(String endDate) {
-		this.endDate = endDate;
+	public void setEnd_date(String end_date) {
+		this.end_date = end_date;
 	}
 
 	public void setArchived(boolean archived) {
@@ -155,6 +155,7 @@ public class Assignment {
 	public void setValidated(boolean validated) {
 		this.validated = validated;
 	}
+
 
 	public void setAssignerUserId(User assignerUserId) {
 		this.assignerUserId = assignerUserId;

@@ -2,18 +2,16 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" th:href="@{/css/APcss2.css}">
+    <title>UpdateTagForm</title>
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
-
-    <title>Crediti - Mijn opdrachten</title>
 </head>
-<body class="background">
+<body>
 <header>
     <div class="nav-main navbackground">
         <div class="container">
             <div class="wrap-all col-xs-12">
                 <div class="left">
-                    <a class="logo" href="/">
+                    <a class="logo" href="">
                         <img th:src="@{/images/logo-ap.svg}">
                     </a>
                 </div>
@@ -67,53 +65,25 @@
         </div>
     </div>
 </header>
-
-<div class="block">
-        <div class="container">
-            <h2 class="extra">Mijn opdrachten</h2>
-            <p>Lijst van al uw opdrachten. Klik op een opdracht voor meer informatie.</p>
+<div class="block background">
+    <div class="container ">
+        <div class="wrap-all col-xs-12 ">
+            <h2 class="extra">Tag aanpassen</h2>
+            <form th:each="a: ${tags}" method="POST" class="standard-form">
+                <fieldset disabled="disabled" id="externalInfo">
+                    <label for='tagName'>Tag: </label>
+                    <input id='tagName' type='text' th:value="*{a.getTagName()}" name="tagName" maxlength="50"/>
+                    <br/><br>
+                    <label for='tagDescription'>Beschrijving: </label>
+                    <input id='tagDescription' type='text' th:value="*{a.getTagDescription()}" name="tagDescription"  maxlength="250"/>
+                    <br/>
+                </fieldset><br>
+                <input type="button" value="✏️TAG BEWERKEN" class="button" onclick="toggleForm();">&nbsp;&nbsp;&nbsp;
+                <input type="submit" value="💾 AANPASSINGEN BEWAREN" class="button" id="save" style="visibility: hidden;">
+            </form>
         </div>
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>Titel</th>
-            </tr>
-            <tr th:each="a : ${assignments}" class = "tablebackground">
-                <td><a th:href="${'/allassignments/' + a.getAssignmentId()}" class="button">✏️</a>
-                    &nbsp;&nbsp;&nbsp;
-                    <a th:href="@{/deleteassignment/{id} (id=${a.assignmentId})}" class="button">🗑️</a></td>
-                <td th:text="${a.getAssignmentId()}"></td>
-                <td th:text="${a.getAssignmentId()}"></td>
-                <td th:text="${a.getTitle()}"></td>
-
-            </tr>
-        </table>
-<!--
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Titel</th>
-        </tr>
-        <tr th:each="f : ${filter}" class = "tablebackground">
-            <td th:text="${f.getAssignmentId()}"></td>
-            <td th:text="${f.getTitle()}"></td>
-
-        </tr>
-    </table>
-
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Titel</th>
-        </tr>
-        <tr th:each="u : ${users}" class = "tablebackground">
-            <td th:text="${u.getAssignmentId()}"></td>
-            <td th:text="${u.getTitle()}"></td>
-
-        </tr>
-    </table>-->
+    </div>
 </div>
-
 <footer>
     <div class="footer-bot">
         <div class="container">
@@ -126,6 +96,12 @@
         </div>
     </div>
 </footer>
-
+<script>
+    function toggleForm() {
+        document.getElementById('externalInfo').removeAttribute('disabled');
+        document.getElementById("save").style.visibility = "visible";
+        ;
+    }
+</script>
 </body>
 </html>

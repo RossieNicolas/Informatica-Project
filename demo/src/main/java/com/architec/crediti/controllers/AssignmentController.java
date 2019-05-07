@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -50,6 +51,10 @@ public class AssignmentController {
     }
 
     @PostMapping("/assignment")
+    public String createAssignment(@Valid Assignment assignment) {
+         assignmentRepo.save(assignment);
+         return "redirect:/assignments";
+    }
     public String createAssignment(@Valid Assignment assignment) {
         User usr = userRepo.findByEmail("s100603@ap.be");
         assignment.setAssignerUserId(usr);
@@ -99,6 +104,71 @@ public class AssignmentController {
 
         return "myassignments";
     }
+
+
+    //find specific assignment to edit out of all assignments
+    @RequestMapping(value = "/allassignments/{assignmentId}", method = RequestMethod.GET)
+    public String getAssignmentsToUpdate(@PathVariable("assignmentId") int assignmentId, Model model) {
+
+        List<Assignment> fiches = assignmentRepo.findByAssignmentId(assignmentId);
+
+        model.addAttribute("assignments", fiches);
+        return "updateAssignment";
+    }
+
+    //update specific assignment
+    @PostMapping(value = "/allassignments/{assignmentId}")
+    public String updateAssignment(@PathVariable("assignmentId") int assignmentId, @Valid Assignment assignment) {
+
+        assignment.setAssignmentId(assignmentId);
+        if (!(assignment.getTitle().equalsIgnoreCase("") || assignment.getType().equalsIgnoreCase("") || assignment.getTask().equalsIgnoreCase(""))){
+            assignmentRepo.save(assignment);
+        }
+
+        return "redirect:/allassignments";
+    }
+
+    //find specific assignment to edit out of all assignments
+    @RequestMapping(value = "/myassignments/{assignmentId}", method = RequestMethod.GET)
+    public String getMyAssignmentsToUpdate(@PathVariable("assignmentId") int assignmentId, Model model) {
+
+        List<Assignment> fiches = assignmentRepo.findByAssignmentId(assignmentId);
+
+        model.addAttribute("assignments", fiches);
+        return "updateMyAssignment";
+    }
+
+    //update specific assignment
+    @PostMapping(value = "/myassignments/{assignmentId}")
+    public String updateMyAssignment(@PathVariable("assignmentId") int assignmentId, @Valid Assignment assignment) {
+
+        assignment.setAssignmentId(assignmentId);
+        if (!(assignment.getTitle().equalsIgnoreCase("") || assignment.getType().equalsIgnoreCase("") || assignment.getTask().equalsIgnoreCase(""))){
+            assignmentRepo.save(assignment);
+        }
+        return "redirect:/myassignments";
+    }
+
+    //delete specific assignment
+    @GetMapping("/deleteassignment/{assignmentId}")
+    public String deleteAssignment(@PathVariable("assignmentId") int assignmentId, Model model) {
+        Assignment assignment = assignmentRepo.findById((long) assignmentId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid assignment Id:" + assignmentId));
+        assignmentRepo.delete(assignment);
+        model.addAttribute("assignments", assignmentRepo.findAll());
+        return "redirect:/allassignments";
+    }
+
+    //delete specific assignment
+    @GetMapping("/deletemyassignment/{assignmentId}")
+    public String deleteMyAssignment(@PathVariable("assignmentId") int assignmentId, Model model) {
+        Assignment assignment = assignmentRepo.findById((long) assignmentId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid assignment Id:" + assignmentId));
+        assignmentRepo.delete(assignment);
+        model.addAttribute("assignments", assignmentRepo.findAll());
+        return "redirect:/myassignments";
+    }
+
 
     @GetMapping("/unvalidatedassignments")
     public String getUnvalidatedAssingments(Model model) {
