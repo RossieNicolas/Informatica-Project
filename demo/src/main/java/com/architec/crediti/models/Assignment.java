@@ -1,6 +1,8 @@
 package com.architec.crediti.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "assignments")
@@ -9,37 +11,54 @@ public class Assignment {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long assignmentId;
 
-	@Column(name = "title", nullable = false)
+	@NotNull(message = "Titel mag niet leeg zijn!")
+	@NotBlank
+	@Column(name = "title")
 	private String title;
 
-	@Column(name = "type", nullable = false)
+	@NotNull(message = "Type mag niet leeg zijn!")
+	@NotBlank
+	@Column(name = "type")
 	private String type;
 
-	@Column(name = "task", nullable = false)
+	@NotNull(message = "Beschrijving mag niet leeg zijn!")
+	@NotBlank
+	@Column(name = "task")
 	private String task;
 
-	@Column(name = "amountHours", nullable = false)
+
+	@NotNull(message = "Totaal uur mag niet leeg zijn!")
+	@Column(name = "amountHours")
 	private int amountHours;
 
 	@Column(name = "amountStudents")
 	private int amountStudents;
 
-	@Column(name = "maxStudents", nullable = false)
+	@NotNull(message = "Max studenten mag niet leeg zijn!")
+	@Column(name = "maxStudents")
 	private int maxStudents;
 
+	@NotNull(message = "Startdatum mag niet leeg zijn!")
+	@NotBlank
 	@Column(name = "start_date")
-	// @Temporal(TemporalType.DATE)
 	private String start_date;
 
+	@NotNull(message = "Einddatum mag niet leeg zijn!")
+	@NotBlank
 	@Column(name = "end_date")
-	// @Temporal(TemporalType.DATE)
 	private String end_date;
 
-	@Column(name = "archived", nullable = false)
+	@NotNull
+	@Column(name = "archived")
 	private boolean archived;
 
-	@Column(name = "validated", nullable = false)
+	@NotNull
+	@Column(name = "validated")
 	private boolean validated;
+
+	@Column(name="tagAssign")
+	private String tagAssign;
+
 
 	@ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.REMOVE })
@@ -49,20 +68,20 @@ public class Assignment {
 	public Assignment() {
 	}
 
-	public Assignment(String title, String type, String task, int amountHours, int amountStudents, int maxStudents,
-					  String start_date, String end_date, boolean archived, boolean validated, User assignerUserId) {
+	public Assignment(String title, String type, String task, int amountHours, int maxStudents, String start_date, String end_date, boolean archived, boolean validated, User assignerUserId, String tagAssign) {
 		this.title = title;
 		this.type = type;
 		this.task = task;
 		this.amountHours = amountHours;
-		this.amountStudents = amountStudents;
 		this.maxStudents = maxStudents;
 		this.start_date = start_date;
 		this.end_date = end_date;
 		this.archived = archived;
 		this.validated = validated;
 		this.assignerUserId = assignerUserId;
+		this.tagAssign = tagAssign;
 	}
+
 
 	public long getAssignmentId() {
 		return assignmentId;
@@ -160,4 +179,16 @@ public class Assignment {
 	public void setAssignerUserId(User assignerUserId) {
 		this.assignerUserId = assignerUserId;
 	}
+	public String getStart_date() {
+		return start_date;
+	}
+
+	public String getTagAssign() {
+		return tagAssign;
+	}
+
+	public void setTagAssign(String tagAssign) {
+		this.tagAssign = tagAssign;
+	}
+
 }

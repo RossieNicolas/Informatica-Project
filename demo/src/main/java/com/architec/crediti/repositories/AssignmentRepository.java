@@ -1,7 +1,6 @@
 package com.architec.crediti.repositories;
 
 import com.architec.crediti.models.Assignment;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,6 +11,5 @@ public interface AssignmentRepository extends JpaRepository<Assignment, Long> {
     List<Assignment> findByMaxStudents(int maxStudents);
     List<Assignment> findByAssignerUserId(long assignerUserId);
     Assignment findByAssignmentId(long assignmentId);
-    List<Assignment> findByTitleContainingAndArchived(String title , boolean archived);
-
+    List<Assignment> findByTitleContainingAndArchived(String title, boolean archived);
 }

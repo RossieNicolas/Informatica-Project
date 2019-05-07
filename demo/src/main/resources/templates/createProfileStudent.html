@@ -1,66 +1,68 @@
 <!DOCTYPE HTML>
 <html xmlns:th='http://www.thymeleaf.org'>
 <head>
-<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>	
-    <link rel="stylesheet" th:href="@{/css/APcss3.css}">
-<title>Profiel aanmaken</title>
+	<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+	<link rel="stylesheet" th:href="@{/css/APcss3.css}">
+	<title>Profiel aanmaken</title>
 </head>
 
 <body class="background">
 <header>
-        <div class="nav-main navbackground">
-            <div class="container">
-                <div class="wrap-all col-xs-12">
-                    <div class="left">
-                        <a class="logo" href="">
-                        <img th:src="@{/images/logo-ap.svg}">
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-		
+	<div class="nav-main navbackground">
 		<div class="container">
-			<h2 class="extra">Profiel</h2>
-			<form th:action='@{/createstudentprofile}' method='POST'>
-				<label for='student_id' class="col-25 label">Studentennummer: </label>
-				<input type='text' name='student_id' />
-				<br><br>
-				<label for='firstname'>Voornaam: </label>
-				<input type='text' name='firstname'/>
-				<br><br>
-				<label for='lastname'>Achternaam: </label>
-				<input type='text' name='lastname'/>
-				<br><br>
-				<label for='mail'>E-mail: </label>
-				<input type='email' name='mail'/>
-				<br><br>
-				<label for='gsm'>GSM-nummer: </label>
-				<input type='text' name='gsm' />
-				<br><br>
-				<label for='class'>Opleiding: </label>
-				<input type='text' name='class' />
-				<br>
-				<br/>
-				<label></label>
-				<input type='SUBMIT' class="button" value='Profiel aanmaken'>
-			</form>
-		</div>
-	
-		
-		
-		<footer>
-			<div class="footer-bot">
-				<div class="container">
-					<div class="left col-sm-6 col-xs-12">
-						<p>Ontworpen door studenten Toegepaste Informatica</p>
-					</div>
-					<div class="right col-sm-6 col-xs-12">
-						<p>© 2019 All rights reserved.</p>
-					</div>
+			<div class="wrap-all col-xs-12">
+				<div class="left">
+					<a class="logo" href="">
+						<img th:src="@{/images/logo-ap.svg}">
+					</a>
 				</div>
 			</div>
-		</footer>
-	</body>
-	</html>
+		</div>
+	</div>
+</header>
+
+<div class="container">
+	<h2 class="extra">Profiel</h2>
+	<form th:action='@{/createstudentprofile}' method='POST'>
+		<label for='student_id' class="col-25 label">Studentennummer: </label>
+		<input type='text' name='student_id' />
+		<br><br>
+		<label for='firstname'>Voornaam: </label>
+		<input type='text' name='firstname'/>
+		<br><br>
+		<label for='lastname'>Achternaam: </label>
+		<input type='text' name='lastname'/>
+		<br><br>
+		<label for='mail'>E-mail: </label>
+		<input type='email' name='mail'/>
+		<br><br>
+		<label for='gsm'>GSM-nummer: </label>
+		<input type='text' name='gsm' />
+		<br><br>
+		<label for='class'>Voor onderdeel: </label>
+		<select name = 'class' class="keuzelijst">
+			<option value="ZAP">ZAP</option>
+			<option value="MOB">MOB</option>
+		</select>
+		<br>
+		<br/>
+		<label></label>
+		<input type='SUBMIT' class="button" value='Profiel aanmaken'>
+	</form>
+</div>
+
+
+<footer>
+	<div class="footer-bot">
+		<div class="container">
+			<div class="left col-sm-6 col-xs-12">
+				<p>Ontworpen door studenten Toegepaste Informatica</p>
+			</div>
+			<div class="right col-sm-6 col-xs-12">
+				<p>© 2019 All rights reserved.</p>
+			</div>
+		</div>
+	</div>
+</footer>
+</body>
+</html>

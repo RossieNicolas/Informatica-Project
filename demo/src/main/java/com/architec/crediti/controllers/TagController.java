@@ -58,9 +58,9 @@ public class TagController {
     @RequestMapping(value = "/listAllTags/{tag_id}", method = RequestMethod.GET)
     public String tags(@PathVariable("tag_id") int tag_id, Model model) {
 
-        List<Tag> tags = tagRepo.findBytagId(tag_id);
+        Tag tag = tagRepo.findBytagId(tag_id);
 
-        model.addAttribute("tags", tags);
+        model.addAttribute("tags", tag);
         return "editTag";
     }
 

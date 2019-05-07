@@ -22,9 +22,6 @@ public class User {
     @Column(name = "role", nullable = false)
     private String role;
 
-    @Column(name = "login_count")
-    private int loginCount;
-
     public User() {
     }
 
@@ -74,9 +71,4 @@ public class User {
     public void setRole(String role) {
         this.role = role;
     }
-    @Override
-    public String toString() {
-        return this.firstname + " " + this.lastname;
-    }
-
 }

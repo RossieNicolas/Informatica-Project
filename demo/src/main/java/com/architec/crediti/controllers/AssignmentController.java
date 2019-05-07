@@ -1,21 +1,29 @@
 package com.architec.crediti.controllers;
 
 import com.architec.crediti.models.Assignment;
+import com.architec.crediti.models.Pager;
 import com.architec.crediti.models.Tag;
 import com.architec.crediti.repositories.AssignmentRepository;
 import com.architec.crediti.repositories.Methods;
 import com.architec.crediti.repositories.TagRepo;
+import com.architec.crediti.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import sun.awt.ModalExclude;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 
 @Controller
 public class AssignmentController {
+    private Iterable<Assignment> fiches;
 
     @Autowired
     TagRepo tagRepo;
@@ -23,11 +31,9 @@ public class AssignmentController {
     @Autowired
     AssignmentRepository assignmentRepo;
 
-    //get assignment form (if no tags)
-    @RequestMapping("/assignment")
-    public String assignment() {
-        return "assignment";
-    }
+    @Autowired
+    UserRepository userRepo;
+
 
     //get assignment form
     @RequestMapping(value = "/assignment", method = RequestMethod.GET)
@@ -41,10 +47,26 @@ public class AssignmentController {
 
     //add assignment
     @PostMapping("/assignment")
-    public String createAssignment(@Valid Assignment assignment) {
-         assignmentRepo.save(assignment);
-         return "redirect:/assignments";
+    public String createAssignment(@Valid Assignment assignment, @RequestParam(required = false, value = "tag") int[] tags) {
+        ArrayList<Tag> list = new ArrayList<>();
+        ArrayList<String> list2 = new ArrayList<>();
+
+        if (tags != null) {
+            for (int item : tags) {
+                Tag tag = tagRepo.findBytagId(item);
+                list.add(tag);
+            }
+
+            for (Tag item : list) {
+                list2.add(item.getTagName());
+            }
+
+            assignment.setTagAssign(list2.toString());
+        }
+        assignmentRepo.save(assignment);
+        return "successfullAssignment";
     }
+
 
     //error page
     @GetMapping("/error")
@@ -54,10 +76,47 @@ public class AssignmentController {
 
     //list all assignments
     @GetMapping("/allassignments")
-    public String getAllAssingments(Model model) {
-        model.addAttribute("assignments", Methods.removeFullAssignments(assignmentRepo.findAll()));
+    public ModelAndView showPersonsPage(@RequestParam("page") Optional<Integer> page) {
+        ModelAndView modelAndView = new ModelAndView("listAllAssignments");
+        int initialPage = 1;
+        int pageSize = 20;
 
-        return "listAllAssignments";
+        int buttons = (int) assignmentRepo.count() / pageSize;
+
+        if (assignmentRepo.count() % pageSize != 0) {
+            buttons++;
+        }
+
+        // Evaluate page. If requested parameter is null or less than 0 (to
+        // prevent exception), return initial size. Otherwise, return value of
+        // param. decreased by 1.
+        int evalPage = (page.orElse(0) < 1) ? initialPage : page.get() - 1;
+
+        Page<Assignment> fiches = assignmentRepo.findAll(PageRequest.of(evalPage, pageSize));
+        Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
+
+        modelAndView.addObject("persons", fiches);
+        modelAndView.addObject("assignments", Methods.removeFullAssignments(assignmentRepo.findByTitleContainingAndArchived("" , false)));
+        modelAndView.addObject("selectedPageSize", pageSize);
+        modelAndView.addObject("pager", pager);
+        return modelAndView;
+    }
+
+    //list all unvalidated assignments
+    @GetMapping("/unvalidatedassignments")
+    public String getUnvalidatedAssingments(Model model) {
+        fiches = assignmentRepo.findAll();
+        List<Assignment> unvalidatedFiches = new ArrayList<>();
+
+        for (Assignment item : fiches) {
+            if (!item.isValidated()) {
+                unvalidatedFiches.add(item);
+            }
+        }
+
+        model.addAttribute("assignments", unvalidatedFiches);
+
+        return "listUnvalidatedAssignments";
     }
 
     //search assignments
@@ -80,26 +139,31 @@ public class AssignmentController {
         return "listAllAssignments";
     }
 
-
     //all my assignments
     @RequestMapping(value = "/myassignments", method = RequestMethod.GET)
     public String assignments(Model model) {
-        List<Assignment> assignments = assignmentRepo.findAll();
+        Iterable<Assignment> assignments = assignmentRepo.findAll();
 
         model.addAttribute("assignments", assignments);
 
         return "myassignments";
     }
 
-
     //find specific assignment to edit out of all assignments
     @RequestMapping(value = "/allassignments/{assignmentId}", method = RequestMethod.GET)
     public String getAssignmentsToUpdate(@PathVariable("assignmentId") int assignmentId, Model model) {
 
-        Assignment fiches = assignmentRepo.findByAssignmentId(assignmentId);
-
-        model.addAttribute("assignments", fiches);
-        return "updateAssignment";
+        try{
+            Assignment a = assignmentRepo.findByAssignmentId(assignmentId);
+            if(a.getAmountStudents() != a.getMaxStudents() && !a.isArchived()){
+                model.addAttribute("assignments" ,  a);
+            }
+        }
+        catch(Exception ex) {
+            // als er geen assignment is met ingegeven id dan wordt er een lege pagina weergegeven,
+            //zonder catch krijgt gebruiker een error wat niet de bedoeling is
+        }
+            return "updateAssignment";
     }
 
     //update specific assignment
