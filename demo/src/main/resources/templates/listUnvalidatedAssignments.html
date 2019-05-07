@@ -66,8 +66,6 @@
     </div>
 </header>
 
-
-		
 		<div class="container ">
 			<h2 class = "extra">Alle opdrachten</h2>
         </div>
@@ -87,7 +85,7 @@
 			<tr th:each="a : ${assignments}" class="tablebackground">
                     <td><input type="submit" value = "Detail" class = "button"></td>
 					<td th:text="${a.getAssignmentId()}"></td>
-					<td></td> <!-- th:text="${a.getAssignerUserId()}" -->
+					<td th:text="${a.getAssignerUserId()}"></td>
 					<td th:text="${a.getType()}"></td>
 					<td th:text="${a.getTask()}" class = "cell"></td>
 					<td th:text="${a.getStartDate()}"></td>
