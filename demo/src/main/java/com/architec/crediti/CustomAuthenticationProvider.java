@@ -47,17 +47,15 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             env.put(Context.SECURITY_AUTHENTICATION, "simple");
             env.put(Context.SECURITY_PRINCIPAL, username);
             env.put(Context.SECURITY_CREDENTIALS, password);
-            env.put(Context.PROVIDER_URL,  ldapUrl);
+            env.put(Context.PROVIDER_URL, ldapUrl);
 
             ctx = new InitialLdapContext(env, null);
 
             result = true;
-            String selectedLdapUrl = ctx.getEnvironment().get(Context.PROVIDER_URL).toString();
-            // do further operations with "ctx" if needed
-            System.out.println("selected LDAP url is: " + selectedLdapUrl);
-            System.out.println("Connection Successful!");
 
-        } catch(NamingException nex) {
+            System.out.println("LDAP Connection Successful!");
+
+        } catch (NamingException nex) {
             nex.printStackTrace();
         } finally {
             if (ctx != null) {
