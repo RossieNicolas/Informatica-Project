@@ -321,6 +321,11 @@ p {
 	background-color:#007bff;
 	border-color:#007bff
 }
+#zoekKnop{
+	float:right ;
+	margin-right: 5px;
+}
+
 
 
 
@@ -14404,7 +14409,14 @@ ul.meta2 li.twitter a:hover:before {
 	font-size: 13px
 }
 
-#summary{
+#task{
 	width: 600px;
 	height: 150px;
+}
+
+#tag {
+	display: block;
+	float: left;
+	margin-top: 12px;
+	margin-right: 11px;
 }

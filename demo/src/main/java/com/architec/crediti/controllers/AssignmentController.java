@@ -3,6 +3,7 @@ package com.architec.crediti.controllers;
 import com.architec.crediti.models.Assignment;
 import com.architec.crediti.models.Tag;
 import com.architec.crediti.repositories.AssignmentRepository;
+import com.architec.crediti.repositories.Methods;
 import com.architec.crediti.repositories.TagRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -54,11 +55,31 @@ public class AssignmentController {
     //list all assignments
     @GetMapping("/allassignments")
     public String getAllAssingments(Model model) {
-        List<Assignment> fiches = assignmentRepo.findAll();
-        model.addAttribute("assignments", fiches);
+        model.addAttribute("assignments", Methods.removeFullAssignments(assignmentRepo.findAll()));
 
         return "listAllAssignments";
     }
+
+    //search assignments
+    @PostMapping("/allassignments")
+    public String getAssignment(@RequestParam("searchbar") String name,
+                         Model model){
+
+        try {
+            Assignment a = assignmentRepo.findByAssignmentId((Integer.parseInt(name)));
+            if(a.getAmountStudents() != a.getMaxStudents() && !a.isArchived()){
+                model.addAttribute("assignments" ,  a);
+            }
+
+        } catch (Exception e) {
+            model.addAttribute("assignments",  Methods.removeFullAssignments(assignmentRepo.findByTitleContainingAndArchived(name , false)));
+        }
+
+
+
+        return "listAllAssignments";
+    }
+
 
     //all my assignments
     @RequestMapping(value = "/myassignments", method = RequestMethod.GET)
@@ -75,7 +96,7 @@ public class AssignmentController {
     @RequestMapping(value = "/allassignments/{assignmentId}", method = RequestMethod.GET)
     public String getAssignmentsToUpdate(@PathVariable("assignmentId") int assignmentId, Model model) {
 
-        List<Assignment> fiches = assignmentRepo.findByAssignmentId(assignmentId);
+        Assignment fiches = assignmentRepo.findByAssignmentId(assignmentId);
 
         model.addAttribute("assignments", fiches);
         return "updateAssignment";
@@ -97,7 +118,7 @@ public class AssignmentController {
     @RequestMapping(value = "/myassignments/{assignmentId}", method = RequestMethod.GET)
     public String getMyAssignmentsToUpdate(@PathVariable("assignmentId") int assignmentId, Model model) {
 
-        List<Assignment> fiches = assignmentRepo.findByAssignmentId(assignmentId);
+        Assignment fiches = assignmentRepo.findByAssignmentId(assignmentId);
 
         model.addAttribute("assignments", fiches);
         return "updateMyAssignment";
