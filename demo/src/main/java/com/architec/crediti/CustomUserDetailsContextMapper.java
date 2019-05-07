@@ -4,6 +4,7 @@ import com.architec.crediti.models.User;
 import com.architec.crediti.repositories.UserRepository;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.ldap.core.DirContextAdapter;
@@ -16,6 +17,7 @@ import org.springframework.security.ldap.userdetails.LdapUserDetailsMapper;
 import org.springframework.security.ldap.userdetails.UserDetailsContextMapper;
 
 import java.util.Collection;
+import java.util.List;
 
 @Configuration
 public class CustomUserDetailsContextMapper extends LdapUserDetailsMapper implements UserDetailsContextMapper {
@@ -43,13 +45,19 @@ public class CustomUserDetailsContextMapper extends LdapUserDetailsMapper implem
         String department = ctx.getStringAttribute("department");
         String role = ctx.getStringAttribute("extensionAttribute1");
 
-
-            if (userRepo.findByEmail(ctx.getStringAttribute("userPrincipalName")) == null) {
-                User user = new User(firstname, lastname, email, role, true);
-                userRepo.save(user);
-            } else {
-
-            }
+//        String userEmail =  userRepo.findByEmail(email);
+//
+//            if (userEmail == null) {
+//                User user = new User(firstname, lastname, email, role, true);
+//                userRepo.save(user);
+//            } else {
+//                for (User u : userRepo.findAll()) {
+//                    if (u.getEmail().equals(email)) {
+//                        User user = userRepo.getOne(u.getUserId());
+//                        user.setLoginCount(u.getLoginCount() + 1);
+//                    }
+//                }
+//            }
 
 
         return new CustomUserDetails(details);
