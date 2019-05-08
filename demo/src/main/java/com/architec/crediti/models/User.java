@@ -22,6 +22,9 @@ public class User {
     @Column(name = "role", nullable = false)
     private String role;
 
+    @Column(name = "studentennummer", nullable = false)
+    private String studentennummer;
+
     @Column(name = "first_login", nullable = false)
     private boolean firstLogin;
 
@@ -31,11 +34,12 @@ public class User {
     public User() {
     }
 
-    public User(String firstname, String lastname, String email, String role, boolean firstLogin) {
+    public User(String firstname, String lastname, String email, String role, String studentennummer, boolean firstLogin) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.role = role;
+        this.studentennummer = studentennummer;
         this.firstLogin = firstLogin;
     }
 

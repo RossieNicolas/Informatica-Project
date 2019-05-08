@@ -66,7 +66,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
             InitialDirContext context = new InitialDirContext(env);
             SearchControls ctrls = new SearchControls();
-            ctrls.setReturningAttributes(new String[]{"givenName", "sn", "department", "extensionAttribute1"});
+            ctrls.setReturningAttributes(new String[]{"givenName", "sn", "department", "extensionAttribute1", "sAMAccountName"});
             ctrls.setSearchScope(SearchControls.SUBTREE_SCOPE);
 
             NamingEnumeration<SearchResult> answers = context.search("OU=Users,OU=DWAP,DC=alpaca,DC=int", "(userPrincipalName=" + username + ")", ctrls);
@@ -76,17 +76,19 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             String rawLastname = res.getAttributes().get("sn").toString();
             String rawDepartment = res.getAttributes().get("department").toString();
             String rawRole = res.getAttributes().get("extensionAttribute1").toString();
+            String rawStudentNr = res.getAttributes().get("sAMAccountName").toString();
             String email = username;
 
             String firstname = (rawFirstname.substring(rawFirstname.lastIndexOf(" ") + 1));
             String lastname = (rawLastname.substring(rawLastname.lastIndexOf(" ") + 1));
             String department = (rawDepartment.substring(rawDepartment.lastIndexOf(" ") + 1));
             String role = (rawRole.substring(rawRole.lastIndexOf(" ") + 1));
+            String studentNr = (rawStudentNr.substring(rawStudentNr.lastIndexOf(" ") + 2));
 
             boolean emailExsist = userRepo.existsByEmail(email);
 
             if (!emailExsist) {
-                User user = new User(firstname, lastname, email, role, true);
+                User user = new User(firstname, lastname, email, role, studentNr, true);
                 userRepo.save(user);
             } else {
                 User user = userRepo.findUserByEmail(email);
