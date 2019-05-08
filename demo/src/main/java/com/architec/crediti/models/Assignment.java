@@ -26,7 +26,6 @@ public class Assignment {
 	@Column(name = "task")
 	private String task;
 
-
 	@NotNull(message = "Totaal uur mag niet leeg zijn!")
 	@Column(name = "amountHours")
 	private int amountHours;
@@ -56,9 +55,8 @@ public class Assignment {
 	@Column(name = "validated")
 	private boolean validated;
 
-	@Column(name="tagAssign")
+	@Column(name = "tagAssign")
 	private String tagAssign;
-
 
 	@ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.REMOVE })
@@ -68,7 +66,8 @@ public class Assignment {
 	public Assignment() {
 	}
 
-	public Assignment(String title, String type, String task, int amountHours, int maxStudents, String start_date, String end_date, boolean archived, boolean validated, User assignerUserId, String tagAssign) {
+	public Assignment(String title, String type, String task, int amountHours, int maxStudents, String start_date,
+			String end_date, boolean archived, boolean validated, User assignerUserId, String tagAssign) {
 		this.title = title;
 		this.type = type;
 		this.task = task;
@@ -175,10 +174,14 @@ public class Assignment {
 		this.validated = validated;
 	}
 
+	public String getAssigner() {
+		return assignerUserId.getFirstname() + " " + assignerUserId.getLastname();
+	}
 
 	public void setAssignerUserId(User assignerUserId) {
 		this.assignerUserId = assignerUserId;
 	}
+
 	public String getStart_date() {
 		return start_date;
 	}

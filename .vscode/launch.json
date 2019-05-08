@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - CreditiApplication",
+            "request": "launch",
+            "mainClass": "com.architec.crediti.CreditiApplication",
+            "projectName": "crediti"
+        },
+        {
+            "type": "java",
             "name": "Debug (Launch) - Current File",
             "request": "launch",
             "mainClass": "${file}"

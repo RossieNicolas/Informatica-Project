@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-
 @Controller
 public class AssignmentController {
 
@@ -36,7 +35,7 @@ public class AssignmentController {
     @Autowired
     UserRepository userRepo;
 
-    //get assignment form
+    // get assignment form
     @RequestMapping(value = "/assignment", method = RequestMethod.GET)
     public String tag(Model model) /* throws SQLException */ {
 
@@ -46,9 +45,10 @@ public class AssignmentController {
         return "assignment";
     }
 
-    //add assignment
+    // add assignment
     @PostMapping("/assignment")
-    public String createAssignment(@Valid Assignment assignment, @RequestParam(required = false, value = "tag") int[] tags) {
+    public String createAssignment(@Valid Assignment assignment,
+            @RequestParam(required = false, value = "tag") int[] tags) {
         ArrayList<Tag> list = new ArrayList<>();
         ArrayList<String> list2 = new ArrayList<>();
 
@@ -68,19 +68,19 @@ public class AssignmentController {
         return "successfullAssignment";
     }
 
-    //error page
+    // error page
     @GetMapping("/error")
     public String error() {
         return "error";
     }
 
-    //list all assignments
+    // list all assignments
     @GetMapping("/allassignments")
     public ModelAndView showPersonsPage(@RequestParam("page") Optional<Integer> page) {
         ModelAndView modelAndView = new ModelAndView("listAllAssignments");
         fiches = assignmentRepo.findAll();
         int initialPage = 0;
-        int pageSize = 20;
+        int pageSize = 15;
 
         int buttons = (int) assignmentRepo.count() / pageSize;
 
@@ -102,8 +102,7 @@ public class AssignmentController {
         modelAndView.addObject("pager", pager);
         return modelAndView;
     }
-
-    //list all unvalidated assignments
+    // list all unvalidated assignments
     @GetMapping("/unvalidatedassignments")
     public String getUnvalidatedAssingments(Model model) {
         fiches = assignmentRepo.findAll();
@@ -120,10 +119,9 @@ public class AssignmentController {
         return "listUnvalidatedAssignments";
     }
 
-    //search assignments
+    // search assignments
     @PostMapping("/allassignments")
-    String getAssignment(@RequestParam("name") String name,
-                         Model model) {
+    String getAssignment(@RequestParam("searchbar") String name, Model model) {
 
         try {
             Assignment a = assignmentRepo.findByAssignmentId((Integer.parseInt(name)));
@@ -138,8 +136,7 @@ public class AssignmentController {
 
         return "listAllAssignments";
     }
-
-
+    
     @RequestMapping(value = "/myassignments", method = RequestMethod.GET)
     public String assignments(Model model) {
         Iterable<Assignment> assignments = assignmentRepo.findAll();
@@ -149,7 +146,7 @@ public class AssignmentController {
         return "myassignments";
     }
 
-    //find specific assignment to edit out of all assignments
+    // find specific assignment to edit out of all assignments
     @RequestMapping(value = "/allassignments/{assignmentId}", method = RequestMethod.GET)
     public String getAssignmentsToUpdate(@PathVariable("assignmentId") int assignmentId, Model model) {
 
@@ -159,25 +156,27 @@ public class AssignmentController {
                 model.addAttribute("assignments", a);
             }
         } catch (Exception ex) {
-            // als er geen assignment is met ingegeven id dan wordt er een lege pagina weergegeven,
-            //zonder catch krijgt gebruiker een error wat niet de bedoeling is
+            // als er geen assignment is met ingegeven id dan wordt er een lege pagina
+            // weergegeven,
+            // zonder catch krijgt gebruiker een error wat niet de bedoeling is
         }
         return "updateAssignment";
     }
 
-    //update specific assignment
+    // update specific assignment
     @PostMapping(value = "/allassignments/{assignmentId}")
     public String updateAssignment(@PathVariable("assignmentId") int assignmentId, @Valid Assignment assignment) {
 
         assignment.setAssignmentId(assignmentId);
-        if (!(assignment.getTitle().equalsIgnoreCase("") || assignment.getType().equalsIgnoreCase("") || assignment.getTask().equalsIgnoreCase(""))) {
+        if (!(assignment.getTitle().equalsIgnoreCase("") || assignment.getType().equalsIgnoreCase("")
+                || assignment.getTask().equalsIgnoreCase(""))) {
             assignmentRepo.save(assignment);
         }
 
         return "redirect:/allassignments";
     }
 
-    //find specific assignment to edit out of all assignments
+    // find specific assignment to edit out of all assignments
     @RequestMapping(value = "/myassignments/{assignmentId}", method = RequestMethod.GET)
     public String getMyAssignmentsToUpdate(@PathVariable("assignmentId") int assignmentId, Model model) {
 
@@ -187,18 +186,19 @@ public class AssignmentController {
         return "updateMyAssignment";
     }
 
-    //update specific assignment
+    // update specific assignment
     @PostMapping(value = "/myassignments/{assignmentId}")
     public String updateMyAssignment(@PathVariable("assignmentId") int assignmentId, @Valid Assignment assignment) {
 
         assignment.setAssignmentId(assignmentId);
-        if (!(assignment.getTitle().equalsIgnoreCase("") || assignment.getType().equalsIgnoreCase("") || assignment.getTask().equalsIgnoreCase(""))) {
+        if (!(assignment.getTitle().equalsIgnoreCase("") || assignment.getType().equalsIgnoreCase("")
+                || assignment.getTask().equalsIgnoreCase(""))) {
             assignmentRepo.save(assignment);
         }
         return "redirect:/myassignments";
     }
 
-    //delete specific assignment
+    // delete specific assignment
     @GetMapping("/deleteassignment/{assignmentId}")
     public String deleteAssignment(@PathVariable("assignmentId") int assignmentId, Model model) {
         Assignment assignment = assignmentRepo.findById((long) assignmentId)
@@ -208,7 +208,7 @@ public class AssignmentController {
         return "redirect:/allassignments";
     }
 
-    //validate specific assignment
+    // validate specific assignment
     @GetMapping("/validateassignment/{assignmentId}")
     public String validateAssignment(@PathVariable("assignmentId") int assignmentId, Model model) {
         Assignment assignment = assignmentRepo.findById((long) assignmentId)

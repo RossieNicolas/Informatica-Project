@@ -24,28 +24,28 @@
         <h2 class="extra">Profiel aanmaken</h2>
         <form th:action='@{/createexternal}' method='POST'>
 			<label for="name">Naam:</label>
-			<input name="name" type="text" id="name"><br><br>
+			<input name="name" type="text" id="name" required><br><br>
 
 			<label for="firstName">Voornaam:</label>
-			<input name="firstName" type="text" id="firstName"><br><br>
+			<input name="firstName" type="text" id="firstName" required><br><br>
 
 			<label for="nameCompany">Naam bedrijf:</label>
-			<input name="company" type="text" id="nameCompany"><br><br>
+			<input name="company" type="text" id="nameCompany" required><br><br>
 
 			<label for="adress">Adres:</label>
-			<input name="adress" type="text" id="adress"><br><br>
+			<input name="adress" type="text" id="adress" required><br><br>
 
 			<label for="postal">Postcode:</label>
-			<input name="postal" type="text" id="postal"><br><br>
+			<input name="postal" type="text" id="postal" required><br><br>
 
 			<label for="city">Gemeente:</label>
-			<input name="city" type="text" id="city"><br><br>
+			<input name="city" type="text" id="city" required><br><br>
 
 			<label for="mail">E-mail:</label>
-			<input name="mail" type="email" id="mail"><br><br>
+			<input name="mail" type="email" id="mail" required><br><br>
 
 			<label for="password">Wachtwoord:</label>
-			<input name="password" type="password" id="password"><br><br>
+			<input name="password" type="password" id="password" required><br><br>
 
 			<label></label>
 			<input value="Registreer" type="SUBMIT" class="button">
