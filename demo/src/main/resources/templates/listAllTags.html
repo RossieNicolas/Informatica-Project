@@ -6,8 +6,6 @@
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
 <body class="background">
-
-<div class="background">
     <header>
         <div class="nav-main navbackground">
             <div class="container">
@@ -67,35 +65,49 @@
             </div>
         </div>
     </header>
-    <div class="block">
-        <section class="find-edu card">
-            <div class="container ">
-                <div class="wrap-all col-xs-12 ">
-                    <h2>Tags bekijken</h2>
-                    <form class="standard-form">
-                        <table>
-                            <tr>
-                                <th></th>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Description</th>
-                                <th></th>
-                            </tr>
-                            <tr th:each="a : ${listAllTags}" class = "notfirst">
-                                <td><a th:href="${'/listAllTags/' + a.tagId}" class="button">✏️</a></td>
-                                <td id="tagId" th:text="${a.getTagId()}"></td>
-                                <td id="tagName" th:text="${a.getTagName()}"></td>
-                                <td id="tagDescription" th:text="${a.getTagDescription()}"></td>
-                                <td><a th:href="@{/deletetag/{id}(id=${a.tagId})}" class="button">🗑️ </a></td>
-                            </tr>
-                        </table>
-                    </form>
-                </div>
-            </div>
-        </section>
+
+        <div class="container ">
+            <h2 class = "extra">Tags bekijken</h2>
+        </div>
+        <div id='overview' >
+
+                <table>
+                    <thead>
+                    <tr>
+                        <th style="padding-left: 2.5%">Info</th>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="a : ${listAllTags}" class = "tablebackground">
+                        <td><a th:href="${'/listAllTags/' + a.tagId}" class="button">📃️</a></td>
+                        <td id="tagId" th:text="${a.getTagId()}"></td>
+                        <td id="tagName" th:text="${a.getTagName()}"></td>
+                        <td id="tagDescription" th:text="${a.getTagDescription()}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+        </div>
+
+    <div class="container">
+        <div th:if="${tags.totalPages !=1}" >
+            <ul class="pagination">
+                <li th:class="${tags.number == 0} ? disabled">
+                    <a class="pageLink" th:href="@{/listAllTags/(page=${tags.number})}">&laquo;</a>
+                </li>
+                <li th:class="${tags.number == (page - 1)} ? 'active pointer-disabled'"
+                    th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
+                    <a class="pageLink" th:href="@{/listAllTags/(page=${page})}" th:text="${page}"></a>
+                </li>
+                <li th:class="${tags.number + 1 == tags.totalPages} ? disabled">
+                    <a class="pageLink" th:href="@{/listAllTags/(page=${tags.number + 2})}">&raquo;</a>
+                </li>
+            </ul>
+        </div>
     </div>
-</div>
-<div style="height: 37%"></div>
+
 <footer>
     <div class="footer-bot">
         <div class="container">
@@ -108,6 +120,5 @@
         </div>
     </div>
 </footer>
-
 </body>
 </html>
