@@ -25,6 +25,12 @@ public class User {
     @Column(name = "studentennummer", nullable = false)
     private String studentennummer;
 
+    @Column(name = "gsm")
+    private String gsm;
+
+    @Column(name = "zap_mobility")
+    private String zapOrMobility;
+
     @Column(name = "first_login", nullable = false)
     private boolean firstLogin;
 
@@ -41,6 +47,22 @@ public class User {
         this.role = role;
         this.studentennummer = studentennummer;
         this.firstLogin = firstLogin;
+    }
+
+    public String getGsm() {
+        return gsm;
+    }
+
+    public void setGsm(String gsm) {
+        this.gsm = gsm;
+    }
+
+    public String getZapOrMobility() {
+        return zapOrMobility;
+    }
+
+    public void setZapOrMobility(String zapOrMobility) {
+        this.zapOrMobility = zapOrMobility;
     }
 
     public boolean isFirstLogin() {

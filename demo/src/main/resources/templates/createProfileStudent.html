@@ -26,10 +26,10 @@
 			<p>Het is de eerste keer dat je inlogt. We hebben wat extra informatie nodig en dan kan je van start gaan.</p>
 			<form th:action="@{/createstudentprofile}" method="POST">
 				<label for="gsm">GSM-nummer: </label>
-				<input type="text" name="gsm" id="gsm"/>
+				<input type="text" name="gsm" id="gsm" required/>
 				<br><br>
 				<label for="class">ZAP of Mobility?: </label>
-				<select name="class" id="class">
+				<select name="class" id="class" required>
 					<option value="ZAP">ZAP</option>
 					<option value="Mobility">Mobility</option>
 				</select>
