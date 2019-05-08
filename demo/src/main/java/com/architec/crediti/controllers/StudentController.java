@@ -11,11 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
+
 @Controller
 public class StudentController {
-
-    @Autowired
-    StudentRepository studentRepo;
 
     @Autowired
     UserRepository userRepo;
@@ -26,22 +25,17 @@ public class StudentController {
     }
 
     @PostMapping("/createstudentprofile")
-    public String createUser(@RequestParam("gsm") String gsm, @RequestParam("class") String s_class) {
+    public String createUser(Principal principal, @RequestParam("gsm") String gsm, @RequestParam("class") String s_class) {
 
-//        Student student = new Student(studentId, s_class, gsm);
-//        User user = new User(firstname, lastname, email, "Student");
-//        // set the foreign key
-//        student.setUserId(user);
-//
-//        if (!userRepo.existsByEmail(user.getEmail())) {
-//            userRepo.save(user);
-//            studentRepo.save(student);
-//        }
+        User currentUser = userRepo.findUserByEmail(principal.getName());
 
-        /*
-         * If the person is already registered, he'll get a passwordrecovery mail, if
-         * the person isn't registered yet, he'll get a comfirmation mail
-         */
+        if (currentUser.isFirstLogin()) {
+            currentUser.setGsm(gsm);
+            currentUser.setZapOrMobility(s_class);
+            currentUser.setFirstLogin(false);
+            userRepo.save(currentUser);
+        }
+
         return "redirect:/registersucces";
     }
 

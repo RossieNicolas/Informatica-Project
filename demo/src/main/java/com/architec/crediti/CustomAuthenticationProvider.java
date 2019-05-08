@@ -90,10 +90,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             if (!emailExsist) {
                 User user = new User(firstname, lastname, email, role, studentNr, true);
                 userRepo.save(user);
-            } else {
-                User user = userRepo.findUserByEmail(email);
-                if (user.isFirstLogin()) user.setFirstLogin(false);
-                userRepo.save(user);
             }
 
             result = true;
