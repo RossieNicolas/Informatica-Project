@@ -3,6 +3,7 @@ package com.architec.crediti.controllers;
 import com.architec.crediti.models.Assignment;
 import com.architec.crediti.models.Pager;
 import com.architec.crediti.models.Tag;
+import com.architec.crediti.models.User;
 import com.architec.crediti.repositories.AssignmentRepository;
 import com.architec.crediti.repositories.Methods;
 import com.architec.crediti.repositories.TagRepo;
@@ -51,6 +52,7 @@ public class AssignmentController {
             @RequestParam(required = false, value = "tag") int[] tags) {
         ArrayList<Tag> list = new ArrayList<>();
         ArrayList<String> list2 = new ArrayList<>();
+        User user = new User("test", "test", "test@ap.be", "test");
 
         if (tags != null) {
             for (int item : tags) {
@@ -61,7 +63,7 @@ public class AssignmentController {
             for (Tag item : list) {
                 list2.add(item.getTagName());
             }
-
+            assignment.setAssignerUserId(user);
             assignment.setTagAssign(list2.toString());
         }
         assignmentRepo.save(assignment);
@@ -136,7 +138,7 @@ public class AssignmentController {
 
         return "listAllAssignments";
     }
-    
+
     @RequestMapping(value = "/myassignments", method = RequestMethod.GET)
     public String assignments(Model model) {
         Iterable<Assignment> assignments = assignmentRepo.findAll();
@@ -166,7 +168,8 @@ public class AssignmentController {
     // update specific assignment
     @PostMapping(value = "/allassignments/{assignmentId}")
     public String updateAssignment(@PathVariable("assignmentId") int assignmentId, @Valid Assignment assignment) {
-
+        User user = new User("Karen", "veraa", "test@ap.be", "test");
+        assignment.setAssignerUserId(user);
         assignment.setAssignmentId(assignmentId);
         if (!(assignment.getTitle().equalsIgnoreCase("") || assignment.getType().equalsIgnoreCase("")
                 || assignment.getTask().equalsIgnoreCase(""))) {
@@ -189,7 +192,8 @@ public class AssignmentController {
     // update specific assignment
     @PostMapping(value = "/myassignments/{assignmentId}")
     public String updateMyAssignment(@PathVariable("assignmentId") int assignmentId, @Valid Assignment assignment) {
-
+        User user = new User("Karen", "veraa", "test@ap.be", "test");
+        assignment.setAssignerUserId(user);
         assignment.setAssignmentId(assignmentId);
         if (!(assignment.getTitle().equalsIgnoreCase("") || assignment.getType().equalsIgnoreCase("")
                 || assignment.getTask().equalsIgnoreCase(""))) {
