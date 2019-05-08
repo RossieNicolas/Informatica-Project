@@ -10,11 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
+
 @Controller
 public class StudentController {
-
-    @Autowired
-    StudentRepository studentRepo;
 
     @Autowired
     UserRepository userRepo;
@@ -25,25 +24,21 @@ public class StudentController {
     }
 
     @PostMapping("/createstudentprofile")
-    public String createUser(@RequestParam("student_id") String studentId, @RequestParam("firstname") String firstname,
-                             @RequestParam("lastname") String lastname, @RequestParam("mail") String email,
-                             @RequestParam("gsm") String gsm, @RequestParam("class") String s_class) {
+    public String createUser(Principal principal, @RequestParam("gsm") String gsm,
+                             @RequestParam(value = "zap", required = false) String zap,
+                             @RequestParam(value = "mobility", required = false) String mobility) {
 
-        Student student = new Student(studentId, s_class, gsm);
-        User user = new User(firstname, lastname, email, "Student");
-        // set the foreign key
-        student.setUserId(user);
+        User currentUser = userRepo.findUserByEmail(principal.getName());
 
-        if (!userRepo.existsByEmail(user.getEmail())) {
-            userRepo.save(user);
-            studentRepo.save(student);
+        if (currentUser.isFirstLogin()) {
+            currentUser.setGsm(gsm);
+            if (zap != null) {currentUser.setZap(true); }
+            if (mobility != null) {currentUser.setMobility(true); }
+            currentUser.setFirstLogin(false);
+            userRepo.save(currentUser);
         }
 
-        /*
-         * If the person is already registered, he'll get a passwordrecovery mail, if
-         * the person isn't registered yet, he'll get a comfirmation mail
-         */
-        return "redirect:/registersucces";
+        return "redirect:/main";
     }
 
 }

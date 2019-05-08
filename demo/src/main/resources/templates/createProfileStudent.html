@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
-<html xmlns:th='http://www.thymeleaf.org'>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>	
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 <title>Profiel aanmaken</title>
 </head>
@@ -23,34 +23,24 @@
 		
 		<div class="container">
 			<h2 class="extra">Profiel</h2>
-			<form th:action='@{/createstudentprofile}' method='POST'>
-				<label for='student_id' class="col-25 label">Studentennummer: </label>
-				<input type='text' name='student_id' required/>
+			<p>Het is de eerste keer dat je inlogt. We hebben wat extra informatie nodig en dan kan je van start gaan.</p>
+			<form th:action="@{/createstudentprofile}" method="POST">
+				<label for="gsm">GSM-nummer: </label>
+				<input type="text" name="gsm" id="gsm" required/>
 				<br><br>
-				<label for='firstname'>Voornaam: </label>
-				<input type='text' name='firstname' required/>
-				<br><br>
-				<label for='lastname'>Achternaam: </label>
-				<input type='text' name='lastname' required/>
-				<br><br>
-				<label for='mail'>E-mail: </label>
-				<input type='email' name='mail' required/>
-				<br><br>
-				<label for='gsm'>GSM-nummer: </label>
-				<input type='text' name='gsm' required/>
-				<br><br>
-				<label for='class'>Voor onderdeel: </label>
-				<select name = 'class' class="keuzelijst">
-					<option value="ZAP">ZAP</option>
-					<option value="MOB">MOB</option>
-				</select>
+				<label>ZAP of Mobility?: </label>
+				<div>
+					<input type="checkbox" name="zap" value="Zap">ZAP<br>
+					<input type="checkbox" name="mobility" value="Mobility">Mobility<br>
+				</div>
 				<br>
 				<br/>
 				<label></label>
-				<input type='SUBMIT' class="button" value='Profiel aanmaken'>
+				<input type="SUBMIT" class="button" value="Profiel aanmaken">
 			</form>
 		</div>
-
+	
+		
 		
 		<footer>
 			<div class="footer-bot">
