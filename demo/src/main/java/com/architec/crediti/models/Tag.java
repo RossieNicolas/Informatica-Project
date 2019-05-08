@@ -19,10 +19,6 @@ public class Tag {
         return tagId;
     }
 
-    public void setTagId(int tagId) {
-        this.tagId = tagId;
-    }
-
     public String getTagName() {
         return tagName;
     }
