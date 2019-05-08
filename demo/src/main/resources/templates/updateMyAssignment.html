@@ -77,25 +77,25 @@
                 <form th:each="a: ${assignments}" class="standard-form" method="post">
                     <fieldset disabled="disabled" id="assignmentInfo">
                         <label for="title">Titel:</label>
-                        <input name="title" id="title" type="text" th:value="*{a.getTitle()}"><br>
+                        <input name="title" id="title" type="text" th:value="*{a.getTitle()}" required="required"><br>
 
                         <label for="type">Type:</label>
-                        <input name="type" id="type" type="text" th:value="*{a.getType()}"><br>
+                        <input name="type" id="type" type="text" th:value="*{a.getType()}" required="required"><br>
 
                         <label for="task">Omschrijving opdracht:</label>
-                        <input name="task" id="task" th:value="*{a.getTask()}" type="text"><br>
+                        <input name="task" id="task" th:value="*{a.getTask()}" type="text" required="required"><br>
 
                         <label for="start_date">Begindatum:</label><br>
-                        <input name="start_date" id="start_date" type="date" th:value="*{a.getStartDate()}"><br>
+                        <input name="start_date" id="start_date" type="date" th:value="*{a.getStartDate()}" required="required"><br>
 
                         <label for="end_date">Einddatum:</label><br>
-                        <input name="end_date" id="end_date" type="date" th:value="*{a.getEnd_date()}"><br><br>
+                        <input name="end_date" id="end_date" type="date" th:value="*{a.getEnd_date()}" required="required"><br><br>
 
                         <label for="amountHours">Totaal uur:</label>
-                        <input name="amountHours" id="amountHours" type="number" th:value="*{a.getAmountHours()}" min="1"><br>
+                        <input name="amountHours" id="amountHours" type="number" th:value="*{a.getAmountHours()}" min="1" required="required"><br>
 
                         <label for="maxStudents">Max Studenten:</label>
-                        <input name="maxStudents" id="maxStudents" type="number" th:value="*{a.getMaxStudents()}" min="1"><br>
+                        <input name="maxStudents" id="maxStudents" type="number" th:value="*{a.getMaxStudents()}" min="1" required="required"><br>
 
                         <table class="tags">
                             <tr>
@@ -145,7 +145,33 @@
                 e.target.value = 0
             }
         })
-    })
+    });
+    function TDate() {
+        var startDate = document.getElementById("start_date").value;
+        var endDate = document.getElementById("end_date").value;
+        if (startDate != null && endDate != null) {
+            if (startDate >= endDate) {
+                alert("De startdatum moet kleiner zijn dan de einddatum van uw opdracht!");
+                document.getElementById('end_date').value = "";
+                return false;
+            }
+            return true;
+        }
+    }
+
+    function SDate() {
+        var startDate = document.getElementById("start_date").value;
+        var currentDate = new Date().toISOString().split('T')[0];
+
+        if (startDate != null) {
+            if (startDate < currentDate) {
+                alert("De startdatum moet groter of gelijk zijn aan de datum van vandaag!");
+                document.getElementById('start_date').value = "";
+                return false;
+            }
+            return true
+        }
+    }
 </script>
 </body>
 </html>
