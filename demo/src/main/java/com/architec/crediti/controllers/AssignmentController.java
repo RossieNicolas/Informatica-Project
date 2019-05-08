@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -48,11 +49,11 @@ public class AssignmentController {
 
     // add assignment
     @PostMapping("/assignment")
-    public String createAssignment(@Valid Assignment assignment,
-            @RequestParam(required = false, value = "tag") int[] tags) {
+    public String createAssignment(Principal principal, @Valid Assignment assignment,
+                                   @RequestParam(required = false, value = "tag") int[] tags) {
         ArrayList<Tag> list = new ArrayList<>();
         ArrayList<String> list2 = new ArrayList<>();
-        User user = new User("test", "test", "test@ap.be", "test");
+        User currentUser = userRepo.findUserByEmail(principal.getName());
 
         if (tags != null) {
             for (int item : tags) {
@@ -63,7 +64,7 @@ public class AssignmentController {
             for (Tag item : list) {
                 list2.add(item.getTagName());
             }
-            assignment.setAssignerUserId(user);
+            assignment.setAssignerUserId(currentUser);
             assignment.setTagAssign(list2.toString());
         }
         assignmentRepo.save(assignment);
@@ -167,9 +168,9 @@ public class AssignmentController {
 
     // update specific assignment
     @PostMapping(value = "/allassignments/{assignmentId}")
-    public String updateAssignment(@PathVariable("assignmentId") int assignmentId, @Valid Assignment assignment) {
-        User user = new User("Karen", "veraa", "test@ap.be", "test");
-        assignment.setAssignerUserId(user);
+    public String updateAssignment(Principal principal, @PathVariable("assignmentId") int assignmentId, @Valid Assignment assignment) {
+        User currentUser = userRepo.findUserByEmail(principal.getName());
+        assignment.setAssignerUserId(currentUser);
         assignment.setAssignmentId(assignmentId);
         if (!(assignment.getTitle().equalsIgnoreCase("") || assignment.getType().equalsIgnoreCase("")
                 || assignment.getTask().equalsIgnoreCase(""))) {
@@ -191,9 +192,9 @@ public class AssignmentController {
 
     // update specific assignment
     @PostMapping(value = "/myassignments/{assignmentId}")
-    public String updateMyAssignment(@PathVariable("assignmentId") int assignmentId, @Valid Assignment assignment) {
-        User user = new User("Karen", "veraa", "test@ap.be", "test");
-        assignment.setAssignerUserId(user);
+    public String updateMyAssignment(Principal principal, @PathVariable("assignmentId") int assignmentId, @Valid Assignment assignment) {
+        User currentUser = userRepo.findUserByEmail(principal.getName());
+        assignment.setAssignerUserId(currentUser);
         assignment.setAssignmentId(assignmentId);
         if (!(assignment.getTitle().equalsIgnoreCase("") || assignment.getType().equalsIgnoreCase("")
                 || assignment.getTask().equalsIgnoreCase(""))) {
