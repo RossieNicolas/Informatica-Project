@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Crediti - Alle opdrachten</title>
-    <link rel="stylesheet" th:href="@{/css/APcss2.css}">
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
 <body class="background">
@@ -72,14 +71,15 @@
 		<div class="container ">
 			<h2 class = "extra">Alle opdrachten</h2>
         </div>
-		<div id='overview'>
+        <div class="container">
             <form th:action='@{/allassignments}' method='POST'>
-                <table  class ="tableAsssignment">
-                    <th><label for='searchbar'>Naam: </label></th>
-                    <th><input type='search' class='form-control' name='searchbar' id='searchbar'></th>
-                    <th><input type='SUBMIT' id = "zoekKnop" value = "Zoek" class="button"/></th>
-                </table>
+                <label for='searchbar'>Zoekwaarde: </label>
+                <input type='search' class='form-control' name='searchbar' id='searchbar'>
+                <input type='SUBMIT' id = "zoekKnop" value = "Zoek" class="button"/>
             </form>
+        </div>
+		<div id='overview'>
+
                 <table>
                     <thead>
 				<tr>
@@ -98,9 +98,7 @@
 				<tr th:each="a : ${assignments}" class="tablebackground">
                     <td><a th:href="${'/allassignments/' + a.getAssignmentId()}" class="button">📃</a>
 					<td th:text="${a.getAssignmentId()}"></td>
-                    <!--TODO-->
-					<!--<td th:text="${a.getAssignerUserId()}"></td>-->
-                    <td>opdrachtgever</td>
+					<td th:text="${a.getAssigner()}"></td>
 					<td th:text="${a.getType()}"></td>
 					<td th:text="${a.getTitle()}" class = "cell"></td>
 					<td th:text="${a.getStartDate()}"></td>
@@ -114,25 +112,23 @@
                     </tbody>
 			</table>
 		</div>
-<!--<div class="container nav-table">
-    <div th:if="${persons.totalPages !=1}" >
-        <ul class="pagination">
-            <li th:class="${persons.number == 0} ? disabled">
-                <a th:href="@{/allassignments/(page=${persons.number})}">&laquo;</a>
-            </li>
-            <li th:class="${persons.number == (page - 1)} ? 'active pointer-disabled'"
-                th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
-                <a th:href="@{/allassignments/(page=${page})}"
-                   th:text="${page}"></a>
-            </li>
-            <li th:class="${persons.number + 1 == persons.totalPages} ? disabled">
-                <a th:href="@{/allassignments/(page=${persons.number + 2})}">&raquo;</a>
-            </li>
-        </ul>
-    </div>
-</div>-->
 
-
+        <div class="container">
+            <div th:if="${persons.totalPages !=1}" >
+                <ul class="pagination">
+                    <li th:class="${persons.number == 0} ? disabled">
+                        <a class="pageLink" th:href="@{/allassignments/(page=${persons.number})}">&laquo;</a>
+                    </li>
+                    <li th:class="${persons.number == (page - 1)} ? 'active pointer-disabled'"
+                        th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
+                        <a class="pageLink" th:href="@{/allassignments/(page=${page})}" th:text="${page}"></a>
+                    </li>
+                    <li th:class="${persons.number + 1 == persons.totalPages} ? disabled">
+                        <a class="pageLink" th:href="@{/allassignments/(page=${persons.number + 2})}">&raquo;</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
 
 <footer>
     <div class="footer-bot">

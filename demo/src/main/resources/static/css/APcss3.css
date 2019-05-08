@@ -319,8 +319,8 @@ p {
 
 .page-item.active .page-link {
 	z-index:1;
-	background-color:#007bff;
-	border-color:#007bff
+	background-color:#e60005;
+	border-color:#e60005
 }
 
 .pagination a {
@@ -338,8 +338,8 @@ p {
 }
 
 .pagination {
-	text-align: center;
-	display: block;
+	text-align: right;
+	background-color:hsla(0,100%,100%,0.6);
 }
 
 .disabled {
@@ -349,11 +349,6 @@ p {
 
 .pointer-disabled {
     pointer-events: none;
-}
-
-.navtable {
-	color:#212529;
-	background-color:hsla(0,100%,100%,0.6);
 }
 
 .pagination {
