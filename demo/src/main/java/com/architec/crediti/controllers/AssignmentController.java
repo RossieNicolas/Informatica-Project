@@ -78,7 +78,8 @@ public class AssignmentController {
     @GetMapping("/allassignments")
     public ModelAndView showPersonsPage(@RequestParam("page") Optional<Integer> page) {
         ModelAndView modelAndView = new ModelAndView("listAllAssignments");
-        int initialPage = 1;
+        fiches = assignmentRepo.findAll();
+        int initialPage = 0;
         int pageSize = 20;
 
         int buttons = (int) assignmentRepo.count() / pageSize;
@@ -96,11 +97,12 @@ public class AssignmentController {
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
 
         modelAndView.addObject("persons", fiches);
-        modelAndView.addObject("assignments", Methods.removeFullAssignments(assignmentRepo.findByTitleContainingAndArchived("", false)));
+        modelAndView.addObject("assignments", fiches);
         modelAndView.addObject("selectedPageSize", pageSize);
         modelAndView.addObject("pager", pager);
         return modelAndView;
     }
+
 
     //list all unvalidated assignments
     @GetMapping("/unvalidatedassignments")
@@ -121,22 +123,24 @@ public class AssignmentController {
 
     //search assignments
     @PostMapping("/allassignments")
-    String getAssignment(@RequestParam("name") String name,
-                         Model model) {
+    String getAssignment(@RequestParam("searchbar") String name,
+                         Model model){
 
         try {
             Assignment a = assignmentRepo.findByAssignmentId((Integer.parseInt(name)));
-            if (a.getAmountStudents() != a.getMaxStudents() && !a.isArchived()) {
-                model.addAttribute("assignments", a);
+            if(a.getAmountStudents() != a.getMaxStudents() && !a.isArchived()){
+                model.addAttribute("assignments" ,  a);
             }
 
         } catch (Exception e) {
-            model.addAttribute("assignments", Methods.removeFullAssignments(assignmentRepo.findByTitleContainingAndArchived(name, false)));
+            model.addAttribute("assignments",  Methods.removeFullAssignments(assignmentRepo.findByTitleContainingAndArchived(name , false)));
         }
+
 
 
         return "listAllAssignments";
     }
+
 
 
     @RequestMapping(value = "/myassignments", method = RequestMethod.GET)

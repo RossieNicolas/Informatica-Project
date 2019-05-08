@@ -73,15 +73,15 @@
 			<h2 class = "extra">Alle opdrachten</h2>
         </div>
 		<div id='overview'>
-            <form th:action='@{/allassignments}' method='POST' class="standard-form">
+            <form th:action='@{/allassignments}' method='POST'>
                 <table  class ="tableAsssignment">
                     <th><label for='searchbar'>Naam: </label></th>
                     <th><input type='search' class='form-control' name='searchbar' id='searchbar'></th>
                     <th><input type='SUBMIT' id = "zoekKnop" value = "Zoek" class="button"/></th>
-
                 </table>
             </form>
                 <table>
+                    <thead>
 				<tr>
 					<th style="padding-left: 2.5%">Info</th>
 					<th>Nr</th>
@@ -93,6 +93,8 @@
 					<th>Gevalideerd</th>
 					<th>Gearchiveerd</th>
 				</tr>
+                    </thead>
+                    <tbody>
 				<tr th:each="a : ${assignments}" class="tablebackground">
                     <td><a th:href="${'/allassignments/' + a.getAssignmentId()}" class="button">📃</a>
 					<td th:text="${a.getAssignmentId()}"></td>
@@ -109,10 +111,11 @@
                     </td>
 					<td th:text="${a.isArchived()}"></td>
 				</tr>
+                    </tbody>
 			</table>
 		</div>
-<div class="container">
-    <div th:if="${persons.totalPages != 1}">
+<!--<div class="container nav-table">
+    <div th:if="${persons.totalPages !=1}" >
         <ul class="pagination">
             <li th:class="${persons.number == 0} ? disabled">
                 <a th:href="@{/allassignments/(page=${persons.number})}">&laquo;</a>
@@ -127,7 +130,8 @@
             </li>
         </ul>
     </div>
-</div>
+</div>-->
+
 
 
 <footer>
