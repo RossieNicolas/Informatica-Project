@@ -78,22 +78,32 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             NamingEnumeration<SearchResult> answers = context.search("OU=Users,OU=DWAP,DC=alpaca,DC=int", "(userPrincipalName=" + username + ")", ctrls);
             javax.naming.directory.SearchResult res = answers.nextElement();
 
-            String firstname = res.getAttributes().get("givenname").toString();
-            String lastname = res.getAttributes().get("sn").toString();
-            String department = res.getAttributes().get("department").toString();
-            String role = res.getAttributes().get("extensionAttribute1").toString();
+            String rawFirstname = res.getAttributes().get("givenname").toString();
+            String rawLastname = res.getAttributes().get("sn").toString();
+            String rawDepartment = res.getAttributes().get("department").toString();
+            String rawRole = res.getAttributes().get("extensionAttribute1").toString();
             String email = username;
 
+            String firstname = (rawFirstname.substring(rawFirstname.lastIndexOf(" ") + 1));
+            String lastname = (rawLastname.substring(rawLastname.lastIndexOf(" ") + 1));
+            String department = (rawDepartment.substring(rawDepartment.lastIndexOf(" ") + 1));
+            String role = (rawRole.substring(rawRole.lastIndexOf(" ") + 1));
+
             boolean emailExsist =  userRepo.existsByEmail(email);
-            System.out.println(emailExsist);
+
+            if (!emailExsist) {
+                User user = new User(firstname, lastname, email, role, true);
+                userRepo.save(user);
+            } else {
+                for (User u : userRepo.findAll()) {
+                    if (u.getEmail().equals(email)) {
+                        User user = userRepo.getOne(u.getUserId());
+                        System.out.println(userRepo.findAll());
+                    }
+                }
+            }
 
 
-
-            System.out.println(firstname.substring(firstname.lastIndexOf(" ") + 1));
-            System.out.println(lastname.substring(lastname.lastIndexOf(" ") + 1));
-            System.out.println(department.substring(department.lastIndexOf(" ") + 1));
-            System.out.println(role.substring(role.lastIndexOf(" ") + 1));
-            System.out.println(username);
 
 
 
