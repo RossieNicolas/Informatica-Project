@@ -21,25 +21,27 @@
         </div>
     </header>
 <div class="block">
-    <div class="container ">
+    <div class="container">
         <div class="wrap-all col-xs-12 ">
         <h2 class="extra">Log In</h2>
-        <form>
-    <label for='eMail'>Email: </label>
-    <input type='email' name='eMailInput' id='eMail'>
-    <br/><br/>
-    <label for='password'>Wachtwoord: </label>
-    <input type='password' name='passwordInput' id='password'>
-    <br/><br>
-    <input type='SUBMIT' value='Login' class='button'>
-	<br><br>
-    <a href="/passwordRecovery">Wachtwoord vergeten?</a>
-    <br/>
-    <p>Nieuwe gebruiker? Klik <a href="">hier</a> om u te registreren.</p>
+            <p th:if="${loginError}" class="error">Wrong user or password</p>
+        <form class="form-signin" name="loginFrom" th:action="@{/login}" action="/login" method="post">
+            <label for="username">Email: </label>
+            <input type="email" name="username" id="username" required="required" autofocus="autofocus">
+            <br/><br/>
+            <label for="password">Wachtwoord: </label>
+            <input type="password" name="password" id="password" required="required">
+            <br/><br>
+            <button type="submit">Log in</button>
+            <br><br>
+            <a href="">Wachtwoord vergeten?</a>
+            <br/>
+            <p>Nieuwe gebruiker? Klik <a href="">hier</a> om u te registreren.</p>
 </form>
         </div>
     </div>
 </div>
+
 <div style="height: 37%"></div>
     <footer>
         <div class="footer-bot">
