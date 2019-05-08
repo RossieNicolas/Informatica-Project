@@ -6,22 +6,16 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.ldap.core.ContextMapper;
-import org.springframework.ldap.core.DirContextAdapter;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.ldap.userdetails.LdapUserDetails;
-import org.springframework.security.ldap.userdetails.UserDetailsContextMapper;
 import org.springframework.stereotype.Component;
 
 import javax.naming.Context;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
-import javax.naming.directory.Attributes;
 import javax.naming.directory.InitialDirContext;
 import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
@@ -72,7 +66,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
             InitialDirContext context = new InitialDirContext(env);
             SearchControls ctrls = new SearchControls();
-            ctrls.setReturningAttributes(new String[] { "givenName", "sn", "department", "extensionAttribute1" });
+            ctrls.setReturningAttributes(new String[]{"givenName", "sn", "department", "extensionAttribute1"});
             ctrls.setSearchScope(SearchControls.SUBTREE_SCOPE);
 
             NamingEnumeration<SearchResult> answers = context.search("OU=Users,OU=DWAP,DC=alpaca,DC=int", "(userPrincipalName=" + username + ")", ctrls);
@@ -89,7 +83,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             String department = (rawDepartment.substring(rawDepartment.lastIndexOf(" ") + 1));
             String role = (rawRole.substring(rawRole.lastIndexOf(" ") + 1));
 
-            boolean emailExsist =  userRepo.existsByEmail(email);
+            boolean emailExsist = userRepo.existsByEmail(email);
 
             if (!emailExsist) {
                 User user = new User(firstname, lastname, email, role, true);
@@ -104,10 +98,9 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
             log.info("LDAP Connection Successful!");
 
-
         } catch (NamingException nex) {
             System.out.println("LDAP Connection: FAILED");
-            nex.printStackTrace();
+            nex.printStackTrace(); //TODO: show error to user
         } finally {
             if (ctx != null) {
                 try {
@@ -117,11 +110,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
                 }
             }
         }
-
         return result;
-
     }
-
 
     @Override
     public boolean supports(Class<?> auth) {
