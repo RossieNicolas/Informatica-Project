@@ -26,9 +26,7 @@ public class StudentController {
     }
 
     @PostMapping("/createstudentprofile")
-    public String createUser(@RequestParam("student_id") String studentId, @RequestParam("firstname") String firstname,
-                             @RequestParam("lastname") String lastname, @RequestParam("mail") String email,
-                             @RequestParam("gsm") String gsm, @RequestParam("class") String s_class) {
+    public String createUser(@RequestParam("gsm") String gsm, @RequestParam("class") String s_class) {
 
 //        Student student = new Student(studentId, s_class, gsm);
 //        User user = new User(firstname, lastname, email, "Student");
