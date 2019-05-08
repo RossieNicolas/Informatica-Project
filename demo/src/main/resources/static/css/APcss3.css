@@ -8822,10 +8822,6 @@ input[type=checkbox]+label {
 	border: 1px solid #bebebe
 }
 
-input[type=checkbox] {
-	display: none
-}
-
 input[type=checkbox]+label {
 	display: inline-block;
 	font-style: normal;

@@ -28,8 +28,11 @@ public class User {
     @Column(name = "gsm")
     private String gsm;
 
-    @Column(name = "zap_mobility")
-    private String zapOrMobility;
+    @Column(name = "zap")
+    private boolean zap;
+
+    @Column(name = "mobility")
+    private boolean mobility;
 
     @Column(name = "first_login", nullable = false)
     private boolean firstLogin;
@@ -57,12 +60,20 @@ public class User {
         this.gsm = gsm;
     }
 
-    public String getZapOrMobility() {
-        return zapOrMobility;
+    public boolean isZap() {
+        return zap;
     }
 
-    public void setZapOrMobility(String zapOrMobility) {
-        this.zapOrMobility = zapOrMobility;
+    public void setZap(boolean zap) {
+        this.zap = zap;
+    }
+
+    public boolean isMobility() {
+        return mobility;
+    }
+
+    public void setMobility(boolean mobility) {
+        this.mobility = mobility;
     }
 
     public boolean isFirstLogin() {
