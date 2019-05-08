@@ -98,7 +98,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         } catch (NamingException nex) {
             System.out.println("LDAP Connection: FAILED");
-            nex.printStackTrace(); //TODO: show error to user
+            nex.printStackTrace();
         } finally {
             if (ctx != null) {
                 try {
