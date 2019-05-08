@@ -72,8 +72,6 @@
                 <div class="wrap-all col-xs-12 ">
                     <h2>Opdracht bewerken</h2>
 
-
-
                     <form th:each="a: ${assignments}" class="standard-form" method="post">
                         <fieldset disabled="disabled" id="assignmentInfo">
                             <label for="title">Titel:</label>
@@ -112,14 +110,15 @@
                             </table>
                         </fieldset>
                         <br/>
-                        <input th:if="${!a.isValidated()}" type="button" value = "✏️BEWERKEN" class = "button" onclick="toggleForm();">
+                        <input th:if="${!a.isValidated()}" type="button" value = "✏️ BEWERKEN" class = "button" onclick="toggleForm();">
                         &nbsp;&nbsp;&nbsp;
                         <input th:if="${!a.isValidated()}" type="submit" value = "💾 BEWAREN" class="button" id="save" disabled>
+
                         <a th:if="${a.isValidated()}" th:href="@{/studentenroll/{id} (id=${a.assignmentId})}" class="button">➕ Inschrijven</a>
                         &nbsp;&nbsp;&nbsp;
                         <a th:href="@{/deleteassignment/{id} (id=${a.assignmentId})}" class="button">🗑️ VERWIJDEREN</a>
                         &nbsp;&nbsp;&nbsp;
-                        <a th:href="@{/validateassignment/{id} (id=${a.assignmentId})}" class="button">✔️VALIDEREN</a>
+                        <a th:if="${!a.isValidated()}" th:href="@{/validateassignment/{id} (id=${a.assignmentId})}" class="button">✔️ VALIDEREN</a>
                         &nbsp;&nbsp;&nbsp;
                         <a th:href="@{/archiveassignment/{id} (id=${a.assignmentId})}" class="button">🗄️ ARCHIVEREN</a>
                     </form>
