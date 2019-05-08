@@ -1,5 +1,6 @@
 package com.architec.crediti.controllers;
 
+import com.architec.crediti.models.User;
 import com.architec.crediti.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,8 +16,11 @@ public class MainController {
 
     @RequestMapping("main")
     public String getDashboard(Principal principal) {
-        String name = principal.getName();
-        System.out.println(name);
+        User currentUser = userRepo.findUserByEmail(principal.getName());
+
+        if (currentUser.isFirstLogin()) {
+            return "redirect:createstudentprofile";
+        }
         return "main";
     }
 }

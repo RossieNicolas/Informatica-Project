@@ -30,15 +30,15 @@ public class StudentController {
                              @RequestParam("lastname") String lastname, @RequestParam("mail") String email,
                              @RequestParam("gsm") String gsm, @RequestParam("class") String s_class) {
 
-        Student student = new Student(studentId, s_class, gsm);
-        User user = new User(firstname, lastname, email, "Student");
-        // set the foreign key
-        student.setUserId(user);
-
-        if (!userRepo.existsByEmail(user.getEmail())) {
-            userRepo.save(user);
-            studentRepo.save(student);
-        }
+//        Student student = new Student(studentId, s_class, gsm);
+//        User user = new User(firstname, lastname, email, "Student");
+//        // set the foreign key
+//        student.setUserId(user);
+//
+//        if (!userRepo.existsByEmail(user.getEmail())) {
+//            userRepo.save(user);
+//            studentRepo.save(student);
+//        }
 
         /*
          * If the person is already registered, he'll get a passwordrecovery mail, if
