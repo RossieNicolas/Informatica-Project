@@ -1,14 +1,30 @@
 package com.architec.crediti;
 
+import com.architec.crediti.models.User;
+import com.architec.crediti.repositories.UserRepository;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.ldap.core.ContextMapper;
+import org.springframework.ldap.core.DirContextAdapter;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.ldap.userdetails.LdapUserDetails;
+import org.springframework.security.ldap.userdetails.UserDetailsContextMapper;
 import org.springframework.stereotype.Component;
 
 import javax.naming.Context;
+import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
+import javax.naming.directory.Attributes;
+import javax.naming.directory.InitialDirContext;
+import javax.naming.directory.SearchControls;
+import javax.naming.directory.SearchResult;
 import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
 import java.util.ArrayList;
@@ -17,8 +33,13 @@ import java.util.Hashtable;
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
+    private Log log = LogFactory.getLog(this.getClass());
+
     @Value("${spring.ldap.urls}")
     private String ldapUrl;
+
+    @Autowired
+    UserRepository userRepo;
 
     @Override
     public Authentication authenticate(Authentication auth) throws AuthenticationException {
@@ -26,13 +47,11 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         String username = auth.getName();
         String password = auth.getCredentials().toString();
 
-
         if (isLdapRegisteredUser(username, password)) {
             return new UsernamePasswordAuthenticationToken(username, password, new ArrayList<>());
         } else {
-            return null;
+            throw new AuthenticationCredentialsNotFoundException("Invalid Credentials!");
         }
-
     }
 
     private boolean isLdapRegisteredUser(String username, String password) {
@@ -51,11 +70,38 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
             ctx = new InitialLdapContext(env, null);
 
+            InitialDirContext context = new InitialDirContext(env);
+            SearchControls ctrls = new SearchControls();
+            ctrls.setReturningAttributes(new String[] { "givenName", "sn", "department", "extensionAttribute1" });
+            ctrls.setSearchScope(SearchControls.SUBTREE_SCOPE);
+
+            NamingEnumeration<SearchResult> answers = context.search("OU=Users,OU=DWAP,DC=alpaca,DC=int", "(userPrincipalName=" + username + ")", ctrls);
+            javax.naming.directory.SearchResult res = answers.nextElement();
+
+            String firstname = res.getAttributes().get("givenname").toString();
+            String lastname = res.getAttributes().get("sn").toString();
+            String department = res.getAttributes().get("department").toString();
+            String role = res.getAttributes().get("extensionAttribute1").toString();
+            String email = username;
+
+
+
+
+            System.out.println(firstname.substring(firstname.lastIndexOf(" ") + 1));
+            System.out.println(lastname.substring(lastname.lastIndexOf(" ") + 1));
+            System.out.println(department.substring(department.lastIndexOf(" ") + 1));
+            System.out.println(role.substring(role.lastIndexOf(" ") + 1));
+            System.out.println(username);
+
+
+
             result = true;
 
-            System.out.println("LDAP Connection Successful!");
+            log.info("LDAP Connection Successful!");
+
 
         } catch (NamingException nex) {
+            System.out.println("LDAP Connection: FAILED");
             nex.printStackTrace();
         } finally {
             if (ctx != null) {
