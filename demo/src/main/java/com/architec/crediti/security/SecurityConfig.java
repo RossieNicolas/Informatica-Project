@@ -1,4 +1,4 @@
-package com.architec.crediti;
+package com.architec.crediti.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

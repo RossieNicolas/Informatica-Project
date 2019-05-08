@@ -1,4 +1,4 @@
-package com.architec.crediti;
+package com.architec.crediti.security;
 
 import com.architec.crediti.models.User;
 import com.architec.crediti.repositories.UserRepository;
