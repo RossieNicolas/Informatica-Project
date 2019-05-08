@@ -30,25 +30,10 @@ public class TagController {
 
     //make a new tag
     @PostMapping("/tag")
-    public String createTag(@Valid Tag tag, Model model) {
-        boolean added = false;
-        for(Tag t : tagRepo.findAll()){
-            if(tag.getTagName().equalsIgnoreCase("")){
-                added = false;
-                model.addAttribute("status", "failed");
-            }
-            else if (tag.getTagName().equalsIgnoreCase(t.getTagName())) {
-                tagRepo.delete(t);
-                tagRepo.save(tag);
-                added = false;
-                model.addAttribute("status", "edit");
-            }
-            else {
-                tagRepo.save(tag);
-                added = true;
-                model.addAttribute("status", "added");
-            }
-        }
+    public String createTag(@RequestParam ("tagName") String tagName, @RequestParam ("tagDescription") String tagDescription) {
+        Tag tag = new Tag(tagName, tagDescription);
+        //TODO check for duplicates
+        tagRepo.save(tag);
         return "redirect:/listAllTags";
     }
 
@@ -98,7 +83,7 @@ public class TagController {
     @PostMapping(value = "/listAllTags/{tagId}")
     public String saveTag(@PathVariable("tagId") int tagId, @Valid Tag tag) {
         boolean added;
-        tag.setTagId(tagId);
+        //tag.setTagId(tagId);
         for(Tag t : tagRepo.findAll()){
             if(tag.getTagName().equalsIgnoreCase("")){
                 added = false;
