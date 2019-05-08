@@ -84,6 +84,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             String role = res.getAttributes().get("extensionAttribute1").toString();
             String email = username;
 
+            boolean emailExsist =  userRepo.existsByEmail(email);
+            System.out.println(emailExsist);
 
 
 
