@@ -1,4 +1,4 @@
-package com.architec.crediti;
+package com.architec.crediti.controllers;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
@@ -10,4 +10,10 @@ public class HelloController {
     public String index() {
         return "home";
     }
+
+    @RequestMapping("/main")
+    public String main() {
+        return "main";
+    }
+
 }
