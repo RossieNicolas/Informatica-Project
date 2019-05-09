@@ -156,6 +156,11 @@
                 document.getElementById('start_date').value = "";
                 return false;
             }
+            else if (startDate > currentDate){
+                alert("De einddatum moet groter of gelijk zijn aan de startdatum!");
+                document.getElementById('start_date').value = "";
+                return false;
+            }
             return true
         }
     }
