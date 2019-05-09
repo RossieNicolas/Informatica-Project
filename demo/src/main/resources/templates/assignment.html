@@ -139,12 +139,18 @@
                 document.getElementById('end_date').value = "";
                 return false;
             }
+            else if (endDate < startDate){
+                alert("De startdatum moet kleiner zijn dan de einddatum!");
+                document.getElementById('end_date').value = "";
+                return false;
+            }
             return true;
         }
     }
 
     function SDate() {
         var startDate = document.getElementById("start_date").value;
+        var endDate = document.getElementById("end_date").value;
         var currentDate = new Date().toISOString().split('T')[0];
 
         if (startDate != null) {
@@ -153,11 +159,7 @@
                 document.getElementById('start_date').value = "";
                 return false;
             }
-            else if (startDate > currentDate){
-                alert("De einddatum moet groter of gelijk zijn aan de startdatum!");
-                document.getElementById('start_date').value = "";
-                return false;
-            }
+
             return true
         }
     }
