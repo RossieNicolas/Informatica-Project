@@ -73,6 +73,7 @@
             <div class="container ">
                 <div class="wrap-all col-xs-12 ">
                     <h2>Tag toevoegen</h2>
+                    <p th:if="${error}" th:text="${error}">No error</p>
                     <form th:action='@{/tag}' method='POST'>
                         <label for='tagName'>Tag: </label>
                         <input type='text' name='tagName' id='tagName' maxlength="50" placeholder="tagnaam">

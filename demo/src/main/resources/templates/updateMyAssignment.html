@@ -74,7 +74,7 @@
 
 
 
-                <form th:each="a: ${assignments}" class="standard-form" method="post">
+                <form th:each="a: ${assignments}" class="standard-form" method="post"  th:action="@{/myassignments/{id}(id=${a.assignmentId})}">
                     <fieldset disabled="disabled" id="assignmentInfo">
                         <label for="title">Titel:</label>
                         <input name="title" id="title" type="text" th:value="*{a.getTitle()}" required="required"><br>
@@ -103,9 +103,10 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <th:block th:each="tag : ${listAllTags}">
-                                        <input type="checkbox" id="tagCheckBox"/>
-                                        <label for="tagCheckBox" th:text="${tag.getTagName()}"></label>
+                                    <th:block th:each='tag: ${updatetag}'>
+                                        <input type="checkbox" id="tag" name="tag" th:tr='${tag.getTagName()}'
+                                               th:value='${tag.getTagId()}'/>
+                                        <label for="tag" th:text='${tag.getTagName()}'></label>
                                     </th:block>
                                 </td>
                             </tr>

@@ -28,6 +28,8 @@ import java.util.Optional;
 public class AssignmentController {
 
     private Iterable<Assignment> fiches;
+    final private int initialPage = 0;
+    final private int pageSize = 15;
 
     @Autowired
     TagRepo tagRepo;
@@ -101,8 +103,7 @@ public class AssignmentController {
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
 
         modelAndView.addObject("persons", fiches);
-        modelAndView.addObject("assignments",
-                Methods.removeFullAssignments(assignmentRepo.findByTitleContainingAndArchived("", false)));
+        modelAndView.addObject("assignments", fiches);
         modelAndView.addObject("selectedPageSize", pageSize);
         modelAndView.addObject("pager", pager);
         return modelAndView;
@@ -127,7 +128,7 @@ public class AssignmentController {
 
     // search assignments
     @PostMapping("/allassignments")
-    String getAssignment(@RequestParam("searchbar") String name, Model model) {
+    String getAssignment(@RequestParam("searchbar") String name, Model model , @RequestParam("page") Optional<Integer> page) {
 
         try {
             Assignment a = assignmentRepo.findByAssignmentId((Integer.parseInt(name)));
@@ -136,9 +137,30 @@ public class AssignmentController {
             }
 
         } catch (Exception e) {
-            model.addAttribute("assignments",
-                    Methods.removeFullAssignments(assignmentRepo.findByTitleContainingAndArchived(name, false)));
+            model.addAttribute("assignments", Methods.removeFullAssignments(assignmentRepo.findByTitleContainingAndArchived(name, false)));
         }
+
+        ModelAndView modelAndView = new ModelAndView("listAllAssignments");
+        fiches = assignmentRepo.findAll();
+
+
+        int buttons = (int) assignmentRepo.count() / pageSize;
+
+        if (assignmentRepo.count() % pageSize != 0) {
+            buttons++;
+        }
+
+        // Evaluate page. If requested parameter is null or less than 0 (to
+        // prevent exception), return initial size. Otherwise, return value of
+        // param. decreased by 1.
+        int evalPage = (page.orElse(0) < 1) ? initialPage : page.get() - 1;
+
+        Page<Assignment> fiches = assignmentRepo.findAll(PageRequest.of(evalPage, pageSize));
+        Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
+
+        model.addAttribute("persons", fiches);
+        model.addAttribute("selectedPageSize", pageSize);
+        model.addAttribute("pager", pager);
 
         return "listAllAssignments";
     }
@@ -148,11 +170,11 @@ public class AssignmentController {
         User currentUser = userRepo.findUserByEmail(principal.getName());
         Iterable<Assignment> assignments = assignmentRepo.findAll();
         ArrayList<Assignment> myAssignments = new ArrayList<>();
-
-        if (currentUser.getUserId() == assignments.iterator().next().getAssignerUserId()) {
-            myAssignments.add(assignments.iterator().next());
+        for (Assignment a : assignments){
+            if (currentUser.getUserId() == a.getAssignerUserId()) {
+                myAssignments.add(a);
+            }
         }
-
         model.addAttribute("assignments", myAssignments);
 
         return "myassignments";
@@ -161,7 +183,9 @@ public class AssignmentController {
     // find specific assignment to edit out of all assignments
     @GetMapping(value = "/allassignments/{assignmentId}")
     public String getAssignmentsToUpdate(@PathVariable("assignmentId") int assignmentId, Model model) {
+        List<Tag> updatetag = tagRepo.findAll();
 
+        model.addAttribute("updatetag", updatetag);
         try {
             Assignment a = assignmentRepo.findByAssignmentId(assignmentId);
             if (a.getAmountStudents() != a.getMaxStudents() && !a.isArchived()) {
@@ -182,19 +206,26 @@ public class AssignmentController {
         User currentUser = userRepo.findUserByEmail(principal.getName());
         assignment.setAssignerUserId(currentUser);
         assignment.setAssignmentId(assignmentId);
-
         assignmentRepo.save(assignment);
-
         return "redirect:/allassignments";
     }
 
     // find specific assignment to edit out of all assignments
     @RequestMapping(value = "/myassignments/{assignmentId}", method = RequestMethod.GET)
     public String getMyAssignmentsToUpdate(@PathVariable("assignmentId") int assignmentId, Model model) {
+        List<Tag> updatetag = tagRepo.findAll();
 
-        Assignment fiches = assignmentRepo.findByAssignmentId(assignmentId);
-
-        model.addAttribute("assignments", fiches);
+        model.addAttribute("updatetag", updatetag);
+        try {
+            Assignment a = assignmentRepo.findByAssignmentId(assignmentId);
+            if (a.getAmountStudents() != a.getMaxStudents() && !a.isArchived()) {
+                model.addAttribute("assignments", a);
+            }
+        } catch (Exception ex) {
+            // als er geen assignment is met ingegeven id dan wordt er een lege pagina
+            // weergegeven,
+            // zonder catch krijgt gebruiker een error wat niet de bedoeling is
+        }
         return "updateMyAssignment";
     }
 
@@ -205,10 +236,7 @@ public class AssignmentController {
         User currentUser = userRepo.findUserByEmail(principal.getName());
         assignment.setAssignerUserId(currentUser);
         assignment.setAssignmentId(assignmentId);
-        if (!(assignment.getTitle().equalsIgnoreCase("") || assignment.getType().equalsIgnoreCase("")
-                || assignment.getTask().equalsIgnoreCase(""))) {
-            assignmentRepo.save(assignment);
-        }
+        assignmentRepo.save(assignment);
         return "redirect:/myassignments";
     }
 

@@ -10,10 +10,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,9 +48,9 @@ public class TagController {
             tagRepo.save(tag);
         }
         else    {
+            model.addAttribute("error", "Tag naam bestaat al!");
             return "tag";
         }
-
         return "redirect:/listAllTags";
     }
 
@@ -93,7 +98,7 @@ public class TagController {
 
     //update specific tag
     @PostMapping(value = "/listAllTags/{id}")
-    public String saveTag(@PathVariable("id") int id,@Valid Tag tag, @RequestParam ("tagName") String tagName,  @RequestParam ("tagDescription") String tagDescription) {
+    public String saveTag(Model model, @PathVariable("id") int id,@Valid Tag tag, @RequestParam ("tagName") String tagName,  @RequestParam ("tagDescription") String tagDescription) {
         tag = tagRepo.findBytagId(id);
 
         boolean existsName = tagRepo.existsByTagName(tagName);
@@ -101,8 +106,11 @@ public class TagController {
             tag.setTagName(tagName);
             tag.setTagDescription(tagDescription);
             tagRepo.save(tag);
+        } else    {
+            model.addAttribute("error", "Tag naam bestaat al!");
+            return "editTag";
+            //TODO return form with existing values of specific id
         }
-
         return "redirect:/listAllTags";
     }
 
