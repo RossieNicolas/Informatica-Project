@@ -64,9 +64,9 @@ public class AssignmentController {
             for (Tag item : list) {
                 list2.add(item.getTagName());
             }
-            assignment.setAssignerUserId(currentUser);
             assignment.setTagAssign(list2.toString());
         }
+        assignment.setAssignerUserId(currentUser);
         assignmentRepo.save(assignment);
         return "successfullAssignment";
     }
