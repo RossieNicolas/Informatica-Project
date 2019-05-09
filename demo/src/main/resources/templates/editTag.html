@@ -69,7 +69,7 @@
     <div class="container ">
         <div class="wrap-all col-xs-12 ">
             <h2 class="extra">Tag aanpassen</h2>
-            <form th:each="a: ${tags}" method="POST" class="standard-form">
+            <form th:each="a: ${tags}" method="POST" class="standard-form" th:action="@{/listAllTags/{id}(id=${a.tagId})}">
                 <fieldset disabled="disabled" id="tagInfo">
                     <label value="${a.getTagId()}"></label>
                     <label for='tagName'>Tag: </label>

@@ -72,7 +72,7 @@
                 <div class="wrap-all col-xs-12 ">
                     <h2>Opdracht bewerken</h2>
 
-                    <form th:each="a: ${assignments}" class="standard-form" method="post">
+                    <form th:each="a: ${assignments}" class="standard-form" method="post" th:action="@{/allassignments/{id}(id=${a.assignmentId})}">
                         <fieldset disabled="disabled" id="assignmentInfo">
                             <label for="title">Titel:</label>
                             <input name="title" id="title" type="text" th:value="*{a.getTitle()}" required="required"><br>

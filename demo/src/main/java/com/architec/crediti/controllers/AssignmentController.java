@@ -142,7 +142,7 @@ public class AssignmentController {
         return "listAllAssignments";
     }
 
-    @RequestMapping(value = "/myassignments", method = RequestMethod.GET)
+    @GetMapping(value = "/myassignments")
     public String assignments(Model model) {
         Iterable<Assignment> assignments = assignmentRepo.findAll();
 
@@ -152,7 +152,7 @@ public class AssignmentController {
     }
 
     // find specific assignment to edit out of all assignments
-    @RequestMapping(value = "/allassignments/{assignmentId}", method = RequestMethod.GET)
+    @GetMapping(value = "/allassignments/{assignmentId}")
     public String getAssignmentsToUpdate(@PathVariable("assignmentId") int assignmentId, Model model) {
 
         try {
@@ -175,10 +175,8 @@ public class AssignmentController {
         User currentUser = userRepo.findUserByEmail(principal.getName());
         assignment.setAssignerUserId(currentUser);
         assignment.setAssignmentId(assignmentId);
-        if (!(assignment.getTitle().equalsIgnoreCase("") || assignment.getType().equalsIgnoreCase("")
-                || assignment.getTask().equalsIgnoreCase(""))) {
-            assignmentRepo.save(assignment);
-        }
+
+        assignmentRepo.save(assignment);
 
         return "redirect:/allassignments";
     }
