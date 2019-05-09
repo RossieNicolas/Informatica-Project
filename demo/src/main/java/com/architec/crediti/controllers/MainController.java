@@ -16,7 +16,7 @@ public class MainController {
 
     @RequestMapping("main")
     public String getDashboard(Principal principal) {
-        User currentUser = userRepo.findUserByEmail(principal.getName());
+        User currentUser = userRepo.findByEmail(principal.getName());
 
         if (currentUser.isFirstLogin()) {
             return "redirect:createstudentprofile";

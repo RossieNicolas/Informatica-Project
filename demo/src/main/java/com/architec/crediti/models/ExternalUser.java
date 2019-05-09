@@ -24,8 +24,6 @@ public class ExternalUser {
     private String city;
     @Column(name = "postal", nullable = false)
     private String postal;
-    @Column(name = "email", nullable = false)
-    private String email;
 
     @Column(name = "password", nullable = false)
     private char[] password;
@@ -34,15 +32,15 @@ public class ExternalUser {
     private byte[] salt;
 
 
-    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.REMOVE })
+    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.REMOVE})
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User userId;
 
     public ExternalUser() {
     }
 
-    public ExternalUser(String firstname, String lastname, String company, String phone, String address, String city, String postal, String email, char[] password, byte[] salt) {
+    public ExternalUser(String firstname, String lastname, String company, String phone, String address, String city, String postal, char[] password, byte[] salt) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.company = company;
@@ -50,7 +48,6 @@ public class ExternalUser {
         this.address = address;
         this.city = city;
         this.postal = postal;
-        this.email = email;
         this.password = password;
         this.salt = salt;
     }
@@ -127,14 +124,6 @@ public class ExternalUser {
 
     public void setPostal(String postal) {
         this.postal = postal;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public char[] getPassword() {
