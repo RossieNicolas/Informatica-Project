@@ -183,7 +183,9 @@ public class AssignmentController {
     // find specific assignment to edit out of all assignments
     @GetMapping(value = "/allassignments/{assignmentId}")
     public String getAssignmentsToUpdate(@PathVariable("assignmentId") int assignmentId, Model model) {
+        List<Tag> updatetag = tagRepo.findAll();
 
+        model.addAttribute("updatetag", updatetag);
         try {
             Assignment a = assignmentRepo.findByAssignmentId(assignmentId);
             if (a.getAmountStudents() != a.getMaxStudents() && !a.isArchived()) {
@@ -211,7 +213,9 @@ public class AssignmentController {
     // find specific assignment to edit out of all assignments
     @RequestMapping(value = "/myassignments/{assignmentId}", method = RequestMethod.GET)
     public String getMyAssignmentsToUpdate(@PathVariable("assignmentId") int assignmentId, Model model) {
+        List<Tag> updatetag = tagRepo.findAll();
 
+        model.addAttribute("updatetag", updatetag);
         try {
             Assignment a = assignmentRepo.findByAssignmentId(assignmentId);
             if (a.getAmountStudents() != a.getMaxStudents() && !a.isArchived()) {
