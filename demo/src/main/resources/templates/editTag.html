@@ -69,7 +69,7 @@
     <div class="container ">
         <div class="wrap-all col-xs-12 ">
             <h2 class="extra">Tag aanpassen</h2>
-            <form th:each="a: ${tags}" method="POST" th:action="@{/listAllTags/{id}(id=${a.tagId})}" class="standard-form">
+            <form th:each="a: ${tags}" method="POST" class="standard-form">
                 <fieldset disabled="disabled" id="tagInfo">
                     <label value="${a.getTagId()}"></label>
                     <label for='tagName'>Tag: </label>
@@ -79,7 +79,7 @@
                     <input id='tagDescription' type='text' th:value="*{a.getTagDescription()}" name="tagDescription"  maxlength="250"/>
                     <br/>
                 </fieldset><br>
-                <input type="button" value = "✏️ BEWERKEN" class = "button" onclick="toggleForm();">
+                <input type="button" value = "✏BEWERKEN" class = "button" onclick="toggleForm();">
                 &nbsp;&nbsp;&nbsp;
                 <input type="submit" value = "💾 BEWAREN" class="button" id="save" disabled>
                 &nbsp;&nbsp;&nbsp;
