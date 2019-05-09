@@ -205,9 +205,7 @@ public class AssignmentController {
         User currentUser = userRepo.findUserByEmail(principal.getName());
         assignment.setAssignerUserId(currentUser);
         assignment.setAssignmentId(assignmentId);
-
         assignmentRepo.save(assignment);
-
         return "redirect:/allassignments";
     }
 
@@ -215,9 +213,16 @@ public class AssignmentController {
     @RequestMapping(value = "/myassignments/{assignmentId}", method = RequestMethod.GET)
     public String getMyAssignmentsToUpdate(@PathVariable("assignmentId") int assignmentId, Model model) {
 
-        Assignment fiches = assignmentRepo.findByAssignmentId(assignmentId);
-
-        model.addAttribute("assignments", fiches);
+        try {
+            Assignment a = assignmentRepo.findByAssignmentId(assignmentId);
+            if (a.getAmountStudents() != a.getMaxStudents() && !a.isArchived()) {
+                model.addAttribute("assignments", a);
+            }
+        } catch (Exception ex) {
+            // als er geen assignment is met ingegeven id dan wordt er een lege pagina
+            // weergegeven,
+            // zonder catch krijgt gebruiker een error wat niet de bedoeling is
+        }
         return "updateMyAssignment";
     }
 
@@ -228,10 +233,7 @@ public class AssignmentController {
         User currentUser = userRepo.findUserByEmail(principal.getName());
         assignment.setAssignerUserId(currentUser);
         assignment.setAssignmentId(assignmentId);
-        if (!(assignment.getTitle().equalsIgnoreCase("") || assignment.getType().equalsIgnoreCase("")
-                || assignment.getTask().equalsIgnoreCase(""))) {
-            assignmentRepo.save(assignment);
-        }
+        assignmentRepo.save(assignment);
         return "redirect:/myassignments";
     }
 
