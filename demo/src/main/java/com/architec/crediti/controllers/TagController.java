@@ -88,6 +88,7 @@ public class TagController {
     public String saveTag(Model model, @PathVariable("id") int id, @Valid Tag tag,
             @RequestParam("tagName") String tagName, @RequestParam("tagDescription") String tagDescription) {
         Tag tagForId = tagRepo.findBytagId(id);
+        tag.setTagId(tagForId.getTagId());
 
         boolean existsName = tagRepo.existsByTagName(tagName);
         if (!existsName) {

@@ -19,6 +19,10 @@ public class Tag {
         return tagId;
     }
 
+    public void setTagId(int tagId) {
+        this.tagId = tagId;
+    }
+
     public String getTagName() {
         return tagName;
     }
@@ -34,6 +38,7 @@ public class Tag {
     public void setTagDescription(String tagDescription) {
         this.tagDescription = tagDescription;
     }
+
 
     public Tag() {
     }
