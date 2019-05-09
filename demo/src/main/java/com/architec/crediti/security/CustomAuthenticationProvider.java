@@ -1,6 +1,9 @@
 package com.architec.crediti.security;
 
+import com.architec.crediti.models.ExternalUser;
 import com.architec.crediti.models.User;
+import com.architec.crediti.repositories.ExternalUserRepository;
+import com.architec.crediti.repositories.HashPass;
 import com.architec.crediti.repositories.UserRepository;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -22,6 +25,7 @@ import javax.naming.directory.SearchResult;
 import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Hashtable;
 
 @Component
@@ -35,6 +39,10 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     @Autowired
     UserRepository userRepo;
 
+    @Autowired
+    ExternalUserRepository exRepo;
+
+
     @Override
     public Authentication authenticate(Authentication auth) throws AuthenticationException {
 
@@ -42,10 +50,33 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         String password = auth.getCredentials().toString();
 
         if (isLdapRegisteredUser(username, password)) {
+            log.info("LDAP successful");
+            return new UsernamePasswordAuthenticationToken(username, password, new ArrayList<>());
+        } else if (isExternalUser(username, password)) {
             return new UsernamePasswordAuthenticationToken(username, password, new ArrayList<>());
         } else {
             throw new AuthenticationCredentialsNotFoundException("Invalid Credentials!");
         }
+    }
+
+    private boolean isExternalUser(String username, String password) {
+        boolean result = false;
+
+        if (userRepo.findByEmail(username) != null) {
+            User user = userRepo.findByEmail(username);
+
+            if (exRepo.findByUserId(user) != null ) {
+                ExternalUser exUser = exRepo.findByUserId(user);
+
+                // Make sure extern is not null
+                String hash = HashPass.convertToPbkdf2(password.toCharArray(), exUser.getSalt());
+
+                if(Arrays.equals(hash.toCharArray(), exUser.getPassword())){
+                    result = true;
+                }
+            }
+        }
+        return result;
     }
 
     private boolean isLdapRegisteredUser(String username, String password) {
@@ -98,7 +129,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         } catch (NamingException nex) {
             System.out.println("LDAP Connection: FAILED");
-            nex.printStackTrace();
         } finally {
             if (ctx != null) {
                 try {

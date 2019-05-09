@@ -10,20 +10,21 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long userId;
 
+    @Column(name = "email", nullable = false)
+    private String email;
+
     @Column(name = "firstname", nullable = false)
     private String firstname;
 
     @Column(name = "lastname", nullable = false)
     private String lastname;
 
-    @Column(name = "email", nullable = false)
-    private String email;
-
     @Column(name = "role", nullable = false)
     private String role;
 
     @Column(name = "first_login", nullable = false)
     private boolean firstLogin;
+
 
     public User() {
     }
@@ -36,6 +37,47 @@ public class User {
         this.firstLogin = firstLogin;
     }
 
+
+    public long getUserId() {
+        return this.userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
+    public String getFirstname() {
+        return this.firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return this.lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getRole() {
+        return this.role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     public boolean isFirstLogin() {
         return firstLogin;
     }
@@ -44,43 +86,9 @@ public class User {
         this.firstLogin = firstLogin;
     }
 
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
-    }
-
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
+    @Override
+    public String toString() {
+        return this.firstname + " " + this.lastname;
     }
 }
+
