@@ -1,132 +1,137 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
     <title>Crediti - Opdracht bewerken</title>
-    <link rel="stylesheet" th:href="@{/css/APcss2.css}">
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
 <body class="background">
-    <header>
-        <div class="nav-main navbackground">
-            <div class="container">
-                <div class="wrap-all col-xs-12">
-                    <div class="left">
-                        <a class="logo" href="/">
-                            <img th:src="@{/images/logo-ap.svg}">
-                        </a>
-                    </div>
-                    <div class="right">
-                        <div class="region-header-menu">
-                            <nav>
-                                <ul class="nav">
-                                    <li>
-                                        <div class="dropdown dropdownleft">
-                                            <span>Opdrachten</span>
-                                            <div class="dropdown-content">
-                                                <a href="/allassignments">Lopende taken</a>
-                                                <a href="/assignment">Taak toevoegen</a>
-                                                <a href="/myassignments">Mijn taken</a>
-                                            </div>
+<header>
+    <div class="nav-main navbackground">
+        <div class="container">
+            <div class="wrap-all col-xs-12">
+                <div class="left">
+                    <a class="logo" href="/main">
+                        <img th:src="@{/images/logo-ap.svg}">
+                    </a>
+                </div>
+                <div class="right">
+                    <div class="region-header-menu">
+                        <nav>
+                            <ul class="nav">
+                                <li>
+                                    <div class="dropdown dropdownleft">
+                                        <span>Opdrachten</span>
+                                        <div class="dropdown-content">
+                                            <a href="/allassignments">Lopende taken</a>
+                                            <a href="/assignment">Taak toevoegen</a>
+                                            <a href="/myassignments">Mijn taken</a>
                                         </div>
-                                    </li>
-                                    <li>
-                                        <div class="dropdown">
-                                            <span>Profiel</span>
-                                            <div class="dropdown-content">
-                                                <a href="">Mijn profiel</a>
-                                                <a href="">Mijn portfolio</a>
-                                                <a href="">Portfolios</a>
-                                            </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="dropdown">
+                                        <span>Profiel</span>
+                                        <div class="dropdown-content">
+                                            <a href="">Mijn profiel</a>
+                                            <a href="">Mijn portfolio</a>
+                                            <a href="">Portfolios</a>
                                         </div>
-                                    </li>
-                                    <li>
-                                        <a href="">
-                                            <span>Documentatie</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <div class="dropdown">
-                                            <span>Coördinator</span>
-                                            <div class="dropdown-content">
-                                                <a href="/tag">Tag toevoegen</a>
-                                                <a href="/listAllTags">Lijst van tags</a>
-                                                <a href="">Archief</a>
-                                            </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <span>Documentatie</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <div class="dropdown">
+                                        <span>Coördinator</span>
+                                        <div class="dropdown-content">
+                                            <a href="/tag">Tag toevoegen</a>
+                                            <a href="/listAllTags">Lijst van tags</a>
+                                            <a href="">Archief</a>
                                         </div>
-                                    </li>
-
-                                </ul>
-                            </nav>
-
-                        </div>
-
+                                    </div>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>
         </div>
-    </header>
-    <div class="block">
-        <section class="find-edu">
-            <div class="container ">
-                <div class="wrap-all col-xs-12 ">
-                    <h2>Opdracht bewerken</h2>
-
-                    <form th:each="a: ${assignments}" class="standard-form" method="post" th:action="@{/allassignments/{id}(id=${a.assignmentId})}">
-                        <fieldset disabled="disabled" id="assignmentInfo">
-                            <label for="title">Titel:</label>
-                            <input name="title" id="title" type="text" th:value="*{a.getTitle()}" required="required"><br>
-
-                            <label for="type">Type:</label>
-                            <input name="type" id="type" type="text" th:value="*{a.getType()}" required="required"><br>
-
-                            <label for="task">Omschrijving opdracht:</label>
-                            <input name="task" id="task" th:value="*{a.getTask()}" type="text" required="required"><br>
-
-                            <label for="start_date">Begindatum:</label><br>
-                            <input name="start_date" id="start_date" type="date" th:value="*{a.getStartDate()}" required="required"><br>
-
-                            <label for="end_date">Einddatum:</label><br>
-                            <input name="end_date" id="end_date" type="date" th:value="*{a.getEnd_date()}" required="required"><br><br>
-
-                            <label for="amountHours">Totaal uur:</label>
-                            <input name="amountHours" id="amountHours" type="number" th:value="*{a.getAmountHours()}" min="1" required="required"><br>
-
-                            <label for="maxStudents">Max Studenten:</label>
-                            <input name="maxStudents" id="maxStudents" type="number" th:value="*{a.getMaxStudents()}" min="1" required="required"><br>
-
-                            <table class="tags">
-                                <tr>
-                                    <th>Tags</th>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <th:block th:each='tag: ${updatetag}'>
-                                            <input type="checkbox" id="tag" name="tag" th:tr='${tag.getTagName()}'
-                                                   th:value='${tag.getTagId()}'/>
-                                            <label for="tag" th:text='${tag.getTagName()}'></label>
-                                        </th:block>
-                                    </td>
-                                </tr>
-                            </table>
-                        </fieldset>
-                        <br/>
-                        <input th:if="${!a.isValidated()}" type="button" value = "✏️ BEWERKEN" class = "button" onclick="toggleForm();">
-                        &nbsp;&nbsp;&nbsp;
-                        <input th:if="${!a.isValidated()}" type="submit" value = "💾 BEWAREN" class="button" id="save" disabled>
-
-                        <a th:if="${a.isValidated()}" th:href="@{/studentenroll/{id} (id=${a.assignmentId})}" class="button">➕ Inschrijven</a>
-                        &nbsp;&nbsp;&nbsp;
-                        <a th:href="@{/deleteassignment/{id} (id=${a.assignmentId})}" class="button">🗑️ VERWIJDEREN</a>
-                        &nbsp;&nbsp;&nbsp;
-                        <a th:if="${!a.isValidated()}" th:href="@{/validateassignment/{id} (id=${a.assignmentId})}" class="button">✔️ VALIDEREN</a>
-                        &nbsp;&nbsp;&nbsp;
-                        <a th:href="@{/archiveassignment/{id} (id=${a.assignmentId})}" class="button">🗄️ ARCHIVEREN</a>
-                    </form>
-                </div>
-            </div>
-        </section>
     </div>
+</header>
+<div class="block">
+    <section class="find-edu">
+        <div class="container ">
+            <div class="wrap-all col-xs-12 ">
+                <h2>Opdracht bewerken</h2>
+
+                <form th:each="a: ${assignments}" class="standard-form" method="post"
+                      th:action="@{/allassignments/{id}(id=${a.assignmentId})}">
+                    <fieldset disabled="disabled" id="assignmentInfo">
+                        <label for="title">Titel:</label>
+                        <input name="title" id="title" type="text" th:value="*{a.getTitle()}" required="required"><br>
+
+                        <label for="type">Type:</label>
+                        <input name="type" id="type" type="text" th:value="*{a.getType()}" required="required"><br>
+
+                        <label for="task">Omschrijving opdracht:</label>
+                        <input name="task" id="task" th:value="*{a.getTask()}" type="text" required="required"><br>
+
+                        <label for="start_date">Begindatum:</label><br>
+                        <input name="start_date" id="start_date" type="date" th:value="*{a.getStartDate()}"
+                               required="required"><br>
+
+                        <label for="end_date">Einddatum:</label><br>
+                        <input name="end_date" id="end_date" type="date" th:value="*{a.getEnd_date()}"
+                               required="required"><br><br>
+
+                        <label for="amountHours">Totaal uur:</label>
+                        <input name="amountHours" id="amountHours" type="number" th:value="*{a.getAmountHours()}"
+                               min="1" required="required"><br>
+
+                        <label for="maxStudents">Max Studenten:</label>
+                        <input name="maxStudents" id="maxStudents" type="number" th:value="*{a.getMaxStudents()}"
+                               min="1" required="required"><br>
+
+                        <table class="tags">
+                            <tr>
+                                <th>Tags</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <th:block th:each='tag: ${updatetag}'>
+                                        <input type="checkbox" id="tag" name="tag" th:tr='${tag.getTagName()}'
+                                               th:value='${tag.getTagId()}'/>
+                                        <label for="tag" th:text='${tag.getTagName()}'></label>
+                                    </th:block>
+                                </td>
+                            </tr>
+                        </table>
+                    </fieldset>
+                    <br/>
+                    <input th:if="${!a.isValidated()}" type="button" value="✏️ BEWERKEN" class="button"
+                           onclick="toggleForm();">
+                    &nbsp;&nbsp;&nbsp;
+                    <input th:if="${!a.isValidated()}" type="submit" value="💾 BEWAREN" class="button" id="save"
+                           disabled>
+
+                    <a th:if="${a.isValidated()}" th:href="@{/studentenroll/{id} (id=${a.assignmentId})}"
+                       class="button">➕ Inschrijven</a>
+                    &nbsp;&nbsp;&nbsp;
+                    <a th:href="@{/deleteassignment/{id} (id=${a.assignmentId})}" class="button">🗑️ VERWIJDEREN</a>
+                    &nbsp;&nbsp;&nbsp;
+                    <a th:if="${!a.isValidated()}" th:href="@{/validateassignment/{id} (id=${a.assignmentId})}"
+                       class="button">✔️ VALIDEREN</a>
+                    &nbsp;&nbsp;&nbsp;
+                    <a th:href="@{/archiveassignment/{id} (id=${a.assignmentId})}" class="button">🗄️ ARCHIVEREN</a>
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
 <footer>
     <div class="footer-bot">
         <div class="container">
@@ -144,6 +149,7 @@
         document.getElementById('assignmentInfo').removeAttribute('disabled');
         document.getElementById("save").disabled = false;
     }
+
     const numInputs = document.querySelectorAll('input[type=number]')
 
     numInputs.forEach(function (input) {
@@ -153,6 +159,7 @@
             }
         })
     });
+
     function TDate() {
         var startDate = document.getElementById("start_date").value;
         var endDate = document.getElementById("end_date").value;
@@ -182,4 +189,3 @@
 </script>
 </body>
 </html>
-

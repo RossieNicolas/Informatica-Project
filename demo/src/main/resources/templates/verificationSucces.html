@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Wachtwoord recovery</title>
-    <link rel="stylesheet" th:href="@{/css/APcss2.css}">
+    <meta charset="UTF-8"/>
+    <title>Crediti - Verificatie</title>
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
 <body class="background">
@@ -25,16 +24,19 @@
         <div class="wrap-all col-xs-12 ">
             <h2 class="extra">Wachtwoord recovery</h2>
             <div th:if="${succes}">
-                <div><td th:text='${succes}' /></div>
+                <div>
+                    <td th:text='${succes}'/>
+                </div>
             </div>
             <div th:unless="${succes}">
-                <div><td th:text='${fail}' />
-                    <a th:href="@{'/passwordRecovery'}"/>Klik hier om opnieuw te proberen.</div>
+                <div>
+                    <td th:text='${fail}'/>
+                    <a th:href="@{'/passwordRecovery'}"/>Klik hier om opnieuw te proberen.
+                </div>
             </div>
         </div>
     </div>
 </div>
-
 <div style="height: 67%"></div>
 <footer>
     <div class="footer-bot">

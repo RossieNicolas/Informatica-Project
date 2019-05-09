@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Crediti - Opdracht bewerken</title>
-    <link rel="stylesheet" th:href="@{/css/APcss2.css}">
+    <meta charset="UTF-8"/>
+    <title>Crediti - Mijn opdracht bewerken</title>
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
 <body class="background">
@@ -12,7 +11,7 @@
         <div class="container">
             <div class="wrap-all col-xs-12">
                 <div class="left">
-                    <a class="logo" href="/">
+                    <a class="logo" href="/main">
                         <img th:src="@{/images/logo-ap.svg}">
                     </a>
                 </div>
@@ -55,12 +54,9 @@
                                         </div>
                                     </div>
                                 </li>
-
                             </ul>
                         </nav>
-
                     </div>
-
                 </div>
             </div>
         </div>
@@ -71,10 +67,8 @@
         <div class="container ">
             <div class="wrap-all col-xs-12 ">
                 <h2>Opdracht bewerken</h2>
-
-
-
-                <form th:each="a: ${assignments}" class="standard-form" method="post"  th:action="@{/myassignments/{id}(id=${a.assignmentId})}">
+                <form th:each="a: ${assignments}" class="standard-form" method="post"
+                      th:action="@{/myassignments/{id}(id=${a.assignmentId})}">
                     <fieldset disabled="disabled" id="assignmentInfo">
                         <label for="title">Titel:</label>
                         <input name="title" id="title" type="text" th:value="*{a.getTitle()}" required="required"><br>
@@ -86,16 +80,20 @@
                         <input name="task" id="task" th:value="*{a.getTask()}" type="text" required="required"><br>
 
                         <label for="start_date">Begindatum:</label><br>
-                        <input name="start_date" id="start_date" type="date" th:value="*{a.getStartDate()}" required="required"><br>
+                        <input name="start_date" id="start_date" type="date" th:value="*{a.getStartDate()}"
+                               required="required"><br>
 
                         <label for="end_date">Einddatum:</label><br>
-                        <input name="end_date" id="end_date" type="date" th:value="*{a.getEnd_date()}" required="required"><br><br>
+                        <input name="end_date" id="end_date" type="date" th:value="*{a.getEnd_date()}"
+                               required="required"><br><br>
 
                         <label for="amountHours">Totaal uur:</label>
-                        <input name="amountHours" id="amountHours" type="number" th:value="*{a.getAmountHours()}" min="1" required="required"><br>
+                        <input name="amountHours" id="amountHours" type="number" th:value="*{a.getAmountHours()}"
+                               min="1" required="required"><br>
 
                         <label for="maxStudents">Max Studenten:</label>
-                        <input name="maxStudents" id="maxStudents" type="number" th:value="*{a.getMaxStudents()}" min="1" required="required"><br>
+                        <input name="maxStudents" id="maxStudents" type="number" th:value="*{a.getMaxStudents()}"
+                               min="1" required="required"><br>
 
                         <table class="tags">
                             <tr>
@@ -113,9 +111,9 @@
                         </table>
                     </fieldset>
                     <br/>
-                    <input type="button" value = "✏️BEWERKEN" class = "button" onclick="toggleForm();">
+                    <input type="button" value="✏️BEWERKEN" class="button" onclick="toggleForm();">
                     &nbsp;&nbsp;&nbsp;
-                    <input type="submit" value = "💾 BEWAREN" class="button" id="save" disabled>
+                    <input type="submit" value="💾 BEWAREN" class="button" id="save" disabled>
                 </form>
             </div>
         </div>
@@ -138,6 +136,7 @@
         document.getElementById('assignmentInfo').removeAttribute('disabled');
         document.getElementById("save").disabled = false;
     }
+
     const numInputs = document.querySelectorAll('input[type=number]')
 
     numInputs.forEach(function (input) {
@@ -147,6 +146,7 @@
             }
         })
     });
+
     function TDate() {
         var startDate = document.getElementById("start_date").value;
         var endDate = document.getElementById("end_date").value;
@@ -176,4 +176,3 @@
 </script>
 </body>
 </html>
-

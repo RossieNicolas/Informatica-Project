@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Crediti - Success</title>
+    <meta charset="UTF-8"/>
+    <title>Crediti - Taak toegevoegd</title>
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
 <body class="background">
@@ -11,7 +11,7 @@
         <div class="container">
             <div class="wrap-all col-xs-12">
                 <div class="left">
-                    <a class="logo" href="/">
+                    <a class="logo" href="/main">
                         <img th:src="@{/images/logo-ap.svg}">
                     </a>
                 </div>
@@ -49,17 +49,14 @@
                                         <span>Coördinator</span>
                                         <div class="dropdown-content">
                                             <a href="/tag">Tag toevoegen</a>
-                                            <a href="/listAllTags">Tag bewerken</a>
+                                            <a href="/listAllTags">Lijst van tags</a>
                                             <a href="">Archief</a>
                                         </div>
                                     </div>
                                 </li>
-
                             </ul>
                         </nav>
-
                     </div>
-
                 </div>
             </div>
         </div>
@@ -69,6 +66,7 @@
     <div class="container extra">
         <h2>Opdracht is aangemaakt!</h2>
         <p>Nieuwe opdracht aanmaken? Klik <a th:href="@{/assignment}"><u>hier.</u></a></p>
+        <a class="button" href="/allassignments">alle taken</a>
     </div>
 </div>
 <div style="height: 65%"></div>

@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" th:href="@{/css/APcss2.css}">
-    <link rel="stylesheet" th:href="@{/css/APcss3.css}">
-
+    <meta charset="UTF-8"/>
     <title>Crediti - Mijn opdrachten</title>
+    <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
 <body class="background">
 <header>
@@ -13,7 +11,7 @@
         <div class="container">
             <div class="wrap-all col-xs-12">
                 <div class="left">
-                    <a class="logo" href="/">
+                    <a class="logo" href="/main">
                         <img th:src="@{/images/logo-ap.svg}">
                     </a>
                 </div>
@@ -56,49 +54,44 @@
                                         </div>
                                     </div>
                                 </li>
-
                             </ul>
                         </nav>
-
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
 </header>
-
 <div class="block">
-        <div class="container">
-            <h2 class="extra">Mijn opdrachten</h2>
-            <p>Lijst van al uw opdrachten. Klik op een opdracht voor meer informatie.</p>
-        </div>
-        <table>
-            <tr>
-                <th style="padding-left: 2.5%">Info</th>
-                <th>Nr</th>
-                <th>Type</th>
-                <th>Naam</th>
-                <th>Begin</th>
-                <th>Einde</th>
-                <th>Gevalideerd</th>
-            </tr>
-            <tr th:each="a : ${assignments}" class = "tablebackground">
-                <td><a th:href="${'/myassignments/' + a.getAssignmentId()}" class="button">📃</a>
-                    &nbsp;&nbsp;&nbsp;
-                <td th:text="${a.getAssignmentId()}"></td>
-                <td th:text="${a.getType()}"></td>
-                <td th:text="${a.getTitle()}" class = "cell"></td>
-                <td th:text="${a.getStartDate()}"></td>
-                <td th:text="${a.getEnd_date()}"></td>
-                <td style="padding-left: 2.5%">
-                    <span th:if="${a.isValidated()}">✔️</span>
-                    <span th:unless="${a.isValidated()}">❌</span>
-                </td>
-            </tr>
-        </table>
+    <div class="container">
+        <h2 class="extra">Mijn opdrachten</h2>
+        <p>Lijst van al uw opdrachten. Klik op een opdracht voor meer informatie.</p>
+    </div>
+    <table>
+        <tr>
+            <th style="padding-left: 2.5%">Info</th>
+            <th>Nr</th>
+            <th>Type</th>
+            <th>Naam</th>
+            <th>Begin</th>
+            <th>Einde</th>
+            <th>Gevalideerd</th>
+        </tr>
+        <tr th:each="a : ${assignments}" class="tablebackground">
+            <td><a th:href="${'/myassignments/' + a.getAssignmentId()}" class="button">📃</a>
+                &nbsp;&nbsp;&nbsp;
+            <td th:text="${a.getAssignmentId()}"></td>
+            <td th:text="${a.getType()}"></td>
+            <td th:text="${a.getTitle()}" class="cell"></td>
+            <td th:text="${a.getStartDate()}"></td>
+            <td th:text="${a.getEnd_date()}"></td>
+            <td style="padding-left: 2.5%">
+                <span th:if="${a.isValidated()}">✔️</span>
+                <span th:unless="${a.isValidated()}">❌</span>
+            </td>
+        </tr>
+    </table>
 </div>
-
 <footer>
     <div class="footer-bot">
         <div class="container">
@@ -111,6 +104,5 @@
         </div>
     </div>
 </footer>
-
 </body>
 </html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
     <title>Crediti - Alle opdrachten</title>
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
@@ -11,7 +11,7 @@
         <div class="container">
             <div class="wrap-all col-xs-12">
                 <div class="left">
-                    <a class="logo" href="/">
+                    <a class="logo" href="/main">
                         <img th:src="@{/images/logo-ap.svg}">
                     </a>
                 </div>
@@ -54,78 +54,72 @@
                                         </div>
                                     </div>
                                 </li>
-
                             </ul>
                         </nav>
-
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
 </header>
-		
-        <div class="container ">
-			<h2 class = "extra">Alle opdrachten</h2>
-        </div>
-        <div class="container">
-            <form th:action='@{/allassignments}' method='POST'>
-                <label for='searchbar'>Zoekwaarde: </label>
-                <input type='search' class='form-control' name='searchbar' id='searchbar'>
-                <input type='SUBMIT' id = "zoekKnop" value = "Zoek" class="button"/>
-            </form>
-        </div>
-		<div id='overview'>
+<div class="container ">
+    <h2 class="extra">Alle opdrachten</h2>
+</div>
+<div class="container">
+    <form th:action='@{/allassignments}' method='POST'>
+        <label for='searchbar'>Zoekwaarde: </label>
+        <input type='search' class='form-control' name='searchbar' id='searchbar'>
+        <input type='SUBMIT' id="zoekKnop" value="Zoek" class="button"/>
+    </form>
+</div>
+<div id='overview'>
 
-                <table>
-                    <thead>
-				<tr>
-					<th style="padding-left: 2.5%">Info</th>
-					<th>Nr</th>
-					<th>Opdrachtgever</th>
-					<th>Type</th>
-					<th>Naam</th>
-					<th>Begin</th>
-					<th>Einde</th>
-					<th>Gevalideerd</th>    
-				</tr>
-                    </thead>
-                    <tbody>
-				<tr th:each="a : ${assignments}" class="tablebackground">
-                    <td><a th:href="${'/allassignments/' + a.getAssignmentId()}" class="button">📃</a>
-					<td th:text="${a.getAssignmentId()}"></td>
-					<td th:text="${a.getAssigner()}"></td>
-					<td th:text="${a.getType()}"></td>
-					<td th:text="${a.getTitle()}" class = "cell"></td>
-					<td th:text="${a.getStartDate()}"></td>
-					<td th:text="${a.getEnd_date()}"></td>
-                    <td style="padding-left: 2.5%">
-                        <span th:if="${a.isValidated()}">✔️</span>
-                        <span th:unless="${a.isValidated()}">❌</span>
-                    </td>
-				</tr>
-                    </tbody>
-			</table>
-		</div>
-
-        <div class="container">
-            <div th:if="${persons.totalPages !=1}" >
-                <ul class="pagination">
-                    <li th:class="${persons.number == 0} ? disabled">
-                        <a class="pageLink" th:href="@{/allassignments/(page=${persons.number})}">&laquo;</a>
-                    </li>
-                    <li th:class="${persons.number == (page - 1)} ? 'active pointer-disabled'"
-                        th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
-                        <a class="pageLink" th:href="@{/allassignments/(page=${page})}" th:text="${page}"></a>
-                    </li>
-                    <li th:class="${persons.number + 1 == persons.totalPages} ? disabled">
-                        <a class="pageLink" th:href="@{/allassignments/(page=${persons.number + 2})}">&raquo;</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
+    <table>
+        <thead>
+        <tr>
+            <th style="padding-left: 2.5%">Info</th>
+            <th>Nr</th>
+            <th>Opdrachtgever</th>
+            <th>Type</th>
+            <th>Naam</th>
+            <th>Begin</th>
+            <th>Einde</th>
+            <th>Gevalideerd</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="a : ${assignments}" class="tablebackground">
+            <td><a th:href="${'/allassignments/' + a.getAssignmentId()}" class="button">📃</a>
+            <td th:text="${a.getAssignmentId()}"></td>
+            <td th:text="${a.getAssigner()}"></td>
+            <td th:text="${a.getType()}"></td>
+            <td th:text="${a.getTitle()}" class="cell"></td>
+            <td th:text="${a.getStartDate()}"></td>
+            <td th:text="${a.getEnd_date()}"></td>
+            <td style="padding-left: 2.5%">
+                <span th:if="${a.isValidated()}">✔️</span>
+                <span th:unless="${a.isValidated()}">❌</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="container">
+    <div th:if="${persons.totalPages !=1}">
+        <ul class="pagination">
+            <li th:class="${persons.number == 0} ? disabled">
+                <a class="pageLink" th:href="@{/allassignments/(page=${persons.number})}">&laquo;</a>
+            </li>
+            <li th:class="${persons.number == (page - 1)} ? 'active pointer-disabled'"
+                th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
+                <a class="pageLink" th:href="@{/allassignments/(page=${page})}" th:text="${page}"></a>
+            </li>
+            <li th:class="${persons.number + 1 == persons.totalPages} ? disabled">
+                <a class="pageLink" th:href="@{/allassignments/(page=${persons.number + 2})}">&raquo;</a>
+            </li>
+        </ul>
+    </div>
+</div>
 <footer>
     <div class="footer-bot">
         <div class="container">

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Crediti - Alle opdrachten</title>
+    <meta charset="UTF-8"/>
+    <title>Crediti - taak niet gevalideerd</title>
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
 <body class="background">
@@ -11,7 +11,7 @@
         <div class="container">
             <div class="wrap-all col-xs-12">
                 <div class="left">
-                    <a class="logo" href="/">
+                    <a class="logo" href="/main">
                         <img th:src="@{/images/logo-ap.svg}">
                     </a>
                 </div>
@@ -49,25 +49,21 @@
                                         <span>Coördinator</span>
                                         <div class="dropdown-content">
                                             <a href="/tag">Tag toevoegen</a>
-                                            <a href="/listAllTags">Tag bewerken</a>
-                                            <a href="/archive">Archief</a>
+                                            <a href="/listAllTags">Lijst van tags</a>
+                                            <a href="">Archief</a>
                                         </div>
                                     </div>
                                 </li>
-
                             </ul>
                         </nav>
-
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
 </header>
-
 <div class="container ">
-    <h2 class = "extra">Alle opdrachten</h2>
+    <h2 class="extra">Alle opdrachten</h2>
 </div>
 <div id='overview'>
     <table>
@@ -83,11 +79,11 @@
             <th>Volzet</th>
         </tr>
         <tr th:each="a : ${assignments}" class="tablebackground">
-            <td><input type="submit" value = "Detail" class = "button"></td>
+            <td><input type="submit" value="Detail" class="button"></td>
             <td th:text="${a.getAssignmentId()}"></td>
             <td th:text="${a.getAssignerUserId()}"></td>
             <td th:text="${a.getType()}"></td>
-            <td th:text="${a.getTask()}" class = "cell"></td>
+            <td th:text="${a.getTask()}" class="cell"></td>
             <td th:text="${a.getStartDate()}"></td>
             <td th:text="${a.getEndDate()}"></td>
             <td th:text="${a.isValidated()}"></td>

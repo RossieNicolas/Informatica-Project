@@ -1,57 +1,53 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8"/>
+    <title>Crediti - Profiel student aanmaken</title>
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
-<title>Profiel aanmaken</title>
 </head>
-
 <body class="background">
 <header>
-        <div class="nav-main navbackground">
-            <div class="container">
-                <div class="wrap-all col-xs-12">
-                    <div class="left">
-                        <a class="logo" href="">
+    <div class="nav-main navbackground">
+        <div class="container">
+            <div class="wrap-all col-xs-12">
+                <div class="left">
+                    <a class="logo" href="">
                         <img th:src="@{/images/logo-ap.svg}">
-                        </a>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
-    </header>
-		
-		<div class="container">
-			<h2 class="extra">Profiel</h2>
-			<p>Het is de eerste keer dat je inlogt. We hebben wat extra informatie nodig en dan kan je van start gaan.</p>
-			<form th:action="@{/createstudentprofile}" method="POST">
-				<label for="gsm">GSM-nummer: </label>
-				<input type="text" name="gsm" id="gsm" required/>
-				<br><br>
-				<label>ZAP of Mobility?: </label>
-				<div>
-					<input type="checkbox" name="zap" value="Zap">ZAP<br>
-					<input type="checkbox" name="mobility" value="Mobility">Mobility<br>
-				</div>
-				<br>
-				<br/>
-				<label></label>
-				<input type="SUBMIT" class="button" value="Profiel aanmaken">
-			</form>
-		</div>
-
-		
-		<footer>
-			<div class="footer-bot">
-				<div class="container">
-					<div class="left col-sm-6 col-xs-12">
-						<p>Ontworpen door studenten Toegepaste Informatica</p>
-					</div>
-					<div class="right col-sm-6 col-xs-12">
-						<p>© 2019 All rights reserved.</p>
-					</div>
-				</div>
-			</div>
-		</footer>
-	</body>
-	</html>
+    </div>
+</header>
+<div class="container">
+    <h2 class="extra">Profiel</h2>
+    <p>Het is de eerste keer dat je inlogt. We hebben wat extra informatie nodig en dan kan je van start gaan.</p>
+    <form th:action="@{/createstudentprofile}" method="POST">
+        <label for="gsm">GSM-nummer: </label>
+        <input type="text" name="gsm" id="gsm" required/>
+        <br><br>
+        <label>ZAP of Mobility?: </label>
+        <div>
+            <input type="checkbox" name="zap" value="Zap">ZAP<br>
+            <input type="checkbox" name="mobility" value="Mobility">Mobility<br>
+        </div>
+        <br>
+        <br/>
+        <label></label>
+        <input type="SUBMIT" class="button" value="Profiel aanmaken">
+    </form>
+</div>
+<footer>
+    <div class="footer-bot">
+        <div class="container">
+            <div class="left col-sm-6 col-xs-12">
+                <p>Ontworpen door studenten Toegepaste Informatica</p>
+            </div>
+            <div class="right col-sm-6 col-xs-12">
+                <p>© 2019 All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
