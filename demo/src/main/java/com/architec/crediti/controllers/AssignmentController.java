@@ -103,8 +103,7 @@ public class AssignmentController {
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
 
         modelAndView.addObject("persons", fiches);
-        modelAndView.addObject("assignments",
-                Methods.removeFullAssignments(assignmentRepo.findByTitleContainingAndArchived("", false)));
+        modelAndView.addObject("assignments", fiches);
         modelAndView.addObject("selectedPageSize", pageSize);
         modelAndView.addObject("pager", pager);
         return modelAndView;
