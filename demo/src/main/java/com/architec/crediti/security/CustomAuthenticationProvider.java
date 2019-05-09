@@ -1,6 +1,9 @@
 package com.architec.crediti.security;
 
+import com.architec.crediti.models.ExternalUser;
 import com.architec.crediti.models.User;
+import com.architec.crediti.repositories.ExternalUserRepository;
+import com.architec.crediti.repositories.HashPass;
 import com.architec.crediti.repositories.UserRepository;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -35,6 +38,10 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     @Autowired
     UserRepository userRepo;
 
+    @Autowired
+    ExternalUserRepository exRepo;
+
+
     @Override
     public Authentication authenticate(Authentication auth) throws AuthenticationException {
 
@@ -43,7 +50,21 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         if (isLdapRegisteredUser(username, password)) {
             return new UsernamePasswordAuthenticationToken(username, password, new ArrayList<>());
-        } else {
+        } else { /*else {
+            if (userRepo.findByEmail(username) != null) {
+            User user = userRepo.findByEmail(username);
+
+            if (exRepo.findByUserId(user) != null ) {
+                ExternalUser exUser = exRepo.findByUserId(user);
+
+                // Make sure extern is not null
+                String hash = HashPass.convertToPbkdf2(password.toCharArray(), exUser.getSalt());
+
+                if(hash.equals(exUser.getPassword())){
+                    System.out.println("gelukt");
+                }
+            }
+        }*/
             throw new AuthenticationCredentialsNotFoundException("Invalid Credentials!");
         }
     }

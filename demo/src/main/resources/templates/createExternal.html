@@ -23,17 +23,17 @@
         <div class="wrap-all col-xs-12 ">
         <h2 class="extra">Profiel aanmaken</h2>
         <form th:action='@{/createexternal}' method='POST'>
-			<label for="name">Naam:</label>
-			<input name="name" type="text" id="name" required><br><br>
+			<label for="lastname">Naam:</label>
+			<input name="lastname" type="text" id="lastname" required><br><br>
 
-			<label for="firstName">Voornaam:</label>
-			<input name="firstName" type="text" id="firstName" required><br><br>
+			<label for="firstname">Voornaam:</label>
+			<input name="firstname" type="text" id="firstname" required><br><br>
 
-			<label for="nameCompany">Naam bedrijf:</label>
-			<input name="company" type="text" id="nameCompany" required><br><br>
+			<label for="company">Naam bedrijf:</label>
+			<input name="company" type="text" id="company" required><br><br>
 
-			<label for="adress">Adres:</label>
-			<input name="adress" type="text" id="adress" required><br><br>
+			<label for="address">Adres:</label>
+			<input name="address" type="text" id="address" required><br><br>
 
 			<label for="postal">Postcode:</label>
 			<input name="postal" type="text" id="postal" required><br><br>
@@ -41,8 +41,11 @@
 			<label for="city">Gemeente:</label>
 			<input name="city" type="text" id="city" required><br><br>
 
-			<label for="mail">E-mail:</label>
-			<input name="mail" type="email" id="mail" required><br><br>
+            <label for="phone">Telefoonnummer:</label>
+            <input name="phone" type="tel" id="phone" required><br><br>
+
+			<label for="email">E-mail:</label>
+			<input name="email" type="email" id="email" required><br><br>
 
 			<label for="password">Wachtwoord:</label>
 			<input name="password" type="password" id="password" required><br><br>

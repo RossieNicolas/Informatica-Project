@@ -3,27 +3,36 @@ package com.architec.crediti.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "externalUsers")
+@Table(name = "external_users")
 public class ExternalUser {
     @Id
     @Column(name = "extern_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long externId;
 
+    @Column(name = "firstname", nullable = false)
+    private String firstname;
+    @Column(name = "lastname", nullable = false)
+    private String lastname;
     @Column(name = "company", nullable = false)
     private String company;
-
-    @Column(name = "adress", nullable = false)
-    private String adress;
-
-    @Column(name = "postalcode", nullable = false)
-    private String postal;
-
+    @Column(name = "phone", nullable = false)
+    private String phone;
+    @Column(name = "address", nullable = false)
+    private String address;
     @Column(name = "city", nullable = false)
     private String city;
+    @Column(name = "postal", nullable = false)
+    private String postal;
+    @Column(name = "email", nullable = false)
+    private String email;
 
     @Column(name = "password", nullable = false)
-    private String password;
+    private char[] password;
+
+    @Column(name = "salt")
+    private byte[] salt;
+
 
     @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.REMOVE })
@@ -33,12 +42,27 @@ public class ExternalUser {
     public ExternalUser() {
     }
 
-    public ExternalUser(String company, String adress, String postal, String city, String password) {
+    public ExternalUser(String firstname, String lastname, String company, String phone, String address, String city, String postal, String email, char[] password, byte[] salt) {
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.company = company;
-        this.adress = adress;
-        this.postal = postal;
+        this.phone = phone;
+        this.address = address;
         this.city = city;
+        this.postal = postal;
+        this.email = email;
         this.password = password;
+        this.salt = salt;
+    }
+
+    public ExternalUser(String firstname, String lastname, String company, String phone, String address, String city, String postal) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.company = company;
+        this.phone = phone;
+        this.address = address;
+        this.city = city;
+        this.postal = postal;
     }
 
     public long getExternId() {
@@ -49,6 +73,22 @@ public class ExternalUser {
         this.externId = externId;
     }
 
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
     public String getCompany() {
         return company;
     }
@@ -57,28 +97,28 @@ public class ExternalUser {
         this.company = company;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public User getUserId() {
-        return userId;
+    public String getAddress() {
+        return address;
     }
 
-    public void setUserId(User userId) {
-        this.userId = userId;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getCity() {
+        return city;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getPostal() {
@@ -89,11 +129,35 @@ public class ExternalUser {
         this.postal = postal;
     }
 
-    public String getCity() {
-        return city;
+    public String getEmail() {
+        return email;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public char[] getPassword() {
+        return password;
+    }
+
+    public void setPassword(char[] password) {
+        this.password = password;
+    }
+
+    public byte[] getSalt() {
+        return salt;
+    }
+
+    public void setSalt(byte[] salt) {
+        this.salt = salt;
+    }
+
+    public User getUserId() {
+        return userId;
+    }
+
+    public void setUserId(User userId) {
+        this.userId = userId;
     }
 }
