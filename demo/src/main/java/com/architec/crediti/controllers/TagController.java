@@ -22,29 +22,40 @@ public class TagController {
     @Autowired
     TagRepo tagRepo;
 
-    // get create tag page
+    //get create tag page
     @RequestMapping("/tag")
     public String assignment() {
         return "tag";
     }
 
-    // make a new tag
+    @RequestMapping(value = "/searchspring", method = RequestMethod.GET)
+    public String view(Model model) throws Exception {
+        model.addAttribute("Status", "Tag name already exists!");
+        return "tag";
+    }
+
+    //make a new tag
     @PostMapping("/tag")
-    public String createTag(@RequestParam("tagName") String tagName,
-            @RequestParam("tagDescription") String tagDescription) {
+    public String createTag(Model model, @RequestParam ("tagName") String tagName, @RequestParam ("tagDescription") String tagDescription) {
         Tag tag = new Tag(tagName, tagDescription);
-        // TODO check for duplicates
-        tagRepo.save(tag);
+        boolean existsName = tagRepo.existsByTagName(tagName);
+        if (!existsName){
+            tagRepo.save(tag);
+        }
+        else    {
+            return "tag";
+        }
+
         return "redirect:/listAllTags";
     }
 
-    // list all tags
+    //list all tags
     @RequestMapping(value = "/listAllTags", method = RequestMethod.GET)
-    public ModelAndView listAllTags(@RequestParam("page") Optional<Integer> page) /* throws SQLException */ {
+    public ModelAndView listAllTags(@RequestParam("page") Optional<Integer> page) /* throws SQLException*/ {
         ModelAndView modelAndView = new ModelAndView("listAllTags");
         List<Tag> listAllTags = tagRepo.findAll();
 
-        // model.addAttribute("listAllTags", listAllTags);
+        //model.addAttribute("listAllTags", listAllTags);
 
         int initialPage = 0;
         int pageSize = 15;
@@ -70,7 +81,7 @@ public class TagController {
         return modelAndView;
     }
 
-    // list specific tag
+    //list specific tag
     @RequestMapping(value = "/listAllTags/{tag_id}", method = RequestMethod.GET)
     public String tags(@PathVariable("tag_id") int tag_id, Model model) {
 
@@ -80,19 +91,22 @@ public class TagController {
         return "editTag";
     }
 
-    // update specific tag
-    @PostMapping(value = "/listAllTags/{tagId}")
-    public String saveTag(@PathVariable("tagId") int tagId, @Valid Tag tag) {
-        tag = tagRepo.findBytagId(tagId);
+    //update specific tag
+    @PostMapping(value = "/listAllTags/{id}")
+    public String saveTag(@PathVariable("id") int id,@Valid Tag tag, @RequestParam ("tagName") String tagName,  @RequestParam ("tagDescription") String tagDescription) {
+        tag = tagRepo.findBytagId(id);
 
-        if (!tagRepo.existsBytagName(tag.getTagName())) {
+        boolean existsName = tagRepo.existsByTagName(tagName);
+        if (!existsName){
+            tag.setTagName(tagName);
+            tag.setTagDescription(tagDescription);
             tagRepo.save(tag);
         }
 
         return "redirect:/listAllTags";
     }
 
-    // delete specific tag
+    //delete specific tag
     @GetMapping("/deletetag/{id}")
     public String deleteTag(@PathVariable("id") int id, Model model) {
         Tag tag = tagRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid tag Id:" + id));
@@ -100,5 +114,8 @@ public class TagController {
         model.addAttribute("tags", tagRepo.findAll());
         return "redirect:/listAllTags";
     }
+
+
+
 
 }

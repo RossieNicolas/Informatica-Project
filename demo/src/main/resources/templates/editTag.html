@@ -73,10 +73,10 @@
                 <fieldset disabled="disabled" id="tagInfo">
                     <label value="${a.getTagId()}"></label>
                     <label for='tagName'>Tag: </label>
-                    <input id='tagName' type='text' th:value="*{a.getTagName()}" name="tagName" maxlength="50"/>
+                    <input id='tagName' type='text' th:value="*{a.getTagName()}" name="tagName" maxlength="50" required="required"/>
                     <br/><br>
                     <label for='tagDescription'>Beschrijving: </label>
-                    <input id='tagDescription' type='text' th:value="*{a.getTagDescription()}" name="tagDescription"  maxlength="250"/>
+                    <input id='tagDescription' type='text' th:value="*{a.getTagDescription()}" name="tagDescription"  maxlength="250" required="required"/>
                     <br/>
                 </fieldset><br>
                 <input type="button" value = "✏BEWERKEN" class = "button" onclick="toggleForm();">
