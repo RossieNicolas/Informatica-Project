@@ -58,8 +58,7 @@ public class Assignment {
 	@Column(name = "tagAssign")
 	private String tagAssign;
 
-	@ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
-			CascadeType.REMOVE })
+	@ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "assigner_user_id", referencedColumnName = "user_id")
 	private User assignerUserId;
 
