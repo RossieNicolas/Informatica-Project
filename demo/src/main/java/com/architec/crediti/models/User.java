@@ -22,55 +22,18 @@ public class User {
     @Column(name = "role", nullable = false)
     private String role;
 
-    @Column(name = "studentennummer", nullable = false)
-    private String studentennummer;
-
-    @Column(name = "gsm")
-    private String gsm;
-
-    @Column(name = "zap")
-    private boolean zap;
-
-    @Column(name = "mobility")
-    private boolean mobility;
-
     @Column(name = "first_login", nullable = false)
     private boolean firstLogin;
 
     public User() {
     }
 
-    public User(String firstname, String lastname, String email, String role, String studentennummer, boolean firstLogin) {
+    public User(String firstname, String lastname, String email, String role, boolean firstLogin) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.role = role;
-        this.studentennummer = studentennummer;
         this.firstLogin = firstLogin;
-    }
-
-    public String getGsm() {
-        return gsm;
-    }
-
-    public void setGsm(String gsm) {
-        this.gsm = gsm;
-    }
-
-    public boolean isZap() {
-        return zap;
-    }
-
-    public void setZap(boolean zap) {
-        this.zap = zap;
-    }
-
-    public boolean isMobility() {
-        return mobility;
-    }
-
-    public void setMobility(boolean mobility) {
-        this.mobility = mobility;
     }
 
     public boolean isFirstLogin() {

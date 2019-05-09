@@ -88,7 +88,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             boolean emailExsist = userRepo.existsByEmail(email);
 
             if (!emailExsist) {
-                User user = new User(firstname, lastname, email, role, studentNr, true);
+                User user = new User(firstname, lastname, email, role, true);
                 userRepo.save(user);
             }
 

@@ -1,7 +1,5 @@
 package com.architec.crediti.models;
 
-import com.architec.crediti.models.User;
-
 import javax.persistence.*;
 
 @Entity
@@ -9,13 +7,19 @@ import javax.persistence.*;
 public class Student {
     @Id
     @Column(name = "student_id")
-    private String studentId;
-
-    @Column(name = "class", nullable = false)
-    private String studentClass;
+    private long studentId;
 
     @Column(name = "gsm", nullable = false)
-    private String gsmNumber;
+    private String gsm;
+
+    @Column(name = "studentennummer", nullable = false)
+    private String studentennummer;
+
+    @Column(name = "zap")
+    private boolean zap;
+
+    @Column(name = "mobility")
+    private boolean mobility;
 
     @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.REMOVE })
@@ -25,34 +29,45 @@ public class Student {
     public Student() {
     }
 
-    public Student(String studentID, String s_class, String gsmnr) {
-        this.studentId = studentID;
-        this.studentClass = s_class;
-        this.gsmNumber = gsmnr;
+    public Student(String gsm, String studentennummer, User userId) {
+        this.gsm = gsm;
+        this.studentennummer = studentennummer;
+        this.userId = userId;
     }
 
-    public String getStudentId() {
-        return studentId;
+    public boolean isZap() {
+        return zap;
     }
 
-    public void setStudentId(String studentId) {
-        this.studentId = studentId;
+    public void setZap(boolean zap) {
+        this.zap = zap;
     }
 
-    public String getStudentClass() {
-        return studentClass;
+    public boolean isMobility() {
+        return mobility;
     }
 
-    public void setStudentClass(String studentClass) {
-        this.studentClass = studentClass;
+    public void setMobility(boolean mobility) {
+        this.mobility = mobility;
+    }
+
+    public String getGsm() {
+        return gsm;
+    }
+
+    public void setGsm(String gsm) {
+        this.gsm = gsm;
+    }
+
+    public String getStudentennummer() {
+        return studentennummer;
+    }
+
+    public void setStudentennummer(String studentennummer) {
+        this.studentennummer = studentennummer;
     }
 
     public User getUserId() {
         return userId;
     }
-
-    public void setUserId(User userId) {
-        this.userId = userId;
-    }
-
 }
