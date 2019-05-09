@@ -50,21 +50,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         if (isLdapRegisteredUser(username, password)) {
             return new UsernamePasswordAuthenticationToken(username, password, new ArrayList<>());
-        } else { /*else {
-            if (userRepo.findByEmail(username) != null) {
-            User user = userRepo.findByEmail(username);
-
-            if (exRepo.findByUserId(user) != null ) {
-                ExternalUser exUser = exRepo.findByUserId(user);
-
-                // Make sure extern is not null
-                String hash = HashPass.convertToPbkdf2(password.toCharArray(), exUser.getSalt());
-
-                if(hash.equals(exUser.getPassword())){
-                    System.out.println("gelukt");
-                }
-            }
-        }*/
+        } else {
             throw new AuthenticationCredentialsNotFoundException("Invalid Credentials!");
         }
     }
@@ -119,7 +105,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         } catch (NamingException nex) {
             System.out.println("LDAP Connection: FAILED");
-            nex.printStackTrace();
         } finally {
             if (ctx != null) {
                 try {
