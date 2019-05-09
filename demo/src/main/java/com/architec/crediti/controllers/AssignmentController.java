@@ -28,6 +28,8 @@ import java.util.Optional;
 public class AssignmentController {
 
     private Iterable<Assignment> fiches;
+    final private int initialPage = 0;
+    final private int pageSize = 15;
 
     @Autowired
     TagRepo tagRepo;
@@ -127,7 +129,7 @@ public class AssignmentController {
 
     // search assignments
     @PostMapping("/allassignments")
-    String getAssignment(@RequestParam("searchbar") String name, Model model) {
+    String getAssignment(@RequestParam("searchbar") String name, Model model , @RequestParam("page") Optional<Integer> page) {
 
         try {
             Assignment a = assignmentRepo.findByAssignmentId((Integer.parseInt(name)));
@@ -136,9 +138,30 @@ public class AssignmentController {
             }
 
         } catch (Exception e) {
-            model.addAttribute("assignments",
-                    Methods.removeFullAssignments(assignmentRepo.findByTitleContainingAndArchived(name, false)));
+            model.addAttribute("assignments", Methods.removeFullAssignments(assignmentRepo.findByTitleContainingAndArchived(name, false)));
         }
+
+        ModelAndView modelAndView = new ModelAndView("listAllAssignments");
+        fiches = assignmentRepo.findAll();
+
+
+        int buttons = (int) assignmentRepo.count() / pageSize;
+
+        if (assignmentRepo.count() % pageSize != 0) {
+            buttons++;
+        }
+
+        // Evaluate page. If requested parameter is null or less than 0 (to
+        // prevent exception), return initial size. Otherwise, return value of
+        // param. decreased by 1.
+        int evalPage = (page.orElse(0) < 1) ? initialPage : page.get() - 1;
+
+        Page<Assignment> fiches = assignmentRepo.findAll(PageRequest.of(evalPage, pageSize));
+        Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
+
+        model.addAttribute("persons", fiches);
+        model.addAttribute("selectedPageSize", pageSize);
+        model.addAttribute("pager", pager);
 
         return "listAllAssignments";
     }
@@ -148,11 +171,11 @@ public class AssignmentController {
         User currentUser = userRepo.findUserByEmail(principal.getName());
         Iterable<Assignment> assignments = assignmentRepo.findAll();
         ArrayList<Assignment> myAssignments = new ArrayList<>();
-
-        if (currentUser.getUserId() == assignments.iterator().next().getAssignerUserId()) {
-            myAssignments.add(assignments.iterator().next());
+        for (Assignment a : assignments){
+            if (currentUser.getUserId() == a.getAssignerUserId()) {
+                myAssignments.add(a);
+            }
         }
-
         model.addAttribute("assignments", myAssignments);
 
         return "myassignments";
