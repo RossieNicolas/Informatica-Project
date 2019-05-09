@@ -71,6 +71,7 @@
             <h2 class="extra">Tag aanpassen</h2>
             <form th:each="a: ${tags}" method="POST" class="standard-form">
                 <fieldset disabled="disabled" id="tagInfo">
+                    <label value="${a.getTagId()}"></label>
                     <label for='tagName'>Tag: </label>
                     <input id='tagName' type='text' th:value="*{a.getTagName()}" name="tagName" maxlength="50"/>
                     <br/><br>

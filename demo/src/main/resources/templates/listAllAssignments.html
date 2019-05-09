@@ -88,8 +88,7 @@
 					<th>Naam</th>
 					<th>Begin</th>
 					<th>Einde</th>
-					<th>Gevalideerd</th>
-					<th>Gearchiveerd</th>
+					<th>Gevalideerd</th>    
 				</tr>
                     </thead>
                     <tbody>
@@ -105,7 +104,6 @@
                         <span th:if="${a.isValidated()}">✔️</span>
                         <span th:unless="${a.isValidated()}">❌</span>
                     </td>
-					<td th:text="${a.isArchived()}"></td>
 				</tr>
                     </tbody>
 			</table>
