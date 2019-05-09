@@ -34,7 +34,7 @@ public class StudentController {
         User currentUser = userRepo.findUserByEmail(principal.getName());
         Student student = new Student(gsm, currentUser.getEmail().substring(1,7), currentUser);
 
-        boolean existsStudent = studentRepo.existsByStudentennummer(currentUser.getEmail().substring(1,6));
+        boolean existsStudent = studentRepo.existsByStudentennummer(currentUser.getEmail().substring(1,7));
 
         if (!existsStudent) {
             if (zap != null) {student.setZap(true); }
