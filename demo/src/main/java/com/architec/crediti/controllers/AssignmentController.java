@@ -53,7 +53,7 @@ public class AssignmentController {
             @RequestParam(required = false, value = "tag") int[] tags) {
         ArrayList<Tag> list = new ArrayList<>();
         ArrayList<String> list2 = new ArrayList<>();
-        User currentUser = userRepo.findUserByEmail(principal.getName());
+        User currentUser = userRepo.findByEmail(principal.getName());
 
         if (tags != null) {
             for (int item : tags) {
@@ -172,7 +172,7 @@ public class AssignmentController {
     @PostMapping(value = "/allassignments/{assignmentId}")
     public String updateAssignment(Principal principal, @PathVariable("assignmentId") int assignmentId,
             @Valid Assignment assignment) {
-        User currentUser = userRepo.findUserByEmail(principal.getName());
+        User currentUser = userRepo.findByEmail(principal.getName());
         assignment.setAssignerUserId(currentUser);
         assignment.setAssignmentId(assignmentId);
 
@@ -195,7 +195,7 @@ public class AssignmentController {
     @PostMapping(value = "/myassignments/{assignmentId}")
     public String updateMyAssignment(Principal principal, @PathVariable("assignmentId") int assignmentId,
             @Valid Assignment assignment) {
-        User currentUser = userRepo.findUserByEmail(principal.getName());
+        User currentUser = userRepo.findByEmail(principal.getName());
         assignment.setAssignerUserId(currentUser);
         assignment.setAssignmentId(assignmentId);
         if (!(assignment.getTitle().equalsIgnoreCase("") || assignment.getType().equalsIgnoreCase("")

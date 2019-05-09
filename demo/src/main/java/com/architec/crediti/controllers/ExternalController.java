@@ -39,7 +39,7 @@ public class ExternalController {
 
         Object[] hashedBytes = HashPass.convertToPbkdf2(password.toCharArray());
         // create an external user
-        ExternalUser externalUser = new ExternalUser(firstname, lastname, company, phone, address, city, postal, email, hashedBytes[0].toString().toCharArray(),(byte[]) hashedBytes[1]);
+        ExternalUser externalUser = new ExternalUser(firstname, lastname, company, phone, address, city, postal, hashedBytes[0].toString().toCharArray(),(byte[]) hashedBytes[1]);
         // create a internal user
         User user = new User(firstname, lastname, email, "Externe",false);
         // set the foreign key

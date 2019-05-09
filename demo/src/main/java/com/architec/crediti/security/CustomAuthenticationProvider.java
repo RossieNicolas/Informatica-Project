@@ -50,7 +50,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         if (isLdapRegisteredUser(username, password)) {
             return new UsernamePasswordAuthenticationToken(username, password, new ArrayList<>());
-        } else { /*else {
+        } else {
             if (userRepo.findByEmail(username) != null) {
             User user = userRepo.findByEmail(username);
 
@@ -64,7 +64,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
                     System.out.println("gelukt");
                 }
             }
-        }*/
+        }
             throw new AuthenticationCredentialsNotFoundException("Invalid Credentials!");
         }
     }
