@@ -25,6 +25,7 @@ import javax.naming.directory.SearchResult;
 import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Hashtable;
 
 @Component
@@ -49,10 +50,33 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         String password = auth.getCredentials().toString();
 
         if (isLdapRegisteredUser(username, password)) {
+            log.info("LDAP successful");
+            return new UsernamePasswordAuthenticationToken(username, password, new ArrayList<>());
+        } else if (isExternalUser(username, password)) {
             return new UsernamePasswordAuthenticationToken(username, password, new ArrayList<>());
         } else {
             throw new AuthenticationCredentialsNotFoundException("Invalid Credentials!");
         }
+    }
+
+    private boolean isExternalUser(String username, String password) {
+        boolean result = false;
+
+        if (userRepo.findByEmail(username) != null) {
+            User user = userRepo.findByEmail(username);
+
+            if (exRepo.findByUserId(user) != null ) {
+                ExternalUser exUser = exRepo.findByUserId(user);
+
+                // Make sure extern is not null
+                String hash = HashPass.convertToPbkdf2(password.toCharArray(), exUser.getSalt());
+
+                if(Arrays.equals(hash.toCharArray(), exUser.getPassword())){
+                    result = true;
+                }
+            }
+        }
+        return result;
     }
 
     private boolean isLdapRegisteredUser(String username, String password) {
