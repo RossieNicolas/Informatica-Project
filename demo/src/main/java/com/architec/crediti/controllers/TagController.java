@@ -109,8 +109,7 @@ public class TagController {
     //delete specific tag
     @GetMapping("/deletetag/{id}")
     public String deleteTag(@PathVariable("id") int id, Model model) {
-        Tag tag = tagRepo.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid tag Id:" + id));
+        Tag tag = tagRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid tag Id:" + id));
         tagRepo.delete(tag);
         model.addAttribute("tags", tagRepo.findAll());
         return "redirect:/listAllTags";

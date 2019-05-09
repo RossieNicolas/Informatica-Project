@@ -18,6 +18,9 @@ public class StudentController {
     @Autowired
     UserRepository userRepo;
 
+    @Autowired
+    StudentRepository studentRepo;
+
     @GetMapping("/createstudentprofile")
     public String getStudentProfileForm() {
         return "createProfileStudent";
@@ -29,13 +32,16 @@ public class StudentController {
                              @RequestParam(value = "mobility", required = false) String mobility) {
 
         User currentUser = userRepo.findUserByEmail(principal.getName());
+        Student student = new Student(gsm, currentUser.getEmail().substring(1,7), currentUser);
 
-        if (currentUser.isFirstLogin()) {
-            currentUser.setGsm(gsm);
-            if (zap != null) {currentUser.setZap(true); }
-            if (mobility != null) {currentUser.setMobility(true); }
+        boolean existsStudent = studentRepo.existsByStudentennummer(currentUser.getEmail().substring(1,6));
+
+        if (!existsStudent) {
+            if (zap != null) {student.setZap(true); }
+            if (mobility != null) {student.setMobility(true); }
             currentUser.setFirstLogin(false);
             userRepo.save(currentUser);
+            studentRepo.save(student);
         }
 
         return "redirect:/main";

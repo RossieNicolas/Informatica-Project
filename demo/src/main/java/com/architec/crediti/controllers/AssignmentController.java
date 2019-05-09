@@ -50,7 +50,7 @@ public class AssignmentController {
     // add assignment
     @PostMapping("/assignment")
     public String createAssignment(Principal principal, @Valid Assignment assignment,
-                                   @RequestParam(required = false, value = "tag") int[] tags) {
+            @RequestParam(required = false, value = "tag") int[] tags) {
         ArrayList<Tag> list = new ArrayList<>();
         ArrayList<String> list2 = new ArrayList<>();
         User currentUser = userRepo.findUserByEmail(principal.getName());
@@ -64,9 +64,9 @@ public class AssignmentController {
             for (Tag item : list) {
                 list2.add(item.getTagName());
             }
-            assignment.setAssignerUserId(currentUser);
             assignment.setTagAssign(list2.toString());
         }
+        assignment.setAssignerUserId(currentUser);
         assignmentRepo.save(assignment);
         return "successfullAssignment";
     }
@@ -100,11 +100,13 @@ public class AssignmentController {
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
 
         modelAndView.addObject("persons", fiches);
-        modelAndView.addObject("assignments", Methods.removeFullAssignments(assignmentRepo.findByTitleContainingAndArchived("", false)));
+        modelAndView.addObject("assignments",
+                Methods.removeFullAssignments(assignmentRepo.findByTitleContainingAndArchived("", false)));
         modelAndView.addObject("selectedPageSize", pageSize);
         modelAndView.addObject("pager", pager);
         return modelAndView;
     }
+
     // list all unvalidated assignments
     @GetMapping("/unvalidatedassignments")
     public String getUnvalidatedAssingments(Model model) {
@@ -133,14 +135,14 @@ public class AssignmentController {
             }
 
         } catch (Exception e) {
-            model.addAttribute("assignments", Methods.removeFullAssignments(assignmentRepo.findByTitleContainingAndArchived(name, false)));
+            model.addAttribute("assignments",
+                    Methods.removeFullAssignments(assignmentRepo.findByTitleContainingAndArchived(name, false)));
         }
-
 
         return "listAllAssignments";
     }
 
-    @RequestMapping(value = "/myassignments", method = RequestMethod.GET)
+    @GetMapping(value = "/myassignments")
     public String assignments(Model model) {
         Iterable<Assignment> assignments = assignmentRepo.findAll();
 
@@ -150,7 +152,7 @@ public class AssignmentController {
     }
 
     // find specific assignment to edit out of all assignments
-    @RequestMapping(value = "/allassignments/{assignmentId}", method = RequestMethod.GET)
+    @GetMapping(value = "/allassignments/{assignmentId}")
     public String getAssignmentsToUpdate(@PathVariable("assignmentId") int assignmentId, Model model) {
 
         try {
@@ -168,14 +170,13 @@ public class AssignmentController {
 
     // update specific assignment
     @PostMapping(value = "/allassignments/{assignmentId}")
-    public String updateAssignment(Principal principal, @PathVariable("assignmentId") int assignmentId, @Valid Assignment assignment) {
+    public String updateAssignment(Principal principal, @PathVariable("assignmentId") int assignmentId,
+            @Valid Assignment assignment) {
         User currentUser = userRepo.findUserByEmail(principal.getName());
         assignment.setAssignerUserId(currentUser);
         assignment.setAssignmentId(assignmentId);
-        if (!(assignment.getTitle().equalsIgnoreCase("") || assignment.getType().equalsIgnoreCase("")
-                || assignment.getTask().equalsIgnoreCase(""))) {
-            assignmentRepo.save(assignment);
-        }
+
+        assignmentRepo.save(assignment);
 
         return "redirect:/allassignments";
     }
@@ -192,7 +193,8 @@ public class AssignmentController {
 
     // update specific assignment
     @PostMapping(value = "/myassignments/{assignmentId}")
-    public String updateMyAssignment(Principal principal, @PathVariable("assignmentId") int assignmentId, @Valid Assignment assignment) {
+    public String updateMyAssignment(Principal principal, @PathVariable("assignmentId") int assignmentId,
+            @Valid Assignment assignment) {
         User currentUser = userRepo.findUserByEmail(principal.getName());
         assignment.setAssignerUserId(currentUser);
         assignment.setAssignmentId(assignmentId);
