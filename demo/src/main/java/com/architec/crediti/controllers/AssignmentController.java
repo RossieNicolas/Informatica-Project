@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -143,10 +144,16 @@ public class AssignmentController {
     }
 
     @GetMapping(value = "/myassignments")
-    public String assignments(Model model) {
+    public String assignments(Principal principal, Model model) {
+        User currentUser = userRepo.findUserByEmail(principal.getName());
         Iterable<Assignment> assignments = assignmentRepo.findAll();
+        ArrayList<Assignment> myAssignments = new ArrayList<>();
 
-        model.addAttribute("assignments", assignments);
+        if (currentUser.getUserId() == assignments.iterator().next().getAssignerUserId()) {
+            myAssignments.add(assignments.iterator().next());
+        }
+
+        model.addAttribute("assignments", myAssignments);
 
         return "myassignments";
     }
