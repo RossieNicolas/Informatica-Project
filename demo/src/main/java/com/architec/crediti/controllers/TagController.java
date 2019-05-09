@@ -1,24 +1,17 @@
 package com.architec.crediti.controllers;
 
-import com.architec.crediti.models.Assignment;
 import com.architec.crediti.models.Pager;
 import com.architec.crediti.models.Tag;
-import com.architec.crediti.repositories.Methods;
 import com.architec.crediti.repositories.TagRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,12 +23,6 @@ public class TagController {
     // get create tag page
     @RequestMapping("/tag")
     public String assignment() {
-        return "tag";
-    }
-
-    @RequestMapping(value = "/searchspring", method = RequestMethod.GET)
-    public String view(Model model) throws Exception {
-        model.addAttribute("Status", "Tag name already exists!");
         return "tag";
     }
 
@@ -111,7 +98,6 @@ public class TagController {
             model.addAttribute("error", "Tag naam bestaat al!");
             model.addAttribute("tags", tagForId);
             return "editTag";
-            // TODO return form with existing values of specific id
         }
         return "redirect:/listAllTags";
     }
