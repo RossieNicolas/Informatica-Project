@@ -28,12 +28,24 @@ public class TagController {
         return "tag";
     }
 
+    @RequestMapping(value = "/searchspring", method = RequestMethod.GET)
+    public String view(Model model) throws Exception {
+        model.addAttribute("Status", "Tag name already exists!");
+        return "tag";
+    }
+
     //make a new tag
     @PostMapping("/tag")
-    public String createTag(@RequestParam ("tagName") String tagName, @RequestParam ("tagDescription") String tagDescription) {
+    public String createTag(Model model, @RequestParam ("tagName") String tagName, @RequestParam ("tagDescription") String tagDescription) {
         Tag tag = new Tag(tagName, tagDescription);
-        //TODO check for duplicates
-        tagRepo.save(tag);
+        boolean existsName = tagRepo.existsByTagName(tagName);
+        if (!existsName){
+            tagRepo.save(tag);
+        }
+        else    {
+            return "tag";
+        }
+
         return "redirect:/listAllTags";
     }
 
@@ -80,24 +92,17 @@ public class TagController {
     }
 
     //update specific tag
-    @PostMapping(value = "/listAllTags/{tagId}")
-    public String saveTag(@PathVariable("tagId") int tagId, @Valid Tag tag) {
-        boolean added;
-        //tag.setTagId(tagId);
-        for(Tag t : tagRepo.findAll()){
-            if(tag.getTagName().equalsIgnoreCase("")){
-                added = false;
-            }
-            else if (tag.getTagName().equalsIgnoreCase(t.getTagName())) {
-                tagRepo.delete(t);
-                tagRepo.save(tag);
-                added = false;
-            }
-            else {
-                added= true;
-                tagRepo.save(tag);
-            }
+    @PostMapping(value = "/listAllTags/{id}")
+    public String saveTag(@PathVariable("id") int id,@Valid Tag tag, @RequestParam ("tagName") String tagName,  @RequestParam ("tagDescription") String tagDescription) {
+        tag = tagRepo.findBytagId(id);
+
+        boolean existsName = tagRepo.existsByTagName(tagName);
+        if (!existsName){
+            tag.setTagName(tagName);
+            tag.setTagDescription(tagDescription);
+            tagRepo.save(tag);
         }
+
         return "redirect:/listAllTags";
     }
 

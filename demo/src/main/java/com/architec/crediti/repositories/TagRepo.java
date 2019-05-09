@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TagRepo extends JpaRepository<Tag, Integer> {
     Tag findBytagId(int tag_id);
+    boolean existsByTagName(String tag_name);
 }
