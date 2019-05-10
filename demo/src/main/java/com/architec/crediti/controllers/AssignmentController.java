@@ -19,10 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class AssignmentController {
@@ -53,12 +50,18 @@ public class AssignmentController {
     // add assignment
     @PostMapping("/assignment")
     public String createAssignment(Principal principal, @Valid Assignment assignment,
-            @RequestParam(required = false, value = "tag") int[] tags) {
-        ArrayList<Tag> list = new ArrayList<>();
-        ArrayList<String> list2 = new ArrayList<>();
+            @RequestParam(required = false, value = "tag") Tag tag) {
+        Set<Tag> tags = new HashSet<>();
+        //tags.add(tag);
+/*        ArrayList<Tag> list = new ArrayList<>();
+        ArrayList<String> list2 = new ArrayList<>();*/
         User currentUser = userRepo.findByEmail(principal.getName());
 
-        if (tags != null) {
+        for(Tag item : tags){
+            tags.add(item);
+        }
+
+       /* if (tags != null) {
             for (int item : tags) {
                 Tag tag = tagRepo.findBytagId(item);
                 list.add(tag);
@@ -67,8 +70,9 @@ public class AssignmentController {
             for (Tag item : list) {
                 list2.add(item.getTagName());
             }
-            assignment.setTagAssign(list2.toString());
-        }
+            //assignment.setTagAssign(list2.toString());
+        }*/
+        assignment.setTags(tags);
         assignment.setAssignerUserId(currentUser);
         assignmentRepo.save(assignment);
         return "successfullAssignment";

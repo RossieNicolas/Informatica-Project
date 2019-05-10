@@ -3,6 +3,7 @@ package com.architec.crediti.models;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 @Entity
 @Table(name = "assignments")
@@ -55,8 +56,12 @@ public class Assignment {
 	@Column(name = "validated")
 	private boolean validated;
 
-	@Column(name = "tagAssign")
-	private String tagAssign;
+	@ManyToMany
+	@JoinTable(
+			name = "tag_assign",
+			joinColumns = @JoinColumn(name = "assign_id"),
+			inverseJoinColumns = @JoinColumn(name = "tag_id"))
+	Set<Tag> tags;
 
 	@ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "assigner_user_id", referencedColumnName = "user_id")
@@ -66,7 +71,7 @@ public class Assignment {
 	}
 
 	public Assignment(String title, String type, String task, int amountHours, int maxStudents, String start_date,
-			String end_date, boolean archived, boolean validated, User assignerUserId, String tagAssign) {
+			String end_date, boolean archived, boolean validated, User assignerUserId) {
 		this.title = title;
 		this.type = type;
 		this.task = task;
@@ -78,7 +83,6 @@ public class Assignment {
 		this.archived = archived;
 		this.validated = validated;
 		this.assignerUserId = assignerUserId;
-		this.tagAssign = tagAssign;
 	}
 
 	public long getAssignmentId() {
@@ -185,12 +189,11 @@ public class Assignment {
 		return start_date;
 	}
 
-	public String getTagAssign() {
-		return tagAssign;
+	public Set<Tag> getTags() {
+		return tags;
 	}
 
-	public void setTagAssign(String tagAssign) {
-		this.tagAssign = tagAssign;
+	public void setTags(Set<Tag> tags) {
+		this.tags = tags;
 	}
-
 }
