@@ -70,6 +70,9 @@
 
                 <form th:each="a: ${assignments}" class="standard-form" method="post"
                       th:action="@{/allassignments/{id}(id=${a.assignmentId})}">
+                    <input th:if="${!a.isValidated()}" type="button" value="✏️ BEWERKEN" class="button"
+                           onclick="toggleForm();">
+                    <br><br>
                     <fieldset disabled="disabled" id="assignmentInfo">
                         <label for="title">Titel:</label>
                         <input name="title" id="title" type="text" th:value="*{a.getTitle()}" required="required"><br>
@@ -112,10 +115,7 @@
                         </table>
                     </fieldset>
                     <br/>
-                    <input th:if="${!a.isValidated()}" type="button" value="✏️ BEWERKEN" class="button"
-                           onclick="toggleForm();">
-                    &nbsp;&nbsp;&nbsp;
-                    <input th:if="${!a.isValidated()}" type="submit" value="💾 BEWAREN" class="button" id="save"
+                    <input th:if="${!a.isValidated()}" type="submit" value="💾 BEWAREN" class="button" style="visibility: hidden;" id="save"
                            disabled>
 
                     <a th:if="${a.isValidated()}" th:href="@{/studentenroll/{id} (id=${a.assignmentId})}"
@@ -148,6 +148,7 @@
     function toggleForm() {
         document.getElementById('assignmentInfo').removeAttribute('disabled');
         document.getElementById("save").disabled = false;
+        document.getElementById("save").style.visibility = "visible"
     }
 
     const numInputs = document.querySelectorAll('input[type=number]')
