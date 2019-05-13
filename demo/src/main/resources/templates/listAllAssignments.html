@@ -50,7 +50,7 @@
                                         <div class="dropdown-content">
                                             <a href="/tag">Tag toevoegen</a>
                                             <a href="/listAllTags">Lijst van tags</a>
-                                            <a href="">Archief</a>
+                                            <a href="/archive">Archief</a>
                                         </div>
                                     </div>
                                 </li>
@@ -89,7 +89,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="a : ${assignments}" class="tablebackground">
+        <tr th:each="a : ${assignments}" class="tablebackground" th:if="${!a.isArchived()}">
             <td><a th:href="${'/allassignments/' + a.getAssignmentId()}" class="button">📃</a>
             <td th:text="${a.getAssignmentId()}"></td>
             <td th:text="${a.getAssigner()}"></td>
