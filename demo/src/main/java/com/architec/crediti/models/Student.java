@@ -14,7 +14,7 @@ public class Student {
     private String gsm;
 
     @Column(name = "studentennummer", nullable = false)
-    private String studentennummer;
+    private int studentennummer;
 
     @Column(name = "zap")
     private boolean zap;
@@ -30,10 +30,19 @@ public class Student {
     public Student() {
     }
 
-    public Student(String gsm, String studentennummer, User userId) {
+    public Student(String gsm, int studentennummer, User userId) {
         this.gsm = gsm;
         this.studentennummer = studentennummer;
         this.userId = userId;
+    }
+
+
+    public long getStudentId() {
+        return this.studentId;
+    }
+
+    public void setStudentId(long studentId) {
+        this.studentId = studentId;
     }
 
     public boolean isZap() {
@@ -60,15 +69,18 @@ public class Student {
         this.gsm = gsm;
     }
 
-    public String getStudentennummer() {
+    public int getStudentennummer() {
         return studentennummer;
     }
 
-    public void setStudentennummer(String studentennummer) {
+    public void setStudentennummer(int studentennummer) {
         this.studentennummer = studentennummer;
     }
 
     public User getUserId() {
         return userId;
+    }
+    public String findEmail(){
+        return this.userId.getEmail();
     }
 }

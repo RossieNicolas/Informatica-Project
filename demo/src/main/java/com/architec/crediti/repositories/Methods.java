@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.architec.crediti.models.Assignment;
+import com.architec.crediti.models.User;
 
 public class Methods{
 
@@ -17,6 +18,19 @@ public class Methods{
             }
         }
         return assignments;
+    }
 
+
+    public static boolean isStudent(User user){
+        return user.getRole().toLowerCase().equals("student".toLowerCase());
+            
+    }
+    public static boolean isCoordinator(User user){
+        return user.getRole().toLowerCase().equals("coordinator".toLowerCase());
+            
+    }
+    public static boolean isLector(User user){
+        return user.getRole().toLowerCase().equals("docent".toLowerCase());
+            
     }
 }
