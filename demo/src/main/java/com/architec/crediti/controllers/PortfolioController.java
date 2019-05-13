@@ -16,11 +16,16 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.servlet.http.HttpServletRequest;
 
 import com.architec.crediti.repositories.FileRepository;
+import com.architec.crediti.repositories.UserRepository;
 import com.architec.crediti.upload.FileStorageService;
 import com.architec.crediti.upload.UploadFileResponse;
 import com.architec.crediti.models.File;
+import com.architec.crediti.models.User;
 
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,6 +41,9 @@ public class PortfolioController {
     @Autowired
     private FileRepository fileRepo;
 
+    @Autowired
+    private UserRepository userRepo;
+
     @GetMapping("/portfolio")
     public String getPortfolio(Model model) {
         List<File> files = fileRepo.findAll();
@@ -48,23 +56,27 @@ public class PortfolioController {
         return "upload";
     }
 
-    public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
+    public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file, long userId) {
         String fileName = fileStorageService.storeFile(file);
 
-        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/downloadFile/")
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/" + userId + "/")
                 .path(fileName).toUriString();
-        /*
-         * File serverFile = new File(dir, fileName); BufferedOutputStream stream = new
-         * BufferedOutputStream(new FileOutputStream(serverFile));
-         * stream.write(file.getBytes()); stream.close();
-         */
+
+        File serverFile = new File(fileName, "c://test/");
+        BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+        stream.write(file.getBytes());
+        stream.close();
+
         fileRepo.save(new File(fileName, fileDownloadUri));
         return new UploadFileResponse(fileName, fileDownloadUri, file.getContentType(), file.getSize());
     }
 
     @PostMapping("/uploadfile")
-    public String uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
-        Arrays.asList(files).stream().map(file -> uploadFile(file)).collect(Collectors.toList());
+    public String uploadMultipleFiles(@RequestParam("files") MultipartFile[] files, Principal principal) {
+        User currentUser = userRepo.findByEmail(principal.getName());
+
+        Arrays.asList(files).stream().map(file -> uploadFile(file, currentUser.getUserId()))
+                .collect(Collectors.toList());
         return "redirect:/portfolio";
     }
 
