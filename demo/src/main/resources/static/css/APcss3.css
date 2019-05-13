@@ -203,6 +203,12 @@ html input[disabled] {
 .dropdown:hover .dropdown-content {
 	display: block;
 }
+
+.smalltable{
+	width: 100%;
+	margin-left: 0%;
+}
+
 table {
 	width:84%;
 	height: 20%;
@@ -369,12 +375,6 @@ p {
 	pointer-events:none;
 	cursor:auto;
 	border-color:#dee2e6
-}
-
-.page-item.active .page-link {
-	z-index:1;
-	background-color:#007bff;
-	border-color:#007bff
 }
 
 #zoekKnop{

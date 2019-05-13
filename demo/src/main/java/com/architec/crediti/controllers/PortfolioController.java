@@ -8,14 +8,17 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.architec.crediti.repositories.FileRepository;
 import com.architec.crediti.upload.FileStorageService;
 import com.architec.crediti.upload.UploadFileResponse;
+import com.architec.crediti.models.File;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -30,8 +33,13 @@ public class PortfolioController {
     @Autowired
     private FileStorageService fileStorageService;
 
+    @Autowired
+    private FileRepository fileRepo;
+
     @GetMapping("/portfolio")
-    public String getPortfolio() {
+    public String getPortfolio(Model model) {
+        List<File> files = fileRepo.findAll();
+        model.addAttribute("files", files);
         return "portfolio";
     }
 
@@ -45,7 +53,12 @@ public class PortfolioController {
 
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/downloadFile/")
                 .path(fileName).toUriString();
-
+        /*
+         * File serverFile = new File(dir, fileName); BufferedOutputStream stream = new
+         * BufferedOutputStream(new FileOutputStream(serverFile));
+         * stream.write(file.getBytes()); stream.close();
+         */
+        fileRepo.save(new File(fileName, fileDownloadUri));
         return new UploadFileResponse(fileName, fileDownloadUri, file.getContentType(), file.getSize());
     }
 
