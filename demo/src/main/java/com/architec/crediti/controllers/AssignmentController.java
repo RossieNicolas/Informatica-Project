@@ -1,13 +1,7 @@
 package com.architec.crediti.controllers;
 
-import com.architec.crediti.models.Assignment;
-import com.architec.crediti.models.Pager;
-import com.architec.crediti.models.Tag;
-import com.architec.crediti.models.User;
-import com.architec.crediti.repositories.AssignmentRepository;
-import com.architec.crediti.repositories.Methods;
-import com.architec.crediti.repositories.TagRepo;
-import com.architec.crediti.repositories.UserRepository;
+import com.architec.crediti.models.*;
+import com.architec.crediti.repositories.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,10 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class AssignmentController {
@@ -36,6 +27,9 @@ public class AssignmentController {
 
     @Autowired
     AssignmentRepository assignmentRepo;
+
+    @Autowired
+    StudentRepository studentRepo;
 
     @Autowired
     UserRepository userRepo;
@@ -53,22 +47,16 @@ public class AssignmentController {
     // add assignment
     @PostMapping("/assignment")
     public String createAssignment(Principal principal, @Valid Assignment assignment,
-            @RequestParam(required = false, value = "tag") int[] tags) {
-        ArrayList<Tag> list = new ArrayList<>();
-        ArrayList<String> list2 = new ArrayList<>();
+                                   @RequestParam(required = false, value = "tag") int[] tags) {
+        Set<Tag> set = new HashSet<>();
         User currentUser = userRepo.findByEmail(principal.getName());
 
-        if (tags != null) {
-            for (int item : tags) {
-                Tag tag = tagRepo.findBytagId(item);
-                list.add(tag);
-            }
-
-            for (Tag item : list) {
-                list2.add(item.getTagName());
-            }
-            assignment.setTagAssign(list2.toString());
+        for (int item : tags) {
+            Tag tag = tagRepo.findBytagId(item);
+            set.add(tag);
         }
+
+        assignment.setTags(set);
         assignment.setAssignerUserId(currentUser);
         assignmentRepo.save(assignment);
         return "successfullAssignment";
@@ -238,6 +226,22 @@ public class AssignmentController {
         assignment.setAssignmentId(assignmentId);
         assignmentRepo.save(assignment);
         return "redirect:/myassignments";
+    }
+
+    // assign student to specific assignment
+    @GetMapping("/studentenroll/{assignmentId}")
+    public String enrollAssignment(@PathVariable("assignmentId") int assignmentId, @Valid Student student, Principal principal) {
+        Assignment assignment = assignmentRepo.findById((long) assignmentId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid assignment Id:" + assignmentId));
+        User user = userRepo.findByEmail(principal.getName());
+
+        student = studentRepo.findByUserId(user);
+        Set<Assignment> set = new HashSet<>();
+        set.add(assignment);
+
+        student.setAssignments(set);
+        studentRepo.save(student);
+        return "studentenroll";
     }
 
     // delete specific assignment

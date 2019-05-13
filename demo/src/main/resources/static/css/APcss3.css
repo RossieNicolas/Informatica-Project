@@ -8919,13 +8919,6 @@ input[type=checkbox]:checked+label {
 	color: #e60005
 }
 
-input[type=checkbox]:checked+label:after {
-	content: "î¨";
-	position: absolute;
-	top: 1px;
-	left: 2px
-}
-
 .hero-aptodate-detail .container:before,
 .sidebar-edu ul.edu li:after,
 .sidebar-edu ul.edu li:before {
@@ -10771,15 +10764,6 @@ form.standard-form input[type=checkbox]:checked+label:before {
 	background-color: #e60005
 }
 
-.page form input[type=checkbox]:checked+label:after,
-form.standard-form input[type=checkbox]:checked+label:after {
-	color: #fff;
-	content: "î¨";
-	position: absolute;
-	top: 2px;
-	left: 2px
-}
-
 .page form input[type=radio],
 form.standard-form input[type=radio] {
 	display: none
@@ -12184,14 +12168,6 @@ section.gallery-overlay .nav-swipe>li.next>a:before {
 
 .mauticform-innerform .mauticform-row input[type=checkbox]:checked+span:before {
 	background-color: #e60005
-}
-
-.mauticform-innerform .mauticform-row input[type=checkbox]:checked+span:after {
-	color: #fff;
-	content: "î¨";
-	position: absolute;
-	top: -19px;
-	left: -33px
 }
 
 .mauticform-innerform .mauticform-row .mauticform-radiogrp-label {
@@ -14471,7 +14447,18 @@ ul.meta2 li.twitter a:hover:before {
 
 #tag {
 	display: block;
-	float: left;
 	margin-top: 12px;
 	margin-right: 11px;
+}
+
+.tagsAssignments{
+	width: 84%;
+	height: 20%;
+	margin-left: 0%;
+	margin-bottom: 1rem;
+	color: #212529;
+	border: 1px solid rgba(0,0,0,.125);
+	background-clip: border-box;
+	border-radius: .25rem;
+	position: relative;
 }
