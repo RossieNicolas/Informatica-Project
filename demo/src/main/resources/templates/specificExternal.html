@@ -62,28 +62,40 @@
         </div>
     </div>
 </header>
-<div class="container ">
-    <h2 class="extra">Gegevens Externe Opdrachtgever</h2>
+
+<div class="block">
+        <div class="container ">
+            <div class="wrap-all col-xs-12 ">
+                <h2 style="text-align: center">Gegevens Externe Opdrachtgever</h2>
+                <div>
+                    <table>
+                        <thead>
+                        <tr class="ext_table">
+                            <th>Valideer</th>
+                            <th>Voor-en achternaam</th>
+                            <th>Bedrijf</th>
+                            <th>E-mail</th>
+                            <th>Telefoon</th>
+                            <th>Adres</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="tablebackground ext_table">
+                            <td><button class="button">✔️</button></td>
+                            <td th:text="${external.getFirstname() + ' ' + external.getLastname()}"></td>
+                            <td th:text="${external.getCompany()}"></td>
+                            <td th:text="${user.getEmail()}"></td>
+                            <td th:text="${external.getPhone()}"></td>
+                            <td th:text="${external.getAddress()} + ', ' + ${external.getPostal()} + ' ' + ${external.getCity()}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 </div>
-<div id='overview'>
-    <table>
-        <thead>
-        <tr>
-            <th>Naam</th>
-            <th>Bedrijf</th>
-            <th>Telefoon</th>
-        </tr>
-        </thead>
-        <tbody>
-<!--        <tr th:each="e : ${externe}" class="tablebackground">-->
-<!--            <td><a th:href="${'/listUnvalidatedExternal/' + e.getUserId().getUserId()}" class="button">📃️</a></td>-->
-<!--            <td id="fullname" th:text="${e.getFirstname() + e.getLastname()}"></td>-->
-<!--            <td id="company" th:text="${e.getCompany()}"></td>-->
-<!--            <td id="phone" th:text="${e.getPhone()}"></td>-->
-<!--        </tr>-->
-        </tbody>
-    </table>
-</div>
+
+
 <div style="height: 45%"></div>
 <footer>
     <div class="footer-bot">
