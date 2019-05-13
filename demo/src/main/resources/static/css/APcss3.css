@@ -386,6 +386,28 @@ p {
     width: 10%;
 }
 
+input[type="file"] {
+	max-width: 100%;
+	min-width: 85%
+}
+
+.upload-title {
+	font-size: 25px;
+}
+
+.upload-container {
+	max-width: 70%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 5%;
+	margin-bottom: 5%;
+	box-shadow: 0 1px 11px rgba(0, 0, 0, 0.27);
+	background-color:hsla(0,100%,100%,0.6);
+	padding: 2% 2%;
+}
+
+
+
 
 
 

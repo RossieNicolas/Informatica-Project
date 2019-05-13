@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8"/>
-    <title>Crediti - Thuispagina</title>
-    <link rel="stylesheet" th:href="@{/css/APcss3.css}">
-</head>
-<body>
-<div class="background">
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Crediti - Upload files</title>
+        <link rel="stylesheet" href="/css/APcss3.css" />
+    </head>
+    <body>
+    <div class="background">
     <header>
         <div class="nav-main navbackground">
             <div class="container">
@@ -63,27 +63,33 @@
             </div>
         </div>
     </header>
-    <div class="block">
-        <section class="find-edu">
-            <div class="container ">
-                <div class="wrap-all col-xs-6 extra">
-                    <h2>Startpagina</h2>
+        <div class="upload-container">
+            <div class="upload-header">
+                <h2>Upload files naar jouw portfolio</h2>
+            </div>
+            <div class="upload-content">
+                <div class="multiple-upload">
+                    <h3 class="upload-title">Upload jouw bestanden</h3>
+                    <form id="multipleUploadForm" name="multipleUploadForm" th:action="@{/uploadfile}" method="POST" enctype="multipart/form-data">
+                        <input id="multipleFileUploadInput" type="file" name="files" class="file-input" multiple required />
+                        <button type="submit">Submit</button>
+                    </form>
                 </div>
             </div>
-        </section>
-    </div>
-</div>
-<footer>
-    <div class="footer-bot">
-        <div class="container">
-            <div class="left col-sm-6 col-xs-12">
-                <p>Ontworpen door studenten Toegepaste Informatica</p>
-            </div>
-            <div class="right col-sm-6 col-xs-12">
-                <p>© 2019 All rights reserved.</p>
-            </div>
         </div>
-    </div>
-</footer>
-</body>
+        <script src="/js/main.js" ></script>
+        </div>
+        <footer>
+            <div class="footer-bot">
+                <div class="container">
+                    <div class="left col-sm-6 col-xs-12">
+                        <p>Ontworpen door studenten Toegepaste Informatica</p>
+                    </div>
+                    <div class="right col-sm-6 col-xs-12">
+                        <p>© 2019 All rights reserved.</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </body>
 </html>
