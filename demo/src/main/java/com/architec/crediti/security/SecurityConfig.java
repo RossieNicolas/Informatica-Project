@@ -27,7 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 //pagina's die niet-ingelogde gebruikers zien
                 .antMatchers(staticResources).permitAll()
-                .antMatchers("/login", "/", "/createexternaluser","/registersucces", "/createexternal").permitAll()
+                .antMatchers("/login", "/", "/createexternaluser","/registersucces", "/createexternal", "/notapproved").permitAll()
                 //Alle andere pagina's blokkeren
                 .anyRequest().fullyAuthenticated()
                 .and()
