@@ -14471,7 +14471,18 @@ ul.meta2 li.twitter a:hover:before {
 
 #tag {
 	display: block;
-	float: left;
 	margin-top: 12px;
 	margin-right: 11px;
+}
+
+.tagsAssignments{
+	width: 84%;
+	height: 20%;
+	margin-left: 0%;
+	margin-bottom: 1rem;
+	color: #212529;
+	border: 1px solid rgba(0,0,0,.125);
+	background-clip: border-box;
+	border-radius: .25rem;
+	position: relative;
 }
