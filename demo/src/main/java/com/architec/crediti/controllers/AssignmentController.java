@@ -116,7 +116,7 @@ public class AssignmentController {
 
     // search assignments
     @PostMapping("/allassignments")
-    String getAssignment(@RequestParam("searchbar") String name, Model model , @RequestParam("page") Optional<Integer> page) {
+    String getAssignment(@RequestParam("searchbar") String name, Model model, @RequestParam("page") Optional<Integer> page) {
 
         try {
             Assignment a = assignmentRepo.findByAssignmentId((Integer.parseInt(name)));
@@ -158,7 +158,7 @@ public class AssignmentController {
         User currentUser = userRepo.findByEmail(principal.getName());
         Iterable<Assignment> assignments = assignmentRepo.findAll();
         ArrayList<Assignment> myAssignments = new ArrayList<>();
-        for (Assignment a : assignments){
+        for (Assignment a : assignments) {
             if (currentUser.getUserId() == a.getAssignerUserId()) {
                 myAssignments.add(a);
             }
@@ -170,9 +170,25 @@ public class AssignmentController {
 
     // find specific assignment to edit out of all assignments
     @GetMapping(value = "/allassignments/{assignmentId}")
-    public String getAssignmentsToUpdate(@PathVariable("assignmentId") int assignmentId, Model model) {
+    public String getAssignmentsToUpdate(@PathVariable("assignmentId") int assignmentId, Model model, @Valid Student student, Principal principal) {
         List<Tag> updatetag = tagRepo.findAll();
+        User user = userRepo.findByEmail(principal.getName());
+        student = studentRepo.findByUserId(user);
+        Assignment as = assignmentRepo.findByAssignmentId(assignmentId);
+        boolean status = false;
+        boolean volzet = false;
 
+
+        for (Assignment item : student.getAssignments()){
+            if(item.getAssignmentId() == assignmentId){
+                status = true;
+            }
+        }
+        if(as.getAmountStudents() == as.getMaxStudents()){
+            volzet = true;
+        }
+        model.addAttribute("volzet", volzet);
+        model.addAttribute("ingeschreven", status);
         model.addAttribute("updatetag", updatetag);
         try {
             Assignment a = assignmentRepo.findByAssignmentId(assignmentId);
@@ -190,7 +206,7 @@ public class AssignmentController {
     // update specific assignment
     @PostMapping(value = "/allassignments/{assignmentId}")
     public String updateAssignment(Principal principal, @PathVariable("assignmentId") int assignmentId,
-            @Valid Assignment assignment) {
+                                   @Valid Assignment assignment) {
         User currentUser = userRepo.findByEmail(principal.getName());
         assignment.setAssignerUserId(currentUser);
         assignment.setAssignmentId(assignmentId);
@@ -220,7 +236,7 @@ public class AssignmentController {
     // update specific assignment
     @PostMapping(value = "/myassignments/{assignmentId}")
     public String updateMyAssignment(Principal principal, @PathVariable("assignmentId") int assignmentId,
-            @Valid Assignment assignment) {
+                                     @Valid Assignment assignment) {
         User currentUser = userRepo.findByEmail(principal.getName());
         assignment.setAssignerUserId(currentUser);
         assignment.setAssignmentId(assignmentId);
@@ -230,16 +246,22 @@ public class AssignmentController {
 
     // assign student to specific assignment
     @GetMapping("/studentenroll/{assignmentId}")
-    public String enrollAssignment(@PathVariable("assignmentId") int assignmentId, @Valid Student student, Principal principal) {
+    public String enrollAssignment(@PathVariable("assignmentId") int assignmentId, @Valid Student student, Principal principal, Model model) {
         Assignment assignment = assignmentRepo.findById((long) assignmentId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid assignment Id:" + assignmentId));
         User user = userRepo.findByEmail(principal.getName());
-
         student = studentRepo.findByUserId(user);
+
         Set<Assignment> set = new HashSet<>();
         set.add(assignment);
 
-        student.setAssignments(set);
+        int counter = assignment.getAmountStudents();
+
+        if(assignment.getAmountStudents() < assignment.getMaxStudents()) {
+            student.setAssignments(set);
+            assignment.setAmountStudents(counter + 1);
+        }
+
         studentRepo.save(student);
         return "studentenroll";
     }
