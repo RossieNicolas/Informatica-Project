@@ -131,17 +131,6 @@ public class ExternalController {
         return "listUnvalidatedExternal";
     }
 
-    @RequestMapping(value = "/listUnvalidatedExternal/{userId}", method = RequestMethod.GET)
-    public String specificExteral(@PathVariable("userId") long userId, Model model) {
-        User user = userRepository.findByUserId(userId);
-        ExternalUser external = externalUserRepository.findByUserId(user);
-
-        model.addAttribute("user", user);
-        model.addAttribute("external", external);
-
-        return "specificExternal";
-    }
-
     @GetMapping("/validateexternal/{externalId}")
     public String validateAssignment(@PathVariable("externalId") int externalId, Model model) {
         ExternalUser extUser = externalUserRepository.findByUserId(userRepository.findByUserId(externalId));
