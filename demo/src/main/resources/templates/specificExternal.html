@@ -81,7 +81,7 @@
                         </thead>
                         <tbody>
                         <tr class="tablebackground ext_table">
-                            <td><button class="button">✔️</button></td>
+                            <td><a th:href="@{/validateexternal/{id} (id=${user.getUserId()})}" class="button">✔️</a></td>
                             <td th:text="${external.getFirstname() + ' ' + external.getLastname()}"></td>
                             <td th:text="${external.getCompany()}"></td>
                             <td th:text="${user.getEmail()}"></td>

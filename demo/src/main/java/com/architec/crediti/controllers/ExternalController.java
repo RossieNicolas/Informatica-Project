@@ -1,5 +1,6 @@
 package com.architec.crediti.controllers;
 
+import com.architec.crediti.models.Assignment;
 import com.architec.crediti.models.ExternalUser;
 import com.architec.crediti.models.User;
 import com.architec.crediti.repositories.ExternalUserRepository;
@@ -120,7 +121,10 @@ public class ExternalController {
         List<User> users = userRepository.findAllByRole("Externe");
         List<ExternalUser> externalUsers = new ArrayList<>();
         for (User u : users) {
-            externalUsers.add(externalUserRepository.findByUserId(u));
+            if (!externalUserRepository.findByUserId(u).isApproved()) {
+                externalUsers.add(externalUserRepository.findByUserId(u));
+            }
+
         }
 
         model.addAttribute("externe", externalUsers);
@@ -136,6 +140,15 @@ public class ExternalController {
         model.addAttribute("external", external);
 
         return "specificExternal";
+    }
+
+    @GetMapping("/validateexternal/{externalId}")
+    public String validateAssignment(@PathVariable("externalId") int externalId, Model model) {
+        ExternalUser extUser = externalUserRepository.findByUserId(userRepository.findByUserId(externalId));
+
+        extUser.setApproved(true);
+        externalUserRepository.save(extUser);
+        return "redirect:/listUnvalidatedExternal";
     }
 
 }
