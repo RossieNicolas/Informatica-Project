@@ -4,10 +4,7 @@ import com.architec.crediti.models.Assignment;
 import com.architec.crediti.models.Pager;
 import com.architec.crediti.models.Tag;
 import com.architec.crediti.models.User;
-import com.architec.crediti.repositories.AssignmentRepository;
-import com.architec.crediti.repositories.Methods;
-import com.architec.crediti.repositories.TagRepo;
-import com.architec.crediti.repositories.UserRepository;
+import com.architec.crediti.repositories.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -50,16 +47,16 @@ public class AssignmentController {
     // add assignment
     @PostMapping("/assignment")
     public String createAssignment(Principal principal, @Valid Assignment assignment,
-            @RequestParam(required = false, value = "tag") int[] tags) {
-         Set<Tag> list = new HashSet<>();
-         User currentUser = userRepo.findByEmail(principal.getName());
+                                   @RequestParam(required = false, value = "tag") int[] tags) {
+        Set<Tag> set = new HashSet<>();
+        User currentUser = userRepo.findByEmail(principal.getName());
 
         for (int item : tags) {
             Tag tag = tagRepo.findBytagId(item);
-            list.add(tag);
+            set.add(tag);
         }
 
-        assignment.setTags(list);
+        assignment.setTags(set);
         assignment.setAssignerUserId(currentUser);
         assignmentRepo.save(assignment);
         return "successfullAssignment";
@@ -119,7 +116,7 @@ public class AssignmentController {
 
     // search assignments
     @PostMapping("/allassignments")
-    String getAssignment(@RequestParam("searchbar") String name, Model model , @RequestParam("page") Optional<Integer> page) {
+    String getAssignment(@RequestParam("searchbar") String name, Model model, @RequestParam("page") Optional<Integer> page) {
 
         try {
             Assignment a = assignmentRepo.findByAssignmentId((Integer.parseInt(name)));
@@ -161,7 +158,7 @@ public class AssignmentController {
         User currentUser = userRepo.findByEmail(principal.getName());
         Iterable<Assignment> assignments = assignmentRepo.findAll();
         ArrayList<Assignment> myAssignments = new ArrayList<>();
-        for (Assignment a : assignments){
+        for (Assignment a : assignments) {
             if (currentUser.getUserId() == a.getAssignerUserId()) {
                 myAssignments.add(a);
             }
@@ -179,6 +176,16 @@ public class AssignmentController {
         model.addAttribute("updatetag", updatetag);
         try {
             Assignment a = assignmentRepo.findByAssignmentId(assignmentId);
+            Set<Tag> tags = a.getTags();
+            for(Tag item : tags)
+            {
+                for(Tag item2 : updatetag){
+                    if(item.getTagId() == item2.getTagId()){
+                        System.out.println(item.getTagId());
+
+                    }
+                }
+            }
             if (a.getAmountStudents() != a.getMaxStudents() && !a.isArchived()) {
                 model.addAttribute("assignments", a);
             }
@@ -193,8 +200,9 @@ public class AssignmentController {
     // update specific assignment
     @PostMapping(value = "/allassignments/{assignmentId}")
     public String updateAssignment(Principal principal, @PathVariable("assignmentId") int assignmentId,
-            @Valid Assignment assignment) {
+                                   @Valid Assignment assignment) {
         User currentUser = userRepo.findByEmail(principal.getName());
+
         assignment.setAssignerUserId(currentUser);
         assignment.setAssignmentId(assignmentId);
         assignmentRepo.save(assignment);
@@ -223,7 +231,7 @@ public class AssignmentController {
     // update specific assignment
     @PostMapping(value = "/myassignments/{assignmentId}")
     public String updateMyAssignment(Principal principal, @PathVariable("assignmentId") int assignmentId,
-            @Valid Assignment assignment) {
+                                     @Valid Assignment assignment) {
         User currentUser = userRepo.findByEmail(principal.getName());
         assignment.setAssignerUserId(currentUser);
         assignment.setAssignmentId(assignmentId);
