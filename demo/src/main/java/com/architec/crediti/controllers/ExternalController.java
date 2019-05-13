@@ -127,4 +127,9 @@ public class ExternalController {
         return "listUnvalidatedExternal";
     }
 
+    @RequestMapping(value = "/listUnvalidatedExternal/{userId}", method = RequestMethod.GET)
+    public String specificExteral(@PathVariable("userId") long userId) {
+        return "specificExternal";
+    }
+
 }
