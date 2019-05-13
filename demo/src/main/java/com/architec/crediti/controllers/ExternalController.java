@@ -117,7 +117,7 @@ public class ExternalController {
     }
 
     @RequestMapping(value = "/listUnvalidatedExternal", method = RequestMethod.GET)
-    public String unvalidatedExternal(Model model) {
+    public String listUnvalidatedExternal(Model model) {
         List<User> users = userRepository.findAllByRole("Externe");
         List<ExternalUser> externalUsers = new ArrayList<>();
         for (User u : users) {
@@ -132,11 +132,20 @@ public class ExternalController {
     }
 
     @GetMapping("/validateexternal/{externalId}")
-    public String validateAssignment(@PathVariable("externalId") int externalId, Model model) {
+    public String validateExternal(@PathVariable("externalId") int externalId) {
         ExternalUser extUser = externalUserRepository.findByUserId(userRepository.findByUserId(externalId));
 
         extUser.setApproved(true);
         externalUserRepository.save(extUser);
+        return "redirect:/listUnvalidatedExternal";
+    }
+
+    @GetMapping("/deleteexternal/{externalId}")
+    public String deleteExternal(@PathVariable("externalId") int externalId) {
+        ExternalUser extUser = externalUserRepository.findByUserId(userRepository.findByUserId(externalId));
+        //TODO: e-mail naar externe dat die niet gevalideerd werd.
+
+        externalUserRepository.delete(extUser);
         return "redirect:/listUnvalidatedExternal";
     }
 

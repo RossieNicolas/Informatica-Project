@@ -75,16 +75,20 @@
             <th>E-mail</th>
             <th>Telefoon</th>
             <th>Adres</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="e : ${externe}" class="tablebackground ext_table">
-            <td><a th:href="@{/validateexternal/{id} (id=${e.getUserId().getUserId()})}" class="button">✔️</a></td>
+            <td>
+                <a th:href="@{/validateexternal/{id} (id=${e.getUserId().getUserId()})}" class="button">✔️</a>
+            </td>
             <td th:text="${e.getFirstname() + ' ' + e.getLastname()}"></td>
             <td th:text="${e.getCompany()}"></td>
             <td th:text="${e.getUserId().getEmail()}"></td>
             <td th:text="${e.getPhone()}"></td>
             <td th:text="${e.getAddress()} + ', ' + ${e.getPostal()} + ' ' + ${e.getCity()}"></td>
+            <td><a th:href="@{/deleteexternal/{id} (id=${e.getUserId().getUserId()})}">🗑️</a></td>
         </tr>
         </tbody>
     </table>
