@@ -124,10 +124,10 @@ public class ExternalController {
             if (!externalUserRepository.findByUserId(u).isApproved()) {
                 externalUsers.add(externalUserRepository.findByUserId(u));
             }
-
         }
 
         model.addAttribute("externe", externalUsers);
+        model.addAttribute("users", users);
         return "listUnvalidatedExternal";
     }
 

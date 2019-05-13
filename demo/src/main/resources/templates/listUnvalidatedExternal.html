@@ -68,18 +68,23 @@
 <div id='overview'>
     <table>
         <thead>
-        <tr>
-            <th>Naam</th>
+        <tr class="ext_table">
+            <th>Valideer</th>
+            <th>Voor-en achternaam</th>
             <th>Bedrijf</th>
+            <th>E-mail</th>
             <th>Telefoon</th>
+            <th>Adres</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="e : ${externe}" class="tablebackground">
-            <td><a th:href="${'/listUnvalidatedExternal/' + e.getUserId().getUserId()}" class="button">📃️</a></td>
-            <td id="fullname" th:text="${e.getFirstname() + e.getLastname()}"></td>
-            <td id="company" th:text="${e.getCompany()}"></td>
-            <td id="phone" th:text="${e.getPhone()}"></td>
+        <tr th:each="e : ${externe}" class="tablebackground ext_table">
+            <td><a th:href="@{/validateexternal/{id} (id=${e.getUserId().getUserId()})}" class="button">✔️</a></td>
+            <td th:text="${e.getFirstname() + ' ' + e.getLastname()}"></td>
+            <td th:text="${e.getCompany()}"></td>
+            <td th:text="${e.getUserId().getEmail()}"></td>
+            <td th:text="${e.getPhone()}"></td>
+            <td th:text="${e.getAddress()} + ', ' + ${e.getPostal()} + ' ' + ${e.getCity()}"></td>
         </tr>
         </tbody>
     </table>
