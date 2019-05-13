@@ -48,6 +48,7 @@ public class ExternalController {
         if (!userRepository.existsByEmail(user.getEmail())) {
             userRepository.save(user);
             externalUserRepository.save(externalUser);
+            //TODO: stuur mail naar coordinator/externe
         }
 
         return "redirect:/registersucces";
