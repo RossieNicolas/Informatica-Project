@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -115,10 +116,14 @@ public class ExternalController {
     }
 
     @RequestMapping(value = "/listUnvalidatedExternal", method = RequestMethod.GET)
-    public String unvalidatedExternal() {
-        ModelAndView modelAndView = new ModelAndView("listUnvalidatedExternal");
+    public String unvalidatedExternal(Model model) {
+        List<User> users = userRepository.findAllByRole("Externe");
+        List<ExternalUser> externalUsers = new ArrayList<>();
+        for (User u : users) {
+            externalUsers.add(externalUserRepository.findByUserId(u));
+        }
 
-
+        model.addAttribute("externe", externalUsers);
         return "listUnvalidatedExternal";
     }
 

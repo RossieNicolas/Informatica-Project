@@ -69,17 +69,17 @@
     <table>
         <thead>
         <tr>
-            <th style="padding-left: 2.5%">ID</th>
             <th>Naam</th>
             <th>Bedrijf</th>
+            <th>Telefoon</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="a : ${listUnvalidatedExternal}" class="tablebackground">
-<!--            <td><a th:href="${'/listUnvalidatedExternal/' + a.tagId}" class="button">📃️</a></td>-->
-<!--            <td id="tagId" th:text="${a.getTagId()}"></td>-->
-<!--            <td id="tagName" th:text="${a.getTagName()}"></td>-->
-<!--            <td id="tagDescription" th:text="${a.getTagDescription()}"></td>-->
+        <tr th:each="e : ${externe}" class="tablebackground">
+            <td><a th:href="${'/listUnvalidatedExternal/' + e.getUserId().getUserId()}" class="button">📃️</a></td>
+            <td id="fullname" th:text="${e.getFirstname() + e.getLastname()}"></td>
+            <td id="company" th:text="${e.getCompany()}"></td>
+            <td id="phone" th:text="${e.getPhone()}"></td>
         </tr>
         </tbody>
     </table>
