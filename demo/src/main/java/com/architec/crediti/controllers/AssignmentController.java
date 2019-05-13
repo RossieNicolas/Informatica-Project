@@ -1,5 +1,7 @@
 package com.architec.crediti.controllers;
 
+import com.architec.crediti.email.EmailServiceImpl;
+import com.architec.crediti.email.EmailTemplates;
 import com.architec.crediti.models.Assignment;
 import com.architec.crediti.models.Pager;
 import com.architec.crediti.models.Tag;
@@ -20,7 +22,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,6 +40,9 @@ public class AssignmentController {
 
     @Autowired
     UserRepository userRepo;
+
+    @Autowired
+    EmailServiceImpl mail;
 
     // get assignment form
     @RequestMapping(value = "/assignment", method = RequestMethod.GET)
@@ -71,6 +75,10 @@ public class AssignmentController {
         }
         assignment.setAssignerUserId(currentUser);
         assignmentRepo.save(assignment);
+
+        mail.sendSimpleMessage("alina.storme@student.ap.be", "Nieuwe opdracht gecreëerd",
+        EmailTemplates.createdAssignment(assignment.getAssigner(),
+                assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments", "class group"));
         return "successfullAssignment";
     }
 
@@ -252,12 +260,15 @@ public class AssignmentController {
 
     // validate specific assignment
     @GetMapping("/validateassignment/{assignmentId}")
-    public String validateAssignment(@PathVariable("assignmentId") int assignmentId, Model model) {
+    public String validateAssignment(@PathVariable("assignmentId") int assignmentId, Model model, Principal principal) {
+        User currentUser = userRepo.findByEmail(principal.getName());
+
         Assignment assignment = assignmentRepo.findById((long) assignmentId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid assignment Id:" + assignmentId));
         assignment.setValidated(true);
         assignmentRepo.save(assignment);
         model.addAttribute("assignments", assignmentRepo.findAll());
+
         return "redirect:/allassignments";
     }
 
