@@ -18,15 +18,20 @@ public class MainController {
     @Autowired
     ExternalUserRepository exRepo;
 
-    @RequestMapping("main")
+    @RequestMapping("/main")
     public String getDashboard(Principal principal) {
         User currentUser = userRepo.findByEmail(principal.getName());
 
         if (currentUser.isFirstLogin()) {
             return "redirect:createstudentprofile";
-        } else if (!exRepo.findByUserId(currentUser).isApproved()) {
-            return "redirect:notapproved";
         }
+
+        if (exRepo.findByUserId(currentUser) != null) {
+            if (!exRepo.findByUserId(currentUser).isApproved()) {
+                return "redirect:notapproved";
+            }
+        }
+
         return "main";
     }
 }
