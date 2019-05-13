@@ -2,16 +2,7 @@ package com.architec.crediti.email;
 
 public class EmailTemplates {
 
-    public static String testEmail(String assigner, String title, String classGroup, String email, String url) {
-        String mail = "Test email" +
-                "\nTest door " + assigner + " – "+ classGroup+"\n" +
-                email+"\n" +
-                "Testnaam: " + title + "\n" +
-                url;
-
-        return mail;
-    }
-
+    //voor coördinator
     public static String createdAssignment(String assigner, String title, String email, String url, String group) {
         String mail = "Beste,\n"+
                 "Nieuwe ZAP-opdracht van student(e) "+ assigner +".\n" +
@@ -22,9 +13,9 @@ public class EmailTemplates {
         return mail;
     }
 
-    public static String archiveAssignment(String assigner, String title, String email, String url, String group) {
+    public static String archivedAssignment(String assigner, String title, String email, String url, String group) {
         String mail = "Beste,\n"+
-                "Volgende ZAP-opdracht van student(e) "+ assigner +" werd gevalideerd.\n" +
+                "Volgende ZAP-opdracht van student(e) "+ assigner +" werd gearchiveerd.\n" +
                 group + "\n" +
                 email + " naam opdracht: "+ title +
                 "\nTe vinden op: "+ url;
@@ -32,4 +23,64 @@ public class EmailTemplates {
         return mail;
     }
 
+    public static String validatedAssignment() {
+        String mail = "Beste,\n\n"+
+                "De opdracht die u via ons ZAP-platform ingaf werd gevalideerd en is nu zichtbaar voor studenten. " +
+                "Van het moment dat een student geïnteresseerd is, neemt hij met u contact op voor het invullen en ondertekenen " +
+                "van de contracten. Van zodra dat rond is (handtekening van uzelf, de verantwoordelijke van de hogeschool en " +
+                "de student) kan de student van start gaan.\n\n"+
+                "Na het uitvoeren van de opdracht verwacht de hogeschool nog een ondertekend bewijsdocument van u en " +
+                "verwachten wij dat de student de nodige bewijsstukken " +
+                "( teksten, audio, video, vergaderverslagen, oefeningen, fotomateriaal,…) kan aanleveren.\n\n"+
+                "Bedankt voor de samenwerking.\n\n"+
+                "AP-hogeschool";
+
+        return mail;
+    }
+
+    // voor de student
+    public static String validatedAssignmentForStudent() {
+        String mail = "Beste,\n\n"+
+                "De ZAP- opdracht die je ingaf/waarvoor je intekende werd gevalideerd. Om te starten breng je de contracten in orde. " +
+                "Pas na ondertekening door de opdrachtgever en de hogeschool mag en kan je starten.\n\n" +
+                "Na het beëindigen van de opdracht, ondertekent de opdrachtgever het bewijsdocument, " +
+                "vul je de zelfevaluatie in en verzamel je de nodige bewijsstukken voor je portfolio." +
+                "Succes.\n" +
+                "\n" +
+                "De coördinator";
+
+        return mail;
+    }
+
+    //voor externe gebruiker
+    public static String validatedByExternalUser() {
+        String mail = "Beste,\n\n"+
+                "De opdracht die u via ons ZAP-platform ingaf werd gevalideerd en is nu zichtbaar voor studenten. " +
+                "Van het moment dat een student geïnteresseerd is, neemt hij met u contact op voor het invullen en ondertekenen " +
+                "van de contracten. Van zodra dat rond is (handtekening van uzelf, de verantwoordelijke van de hogeschool en " +
+                "de student) kan de student van start gaan.\n\n"+
+                "Na het uitvoeren van de opdracht verwacht de hogeschool nog een ondertekend bewijsdocument van u en " +
+                "verwachten wij dat de student de nodige bewijsstukken " +
+                "( teksten, audio, video, vergaderverslagen, oefeningen, fotomateriaal,…) kan aanleveren.\n\n"+
+                "Bedankt voor de samenwerking.\n\n"+
+                "AP-hogeschool";
+
+        return mail;
+    }
+
+    //wanneer coordinator heeft approved
+    public static String ApprovedByCoordinator() {
+        String mail = "Beste,\n\n" +
+                "De opdracht die u via ons ZAP-platform ingaf werd goedgekeurd door de coördinator en is nu zichtbaar voor studenten. " +
+                "Van het moment dat een student geïnteresseerd is, neemt hij met u contact op voor het invullen en ondertekenen " +
+                "van de contracten. Van zodra dat rond is (handtekening van uzelf, de verantwoordelijke van de hogeschool en " +
+                "de student) kan de student van start gaan.\n\n"+
+                "Na het uitvoeren van de opdracht verwacht de hogeschool nog een ondertekend bewijsdocument van u en " +
+                "verwachten wij dat de student de nodige bewijsstukken " +
+                "( teksten, audio, video, vergaderverslagen, oefeningen, fotomateriaal,…) kan aanleveren.\n\n"+
+                "Bedankt voor de samenwerking.\n\n"+
+                "AP-hogeschool";
+
+        return mail;
+    }
 }

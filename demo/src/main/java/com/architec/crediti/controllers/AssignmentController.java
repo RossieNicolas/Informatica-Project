@@ -269,6 +269,12 @@ public class AssignmentController {
         assignmentRepo.save(assignment);
         model.addAttribute("assignments", assignmentRepo.findAll());
 
+        //deze functie is voor de archive controller
+        mail.sendSimpleMessage("alina.storme@student.ap.be", "Opdracht gevalideerd",
+                EmailTemplates.archivedAssignment(assignment.getAssigner(),
+                        assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments", "class group"));
+
+
         return "redirect:/allassignments";
     }
 
