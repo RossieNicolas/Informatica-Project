@@ -65,7 +65,6 @@ public class ExternalController {
     @RequestMapping("/notapproved")
     public String notApproved() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println(auth.getDetails());
         auth.setAuthenticated(false);
         SecurityContextHolder.clearContext();
         return "notapproved";
