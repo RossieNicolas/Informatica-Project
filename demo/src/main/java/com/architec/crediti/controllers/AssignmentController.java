@@ -50,29 +50,16 @@ public class AssignmentController {
     // add assignment
     @PostMapping("/assignment")
     public String createAssignment(Principal principal, @Valid Assignment assignment,
-            @RequestParam(required = false, value = "tag") Tag tag) {
-        Set<Tag> tags = new HashSet<>();
-        //tags.add(tag);
-/*        ArrayList<Tag> list = new ArrayList<>();
-        ArrayList<String> list2 = new ArrayList<>();*/
-        User currentUser = userRepo.findByEmail(principal.getName());
+            @RequestParam(required = false, value = "tag") int[] tags) {
+         Set<Tag> list = new HashSet<>();
+         User currentUser = userRepo.findByEmail(principal.getName());
 
-        for(Tag item : tags){
-            tags.add(item);
+        for (int item : tags) {
+            Tag tag = tagRepo.findBytagId(item);
+            list.add(tag);
         }
 
-       /* if (tags != null) {
-            for (int item : tags) {
-                Tag tag = tagRepo.findBytagId(item);
-                list.add(tag);
-            }
-
-            for (Tag item : list) {
-                list2.add(item.getTagName());
-            }
-            //assignment.setTagAssign(list2.toString());
-        }*/
-        assignment.setTags(tags);
+        assignment.setTags(list);
         assignment.setAssignerUserId(currentUser);
         assignmentRepo.save(assignment);
         return "successfullAssignment";
