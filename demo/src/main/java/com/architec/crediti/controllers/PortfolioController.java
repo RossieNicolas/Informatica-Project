@@ -37,6 +37,7 @@ public class PortfolioController {
 
     private static final Logger logger = LoggerFactory.getLogger(PortfolioController.class);
 
+    @Autowired
     private PortfolioUtil portfolioUtil;
 
     @Autowired
@@ -64,7 +65,11 @@ public class PortfolioController {
     public String uploadMultipleFiles(@RequestParam("files") MultipartFile[] files, Principal principal) {
         User currentUser = userRepo.findByEmail(principal.getName());
 
-        Arrays.stream(files).map(file -> portfolioUtil.uploadFile(file, currentUser.getUserId()));
+        for (MultipartFile item: files) {
+            portfolioUtil.uploadFile(item, currentUser.getUserId());
+        }
+
+        //Arrays.stream(files).map(file -> portfolioUtil.uploadFile(file, currentUser.getUserId()));
 
         // Arrays.asList(files).stream().map(file -> util.uploadFile(file, currentUser.getUserId()))
         //      .collect(Collectors.toList());
@@ -92,6 +97,11 @@ public class PortfolioController {
         return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
                 .body(resource);
+    }
+
+    @GetMapping("/documentation")
+    public String getDocumentation() {
+        return "documentation";
     }
 
 }
