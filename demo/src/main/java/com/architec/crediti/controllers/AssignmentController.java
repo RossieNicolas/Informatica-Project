@@ -1,5 +1,7 @@
 package com.architec.crediti.controllers;
 
+import com.architec.crediti.email.EmailServiceImpl;
+import com.architec.crediti.email.EmailTemplates;
 import com.architec.crediti.models.*;
 import com.architec.crediti.repositories.*;
 
@@ -14,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -263,16 +264,11 @@ public class AssignmentController {
         assignmentRepo.save(assignment);
         model.addAttribute("assignments", assignmentRepo.findAll());
 
-        //deze functie is voor de archive controller
-        mail.sendSimpleMessage("alina.storme@student.ap.be", "Opdracht gearchiveerd",
-                EmailTemplates.archivedAssignment(assignment.getAssigner(),
-                        assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments", "class group"));
-
-        //mail naar coordinator
+        //mail to coordinator
         mail.sendSimpleMessage("alina.storme@student.ap.be", "Opdracht gevalideerd",
                 EmailTemplates.validatedAssignment(assignment.getTitle()));
 
-        //mail naar student
+        //mail to student
         mail.sendSimpleMessage("alina.storme@student.ap.be", "Opdracht gevalideerd",
                 EmailTemplates.validatedAssignmentStudent(assignment.getTitle()));
 
@@ -281,7 +277,8 @@ public class AssignmentController {
 
     //archive assignment
     @GetMapping("/archiveassignment/{assignmentId}")
-    public String archiveAssignment(@PathVariable("assignmentId") int assignmentId, Model model) {
+    public String archiveAssignment(Principal principal, @PathVariable("assignmentId") int assignmentId, Model model) {
+        User currentUser = userRepo.findByEmail(principal.getName());
         Assignment assignment = assignmentRepo.findById((long) assignmentId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid assignment Id:" + assignmentId));
         assignment.setArchived(true);
@@ -291,6 +288,12 @@ public class AssignmentController {
         archiveRepo.save(archivedAssignment);
         assignmentRepo.delete(assignment);
         model.addAttribute("assignments", assignmentRepo.findAll());
+
+        //mail to coordinator
+        mail.sendSimpleMessage("alina.storme@student.ap.be", "Opdracht gearchiveerd",
+                EmailTemplates.archivedAssignment(assignment.getAssigner(),
+                        assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments", "class group"));
+
         return "redirect:/allassignments";
     }
 
