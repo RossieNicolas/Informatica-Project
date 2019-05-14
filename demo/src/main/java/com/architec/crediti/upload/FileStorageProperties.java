@@ -1,24 +1,20 @@
 package com.architec.crediti.upload;
 
-import java.security.Principal;
-
-import com.architec.crediti.models.User;
-import com.architec.crediti.repositories.UserRepository;
-
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+/*
+From https://github.com/callicoder/spring-boot-file-upload-download-rest-api-example/blob/master/src/main/java/com/example/filedemo/property/FileStorageProperties.java
+ */
 @ConfigurationProperties(prefix = "file")
 public class FileStorageProperties {
     private String uploadDir;
-    UserRepository userRepo;
 
     public String getUploadDir() {
+
         return uploadDir + "";
     }
 
-    public void setUploadDir(String uploadDir, Principal principal) {
-        User currentUser = userRepo.findByEmail(principal.getName());
-
-        this.uploadDir = uploadDir + "/" + currentUser.getUserId();
+    public void setUploadDir(String uploadDir) {
+        this.uploadDir = uploadDir;
     }
 }

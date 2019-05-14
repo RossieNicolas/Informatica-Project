@@ -6,6 +6,11 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.core.env.Environment;
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -15,10 +20,14 @@ import java.nio.file.StandardCopyOption;
 
 import com.architec.crediti.repositories.UserRepository;
 
+/*
+from https://github.com/callicoder/spring-boot-file-upload-download-rest-api-example/blob/master/src/main/java/com/example/filedemo/service/FileStorageService.java
+ */
 @Service
 public class FileStorageService {
 
     private final Path fileStorageLocation;
+    private Environment env;
 
     UserRepository userRepo;
 
@@ -44,6 +53,17 @@ public class FileStorageService {
                 throw new FileStorageException("Sorry! Filename contains invalid path sequence " + fileName);
             }
 
+            // Mapje maken
+            File dir = new File("c:\\Files");
+
+            // Save file
+            if (dir.isDirectory()) {
+                File serverFile = new File(dir, fileName);
+                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+                stream.write(file.getBytes());
+                stream.close();
+            }
+
             // Copy file to the target location (Replacing existing file with the same name)
             Path targetLocation = this.fileStorageLocation.resolve(fileName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
@@ -52,6 +72,17 @@ public class FileStorageService {
         } catch (IOException ex) {
             throw new FileStorageException("Could not store file " + fileName + ". Please try again!", ex);
         }
+    }
+
+    public File MakeDir(String studName, String assignmentId) {
+        File dir = new File(env.getProperty("file.upload-dir") + "\\" + studName + "\\" + assignmentId);
+        if (dir.exists()) {
+            return dir;
+        } else {
+            new File(dir.getPath()).mkdirs();
+        }
+        return dir;
+
     }
 
     public Resource loadFileAsResource(String fileName) {
