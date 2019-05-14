@@ -70,7 +70,6 @@
         <thead>
         <tr>
             <th style="padding-left: 2.5%">Info</th>
-            <th>ID</th>
             <th>Name</th>
             <th>Description</th>
         </tr>
@@ -78,7 +77,6 @@
         <tbody>
         <tr th:each="a : ${listAllTags}" class="tablebackground">
             <td><a th:href="${'/listAllTags/' + a.tagId}" class="button">📃️</a></td>
-            <td id="tagId" th:text="${a.getTagId()}"></td>
             <td id="tagName" th:text="${a.getTagName()}"></td>
             <td id="tagDescription" th:text="${a.getTagDescription()}"></td>
         </tr>

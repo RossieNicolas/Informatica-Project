@@ -90,12 +90,13 @@ public class TagController {
         Tag tagForId = tagRepo.findBytagId(id);
 
         boolean existsName = tagRepo.existsByTagName(tagName);
-        if (!existsName && tag.getTagName().equals(tagForId.getTagName())) {
+        if (!existsName || tag.getTagName().equals(tagForId.getTagName())) {
             if (!tag.getTagName().equals(tagForId.getTagName())){
                 tag.setTagName(tagName);
             }
             tag.setTagDescription(tagDescription);
             tagRepo.save(tag);
+            tagRepo.delete(tagForId);
         } else {
             model.addAttribute("error", "Tag naam bestaat al!");
             model.addAttribute("tags", tagForId);
