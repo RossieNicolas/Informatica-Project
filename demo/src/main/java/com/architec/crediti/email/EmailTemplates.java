@@ -44,7 +44,7 @@ public class EmailTemplates {
                 "De ZAP- opdracht ("+ name +") die je ingaf/waarvoor je intekende werd gevalideerd. Om te starten breng je de contracten in orde. " +
                 "Pas na ondertekening door de opdrachtgever en de hogeschool mag en kan je starten.\n\n" +
                 "Na het beëindigen van de opdracht, ondertekent de opdrachtgever het bewijsdocument, " +
-                "vul je de zelfevaluatie in en verzamel je de nodige bewijsstukken voor je portfolio." +
+                "vul je de zelfevaluatie in en verzamel je de nodige bewijsstukken voor je portfolio.\n\n" +
                 "Succes.\n" +
                 "\n" +
                 "De coördinator";
