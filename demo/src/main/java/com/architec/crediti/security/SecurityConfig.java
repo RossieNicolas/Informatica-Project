@@ -11,8 +11,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final CustomAuthenticationProvider customAuthProvider;
+
     @Autowired
-    private CustomAuthenticationProvider customAuthProvider;
+    public SecurityConfig(CustomAuthenticationProvider customAuthProvider) {
+        this.customAuthProvider = customAuthProvider;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

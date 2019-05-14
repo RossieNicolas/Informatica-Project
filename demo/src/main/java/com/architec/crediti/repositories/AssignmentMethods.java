@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.architec.crediti.models.Assignment;
 
-public class Methods{
+public class AssignmentMethods {
 
 
     public static List<Assignment> removeFullAssignments (List<Assignment> assignments ){
