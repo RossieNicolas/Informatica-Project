@@ -105,8 +105,8 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <th:block th:each='tag: ${updatetag}'>
-                                        <input type="checkbox" id="tag" name="tag" th:tr='${tag.getTagName()}'
+                                    <th:block th:each='tag,iter: ${updatetag}'>
+                                        <input th:checked="${status[iter.index]}" type="checkbox" id="tag" name="tag" th:tr='${tag.getTagName()}'
                                                th:value='${tag.getTagId()}'/>
                                         <label for="tag" th:text='${tag.getTagName()}'></label>
                                     </th:block>
@@ -126,7 +126,7 @@
                     <a th:if="${!a.isValidated()}" th:href="@{/validateassignment/{id} (id=${a.assignmentId})}"
                        class="button">✔️ VALIDEREN</a>
                     &nbsp;&nbsp;&nbsp;
-                    <a th:href="@{/archiveassignment/{id} (id=${a.assignmentId})}" class="button">🗄️ ARCHIVEREN</a>
+                    <a th:if="${a.isValidated()}" th:href="@{/archiveassignment/{id} (id=${a.assignmentId})}" class="button">🗄️ ARCHIVEREN</a>
                 </form>
             </div>
         </div>

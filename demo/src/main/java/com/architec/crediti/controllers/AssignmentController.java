@@ -59,22 +59,18 @@ public class AssignmentController {
 
     // add assignment
     @PostMapping("/assignment")
-    public String createAssignment(Principal principal, @Valid Assignment assignment, @RequestParam(required = false, value = "tag") int[] tags) {
-        ArrayList<Tag> list = new ArrayList<>();
-        ArrayList<String> list2 = new ArrayList<>();
+    public String createAssignment(Principal principal, @Valid Assignment assignment,
+                                   @RequestParam(required = false, value = "tag") int[] tags) {
+        Set<Tag> set = new HashSet<>();
         User currentUser = userRepo.findByEmail(principal.getName());
 
         if (tags != null) {
             for (int item : tags) {
                 Tag tag = tagRepo.findBytagId(item);
-                list.add(tag);
+                set.add(tag);
             }
-
-            for (Tag item : list) {
-                list2.add(item.getTagName());
-            }
-            assignment.setTagAssign(list2.toString());
         }
+        assignment.setTags(set);
         assignment.setAssignerUserId(currentUser);
         assignmentRepo.save(assignment);
 
@@ -97,7 +93,9 @@ public class AssignmentController {
 
         int initialPage = 0;
         int pageSize = 15;
+
         int buttons = (int) assignmentRepo.count() / pageSize;
+
         if (assignmentRepo.count() % pageSize != 0) {
             buttons++;
         }
@@ -183,22 +181,48 @@ public class AssignmentController {
     @GetMapping(value = "/allassignments/{assignmentId}")
     public String getAssignmentsToUpdate(@PathVariable("assignmentId") int assignmentId, Model model) {
         List<Tag> updatetag = tagRepo.findAll();
-
         model.addAttribute("updatetag", updatetag);
         try {
             Assignment a = assignmentRepo.findByAssignmentId(assignmentId);
+            Set<Tag> tags = a.getTags();
+            boolean[] status = new boolean[updatetag.size()];
+
+            for (int i = 0; i < updatetag.size(); i++) {
+                for (Tag item : tags) {
+                    if (updatetag.get(i).getTagId() == item.getTagId()) {
+                        status[i] = true;
+                    }
+                }
+            }
+
+            model.addAttribute("status", status);
             if (a.getAmountStudents() != a.getMaxStudents() && !a.isArchived()) {
                 model.addAttribute("assignments", a);
             }
         } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            // als er geen assignment is met ingegeven id dan wordt er een lege pagina
+            // weergegeven,
+            // zonder catch krijgt gebruiker een error wat niet de bedoeling is
         }
         return "updateAssignment";
     }
 
     // update specific assignment
     @PostMapping(value = "/allassignments/{assignmentId}")
-    public String updateAssignment(Principal principal, @PathVariable("assignmentId") int assignmentId, @Valid Assignment assignment) {
+    public String updateAssignment(Principal principal, @PathVariable("assignmentId") int assignmentId,
+                                   @Valid Assignment assignment, @RequestParam(required = false, value = "tag") int[] tags) {
+        Set<Tag> set = new HashSet<>();
         User currentUser = userRepo.findByEmail(principal.getName());
+
+        if (tags != null) {
+            for (int item : tags) {
+                Tag tag = tagRepo.findBytagId(item);
+                set.add(tag);
+            }
+        }
+
+        assignment.setTags(set);
         assignment.setAssignerUserId(currentUser);
         assignment.setAssignmentId(assignmentId);
         assignmentRepo.save(assignment);
@@ -213,6 +237,18 @@ public class AssignmentController {
         model.addAttribute("updatetag", updatetag);
         try {
             Assignment a = assignmentRepo.findByAssignmentId(assignmentId);
+            Set<Tag> tags = a.getTags();
+            boolean[] status = new boolean[updatetag.size()];
+
+            for (int i = 0; i < updatetag.size(); i++) {
+                for (Tag item : tags) {
+                    if (updatetag.get(i).getTagId() == item.getTagId()) {
+                        status[i] = true;
+                    }
+                }
+            }
+
+            model.addAttribute("status", status);
             if (a.getAmountStudents() != a.getMaxStudents() && !a.isArchived()) {
                 model.addAttribute("assignments", a);
             }
@@ -223,8 +259,19 @@ public class AssignmentController {
 
     // update specific assignment
     @PostMapping(value = "/myassignments/{assignmentId}")
-    public String updateMyAssignment(Principal principal, @PathVariable("assignmentId") int assignmentId, @Valid Assignment assignment) {
+    public String updateMyAssignment(Principal principal, @PathVariable("assignmentId") int assignmentId,
+                                     @Valid Assignment assignment, @RequestParam(required = false, value = "tag") int[] tags) {
+        Set<Tag> set = new HashSet<>();
         User currentUser = userRepo.findByEmail(principal.getName());
+
+        if (tags != null) {
+            for (int item : tags) {
+                Tag tag = tagRepo.findBytagId(item);
+                set.add(tag);
+            }
+        }
+
+        assignment.setTags(set);
         assignment.setAssignerUserId(currentUser);
         assignment.setAssignmentId(assignmentId);
         assignmentRepo.save(assignment);

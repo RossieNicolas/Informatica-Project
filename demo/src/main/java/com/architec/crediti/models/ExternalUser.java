@@ -33,7 +33,6 @@ public class ExternalUser {
     @Column(name = "salt")
     private byte[] salt;
 
-
     @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.REMOVE})
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
