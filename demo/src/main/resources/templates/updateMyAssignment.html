@@ -99,9 +99,9 @@
 
                         <label>Tags:</label>
                         <ul>
-                            <th:block th:each='tag: ${updatetag}'>
+                            <th:block th:each='tag, iter: ${updatetag}'>
                                 <label th:value='${tag.getTagId()}' for="tag">
-                                    <input type="checkbox" id="tag" name="tag" th:value='${tag.getTagId()}' th:text='${tag.getTagName()}'/>
+                                    <input th:checked="${status[iter.index]}" type="checkbox" id="tag" name="tag" th:value='${tag.getTagId()}' th:text='${tag.getTagName()}'/>
                                 </label>
                             </th:block>
                         </ul>
