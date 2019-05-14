@@ -106,9 +106,9 @@
                             <tr>
                                 <td>
                                     <th:block th:each='tag,iter: ${updatetag}'>
-                                        <input th:checked="${status[iter.index]}" type="checkbox" id="tag" name="tag" th:tr='${tag.getTagName()}'
+                                        <input class="inputTag" th:checked="${status[iter.index]}" type="checkbox" id="tag" name="tag" th:tr='${tag.getTagName()}'
                                                th:value='${tag.getTagId()}'/>
-                                        <label for="tag" th:text='${tag.getTagName()}'></label>
+                                        <label class="inputTag" for="tag" th:text='${tag.getTagName()}'></label>
                                     </th:block>
                                 </td>
                             </tr>
