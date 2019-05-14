@@ -47,7 +47,7 @@ public class AssignmentController {
         this.archiveRepo = archiveRepo;
         this.mail = mail;
     }
-    
+
     // get assignment form
     @GetMapping(value = "/assignment")
     public String tag(Model model){
