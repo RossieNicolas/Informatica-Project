@@ -32,20 +32,22 @@ public class AssignmentController {
 
     private final
     UserRepository userRepo;
+
     private final
     ArchiveRepository archiveRepo;
 
+    private final
+    EmailServiceImpl mail;
+
     @Autowired
-    public AssignmentController(TagRepo tagRepo, AssignmentRepository assignmentRepo, UserRepository userRepo, ArchiveRepository archiveRepo) {
+    public AssignmentController(TagRepo tagRepo, AssignmentRepository assignmentRepo, UserRepository userRepo, ArchiveRepository archiveRepo, EmailServiceImpl mail) {
         this.tagRepo = tagRepo;
         this.assignmentRepo = assignmentRepo;
         this.userRepo = userRepo;
         this.archiveRepo = archiveRepo;
+        this.mail = mail;
     }
-
-    @Autowired
-    EmailServiceImpl mail;
-
+    
     // get assignment form
     @GetMapping(value = "/assignment")
     public String tag(Model model){
