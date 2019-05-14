@@ -66,7 +66,7 @@
     <section class="find-edu">
         <div class="container ">
             <div class="wrap-all col-xs-12 ">
-                <h2>Detail student</h2>
+                <h2>Detail</h2>
 
                 <form th:each="a: ${student}" class="standard-form" method="post"
                       th:action="@{/liststudents/{id}(id=${a.studentennummer})}">
@@ -87,7 +87,7 @@
 
                         <label for="start_date">Soort:</label><br>
                         <input th:if="${a.isMobility()}" type="text" value="Mobility" >
-                           <input th:if="${!a.isMobility()}"  type="text" value="Zap" >
+                        <input th:if="${!a.isMobility()}"  type="text" value="Zap" >
 
                     
                 </form>
