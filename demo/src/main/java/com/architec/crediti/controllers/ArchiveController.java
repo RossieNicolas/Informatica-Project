@@ -17,26 +17,25 @@ import java.util.Optional;
 
 @Controller
 public class ArchiveController {
-    @Autowired
+    private final
     ArchiveRepository archiveRepo;
-    int initialPage = 0;
-    int pageSize = 15;
+    private int initialPage = 0;
+    private int pageSize = 15;
+
+    @Autowired
+    public ArchiveController(ArchiveRepository archiveRepo) {
+        this.archiveRepo = archiveRepo;
+    }
 
     //get archive page
     @GetMapping("/archive")
     public ModelAndView showPersonsPage(@RequestParam("page") Optional<Integer> page) {
         ModelAndView modelAndView = new ModelAndView("archive");
 
-
         int buttons = (int) archiveRepo.count() / pageSize;
-
         if (archiveRepo.count() % pageSize != 0) {
             buttons++;
         }
-
-        // Evaluate page. If requested parameter is null or less than 0 (to
-        // prevent exception), return initial size. Otherwise, return value of
-        // param. decreased by 1.
         int evalPage = (page.orElse(0) < 1) ? initialPage : page.get() - 1;
 
         Page<ArchivedAssignment> fiches = archiveRepo.findAll(PageRequest.of(evalPage, pageSize));
@@ -63,16 +62,11 @@ public class ArchiveController {
 
         ModelAndView modelAndView = new ModelAndView("Archive");
 
-
         int buttons = (int) archiveRepo.count() / pageSize;
-
         if (archiveRepo.count() % pageSize != 0) {
             buttons++;
         }
 
-        // Evaluate page. If requested parameter is null or less than 0 (to
-        // prevent exception), return initial size. Otherwise, return value of
-        // param. decreased by 1.
         int evalPage = (page.orElse(0) < 1) ? initialPage : page.get() - 1;
 
         Page<ArchivedAssignment> fiches = archiveRepo.findAll(PageRequest.of(evalPage, pageSize));

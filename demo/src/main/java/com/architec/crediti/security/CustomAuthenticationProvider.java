@@ -36,11 +36,17 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     @Value("${spring.ldap.urls}")
     private String ldapUrl;
 
-    @Autowired
+    private final
     UserRepository userRepo;
 
-    @Autowired
+    private final
     ExternalUserRepository exRepo;
+
+    @Autowired
+    public CustomAuthenticationProvider(UserRepository userRepo, ExternalUserRepository exRepo) {
+        this.userRepo = userRepo;
+        this.exRepo = exRepo;
+    }
 
 
     @Override

@@ -14,7 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,24 +21,29 @@ import java.util.Optional;
 public class AssignmentController {
 
     private Iterable<Assignment> fiches;
-    final private int initialPage = 0;
-    final private int pageSize = 15;
 
-    @Autowired
+    private final
     TagRepo tagRepo;
 
-    @Autowired
+    private final
     AssignmentRepository assignmentRepo;
 
-    @Autowired
+    private final
     UserRepository userRepo;
-    @Autowired
+    private final
     ArchiveRepository archiveRepo;
 
-    // get assignment form
-    @RequestMapping(value = "/assignment", method = RequestMethod.GET)
-    public String tag(Model model) /* throws SQLException */ {
+    @Autowired
+    public AssignmentController(TagRepo tagRepo, AssignmentRepository assignmentRepo, UserRepository userRepo, ArchiveRepository archiveRepo) {
+        this.tagRepo = tagRepo;
+        this.assignmentRepo = assignmentRepo;
+        this.userRepo = userRepo;
+        this.archiveRepo = archiveRepo;
+    }
 
+    // get assignment form
+    @GetMapping(value = "/assignment")
+    public String tag(Model model){
         List<Tag> updatetag = tagRepo.findAll();
 
         model.addAttribute("updatetag", updatetag);
@@ -48,8 +52,7 @@ public class AssignmentController {
 
     // add assignment
     @PostMapping("/assignment")
-    public String createAssignment(Principal principal, @Valid Assignment assignment,
-            @RequestParam(required = false, value = "tag") int[] tags) {
+    public String createAssignment(Principal principal, @Valid Assignment assignment, @RequestParam(required = false, value = "tag") int[] tags) {
         ArrayList<Tag> list = new ArrayList<>();
         ArrayList<String> list2 = new ArrayList<>();
         User currentUser = userRepo.findByEmail(principal.getName());
@@ -80,18 +83,13 @@ public class AssignmentController {
     @GetMapping("/allassignments")
     public ModelAndView showPersonsPage(@RequestParam("page") Optional<Integer> page) {
         ModelAndView modelAndView = new ModelAndView("listAllAssignments");
+
         int initialPage = 0;
         int pageSize = 15;
-
         int buttons = (int) assignmentRepo.count() / pageSize;
-
         if (assignmentRepo.count() % pageSize != 0) {
             buttons++;
         }
-
-        // Evaluate page. If requested parameter is null or less than 0 (to
-        // prevent exception), return initial size. Otherwise, return value of
-        // param. decreased by 1.
         int evalPage = (page.orElse(0) < 1) ? initialPage : page.get() - 1;
 
         Page<Assignment> fiches = assignmentRepo.findAll(PageRequest.of(evalPage, pageSize));
@@ -132,22 +130,17 @@ public class AssignmentController {
             }
 
         } catch (Exception e) {
-            model.addAttribute("assignments", Methods.removeFullAssignments(assignmentRepo.findByTitleContainingAndArchived(name, false)));
+            model.addAttribute("assignments", AssignmentMethods.removeFullAssignments(assignmentRepo.findByTitleContainingAndArchived(name, false)));
         }
 
         ModelAndView modelAndView = new ModelAndView("listAllAssignments");
-        fiches = assignmentRepo.findAll();
-
-
+        int pageSize = 15;
         int buttons = (int) assignmentRepo.count() / pageSize;
 
         if (assignmentRepo.count() % pageSize != 0) {
             buttons++;
         }
-
-        // Evaluate page. If requested parameter is null or less than 0 (to
-        // prevent exception), return initial size. Otherwise, return value of
-        // param. decreased by 1.
+        int initialPage = 0;
         int evalPage = (page.orElse(0) < 1) ? initialPage : page.get() - 1;
 
         Page<Assignment> fiches = assignmentRepo.findAll(PageRequest.of(evalPage, pageSize));
@@ -187,17 +180,13 @@ public class AssignmentController {
                 model.addAttribute("assignments", a);
             }
         } catch (Exception ex) {
-            // als er geen assignment is met ingegeven id dan wordt er een lege pagina
-            // weergegeven,
-            // zonder catch krijgt gebruiker een error wat niet de bedoeling is
         }
         return "updateAssignment";
     }
 
     // update specific assignment
     @PostMapping(value = "/allassignments/{assignmentId}")
-    public String updateAssignment(Principal principal, @PathVariable("assignmentId") int assignmentId,
-            @Valid Assignment assignment) {
+    public String updateAssignment(Principal principal, @PathVariable("assignmentId") int assignmentId, @Valid Assignment assignment) {
         User currentUser = userRepo.findByEmail(principal.getName());
         assignment.setAssignerUserId(currentUser);
         assignment.setAssignmentId(assignmentId);
@@ -206,7 +195,7 @@ public class AssignmentController {
     }
 
     // find specific assignment to edit out of all assignments
-    @RequestMapping(value = "/myassignments/{assignmentId}", method = RequestMethod.GET)
+    @GetMapping("/myassignments/{assignmentId}")
     public String getMyAssignmentsToUpdate(@PathVariable("assignmentId") int assignmentId, Model model) {
         List<Tag> updatetag = tagRepo.findAll();
 
@@ -217,17 +206,13 @@ public class AssignmentController {
                 model.addAttribute("assignments", a);
             }
         } catch (Exception ex) {
-            // als er geen assignment is met ingegeven id dan wordt er een lege pagina
-            // weergegeven,
-            // zonder catch krijgt gebruiker een error wat niet de bedoeling is
         }
         return "updateMyAssignment";
     }
 
     // update specific assignment
     @PostMapping(value = "/myassignments/{assignmentId}")
-    public String updateMyAssignment(Principal principal, @PathVariable("assignmentId") int assignmentId,
-            @Valid Assignment assignment) {
+    public String updateMyAssignment(Principal principal, @PathVariable("assignmentId") int assignmentId, @Valid Assignment assignment) {
         User currentUser = userRepo.findByEmail(principal.getName());
         assignment.setAssignerUserId(currentUser);
         assignment.setAssignmentId(assignmentId);

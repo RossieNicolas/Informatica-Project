@@ -1,6 +1,5 @@
 package com.architec.crediti.controllers;
 
-import com.architec.crediti.models.Assignment;
 import com.architec.crediti.models.ExternalUser;
 import com.architec.crediti.models.User;
 import com.architec.crediti.repositories.ExternalUserRepository;
@@ -12,7 +11,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -23,11 +21,16 @@ import java.util.List;
 @Controller
 public class ExternalController {
 
-    @Autowired
-    private ExternalUserRepository externalUserRepository;
+    private final ExternalUserRepository externalUserRepository;
+
+    private final
+    UserRepository userRepository;
 
     @Autowired
-    UserRepository userRepository;
+    public ExternalController(ExternalUserRepository externalUserRepository, UserRepository userRepository) {
+        this.externalUserRepository = externalUserRepository;
+        this.userRepository = userRepository;
+    }
 
     @GetMapping("/createexternaluser")
     public String getCreateUser() {
@@ -65,7 +68,7 @@ public class ExternalController {
         return "registerSucces";
     }
 
-    @RequestMapping("/notapproved")
+    @GetMapping("/notapproved")
     public String notApproved() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         auth.setAuthenticated(false);
@@ -74,7 +77,7 @@ public class ExternalController {
     }
 
 
-    @RequestMapping(value = "/externalUserProfile", method = RequestMethod.GET)
+    @GetMapping("/externalUserProfile")
     public String externalUsers(Principal principal, Model model) {
         User user = userRepository.findByEmail(principal.getName());
         ExternalUser externalUser = externalUserRepository.findByUserId(user);
@@ -85,7 +88,6 @@ public class ExternalController {
 
     @PostMapping("/externalUserProfile")
     public String changeExtUser(Principal principal,
-                                @Valid ExternalUser externalUser,
                                 @RequestParam ("lastname") String lastname,
                                 @RequestParam ("firstname") String firstname,
                                 @RequestParam ("company") String company,
@@ -97,7 +99,7 @@ public class ExternalController {
 
 
         User user = userRepository.findByEmail(principal.getName());
-        externalUser = externalUserRepository.findByUserId(user);
+        ExternalUser externalUser = externalUserRepository.findByUserId(user);
         externalUser.setLastname(lastname);
         externalUser.setFirstname(firstname);
         externalUser.setCompany(company);
@@ -116,7 +118,7 @@ public class ExternalController {
 
     }
 
-    @RequestMapping(value = "/listUnvalidatedExternal", method = RequestMethod.GET)
+    @GetMapping("/listUnvalidatedExternal")
     public String listUnvalidatedExternal(Model model) {
         List<User> users = userRepository.findAllByRole("Externe");
         List<ExternalUser> externalUsers = new ArrayList<>();

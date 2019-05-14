@@ -5,20 +5,26 @@ import com.architec.crediti.repositories.ExternalUserRepository;
 import com.architec.crediti.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.security.Principal;
 
 @Controller
 public class MainController {
 
-    @Autowired
+    private final
     UserRepository userRepo;
 
-    @Autowired
+    private final
     ExternalUserRepository exRepo;
 
-    @RequestMapping("/main")
+    @Autowired
+    public MainController(UserRepository userRepo, ExternalUserRepository exRepo) {
+        this.userRepo = userRepo;
+        this.exRepo = exRepo;
+    }
+
+    @GetMapping("/main")
     public String getDashboard(Principal principal) {
         User currentUser = userRepo.findByEmail(principal.getName());
 
