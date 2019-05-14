@@ -137,7 +137,8 @@ select,
 textarea {
 	color: inherit;
 	font: inherit;
-	margin: 0
+	margin: 0;
+	vertical-align: middle;
 }
 
 button {
@@ -406,6 +407,7 @@ p {
 
 
 
+
 .hamburger,
 [role=button] {
 	cursor: pointer
@@ -420,7 +422,7 @@ input::-moz-focus-inner {
 input[type=checkbox],
 input[type=radio] {
 	box-sizing: border-box;
-	padding: 0
+	padding: 0;
 }
 
 input[type=number]::-webkit-inner-spin-button,
@@ -1886,7 +1888,8 @@ ul li:before {
 
 ul li {
 	padding-left: 20px;
-	margin: 8px 0
+	margin: 8px 0;
+	display: block;
 }
 
 ul li:before {
@@ -10730,7 +10733,8 @@ form.standard-form button:after {
 
 .page form input[type=checkbox],
 form.standard-form input[type=checkbox] {
-	display: none
+	display: none;
+
 }
 
 .page form input[type=checkbox]+label,
@@ -10745,7 +10749,8 @@ form.standard-form input[type=checkbox]+label {
 	text-transform: none;
 	padding-left: 32px;
 	cursor: pointer;
-	user-select: none
+	user-select: none;
+
 }
 
 .page form input[type=checkbox]+label:before,
@@ -14472,6 +14477,6 @@ ul.meta2 li.twitter a:hover:before {
 #tag {
 	display: block;
 	float: left;
-	margin-top: 12px;
+	margin-top: 3px;
 	margin-right: 11px;
 }

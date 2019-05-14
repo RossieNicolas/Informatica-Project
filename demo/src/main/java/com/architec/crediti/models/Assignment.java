@@ -56,6 +56,7 @@ public class Assignment {
 	@Column(name = "validated")
 	private boolean validated;
 
+
 	@ManyToMany
 	@JoinTable(
 			name = "tag_assign",
