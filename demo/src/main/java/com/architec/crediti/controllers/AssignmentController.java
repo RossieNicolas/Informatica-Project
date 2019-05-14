@@ -36,6 +36,9 @@ public class AssignmentController {
     @Autowired
     ArchiveRepository archiveRepo;
 
+    @Autowired
+    EmailServiceImpl mail;
+
     // get assignment form
     @RequestMapping(value = "/assignment", method = RequestMethod.GET)
     public String tag(Model model) /* throws SQLException */ {
@@ -67,6 +70,10 @@ public class AssignmentController {
         }
         assignment.setAssignerUserId(currentUser);
         assignmentRepo.save(assignment);
+
+        mail.sendSimpleMessage("alina.storme@student.ap.be", "Nieuwe opdracht gecreëerd",
+        EmailTemplates.createdAssignment(assignment.getAssigner(),
+                assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments", "class group"));
         return "successfullAssignment";
     }
 
@@ -247,12 +254,28 @@ public class AssignmentController {
 
     // validate specific assignment
     @GetMapping("/validateassignment/{assignmentId}")
-    public String validateAssignment(@PathVariable("assignmentId") int assignmentId, Model model) {
+    public String validateAssignment(@PathVariable("assignmentId") int assignmentId, Model model, Principal principal) {
+        User currentUser = userRepo.findByEmail(principal.getName());
+
         Assignment assignment = assignmentRepo.findById((long) assignmentId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid assignment Id:" + assignmentId));
         assignment.setValidated(true);
         assignmentRepo.save(assignment);
         model.addAttribute("assignments", assignmentRepo.findAll());
+
+        //deze functie is voor de archive controller
+        mail.sendSimpleMessage("alina.storme@student.ap.be", "Opdracht gearchiveerd",
+                EmailTemplates.archivedAssignment(assignment.getAssigner(),
+                        assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments", "class group"));
+
+        //mail naar coordinator
+        mail.sendSimpleMessage("alina.storme@student.ap.be", "Opdracht gevalideerd",
+                EmailTemplates.validatedAssignment(assignment.getTitle()));
+
+        //mail naar student
+        mail.sendSimpleMessage("alina.storme@student.ap.be", "Opdracht gevalideerd",
+                EmailTemplates.validatedAssignmentStudent(assignment.getTitle()));
+
         return "redirect:/allassignments";
     }
 

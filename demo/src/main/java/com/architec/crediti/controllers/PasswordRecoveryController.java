@@ -25,6 +25,7 @@ public class PasswordRecoveryController {
             System.out.println(u.getEmail());
             if (u.getEmail().equals(email.toLowerCase())) {
                 check = true;
+
             }
         }
 
