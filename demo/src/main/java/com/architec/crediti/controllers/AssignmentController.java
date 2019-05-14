@@ -172,23 +172,26 @@ public class AssignmentController {
     @GetMapping(value = "/allassignments/{assignmentId}")
     public String getAssignmentsToUpdate(@PathVariable("assignmentId") int assignmentId, Model model) {
         List<Tag> updatetag = tagRepo.findAll();
-
         model.addAttribute("updatetag", updatetag);
         try {
             Assignment a = assignmentRepo.findByAssignmentId(assignmentId);
             Set<Tag> tags = a.getTags();
-            for(Tag item : tags)
-            {
-                for(Tag item2 : updatetag){
-                    if(item.getTagId() == item2.getTagId()){
-                        System.out.println(item.getTagId());
+            boolean[] status = new boolean[updatetag.size()];
+
+            for (int i = 0; i < updatetag.size(); i++) {
+                for (Tag item : tags) {
+                    if (updatetag.get(i).getTagId() == item.getTagId()) {
+                        status[i] = true;
                     }
                 }
             }
+
+            model.addAttribute("status", status);
             if (a.getAmountStudents() != a.getMaxStudents() && !a.isArchived()) {
                 model.addAttribute("assignments", a);
             }
         } catch (Exception ex) {
+            System.out.println(ex.getMessage());
             // als er geen assignment is met ingegeven id dan wordt er een lege pagina
             // weergegeven,
             // zonder catch krijgt gebruiker een error wat niet de bedoeling is
