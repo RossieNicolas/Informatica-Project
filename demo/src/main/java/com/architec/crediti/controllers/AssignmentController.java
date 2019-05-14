@@ -50,11 +50,12 @@ public class AssignmentController {
         Set<Tag> set = new HashSet<>();
         User currentUser = userRepo.findByEmail(principal.getName());
 
-        for (int item : tags) {
-            Tag tag = tagRepo.findBytagId(item);
-            set.add(tag);
+        if(tags != null){
+            for (int item : tags) {
+                Tag tag = tagRepo.findBytagId(item);
+                set.add(tag);
+            }
         }
-
         assignment.setTags(set);
         assignment.setAssignerUserId(currentUser);
         assignmentRepo.save(assignment);
