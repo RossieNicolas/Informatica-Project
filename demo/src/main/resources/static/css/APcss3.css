@@ -228,6 +228,14 @@ th{
 	max-width: 550px;
 }
 
+.ext_table {
+	text-align: center;
+}
+
+.ext_table th{
+	text-align: center;
+}
+
 .cell {
 	max-width: 450px;
 }

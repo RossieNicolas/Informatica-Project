@@ -1,17 +1,22 @@
 package com.architec.crediti.controllers;
 
+import com.architec.crediti.models.Assignment;
 import com.architec.crediti.models.ExternalUser;
 import com.architec.crediti.models.User;
 import com.architec.crediti.repositories.ExternalUserRepository;
 import com.architec.crediti.repositories.HashPass;
 import com.architec.crediti.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -48,6 +53,7 @@ public class ExternalController {
         if (!userRepository.existsByEmail(user.getEmail())) {
             userRepository.save(user);
             externalUserRepository.save(externalUser);
+            //TODO: stuur mail naar coordinator/externe
         }
 
         return "redirect:/registersucces";
@@ -57,6 +63,14 @@ public class ExternalController {
     @GetMapping("/registersucces")
     public String getSucces() {
         return "registerSucces";
+    }
+
+    @RequestMapping("/notapproved")
+    public String notApproved() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        auth.setAuthenticated(false);
+        SecurityContextHolder.clearContext();
+        return "notapproved";
     }
 
 
@@ -100,6 +114,39 @@ public class ExternalController {
 
         return "redirect:/externalUserProfile";
 
+    }
+
+    @RequestMapping(value = "/listUnvalidatedExternal", method = RequestMethod.GET)
+    public String listUnvalidatedExternal(Model model) {
+        List<User> users = userRepository.findAllByRole("Externe");
+        List<ExternalUser> externalUsers = new ArrayList<>();
+        for (User u : users) {
+            if (!externalUserRepository.findByUserId(u).isApproved()) {
+                externalUsers.add(externalUserRepository.findByUserId(u));
+            }
+        }
+
+        model.addAttribute("externe", externalUsers);
+        model.addAttribute("users", users);
+        return "listUnvalidatedExternal";
+    }
+
+    @GetMapping("/validateexternal/{externalId}")
+    public String validateExternal(@PathVariable("externalId") int externalId) {
+        ExternalUser extUser = externalUserRepository.findByUserId(userRepository.findByUserId(externalId));
+
+        extUser.setApproved(true);
+        externalUserRepository.save(extUser);
+        return "redirect:/listUnvalidatedExternal";
+    }
+
+    @GetMapping("/deleteexternal/{externalId}")
+    public String deleteExternal(@PathVariable("externalId") int externalId) {
+        ExternalUser extUser = externalUserRepository.findByUserId(userRepository.findByUserId(externalId));
+        //TODO: e-mail naar externe dat die niet gevalideerd werd.
+
+        externalUserRepository.delete(extUser);
+        return "redirect:/listUnvalidatedExternal";
     }
 
 }
