@@ -24,6 +24,8 @@ public class ExternalUser {
     private String city;
     @Column(name = "postal", nullable = false)
     private String postal;
+    @Column (name = "approved")
+    private boolean approved;
 
     @Column(name = "password", nullable = false)
     private char[] password;
@@ -50,6 +52,7 @@ public class ExternalUser {
         this.postal = postal;
         this.password = password;
         this.salt = salt;
+        this.approved = false;
     }
 
     public ExternalUser(String firstname, String lastname, String company, String phone, String address, String city, String postal) {
@@ -60,6 +63,14 @@ public class ExternalUser {
         this.address = address;
         this.city = city;
         this.postal = postal;
+    }
+
+    public boolean isApproved() {
+        return approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
     }
 
     public long getExternId() {

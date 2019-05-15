@@ -1,13 +1,7 @@
 package com.architec.crediti.controllers;
 
-import com.architec.crediti.models.Assignment;
-import com.architec.crediti.models.Pager;
-import com.architec.crediti.models.Tag;
-import com.architec.crediti.models.User;
-import com.architec.crediti.repositories.AssignmentRepository;
-import com.architec.crediti.repositories.Methods;
-import com.architec.crediti.repositories.TagRepo;
-import com.architec.crediti.repositories.UserRepository;
+import com.architec.crediti.models.*;
+import com.architec.crediti.repositories.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -39,6 +33,8 @@ public class AssignmentController {
 
     @Autowired
     UserRepository userRepo;
+    @Autowired
+    ArchiveRepository archiveRepo;
 
     // get assignment form
     @RequestMapping(value = "/assignment", method = RequestMethod.GET)
@@ -84,7 +80,6 @@ public class AssignmentController {
     @GetMapping("/allassignments")
     public ModelAndView showPersonsPage(@RequestParam("page") Optional<Integer> page) {
         ModelAndView modelAndView = new ModelAndView("listAllAssignments");
-        fiches = assignmentRepo.findAll();
         int initialPage = 0;
         int pageSize = 15;
 
@@ -257,6 +252,21 @@ public class AssignmentController {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid assignment Id:" + assignmentId));
         assignment.setValidated(true);
         assignmentRepo.save(assignment);
+        model.addAttribute("assignments", assignmentRepo.findAll());
+        return "redirect:/allassignments";
+    }
+
+    //archive assignment
+    @GetMapping("/archiveassignment/{assignmentId}")
+    public String archiveAssignment(@PathVariable("assignmentId") int assignmentId, Model model) {
+        Assignment assignment = assignmentRepo.findById((long) assignmentId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid assignment Id:" + assignmentId));
+        assignment.setArchived(true);
+        assignmentRepo.save(assignment);
+        ArchivedAssignment archivedAssignment = new ArchivedAssignment();
+        archivedAssignment.fillArchivedAssignment(assignment);
+        archiveRepo.save(archivedAssignment);
+        assignmentRepo.delete(assignment);
         model.addAttribute("assignments", assignmentRepo.findAll());
         return "redirect:/allassignments";
     }
