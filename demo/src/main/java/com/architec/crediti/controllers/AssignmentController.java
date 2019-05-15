@@ -317,6 +317,7 @@ public class AssignmentController {
 
         studentRepo.save(student);
 
+        //TODO vervang 'to' door mail van coordinator
         mail.sendSimpleMessage("alina.storme@student.ap.be", "Opdracht toegewezen aan student",
                 EmailTemplates.enrolledAssignmentStudent(currentUser.getFirstname(), currentUser.getLastname(),
                         assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments", assignment.getTitle()));
@@ -345,11 +346,10 @@ public class AssignmentController {
         assignmentRepo.save(assignment);
         model.addAttribute("assignments", assignmentRepo.findAll());
 
-        //mail to coordinator
+        //TODO vervang 'to' door mail van coordinator
         mail.sendSimpleMessage("alina.storme@student.ap.be", "Opdracht gevalideerd",
                 EmailTemplates.validatedAssignment(assignment.getTitle()));
 
-        //mail to student
         mail.sendSimpleMessage(currentUser.getEmail(), "Opdracht gevalideerd",
                 EmailTemplates.validatedAssignmentStudent(assignment.getTitle()));
 
@@ -370,7 +370,7 @@ public class AssignmentController {
         assignmentRepo.delete(assignment);
         model.addAttribute("assignments", assignmentRepo.findAll());
 
-        //mail to coordinator
+        //TODO vervang 'to' door mail van coordinator
         mail.sendSimpleMessage("alina.storme@student.ap.be", "Opdracht gearchiveerd",
                 EmailTemplates.archivedAssignment(assignment.getAssigner(),
                         assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments", "class group"));

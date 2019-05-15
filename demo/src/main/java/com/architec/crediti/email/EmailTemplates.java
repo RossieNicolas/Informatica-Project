@@ -38,25 +38,7 @@ public class EmailTemplates {
         return mail;
     }
 
-    // voor de externe
-
-    public static String validatedAssignmentByExternal() {
-        String mail = "Beste,\n\n"+
-                "Uw registratie werd gevalideerd. Nu kunt u inloggen op de pagina.\n\n"+
-                "De coördinator";
-
-        return mail;
-    }
-
-    public static String notValidatedAssignmentByExternal() {
-        String mail = "Beste,\n\n"+
-                "Uw registratie werd geweigerd.\n\n"+
-                "De coördinator";
-
-        return mail;
-    }
-
-    // voor de student
+    // voor student
     public static String validatedAssignmentStudent(String name) {
         String mail = "Beste,\n\n"+
                 "De ZAP- opdracht ("+ name +") die je ingaf/waarvoor je intekende werd gevalideerd. Om te starten breng je de contracten in orde. " +
@@ -81,7 +63,23 @@ public class EmailTemplates {
         return mail;
     }
 
-    // Externe geregistreerd
+    // Voor externe
+    public static String validatedExternal() {
+        String mail = "Beste,\n\n"+
+                "Uw registratie werd gevalideerd. Nu kunt u inloggen op de pagina.\n\n"+
+                "De coördinator";
+
+        return mail;
+    }
+
+    public static String notValidatedExternal() {
+        String mail = "Beste,\n\n"+
+                "Uw registratie werd geweigerd.\n\n"+
+                "De coördinator";
+
+        return mail;
+    }
+
     public static String newExternalUser(long userId, String name, String company, String address, String phone, String email) {
         String mail =
                 "Een externe opdrachtgever heeft zich zojuist geregistreerd.\n\n" +

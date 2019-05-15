@@ -150,7 +150,7 @@ public class ExternalController {
         externalUserRepository.save(extUser);
 
         mail.sendSimpleMessage(userRepository.findByUserId(externalId).getEmail(), "externe gevalideerd",
-                EmailTemplates.validatedAssignmentByExternal());
+                EmailTemplates.validatedExternal());
 
         return "redirect:/listUnvalidatedExternal";
     }
@@ -160,7 +160,7 @@ public class ExternalController {
         ExternalUser extUser = externalUserRepository.findByUserId(userRepository.findByUserId(externalId));
 
         mail.sendSimpleMessage(userRepository.findByUserId(externalId).getEmail(), "externe niet gevalideerd",
-                EmailTemplates.notValidatedAssignmentByExternal());
+                EmailTemplates.notValidatedExternal());
 
         externalUserRepository.delete(extUser);
         return "redirect:/listUnvalidatedExternal";
