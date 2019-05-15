@@ -1,6 +1,5 @@
 package com.architec.crediti.upload;
 
-import com.architec.crediti.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -17,7 +16,6 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.security.Principal;
 
 import com.architec.crediti.repositories.UserRepository;
 
@@ -28,10 +26,6 @@ from https://github.com/callicoder/spring-boot-file-upload-download-rest-api-exa
 public class FileStorageService {
 
     private final Path fileStorageLocation;
-
-    private Environment env;
-
-    UserRepository userRepo;
 
     @Autowired
     public FileStorageService(FileStorageProperties fileStorageProperties) {
