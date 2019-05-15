@@ -346,10 +346,12 @@ public class AssignmentController {
         assignmentRepo.save(assignment);
         model.addAttribute("assignments", assignmentRepo.findAll());
 
-        //TODO vervang 'to' door mail van coordinator
-        mail.sendSimpleMessage("alina.storme@student.ap.be", "Opdracht gevalideerd",
-                EmailTemplates.validatedAssignment(assignment.getTitle()));
+        long assignerId = assignmentRepo.findByAssignmentId(assignmentId).getAssignerUserId();
+        String assignerEmail = userRepo.findByUserId(assignerId).getEmail();
 
+        mail.sendSimpleMessageWithCc(assignerEmail, "Opdracht gevalideerd",
+                EmailTemplates.validatedAssignment(assignment.getTitle()));
+        //TODO currentUser.getEmail() vervangen naar student email die ingeschreven voor deze assignment
         mail.sendSimpleMessage(currentUser.getEmail(), "Opdracht gevalideerd",
                 EmailTemplates.validatedAssignmentStudent(assignment.getTitle()));
 
