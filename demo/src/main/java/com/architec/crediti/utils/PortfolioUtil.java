@@ -15,14 +15,18 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @Service
 public class PortfolioUtil {
-    @Autowired
     private FileStorageService fileStorageService;
 
-    @Autowired
     private FileRepository fileRepo;
 
-    @Autowired
     private UserRepository userRepo;
+
+    @Autowired
+    public PortfolioUtil(FileStorageService fileStorageService, FileRepository fileRepo, UserRepository userRepo) {
+        this.fileStorageService = fileStorageService;
+        this.fileRepo = fileRepo;
+        this.userRepo = userRepo;
+    }
 
     public PortfolioUtil(){
 
