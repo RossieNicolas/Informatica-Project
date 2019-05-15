@@ -1,7 +1,6 @@
 package com.architec.crediti.repositories;
 
 
-import com.architec.crediti.models.Assignment;
 import com.architec.crediti.models.Student;
 import com.architec.crediti.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;

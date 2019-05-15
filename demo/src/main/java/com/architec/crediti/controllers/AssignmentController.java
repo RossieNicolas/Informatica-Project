@@ -29,10 +29,9 @@ public class AssignmentController {
     AssignmentRepository assignmentRepo;
 
     private final
-    @Autowired
     StudentRepository studentRepo;
 
-    @Autowired
+    private final
     UserRepository userRepo;
 
     private final
@@ -42,9 +41,10 @@ public class AssignmentController {
     EmailServiceImpl mail;
 
     @Autowired
-    public AssignmentController(TagRepo tagRepo, AssignmentRepository assignmentRepo, UserRepository userRepo, ArchiveRepository archiveRepo, EmailServiceImpl mail) {
+    public AssignmentController(TagRepo tagRepo, AssignmentRepository assignmentRepo, StudentRepository studentRepo, UserRepository userRepo, ArchiveRepository archiveRepo, EmailServiceImpl mail) {
         this.tagRepo = tagRepo;
         this.assignmentRepo = assignmentRepo;
+        this.studentRepo = studentRepo;
         this.userRepo = userRepo;
         this.archiveRepo = archiveRepo;
         this.mail = mail;
@@ -187,20 +187,20 @@ public class AssignmentController {
         User user = userRepo.findByEmail(principal.getName());
         student = studentRepo.findByUserId(user);
         Assignment as = assignmentRepo.findByAssignmentId(assignmentId);
-        boolean status = false;
+        boolean ingeschreven = false;
         boolean volzet = false;
 
 
         for (Assignment item : student.getAssignments()){
             if(item.getAssignmentId() == assignmentId){
-                status = true;
+                ingeschreven = true;
             }
         }
         if(as.getAmountStudents() == as.getMaxStudents()){
             volzet = true;
         }
         model.addAttribute("volzet", volzet);
-        model.addAttribute("ingeschreven", status);
+        model.addAttribute("ingeschreven", ingeschreven);
         model.addAttribute("updatetag", updatetag);
         try {
             Assignment a = assignmentRepo.findByAssignmentId(assignmentId);
@@ -221,12 +221,10 @@ public class AssignmentController {
             }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
-            // als er geen assignment is met ingegeven id dan wordt er een lege pagina
-            // weergegeven,
-            // zonder catch krijgt gebruiker een error wat niet de bedoeling is
         }
         return "updateAssignment";
     }
+
 
     // update specific assignment
     @PostMapping(value = "/allassignments/{assignmentId}")
