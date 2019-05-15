@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Crediti - Alle tags</title>
+    <title>Crediti - Student toegekend aan opdracht</title>
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
 <body class="background">
@@ -34,7 +34,7 @@
                                         <span>Profiel</span>
                                         <div class="dropdown-content">
                                             <a href="">Mijn profiel</a>
-                                            <a href="/portfolio">Mijn portfolio</a>
+                                            <a href="">Mijn portfolio</a>
                                             <a href="">Portfolios</a>
                                         </div>
                                     </div>
@@ -50,7 +50,7 @@
                                         <div class="dropdown-content">
                                             <a href="/tag">Tag toevoegen</a>
                                             <a href="/listAllTags">Lijst van tags</a>
-                                            <a href="/archive">Archief</a>
+                                            <a href="">Archief</a>
                                         </div>
                                     </div>
                                 </li>
@@ -62,44 +62,12 @@
         </div>
     </div>
 </header>
-<div class="container ">
-    <h2 class="extra">Tags bekijken</h2>
-</div>
-<div id='overview'>
-    <table>
-        <thead>
-        <tr>
-            <th style="padding-left: 2.5%">Info</th>
-            <th>Name</th>
-            <th>Description</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="a : ${listAllTags}" class="tablebackground">
-            <td><a th:href="${'/listAllTags/' + a.tagId}" class="button">📃️</a></td>
-            <td id="tagName" th:text="${a.getTagName()}"></td>
-            <td id="tagDescription" th:text="${a.getTagDescription()}"></td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-<div class="container">
-    <div th:if="${tags.totalPages !=1}">
-        <ul class="pagination">
-            <li th:class="${tags.number == 0} ? disabled">
-                <a class="pageLink" th:href="@{/listAllTags/(page=${tags.number})}">&laquo;</a>
-            </li>
-            <li th:class="${tags.number == (page - 1)} ? 'active pointer-disabled'"
-                th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
-                <a class="pageLink" th:href="@{/listAllTags/(page=${page})}" th:text="${page}"></a>
-            </li>
-            <li th:class="${tags.number + 1 == tags.totalPages} ? disabled">
-                <a class="pageLink" th:href="@{/listAllTags/(page=${tags.number + 2})}">&raquo;</a>
-            </li>
-        </ul>
+<div class="block">
+    <div class="container extra">
+        <h2>U bent toegekend aan de opdracht. Gelieve te wachten op validatie!</h2>
     </div>
 </div>
-<div style="height: 45%"></div>
+<div style="height: 65%"></div>
 <footer>
     <div class="footer-bot">
         <div class="container">

@@ -1,6 +1,7 @@
 package com.architec.crediti.controllers;
 
-import com.architec.crediti.models.Assignment;
+import com.architec.crediti.email.EmailServiceImpl;
+import com.architec.crediti.email.EmailTemplates;
 import com.architec.crediti.models.ExternalUser;
 import com.architec.crediti.models.User;
 import com.architec.crediti.repositories.ExternalUserRepository;
@@ -12,9 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.validation.Valid;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,11 +22,20 @@ import java.util.List;
 @Controller
 public class ExternalController {
 
-    @Autowired
-    private ExternalUserRepository externalUserRepository;
+    private final ExternalUserRepository externalUserRepository;
+
+    private final
+    UserRepository userRepository;
+
+    private final
+    EmailServiceImpl mail;
 
     @Autowired
-    UserRepository userRepository;
+    public ExternalController(ExternalUserRepository externalUserRepository, UserRepository userRepository, EmailServiceImpl mail) {
+        this.externalUserRepository = externalUserRepository;
+        this.userRepository = userRepository;
+        this.mail = mail;
+    }
 
     @GetMapping("/createexternaluser")
     public String getCreateUser() {
@@ -53,7 +61,13 @@ public class ExternalController {
         if (!userRepository.existsByEmail(user.getEmail())) {
             userRepository.save(user);
             externalUserRepository.save(externalUser);
-            //TODO: stuur mail naar coordinator/externe
+
+            long userId = userRepository.findByEmail(email).getUserId();
+            String name = firstname + " " + lastname;
+            String fullAddress = address + ", " + postal + " " + city;
+            //TODO: vervang 's097086@ap.be' door mail van coordinator
+            mail.sendSimpleMessage("s097086@ap.be", "Nieuwe externe registratie",
+                    EmailTemplates.newExternalUser(userId, name, company, fullAddress, phone, email));
         }
 
         return "redirect:/registersucces";
@@ -65,7 +79,7 @@ public class ExternalController {
         return "registerSucces";
     }
 
-    @RequestMapping("/notapproved")
+    @GetMapping("/notapproved")
     public String notApproved() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         auth.setAuthenticated(false);
@@ -74,7 +88,7 @@ public class ExternalController {
     }
 
 
-    @RequestMapping(value = "/externalUserProfile", method = RequestMethod.GET)
+    @GetMapping("/externalUserProfile")
     public String externalUsers(Principal principal, Model model) {
         User user = userRepository.findByEmail(principal.getName());
         ExternalUser externalUser = externalUserRepository.findByUserId(user);
@@ -85,7 +99,6 @@ public class ExternalController {
 
     @PostMapping("/externalUserProfile")
     public String changeExtUser(Principal principal,
-                                @Valid ExternalUser externalUser,
                                 @RequestParam ("lastname") String lastname,
                                 @RequestParam ("firstname") String firstname,
                                 @RequestParam ("company") String company,
@@ -97,7 +110,7 @@ public class ExternalController {
 
 
         User user = userRepository.findByEmail(principal.getName());
-        externalUser = externalUserRepository.findByUserId(user);
+        ExternalUser externalUser = externalUserRepository.findByUserId(user);
         externalUser.setLastname(lastname);
         externalUser.setFirstname(firstname);
         externalUser.setCompany(company);
@@ -116,7 +129,7 @@ public class ExternalController {
 
     }
 
-    @RequestMapping(value = "/listUnvalidatedExternal", method = RequestMethod.GET)
+    @GetMapping("/listUnvalidatedExternal")
     public String listUnvalidatedExternal(Model model) {
         List<User> users = userRepository.findAllByRole("Externe");
         List<ExternalUser> externalUsers = new ArrayList<>();
@@ -132,18 +145,22 @@ public class ExternalController {
     }
 
     @GetMapping("/validateexternal/{externalId}")
-    public String validateExternal(@PathVariable("externalId") int externalId) {
+    public String validateExternal(@PathVariable("externalId") int externalId, int assignmentId) {
         ExternalUser extUser = externalUserRepository.findByUserId(userRepository.findByUserId(externalId));
-
-        extUser.setApproved(true);
         externalUserRepository.save(extUser);
+
+        mail.sendSimpleMessage(userRepository.findByUserId(externalId).getEmail(), "externe gevalideerd",
+                EmailTemplates.validatedExternal());
+
         return "redirect:/listUnvalidatedExternal";
     }
 
     @GetMapping("/deleteexternal/{externalId}")
     public String deleteExternal(@PathVariable("externalId") int externalId) {
         ExternalUser extUser = externalUserRepository.findByUserId(userRepository.findByUserId(externalId));
-        //TODO: e-mail naar externe dat die niet gevalideerd werd.
+
+        mail.sendSimpleMessage(userRepository.findByUserId(externalId).getEmail(), "externe niet gevalideerd",
+                EmailTemplates.notValidatedExternal());
 
         externalUserRepository.delete(extUser);
         return "redirect:/listUnvalidatedExternal";

@@ -9,8 +9,13 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class PasswordRecoveryController {
-    @Autowired
+    private final
     UserRepository userRepo;
+
+    @Autowired
+    public PasswordRecoveryController(UserRepository userRepo) {
+        this.userRepo = userRepo;
+    }
 
     @GetMapping("/passwordRecovery")
     public String getPassword() {
@@ -25,6 +30,7 @@ public class PasswordRecoveryController {
             System.out.println(u.getEmail());
             if (u.getEmail().equals(email.toLowerCase())) {
                 check = true;
+
             }
         }
 

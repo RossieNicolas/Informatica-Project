@@ -3,6 +3,7 @@ package com.architec.crediti.models;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 @Entity
 @Table(name = "archive")
@@ -52,11 +53,18 @@ public class ArchivedAssignment {
     @Column(name = "assigner_user")
     private String assignerUser;
 
+    @ManyToMany
+    @JoinTable(
+            name = "tag_assign",
+            joinColumns = @JoinColumn(name = "assign_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    Set<Tag> tags;
+
     public ArchivedAssignment() {
     }
 
     public ArchivedAssignment(String title, String type, String task, int amountHours, int maxStudents, String start_date,
-                      String end_date, boolean archived, boolean validated, String assignerUser, String tagAssign) {
+                      String end_date, boolean archived, boolean validated, String assignerUser) {
         this.title = title;
         this.type = type;
         this.task = task;
@@ -66,7 +74,6 @@ public class ArchivedAssignment {
         this.start_date = start_date;
         this.end_date = end_date;
         this.assignerUser = assignerUser;
-        this.tagAssign = tagAssign;
     }
 
     public void fillArchivedAssignment(Assignment a){
@@ -80,7 +87,7 @@ public class ArchivedAssignment {
         this.start_date = a.getStart_date();
         this.end_date = a.getEnd_date();
         this.assignerUser = a.getAssigner();
-        this.tagAssign = a.getTagAssign();
+        this.tags= a.tags;
     }
 
     public long getAssignmentId() {
@@ -159,20 +166,20 @@ public class ArchivedAssignment {
         return start_date;
     }
 
-    public String getTagAssign() {
-        return tagAssign;
-    }
-
-    public void setTagAssign(String tagAssign) {
-        this.tagAssign = tagAssign;
-    }
-
     public String getAssignerUser() {
         return assignerUser;
     }
 
     public void setAssignerUser(String assignerUser) {
         this.assignerUser = assignerUser;
+    }
+
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
     }
 
 }

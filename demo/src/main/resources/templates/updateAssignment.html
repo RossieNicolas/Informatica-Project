@@ -105,10 +105,10 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <th:block th:each='tag: ${updatetag}'>
-                                        <input type="checkbox" id="tag" name="tag" th:tr='${tag.getTagName()}'
+                                    <th:block th:each='tag,iter: ${updatetag}'>
+                                        <input class="inputTag" th:checked="${status[iter.index]}" type="checkbox" id="tag" name="tag" th:tr='${tag.getTagName()}'
                                                th:value='${tag.getTagId()}'/>
-                                        <label for="tag" th:text='${tag.getTagName()}'></label>
+                                        <label class="inputTag" for="tag" th:text='${tag.getTagName()}'></label>
                                     </th:block>
                                 </td>
                             </tr>
@@ -118,7 +118,7 @@
                     <input th:if="${!a.isValidated()}" type="submit" value="💾 BEWAREN" class="button" style="visibility: hidden;" id="save"
                            disabled>
 
-                    <a th:if="${a.isValidated()}" th:href="@{/studentenroll/{id} (id=${a.assignmentId})}"
+                    <a th:if="${a.isValidated()} and ${!ingeschreven} and ${!volzet}" th:href="@{/studentenroll/{id} (id=${a.assignmentId})}"
                        class="button">➕ Inschrijven</a>
                     &nbsp;&nbsp;&nbsp;
                     <a th:href="@{/deleteassignment/{id} (id=${a.assignmentId})}" class="button">🗑️ VERWIJDEREN</a>
@@ -126,7 +126,7 @@
                     <a th:if="${!a.isValidated()}" th:href="@{/validateassignment/{id} (id=${a.assignmentId})}"
                        class="button">✔️ VALIDEREN</a>
                     &nbsp;&nbsp;&nbsp;
-                    <a th:href="@{/archiveassignment/{id} (id=${a.assignmentId})}" class="button">🗄️ ARCHIVEREN</a>
+                    <a th:if="${a.isValidated()}" th:href="@{/archiveassignment/{id} (id=${a.assignmentId})}" class="button">🗄️ ARCHIVEREN</a>
                 </form>
             </div>
         </div>

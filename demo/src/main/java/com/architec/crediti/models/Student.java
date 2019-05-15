@@ -1,6 +1,7 @@
 package com.architec.crediti.models;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "students")
@@ -10,10 +11,10 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long studentId;
 
-    @Column(name = "gsm", nullable = false)
+    @Column(name = "gsm")
     private String gsm;
 
-    @Column(name = "studentennummer", nullable = false)
+    @Column(name = "studentennummer")
     private String studentennummer;
 
     @Column(name = "zap")
@@ -21,6 +22,13 @@ public class Student {
 
     @Column(name = "mobility")
     private boolean mobility;
+
+    @ManyToMany
+    @JoinTable(
+            name = "student_assign",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "assign_id"))
+    Set<Assignment> assignments;
 
     @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.REMOVE })
@@ -66,6 +74,22 @@ public class Student {
 
     public void setStudentennummer(String studentennummer) {
         this.studentennummer = studentennummer;
+    }
+
+    public Set<Assignment> getAssignments() {
+        return assignments;
+    }
+
+    public void setAssignments(Set<Assignment> assignments) {
+        this.assignments = assignments;
+    }
+
+    public long getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(long studentId) {
+        this.studentId = studentId;
     }
 
     public User getUserId() {

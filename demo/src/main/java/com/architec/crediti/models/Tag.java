@@ -1,5 +1,6 @@
 package com.architec.crediti.models;
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "tags")
@@ -14,6 +15,9 @@ public class Tag {
 
     @Column(name = "tagDescription")
     private String tagDescription;
+
+    @ManyToMany(mappedBy = "tags")
+    Set<Assignment> assignedTags;
 
     public int getTagId() {
         return tagId;
@@ -39,12 +43,19 @@ public class Tag {
         this.tagDescription = tagDescription;
     }
 
-
     public Tag() {
     }
 
     public Tag(String tagName, String tagDescription) {
         this.tagName = tagName;
         this.tagDescription = tagDescription;
+    }
+
+    public Set<Assignment> getAssignedTags() {
+        return assignedTags;
+    }
+
+    public void setAssignedTags(Set<Assignment> assignedTags) {
+        this.assignedTags = assignedTags;
     }
 }

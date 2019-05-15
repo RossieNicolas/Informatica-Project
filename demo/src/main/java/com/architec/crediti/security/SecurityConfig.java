@@ -11,8 +11,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final CustomAuthenticationProvider customAuthProvider;
+
     @Autowired
-    private CustomAuthenticationProvider customAuthProvider;
+    public SecurityConfig(CustomAuthenticationProvider customAuthProvider) {
+        this.customAuthProvider = customAuthProvider;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -27,7 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 //pagina's die niet-ingelogde gebruikers zien
                 .antMatchers(staticResources).permitAll()
-                .antMatchers("/login", "/", "/createexternaluser","/registersucces", "/createexternal", "/notapproved").permitAll()
+                .antMatchers("/login", "/", "/createexternaluser","/registersucces", "/createexternal", "/passwordRecovery", "/notapproved").permitAll()
                 //Alle andere pagina's blokkeren
                 .anyRequest().fullyAuthenticated()
                 .and()

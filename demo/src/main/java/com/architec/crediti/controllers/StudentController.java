@@ -15,11 +15,17 @@ import java.security.Principal;
 @Controller
 public class StudentController {
 
-    @Autowired
+    private final
     UserRepository userRepo;
 
-    @Autowired
+    private final
     StudentRepository studentRepo;
+
+    @Autowired
+    public StudentController(UserRepository userRepo, StudentRepository studentRepo) {
+        this.userRepo = userRepo;
+        this.studentRepo = studentRepo;
+    }
 
     @GetMapping("/createstudentprofile")
     public String getStudentProfileForm() {
