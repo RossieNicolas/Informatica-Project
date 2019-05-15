@@ -271,6 +271,7 @@ public class AssignmentController {
                 model.addAttribute("assignments", a);
             }
         } catch (Exception ex) {
+            System.out.println(ex.getMessage());
         }
         return "updateMyAssignment";
     }
@@ -304,24 +305,35 @@ public class AssignmentController {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid assignment Id:" + assignmentId));
         User user = userRepo.findByEmail(principal.getName());
         student = studentRepo.findByUserId(user);
+        try {
+            Set<Assignment> set = new HashSet<>();
+            set.addAll(student.getAssignments());
+            int counter = assignment.getAmountStudents();
+            boolean zelfde = false;
 
-        Set<Assignment> set = new HashSet<>();
-        set.add(assignment);
+            for (Assignment item : student.getAssignments()) {
+                if (item.getAssignmentId() == assignmentId) {
+                    zelfde = true;
+                }
+            }
 
-        int counter = assignment.getAmountStudents();
-
-        if(assignment.getAmountStudents() < assignment.getMaxStudents()) {
-            student.setAssignments(set);
-            assignment.setAmountStudents(counter + 1);
-        }
-
-        studentRepo.save(student);
+            if(!zelfde) {
+                if (assignment.getAmountStudents() < assignment.getMaxStudents()) {
+                    set.add(assignment);
+                    assignment.setAmountStudents(counter + 1);
+                }
+            }else return "alreadyAssigned";
 
         //TODO vervang 'to' door mail van coordinator
         mail.sendSimpleMessage("alina.storme@student.ap.be", "Opdracht toegewezen aan student",
                 EmailTemplates.enrolledAssignmentStudent(currentUser.getFirstname(), currentUser.getLastname(),
                         assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments", assignment.getTitle()));
 
+            student.setAssignments(set);
+            studentRepo.save(student);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
         return "studentenroll";
     }
 
