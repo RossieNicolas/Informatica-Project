@@ -118,7 +118,7 @@
                     <input th:if="${!a.isValidated()}" type="submit" value="💾 BEWAREN" class="button" style="visibility: hidden;" id="save"
                            disabled>
 
-                    <a th:if="${a.isValidated()}" th:href="@{/studentenroll/{id} (id=${a.assignmentId})}"
+                    <a th:if="${a.isValidated()} and ${!ingeschreven} and ${!volzet}" th:href="@{/studentenroll/{id} (id=${a.assignmentId})}"
                        class="button">➕ Inschrijven</a>
                     &nbsp;&nbsp;&nbsp;
                     <a th:href="@{/deleteassignment/{id} (id=${a.assignmentId})}" class="button">🗑️ VERWIJDEREN</a>

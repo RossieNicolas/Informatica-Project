@@ -29,6 +29,10 @@ public class AssignmentController {
     AssignmentRepository assignmentRepo;
 
     private final
+    @Autowired
+    StudentRepository studentRepo;
+
+    @Autowired
     UserRepository userRepo;
 
     private final
@@ -62,6 +66,7 @@ public class AssignmentController {
         Set<Tag> set = new HashSet<>();
         User currentUser = userRepo.findByEmail(principal.getName());
 
+        assignment.setTags(set);
         if (tags != null) {
             for (int item : tags) {
                 Tag tag = tagRepo.findBytagId(item);
@@ -177,8 +182,25 @@ public class AssignmentController {
 
     // find specific assignment to edit out of all assignments
     @GetMapping(value = "/allassignments/{assignmentId}")
-    public String getAssignmentsToUpdate(@PathVariable("assignmentId") int assignmentId, Model model) {
+    public String getAssignmentsToUpdate(@PathVariable("assignmentId") int assignmentId, Model model, @Valid Student student, Principal principal) {
         List<Tag> updatetag = tagRepo.findAll();
+        User user = userRepo.findByEmail(principal.getName());
+        student = studentRepo.findByUserId(user);
+        Assignment as = assignmentRepo.findByAssignmentId(assignmentId);
+        boolean status = false;
+        boolean volzet = false;
+
+
+        for (Assignment item : student.getAssignments()){
+            if(item.getAssignmentId() == assignmentId){
+                status = true;
+            }
+        }
+        if(as.getAmountStudents() == as.getMaxStudents()){
+            volzet = true;
+        }
+        model.addAttribute("volzet", volzet);
+        model.addAttribute("ingeschreven", status);
         model.addAttribute("updatetag", updatetag);
         try {
             Assignment a = assignmentRepo.findByAssignmentId(assignmentId);
@@ -274,6 +296,28 @@ public class AssignmentController {
         assignment.setAssignmentId(assignmentId);
         assignmentRepo.save(assignment);
         return "redirect:/myassignments";
+    }
+
+    // assign student to specific assignment
+    @GetMapping("/studentenroll/{assignmentId}")
+    public String enrollAssignment(@PathVariable("assignmentId") int assignmentId, @Valid Student student, Principal principal, Model model) {
+        Assignment assignment = assignmentRepo.findById((long) assignmentId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid assignment Id:" + assignmentId));
+        User user = userRepo.findByEmail(principal.getName());
+        student = studentRepo.findByUserId(user);
+
+        Set<Assignment> set = new HashSet<>();
+        set.add(assignment);
+
+        int counter = assignment.getAmountStudents();
+
+        if(assignment.getAmountStudents() < assignment.getMaxStudents()) {
+            student.setAssignments(set);
+            assignment.setAmountStudents(counter + 1);
+        }
+
+        studentRepo.save(student);
+        return "studentenroll";
     }
 
     // delete specific assignment

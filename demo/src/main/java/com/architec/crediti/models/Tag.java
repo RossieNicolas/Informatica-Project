@@ -43,6 +43,13 @@ public class Tag {
         this.tagDescription = tagDescription;
     }
 
+    public Set<Assignment> getAssignedTags() {
+        return assignedTags;
+    }
+
+    public void setAssignedTags(Set<Assignment> assignedTags) {
+        this.assignedTags = assignedTags;
+    }
 
     public Tag() {
     }
