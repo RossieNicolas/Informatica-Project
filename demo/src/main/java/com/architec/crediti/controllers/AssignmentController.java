@@ -268,6 +268,7 @@ public class AssignmentController {
                 model.addAttribute("assignments", a);
             }
         } catch (Exception ex) {
+            System.out.println(ex.getMessage());
         }
         return "updateMyAssignment";
     }
@@ -304,11 +305,39 @@ public class AssignmentController {
             Set<Assignment> set = new HashSet<>();
             set.addAll(student.getAssignments());
             int counter = assignment.getAmountStudents();
+        try {
+            Set<Assignment> set = new HashSet<>();
+            set.addAll(student.getAssignments());
+            int counter = assignment.getAmountStudents();
+            boolean zelfde = false;
 
             if (assignment.getAmountStudents() < assignment.getMaxStudents()) {
                 set.add(assignment);
                 assignment.setAmountStudents(counter + 1);
             }
+
+            student.setAssignments(set);
+            studentRepo.save(student);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+            for (Assignment item : student.getAssignments()) {
+                if (item.getAssignmentId() == assignmentId) {
+                    zelfde = true;
+                }
+            }
+
+            if(!zelfde) {
+                if (assignment.getAmountStudents() < assignment.getMaxStudents()) {
+                    set.add(assignment);
+                    assignment.setAmountStudents(counter + 1);
+                }
+            }else return "alreadyAssigned";
+
+        //TODO vervang 'to' door mail van coordinator
+        mail.sendSimpleMessage("alina.storme@student.ap.be", "Opdracht toegewezen aan student",
+                EmailTemplates.enrolledAssignmentStudent(currentUser.getFirstname(), currentUser.getLastname(),
+                        assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments", assignment.getTitle()));
 
             student.setAssignments(set);
             studentRepo.save(student);
@@ -339,10 +368,12 @@ public class AssignmentController {
         assignmentRepo.save(assignment);
         model.addAttribute("assignments", assignmentRepo.findAll());
 
-        //TODO vervang 'to' door mail van coordinator
-        mail.sendSimpleMessage("alina.storme@student.ap.be", "Opdracht gevalideerd",
-                EmailTemplates.validatedAssignment(assignment.getTitle()));
+        long assignerId = assignmentRepo.findByAssignmentId(assignmentId).getAssignerUserId();
+        String assignerEmail = userRepo.findByUserId(assignerId).getEmail();
 
+        mail.sendSimpleMessageWithCc(assignerEmail, "Opdracht gevalideerd",
+                EmailTemplates.validatedAssignment(assignment.getTitle()));
+        //TODO currentUser.getEmail() vervangen naar student email die ingeschreven voor deze assignment
         mail.sendSimpleMessage(currentUser.getEmail(), "Opdracht gevalideerd",
                 EmailTemplates.validatedAssignmentStudent(assignment.getTitle()));
 

@@ -66,7 +66,7 @@ public class EmailTemplates {
     // Voor externe
     public static String validatedExternal() {
         String mail = "Beste,\n\n"+
-                "Uw registratie werd gevalideerd. Nu kunt u inloggen op de pagina.\n\n"+
+                "Uw registratie werd goedgekeurd. Nu kunt u inloggen op de pagina.\n\n"+
                 "De coördinator";
 
         return mail;

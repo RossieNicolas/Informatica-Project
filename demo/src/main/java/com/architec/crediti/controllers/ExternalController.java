@@ -22,7 +22,8 @@ import java.util.List;
 @Controller
 public class ExternalController {
 
-    private final ExternalUserRepository externalUserRepository;
+    private final
+    ExternalUserRepository externalUserRepository;
 
     private final
     UserRepository userRepository;
