@@ -299,6 +299,7 @@ public class AssignmentController {
     // assign student to specific assignment
     @GetMapping("/studentenroll/{assignmentId}")
     public String enrollAssignment(@PathVariable("assignmentId") int assignmentId, @Valid Student student, Principal principal, Model model) {
+        User currentUser = userRepo.findByEmail(principal.getName());
         Assignment assignment = assignmentRepo.findById((long) assignmentId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid assignment Id:" + assignmentId));
         User user = userRepo.findByEmail(principal.getName());
@@ -315,6 +316,11 @@ public class AssignmentController {
         }
 
         studentRepo.save(student);
+
+        mail.sendSimpleMessage("alina.storme@student.ap.be", "Opdracht toegewezen aan student",
+                EmailTemplates.enrolledAssignmentStudent(assignment.getAssigner(),
+                        assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments", assignment.getTitle()));
+
         return "studentenroll";
     }
 
