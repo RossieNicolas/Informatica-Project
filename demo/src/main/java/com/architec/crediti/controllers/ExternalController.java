@@ -1,5 +1,7 @@
 package com.architec.crediti.controllers;
 
+import com.architec.crediti.email.EmailServiceImpl;
+import com.architec.crediti.email.EmailTemplates;
 import com.architec.crediti.models.ExternalUser;
 import com.architec.crediti.models.User;
 import com.architec.crediti.repositories.ExternalUserRepository;
@@ -26,10 +28,14 @@ public class ExternalController {
     private final
     UserRepository userRepository;
 
+    private final
+    EmailServiceImpl mail;
+
     @Autowired
-    public ExternalController(ExternalUserRepository externalUserRepository, UserRepository userRepository) {
+    public ExternalController(ExternalUserRepository externalUserRepository, UserRepository userRepository, EmailServiceImpl mail) {
         this.externalUserRepository = externalUserRepository;
         this.userRepository = userRepository;
+        this.mail = mail;
     }
 
     @GetMapping("/createexternaluser")
@@ -56,7 +62,13 @@ public class ExternalController {
         if (!userRepository.existsByEmail(user.getEmail())) {
             userRepository.save(user);
             externalUserRepository.save(externalUser);
-            //TODO: stuur mail naar coordinator/externe
+
+            long userId = userRepository.findByEmail(email).getUserId();
+            String name = firstname + " " + lastname;
+            String fullAddress = address + ", " + postal + " " + city;
+            //TODO: vervang 's097086@ap.be' door mail van coordinator
+            mail.sendSimpleMessage("s097086@ap.be", "Nieuwe externe registratie",
+                    EmailTemplates.newExternalUser(userId, name, company, fullAddress, phone, email));
         }
 
         return "redirect:/registersucces";

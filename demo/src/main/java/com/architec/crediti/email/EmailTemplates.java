@@ -52,4 +52,21 @@ public class EmailTemplates {
         return mail;
     }
 
+    // Externe geregistreerd
+    public static String newExternalUser(long userId, String name, String company, String address, String phone, String email) {
+        String mail =
+                "Een externe opdrachtgever heeft zich zojuist geregistreerd.\n\n" +
+                "Enkele gegevens van de opdrachtgever:\n\n" +
+                "Volledige naam: " + name + "\n" +
+                "Bedrijf: " + company + "\n" +
+                "Adres: " + address + "\n" +
+                "Telefoon: " + phone + "\n" +
+                "E-mail: " + email + "\n\n" +
+                        //TODO: vervang localhost door vps092.be na testing
+                "VALIDEER deze externe: http://localhost:8080/validateexternal/" + userId + "\n" +
+                "WEIGER deze externe: http://localhost:8080/deleteexternal/" + userId + "\n\n" +
+                "Lijst van alle ongevalideerde externe: http://localhost:8080/listUnvalidatedExternal";
+        return mail;
+    }
+
 }
