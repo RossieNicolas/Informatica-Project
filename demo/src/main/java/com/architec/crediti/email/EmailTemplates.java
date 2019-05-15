@@ -52,9 +52,9 @@ public class EmailTemplates {
         return mail;
     }
 
-    public static String enrolledAssignmentStudent(String assigner, String title, String email, String url, String name) {
+    public static String enrolledAssignmentStudent(String firstname, String lastname, String title, String email, String url, String name) {
         String mail = "Beste,\n\n"+
-                "Volgende student, " + assigner + ", heeft zich ingeschreven voor de opdracht ("+ name +") " +
+                "Volgende student, " + firstname + " " + lastname + ", heeft zich ingeschreven voor de opdracht ("+ name +") " +
                 "die u via ons ZAP-platform ingaf. \n\n" +
                 email + "naam opdracht: " + title +
                 "\nTe vinden op: "+ url + "\n\n" +

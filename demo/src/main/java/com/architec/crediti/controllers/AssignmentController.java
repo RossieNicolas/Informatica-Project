@@ -318,7 +318,7 @@ public class AssignmentController {
         studentRepo.save(student);
 
         mail.sendSimpleMessage("alina.storme@student.ap.be", "Opdracht toegewezen aan student",
-                EmailTemplates.enrolledAssignmentStudent(assignment.getAssigner(),
+                EmailTemplates.enrolledAssignmentStudent(currentUser.getFirstname(), currentUser.getLastname(),
                         assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments", assignment.getTitle()));
 
         return "studentenroll";
