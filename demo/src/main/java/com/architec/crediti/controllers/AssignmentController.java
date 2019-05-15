@@ -41,7 +41,8 @@ public class AssignmentController {
     EmailServiceImpl mail;
 
     @Autowired
-    public AssignmentController(TagRepo tagRepo, AssignmentRepository assignmentRepo, StudentRepository studentRepo, UserRepository userRepo, ArchiveRepository archiveRepo, EmailServiceImpl mail) {
+    public AssignmentController(TagRepo tagRepo, AssignmentRepository assignmentRepo, StudentRepository studentRepo,
+                                UserRepository userRepo, ArchiveRepository archiveRepo, EmailServiceImpl mail) {
         this.tagRepo = tagRepo;
         this.assignmentRepo = assignmentRepo;
         this.studentRepo = studentRepo;
@@ -78,8 +79,9 @@ public class AssignmentController {
         assignmentRepo.save(assignment);
 
         mail.sendSimpleMessage("alina.storme@student.ap.be", "Nieuwe opdracht gecreëerd",
-        EmailTemplates.createdAssignment(assignment.getAssigner(),
-                assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments", "class group"));
+                EmailTemplates.createdAssignment(assignment.getAssigner(),
+                        assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments",
+                        "class group"));
         return "successfullAssignment";
     }
 
@@ -142,7 +144,8 @@ public class AssignmentController {
             }
 
         } catch (Exception e) {
-            model.addAttribute("assignments", AssignmentMethods.removeFullAssignments(assignmentRepo.findByTitleContainingAndArchived(name, false)));
+            model.addAttribute("assignments", AssignmentMethods.removeFullAssignments(assignmentRepo
+                    .findByTitleContainingAndArchived(name, false)));
         }
 
         ModelAndView modelAndView = new ModelAndView("listAllAssignments");
@@ -182,7 +185,8 @@ public class AssignmentController {
 
     // find specific assignment to edit out of all assignments
     @GetMapping(value = "/allassignments/{assignmentId}")
-    public String getAssignmentsToUpdate(@PathVariable("assignmentId") int assignmentId, Model model, @Valid Student student, Principal principal) {
+    public String getAssignmentsToUpdate(@PathVariable("assignmentId") int assignmentId, Model model,
+                                         @Valid Student student, Principal principal) {
         List<Tag> updatetag = tagRepo.findAll();
         User user = userRepo.findByEmail(principal.getName());
         student = studentRepo.findByUserId(user);
@@ -299,7 +303,8 @@ public class AssignmentController {
 
     // assign student to specific assignment
     @GetMapping("/studentenroll/{assignmentId}")
-    public String enrollAssignment(@PathVariable("assignmentId") int assignmentId, @Valid Student student, Principal principal, Model model) {
+    public String enrollAssignment(@PathVariable("assignmentId") int assignmentId, @Valid Student student,
+                                   Principal principal, Model model) {
         User currentUser = userRepo.findByEmail(principal.getName());
         Assignment assignment = assignmentRepo.findById((long) assignmentId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid assignment Id:" + assignmentId));
@@ -324,10 +329,11 @@ public class AssignmentController {
                 }
             }else return "alreadyAssigned";
 
-        //TODO vervang 'to' door mail van coordinator
-        mail.sendSimpleMessage("alina.storme@student.ap.be", "Opdracht toegewezen aan student",
-                EmailTemplates.enrolledAssignmentStudent(currentUser.getFirstname(), currentUser.getLastname(),
-                        assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments", assignment.getTitle()));
+            //TODO vervang 'to' door mail van coordinator
+            mail.sendSimpleMessage("alina.storme@student.ap.be", "Opdracht toegewezen aan student",
+                    EmailTemplates.enrolledAssignmentStudent(currentUser.getFirstname(), currentUser.getLastname(),
+                            assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments",
+                            assignment.getTitle()));
 
             student.setAssignments(set);
             studentRepo.save(student);
@@ -387,7 +393,8 @@ public class AssignmentController {
         //TODO vervang 'to' door mail van coordinator
         mail.sendSimpleMessage("alina.storme@student.ap.be", "Opdracht gearchiveerd",
                 EmailTemplates.archivedAssignment(assignment.getAssigner(),
-                        assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments", "class group"));
+                        assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments",
+                        "class group"));
 
 
         return "redirect:/allassignments";

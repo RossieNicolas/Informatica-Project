@@ -41,12 +41,12 @@ public class Assignment {
     @NotNull(message = "Startdatum mag niet leeg zijn!")
     @NotBlank
     @Column(name = "start_date")
-    private String start_date;
+    private String startDate;
 
     @NotNull(message = "Einddatum mag niet leeg zijn!")
     @NotBlank
     @Column(name = "end_date")
-    private String end_date;
+    private String endDate;
 
     @NotNull
     @Column(name = "archived")
@@ -79,10 +79,9 @@ public class Assignment {
         this.type = type;
         this.task = task;
         this.amountHours = amountHours;
-        this.amountStudents = amountStudents;
         this.maxStudents = maxStudents;
-        this.start_date = start_date;
-        this.end_date = end_date;
+        this.startDate = start_date;
+        this.endDate = end_date;
         this.archived = archived;
         this.validated = validated;
         this.assignerUserId = assignerUserId;
@@ -117,11 +116,11 @@ public class Assignment {
     }
 
     public String getStartDate() {
-        return start_date;
+        return startDate;
     }
 
     public String getEnd_date() {
-        return end_date;
+        return endDate;
     }
 
     public boolean isArchived() {
@@ -165,11 +164,11 @@ public class Assignment {
     }
 
     public void setStart_date(String start_date) {
-        this.start_date = start_date;
+        this.startDate = start_date;
     }
 
     public void setEnd_date(String end_date) {
-        this.end_date = end_date;
+        this.endDate = end_date;
     }
 
     public void setArchived(boolean archived) {
@@ -189,7 +188,7 @@ public class Assignment {
     }
 
     public String getStart_date() {
-        return start_date;
+        return startDate;
     }
 
     public Set<Student> getAssignStudents() {
