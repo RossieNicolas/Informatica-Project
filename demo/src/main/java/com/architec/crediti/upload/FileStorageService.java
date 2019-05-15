@@ -43,7 +43,7 @@ public class FileStorageService {
         }
     }
 
-    public String storeFile(MultipartFile file) {
+    public String storeFile(MultipartFile file, String userID) {
         // Normalize file name
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 
@@ -54,7 +54,7 @@ public class FileStorageService {
             }
 
             // Mapje maken
-            File dir = new File("c:\\Files");
+            File dir = makeDir(userID);
 
             // Save file
             if (dir.isDirectory()) {
@@ -74,11 +74,9 @@ public class FileStorageService {
         }
     }
 
-    public File MakeDir(String studName, String assignmentId) {
-        File dir = new File(env.getProperty("file.upload-dir") + "\\" + studName + "\\" + assignmentId);
-        if (dir.exists()) {
-            return dir;
-        } else {
+    public File makeDir(String userId) {
+        File dir = new File(fileStorageLocation + "\\" + userId);
+        if (!dir.exists()) {
             new File(dir.getPath()).mkdirs();
         }
         return dir;

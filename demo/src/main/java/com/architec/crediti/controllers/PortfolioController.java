@@ -69,10 +69,6 @@ public class PortfolioController {
             portfolioUtil.uploadFile(item, currentUser.getUserId());
         }
 
-        //Arrays.stream(files).map(file -> portfolioUtil.uploadFile(file, currentUser.getUserId()));
-
-        // Arrays.asList(files).stream().map(file -> util.uploadFile(file, currentUser.getUserId()))
-        //      .collect(Collectors.toList());
         return "redirect:/portfolio";
     }
 

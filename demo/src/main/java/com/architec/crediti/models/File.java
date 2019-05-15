@@ -16,12 +16,17 @@ public class File {
     @Column(name = "downloadlink")
     private String downloadLink;
 
+    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    private User user;
+
     public File() {
     }
 
-    public File(String fileTitle, String download) {
+    public File(String fileTitle, String download, User user) {
         this.title = fileTitle;
         this.downloadLink = download;
+        this.user = user;
     }
 
     public int getFileId() {
@@ -46,5 +51,13 @@ public class File {
 
     public void setDownloadLink(String downloadLink) {
         this.downloadLink = downloadLink;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
