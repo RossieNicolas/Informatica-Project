@@ -179,12 +179,12 @@ public class AssignmentController {
         boolean volzet = false;
 
 
-        for (Assignment item : student.getAssignments()){
-            if(item.getAssignmentId() == assignmentId){
+        for (Assignment item : student.getAssignments()) {
+            if (item.getAssignmentId() == assignmentId) {
                 status = true;
             }
         }
-        if(as.getAmountStudents() == as.getMaxStudents()){
+        if (as.getAmountStudents() == as.getMaxStudents()) {
             volzet = true;
         }
         model.addAttribute("volzet", volzet);
@@ -196,9 +196,7 @@ public class AssignmentController {
                 model.addAttribute("assignments", a);
             }
         } catch (Exception ex) {
-            // als er geen assignment is met ingegeven id dan wordt er een lege pagina
-            // weergegeven,
-            // zonder catch krijgt gebruiker een error wat niet de bedoeling is
+            System.out.println(ex.getMessage());
         }
         return "updateAssignment";
     }
@@ -226,9 +224,7 @@ public class AssignmentController {
                 model.addAttribute("assignments", a);
             }
         } catch (Exception ex) {
-            // als er geen assignment is met ingegeven id dan wordt er een lege pagina
-            // weergegeven,
-            // zonder catch krijgt gebruiker een error wat niet de bedoeling is
+            System.out.println(ex.getMessage());
         }
         return "updateMyAssignment";
     }
@@ -251,18 +247,21 @@ public class AssignmentController {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid assignment Id:" + assignmentId));
         User user = userRepo.findByEmail(principal.getName());
         student = studentRepo.findByUserId(user);
+        try {
+            Set<Assignment> set = new HashSet<>();
+            set.addAll(student.getAssignments());
+            int counter = assignment.getAmountStudents();
 
-        Set<Assignment> set = new HashSet<>();
-        set.add(assignment);
+            if (assignment.getAmountStudents() < assignment.getMaxStudents()) {
+                set.add(assignment);
+                assignment.setAmountStudents(counter + 1);
+            }
 
-        int counter = assignment.getAmountStudents();
-
-        if(assignment.getAmountStudents() < assignment.getMaxStudents()) {
             student.setAssignments(set);
-            assignment.setAmountStudents(counter + 1);
+            studentRepo.save(student);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
         }
-
-        studentRepo.save(student);
         return "studentenroll";
     }
 
