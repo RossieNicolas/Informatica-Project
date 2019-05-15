@@ -19,7 +19,9 @@ import java.util.Optional;
 public class ArchiveController {
     private final
     ArchiveRepository archiveRepo;
+
     private int initialPage = 0;
+
     private int pageSize = 15;
 
     @Autowired
