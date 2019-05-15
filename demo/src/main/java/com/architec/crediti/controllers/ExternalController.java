@@ -2,9 +2,6 @@ package com.architec.crediti.controllers;
 
 import com.architec.crediti.email.EmailServiceImpl;
 import com.architec.crediti.email.EmailTemplates;
-import com.architec.crediti.email.EmailServiceImpl;
-import com.architec.crediti.email.EmailTemplates;
-import com.architec.crediti.models.Assignment;
 import com.architec.crediti.models.ExternalUser;
 import com.architec.crediti.models.User;
 import com.architec.crediti.repositories.ExternalUserRepository;
@@ -17,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -155,6 +151,7 @@ public class ExternalController {
 
         mail.sendSimpleMessage(userRepository.findByUserId(externalId).getEmail(), "externe gevalideerd",
                 EmailTemplates.validatedAssignmentByExternal());
+
         return "redirect:/listUnvalidatedExternal";
     }
 
@@ -164,6 +161,7 @@ public class ExternalController {
 
         mail.sendSimpleMessage(userRepository.findByUserId(externalId).getEmail(), "externe niet gevalideerd",
                 EmailTemplates.notValidatedAssignmentByExternal());
+
         externalUserRepository.delete(extUser);
         return "redirect:/listUnvalidatedExternal";
     }
