@@ -93,6 +93,11 @@
                         <input name="amountHours" id="amountHours" type="number" th:value="*{a.getAmountHours()}"
                                min="1" required="required"><br>
 
+                        <label for="amountStudents">Aantal ingeschreven studenten:</label>
+                        <input name="amountStudents" id="amountStudents" type="number"
+                               th:value="*{a.getAmountStudents()}"
+                               required="required" readonly><br>
+
                         <label for="maxStudents">Max Studenten:</label>
                         <input name="maxStudents" id="maxStudents" type="number" th:value="*{a.getMaxStudents()}"
                                min="1" required="required"><br>

@@ -85,12 +85,6 @@ public class AssignmentController {
         return "successfullAssignment";
     }
 
-    // error page
-    @GetMapping("/error")
-    public String error() {
-        return "error";
-    }
-
     // list all assignments
     @GetMapping("/allassignments")
     public ModelAndView showPersonsPage(@RequestParam("page") Optional<Integer> page) {
