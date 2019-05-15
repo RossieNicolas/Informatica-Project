@@ -31,7 +31,7 @@ public class PortfolioUtil {
     }
 
     public UploadFileResponse uploadFile(MultipartFile file, long userId) {
-        User current = userRepo.findById(userId);
+        User current = userRepo.findByUserId(userId);
         String fileName = fileStorageService.storeFile(file, userId +"");
 
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/downloadFile/")
