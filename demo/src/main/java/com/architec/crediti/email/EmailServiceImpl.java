@@ -20,7 +20,7 @@ public class EmailServiceImpl implements EmailService {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
             message.setTo(to);
-            message.setCc("alina@cebit.be");
+            message.setCc();
             message.setSubject(subject);
             message.setText(text);
             emailSender.send(message);

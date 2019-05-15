@@ -344,7 +344,7 @@ public class AssignmentController {
                 EmailTemplates.validatedAssignment(assignment.getTitle()));
 
         //mail to student
-        mail.sendSimpleMessage("alina.storme@student.ap.be", "Opdracht gevalideerd",
+        mail.sendSimpleMessage(currentUser.getEmail(), "Opdracht gevalideerd",
                 EmailTemplates.validatedAssignmentStudent(assignment.getTitle()));
 
         return "redirect:/allassignments";
@@ -368,6 +368,7 @@ public class AssignmentController {
         mail.sendSimpleMessage("alina.storme@student.ap.be", "Opdracht gearchiveerd",
                 EmailTemplates.archivedAssignment(assignment.getAssigner(),
                         assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments", "class group"));
+
 
         return "redirect:/allassignments";
     }
