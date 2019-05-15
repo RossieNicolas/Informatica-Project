@@ -148,6 +148,8 @@ public class ExternalController {
     @GetMapping("/validateexternal/{externalId}")
     public String validateExternal(@PathVariable("externalId") int externalId) {
         ExternalUser extUser = externalUserRepository.findByUserId(userRepository.findByUserId(externalId));
+
+        extUser.setApproved(true);
         externalUserRepository.save(extUser);
 
         mail.sendSimpleMessage(userRepository.findByUserId(externalId).getEmail(), "externe gevalideerd",
