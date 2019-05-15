@@ -13,6 +13,7 @@ import org.springframework.security.authentication.AuthenticationCredentialsNotF
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
 import javax.naming.Context;
@@ -49,7 +50,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
 
     @Override
-    public Authentication authenticate(Authentication auth)  {
+    public Authentication authenticate(Authentication auth) throws AuthenticationException {
 
         String username = auth.getName();
         String password = auth.getCredentials().toString();
@@ -102,22 +103,24 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
             InitialDirContext context = new InitialDirContext(env);
             SearchControls ctrls = new SearchControls();
-            ctrls.setReturningAttributes(new String[]{"givenName", "sn", "department", "extensionAttribute1",
-                    "sAMAccountName"});
+            ctrls.setReturningAttributes(new String[]{"givenName", "sn", "department", "extensionAttribute1", "sAMAccountName"});
             ctrls.setSearchScope(SearchControls.SUBTREE_SCOPE);
 
-            NamingEnumeration<SearchResult> answers = context.search("OU=Users,OU=DWAP,DC=alpaca,DC=int",
-                    "(userPrincipalName=" + username + ")", ctrls);
+            NamingEnumeration<SearchResult> answers = context.search("OU=Users,OU=DWAP,DC=alpaca,DC=int", "(userPrincipalName=" + username + ")", ctrls);
             javax.naming.directory.SearchResult res = answers.nextElement();
 
             String rawFirstname = res.getAttributes().get("givenname").toString();
             String rawLastname = res.getAttributes().get("sn").toString();
+            String rawDepartment = res.getAttributes().get("department").toString();
             String rawRole = res.getAttributes().get("extensionAttribute1").toString();
+            String rawStudentNr = res.getAttributes().get("sAMAccountName").toString();
             String email = username;
 
-            String firstname = (rawFirstname.substring(rawFirstname.lastIndexOf(' ') + 1));
-            String lastname = (rawLastname.substring(rawLastname.lastIndexOf(' ') + 1));
-            String role = (rawRole.substring(rawRole.lastIndexOf(' ') + 1));
+            String firstname = (rawFirstname.substring(rawFirstname.lastIndexOf(" ") + 1));
+            String lastname = (rawLastname.substring(rawLastname.lastIndexOf(" ") + 1));
+            String department = (rawDepartment.substring(rawDepartment.lastIndexOf(" ") + 1));
+            String role = (rawRole.substring(rawRole.lastIndexOf(" ") + 1));
+            String studentNr = (rawStudentNr.substring(rawStudentNr.lastIndexOf(" ") + 2));
 
             boolean emailExsist = userRepo.existsByEmail(email);
 

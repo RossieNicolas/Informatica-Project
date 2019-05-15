@@ -66,7 +66,7 @@ public class EmailTemplates {
     // Voor externe
     public static String validatedExternal() {
         String mail = "Beste,\n\n"+
-                "Uw registratie werd goedgekeurd. Nu kunt u inloggen op de pagina.\n\n"+
+                "Uw registratie werd gevalideerd. Nu kunt u inloggen op de pagina.\n\n"+
                 "De coördinator";
 
         return mail;
@@ -94,6 +94,14 @@ public class EmailTemplates {
                 "WEIGER deze externe: http://localhost:8080/deleteexternal/" + userId + "\n\n" +
                 "Lijst van alle ongevalideerde externe: http://localhost:8080/listUnvalidatedExternal";
         return mail;
+    }
+    public static String reminder(String opdrachtTitel ) {
+        String mail = "Beste,\n\n"+
+                "De deadline van opdracht : " + opdrachtTitel + " is morgen";
+
+        return mail;
+
+        
     }
 
 }

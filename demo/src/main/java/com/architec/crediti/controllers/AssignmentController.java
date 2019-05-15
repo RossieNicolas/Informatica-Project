@@ -41,8 +41,7 @@ public class AssignmentController {
     EmailServiceImpl mail;
 
     @Autowired
-    public AssignmentController(TagRepo tagRepo, AssignmentRepository assignmentRepo, StudentRepository studentRepo,
-                                UserRepository userRepo, ArchiveRepository archiveRepo, EmailServiceImpl mail) {
+    public AssignmentController(TagRepo tagRepo, AssignmentRepository assignmentRepo, StudentRepository studentRepo, UserRepository userRepo, ArchiveRepository archiveRepo, EmailServiceImpl mail) {
         this.tagRepo = tagRepo;
         this.assignmentRepo = assignmentRepo;
         this.studentRepo = studentRepo;
@@ -79,10 +78,15 @@ public class AssignmentController {
         assignmentRepo.save(assignment);
 
         mail.sendSimpleMessage("alina.storme@student.ap.be", "Nieuwe opdracht gecreëerd",
-                EmailTemplates.createdAssignment(assignment.getAssigner(),
-                        assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments",
-                        "class group"));
+        EmailTemplates.createdAssignment(assignment.getAssigner(),
+                assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments", "class group"));
         return "successfullAssignment";
+    }
+
+    // error page
+    @GetMapping("/error")
+    public String error() {
+        return "error";
     }
 
     // list all assignments
@@ -138,8 +142,7 @@ public class AssignmentController {
             }
 
         } catch (Exception e) {
-            model.addAttribute("assignments", AssignmentMethods.removeFullAssignments(assignmentRepo
-                    .findByTitleContainingAndArchived(name, false)));
+            model.addAttribute("assignments", AssignmentMethods.removeFullAssignments(assignmentRepo.findByTitleContainingAndArchived(name, false)));
         }
 
         ModelAndView modelAndView = new ModelAndView("listAllAssignments");
@@ -179,8 +182,7 @@ public class AssignmentController {
 
     // find specific assignment to edit out of all assignments
     @GetMapping(value = "/allassignments/{assignmentId}")
-    public String getAssignmentsToUpdate(@PathVariable("assignmentId") int assignmentId, Model model,
-                                         @Valid Student student, Principal principal) {
+    public String getAssignmentsToUpdate(@PathVariable("assignmentId") int assignmentId, Model model, @Valid Student student, Principal principal) {
         List<Tag> updatetag = tagRepo.findAll();
         User user = userRepo.findByEmail(principal.getName());
         student = studentRepo.findByUserId(user);
@@ -269,7 +271,6 @@ public class AssignmentController {
                 model.addAttribute("assignments", a);
             }
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
         }
         return "updateMyAssignment";
     }
@@ -297,43 +298,30 @@ public class AssignmentController {
 
     // assign student to specific assignment
     @GetMapping("/studentenroll/{assignmentId}")
-    public String enrollAssignment(@PathVariable("assignmentId") int assignmentId, @Valid Student student,
-                                   Principal principal, Model model) {
+    public String enrollAssignment(@PathVariable("assignmentId") int assignmentId, @Valid Student student, Principal principal, Model model) {
         User currentUser = userRepo.findByEmail(principal.getName());
         Assignment assignment = assignmentRepo.findById((long) assignmentId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid assignment Id:" + assignmentId));
         User user = userRepo.findByEmail(principal.getName());
         student = studentRepo.findByUserId(user);
-        try {
-            Set<Assignment> set = new HashSet<>();
-            set.addAll(student.getAssignments());
-            int counter = assignment.getAmountStudents();
-            boolean zelfde = false;
 
-            for (Assignment item : student.getAssignments()) {
-                if (item.getAssignmentId() == assignmentId) {
-                    zelfde = true;
-                }
-            }
+        Set<Assignment> set = new HashSet<>();
+        set.add(assignment);
 
-            if(!zelfde) {
-                if (assignment.getAmountStudents() < assignment.getMaxStudents()) {
-                    set.add(assignment);
-                    assignment.setAmountStudents(counter + 1);
-                }
-            }else return "alreadyAssigned";
+        int counter = assignment.getAmountStudents();
 
-            //TODO vervang 'to' door mail van coordinator
-            mail.sendSimpleMessage("alina.storme@student.ap.be", "Opdracht toegewezen aan student",
-                    EmailTemplates.enrolledAssignmentStudent(currentUser.getFirstname(), currentUser.getLastname(),
-                            assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments",
-                            assignment.getTitle()));
-
+        if(assignment.getAmountStudents() < assignment.getMaxStudents()) {
             student.setAssignments(set);
-            studentRepo.save(student);
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            assignment.setAmountStudents(counter + 1);
         }
+
+        studentRepo.save(student);
+
+        //TODO vervang 'to' door mail van coordinator
+        mail.sendSimpleMessage("alina.storme@student.ap.be", "Opdracht toegewezen aan student",
+                EmailTemplates.enrolledAssignmentStudent(currentUser.getFirstname(), currentUser.getLastname(),
+                        assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments", assignment.getTitle()));
+
         return "studentenroll";
     }
 
@@ -358,12 +346,10 @@ public class AssignmentController {
         assignmentRepo.save(assignment);
         model.addAttribute("assignments", assignmentRepo.findAll());
 
-        long assignerId = assignmentRepo.findByAssignmentId(assignmentId).getAssignerUserId();
-        String assignerEmail = userRepo.findByUserId(assignerId).getEmail();
-
-        mail.sendSimpleMessageWithCc(assignerEmail, "Opdracht gevalideerd",
+        //TODO vervang 'to' door mail van coordinator
+        mail.sendSimpleMessage("alina.storme@student.ap.be", "Opdracht gevalideerd",
                 EmailTemplates.validatedAssignment(assignment.getTitle()));
-        //TODO currentUser.getEmail() vervangen naar student email die ingeschreven voor deze assignment
+
         mail.sendSimpleMessage(currentUser.getEmail(), "Opdracht gevalideerd",
                 EmailTemplates.validatedAssignmentStudent(assignment.getTitle()));
 
@@ -387,8 +373,7 @@ public class AssignmentController {
         //TODO vervang 'to' door mail van coordinator
         mail.sendSimpleMessage("alina.storme@student.ap.be", "Opdracht gearchiveerd",
                 EmailTemplates.archivedAssignment(assignment.getAssigner(),
-                        assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments",
-                        "class group"));
+                        assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments", "class group"));
 
 
         return "redirect:/allassignments";

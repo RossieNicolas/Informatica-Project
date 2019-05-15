@@ -22,8 +22,7 @@ import java.util.List;
 @Controller
 public class ExternalController {
 
-    private final
-    ExternalUserRepository externalUserRepository;
+    private final ExternalUserRepository externalUserRepository;
 
     private final
     UserRepository userRepository;
@@ -32,8 +31,7 @@ public class ExternalController {
     EmailServiceImpl mail;
 
     @Autowired
-    public ExternalController(ExternalUserRepository externalUserRepository, UserRepository userRepository,
-                              EmailServiceImpl mail) {
+    public ExternalController(ExternalUserRepository externalUserRepository, UserRepository userRepository, EmailServiceImpl mail) {
         this.externalUserRepository = externalUserRepository;
         this.userRepository = userRepository;
         this.mail = mail;
@@ -48,15 +46,13 @@ public class ExternalController {
     @PostMapping("/createexternal")
     public String createUser(@RequestParam("lastname") String lastname, @RequestParam("firstname") String firstname,
                              @RequestParam("company") String company, @RequestParam("address") String address,
-                             @RequestParam("postal") String postal, @RequestParam("city") String city,
-                             @RequestParam("phone") String phone, @RequestParam("email") String email,
-                             @RequestParam("password") String password) {
+                             @RequestParam("postal") String postal, @RequestParam("city") String city, @RequestParam("phone") String phone,
+                             @RequestParam("email") String email, @RequestParam("password") String password) {
 
 
         Object[] hashedBytes = HashPass.convertToPbkdf2(password.toCharArray());
         // create an external user
-        ExternalUser externalUser = new ExternalUser(firstname, lastname, company, phone, address, city, postal,
-                hashedBytes[0].toString().toCharArray(),(byte[]) hashedBytes[1]);
+        ExternalUser externalUser = new ExternalUser(firstname, lastname, company, phone, address, city, postal, hashedBytes[0].toString().toCharArray(),(byte[]) hashedBytes[1]);
         // create a internal user
         User user = new User(firstname, lastname, email, "Externe",false);
         // set the foreign key
@@ -149,10 +145,8 @@ public class ExternalController {
     }
 
     @GetMapping("/validateexternal/{externalId}")
-    public String validateExternal(@PathVariable("externalId") int externalId) {
+    public String validateExternal(@PathVariable("externalId") int externalId, int assignmentId) {
         ExternalUser extUser = externalUserRepository.findByUserId(userRepository.findByUserId(externalId));
-
-        extUser.setApproved(true);
         externalUserRepository.save(extUser);
 
         mail.sendSimpleMessage(userRepository.findByUserId(externalId).getEmail(), "externe gevalideerd",

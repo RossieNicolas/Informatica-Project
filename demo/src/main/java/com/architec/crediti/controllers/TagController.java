@@ -27,7 +27,7 @@ public class TagController {
 
     // get create tag page
     @GetMapping("/tag")
-    public String tag() {
+    public String assignment() {
         return "tag";
     }
 
@@ -50,6 +50,7 @@ public class TagController {
     @GetMapping("/listAllTags")
     public ModelAndView listAllTags(@RequestParam("page") Optional<Integer> page) {
         ModelAndView modelAndView = new ModelAndView("listAllTags");
+        List<Tag> listAllTags = tagRepo.findAll();
 
         int initialPage = 0;
         int pageSize = 15;
@@ -72,9 +73,9 @@ public class TagController {
 
     // list specific tag
     @GetMapping("/listAllTags/{tag_id}")
-    public String tags(@PathVariable("tag_id") int tagId, Model model) {
+    public String tags(@PathVariable("tag_id") int tag_id, Model model) {
 
-        Tag tag = tagRepo.findBytagId(tagId);
+        Tag tag = tagRepo.findBytagId(tag_id);
 
         model.addAttribute("tags", tag);
         return "editTag";
