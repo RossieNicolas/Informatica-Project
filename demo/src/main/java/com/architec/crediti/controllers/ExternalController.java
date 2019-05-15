@@ -146,7 +146,7 @@ public class ExternalController {
     }
 
     @GetMapping("/validateexternal/{externalId}")
-    public String validateExternal(@PathVariable("externalId") int externalId, int assignmentId) {
+    public String validateExternal(@PathVariable("externalId") int externalId) {
         ExternalUser extUser = externalUserRepository.findByUserId(userRepository.findByUserId(externalId));
         externalUserRepository.save(extUser);
 
