@@ -1,5 +1,6 @@
 package com.architec.crediti.upload;
 
+import com.architec.crediti.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -16,7 +17,7 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.security.Principal;
 
 import com.architec.crediti.repositories.UserRepository;
 
@@ -27,6 +28,7 @@ from https://github.com/callicoder/spring-boot-file-upload-download-rest-api-exa
 public class FileStorageService {
 
     private final Path fileStorageLocation;
+
     private Environment env;
 
     UserRepository userRepo;
@@ -64,10 +66,6 @@ public class FileStorageService {
                 stream.close();
             }
 
-            // Copy file to the target location (Replacing existing file with the same name)
-            Path targetLocation = this.fileStorageLocation.resolve(fileName);
-            Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-
             return fileName;
         } catch (IOException ex) {
             throw new FileStorageException("Could not store file " + fileName + ". Please try again!", ex);
@@ -83,9 +81,9 @@ public class FileStorageService {
 
     }
 
-    public Resource loadFileAsResource(String fileName) {
+    public Resource loadFileAsResource(String fileName, String userId) {
         try {
-            Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
+            Path filePath = Paths.get(this.fileStorageLocation.toString(), userId + "").toAbsolutePath().normalize();
             Resource resource = new UrlResource(filePath.toUri());
             if (resource.exists()) {
                 return resource;

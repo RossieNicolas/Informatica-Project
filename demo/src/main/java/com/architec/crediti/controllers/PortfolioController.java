@@ -50,8 +50,9 @@ public class PortfolioController {
     private UserRepository userRepo;
 
     @GetMapping("/portfolio")
-    public String getPortfolio(Model model) {
-        List<File> files = fileRepo.findAll();
+    public String getPortfolio(Model model, Principal principal) {
+        User currentUser = userRepo.findByEmail(principal.getName());
+        List<File> files = fileRepo.findByUser(currentUser);
         model.addAttribute("files", files);
         return "portfolio";
     }
@@ -60,6 +61,7 @@ public class PortfolioController {
     public String getUploadFile() {
         return "upload";
     }
+
 
     @PostMapping("/uploadfile")
     public String uploadMultipleFiles(@RequestParam("files") MultipartFile[] files, Principal principal) {
@@ -73,9 +75,10 @@ public class PortfolioController {
     }
 
     @GetMapping("/downloadFile/{fileName:.+}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
+    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request, Principal principal) {
         // Load file as Resource
-        Resource resource = fileStorageService.loadFileAsResource(fileName);
+        User currentUser = userRepo.findByEmail(principal.getName());
+        Resource resource = fileStorageService.loadFileAsResource(fileName, currentUser.getUserId() + "");
 
         // Try to determine file's content type
         String contentType = null;
