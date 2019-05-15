@@ -251,11 +251,20 @@ public class AssignmentController {
             Set<Assignment> set = new HashSet<>();
             set.addAll(student.getAssignments());
             int counter = assignment.getAmountStudents();
+            boolean zelfde = false;
 
-            if (assignment.getAmountStudents() < assignment.getMaxStudents()) {
-                set.add(assignment);
-                assignment.setAmountStudents(counter + 1);
+            for (Assignment item : student.getAssignments()) {
+                if (item.getAssignmentId() == assignmentId) {
+                    zelfde = true;
+                }
             }
+
+            if(!zelfde) {
+                if (assignment.getAmountStudents() < assignment.getMaxStudents()) {
+                    set.add(assignment);
+                    assignment.setAmountStudents(counter + 1);
+                }
+            }else return "alreadyAssigned";
 
             student.setAssignments(set);
             studentRepo.save(student);
