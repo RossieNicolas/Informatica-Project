@@ -23,6 +23,7 @@ import java.util.*;
 public class AssignmentController {
 
     private Iterable<Assignment> fiches;
+    private static final int PAGE_SIZE = 15;
 
     private final
     TagRepo tagRepo;
@@ -93,7 +94,7 @@ public class AssignmentController {
         ModelAndView modelAndView = new ModelAndView("listAllAssignments");
 
         int initialPage = 0;
-        int pageSize = 15;
+        int pageSize = PAGE_SIZE;
 
         int buttons = (int) assignmentRepo.count() / pageSize;
 
@@ -126,8 +127,7 @@ public class AssignmentController {
         }
         model.addAttribute("assignments", fullas);
 
-        ModelAndView modelAndView = new ModelAndView("listAllAssignments");
-        int pageSize = 15;
+        int pageSize = PAGE_SIZE;
         int buttons = (int) assignmentRepo.count() / pageSize;
 
         if (assignmentRepo.count() % pageSize != 0) {
@@ -178,8 +178,7 @@ public class AssignmentController {
                     .findByTitleContainingAndArchived(name, false)));
         }
 
-        ModelAndView modelAndView = new ModelAndView("listAllAssignments");
-        int pageSize = 15;
+        int pageSize = PAGE_SIZE;
         int buttons = (int) assignmentRepo.count() / pageSize;
 
         if (assignmentRepo.count() % pageSize != 0) {

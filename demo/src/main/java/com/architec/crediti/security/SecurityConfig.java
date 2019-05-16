@@ -37,6 +37,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //Everyone can see these pages
                 .antMatchers("/login", "/", "/createexternaluser","/registersucces", "/createexternal", "/passwordRecovery", "/notapproved").permitAll()
 
+                //COORDINATOR && DOCENT
+                .antMatchers("/allFullAssignments").hasAnyRole("DOCENT", "COORDINATOR")
+
                 //Only for EXTERNAL
                 .antMatchers("/externalUserProfile").hasRole("EXTERNE")
 
