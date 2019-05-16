@@ -60,9 +60,12 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         if (isLdapRegisteredUser(username, password)) {
             log.info("LDAP successful");
-            return new UsernamePasswordAuthenticationToken(username, password, new ArrayList<>());
+            String role = userRepo.findByEmail(username).getRole();
+            grantedAuths.add(new SimpleGrantedAuthority("ROLE_" + role.toUpperCase()));
+            return new UsernamePasswordAuthenticationToken(username, password, grantedAuths);
         } else if (isExternalUser(username, password)) {
-            grantedAuths.add(new SimpleGrantedAuthority("ROLE_EXTERNE"));
+            String role = userRepo.findByEmail(username).getRole();
+            grantedAuths.add(new SimpleGrantedAuthority("ROLE_" + role.toUpperCase()));
             return new UsernamePasswordAuthenticationToken(username, password, grantedAuths);
         } else {
             throw new AuthenticationCredentialsNotFoundException("Invalid Credentials!");
@@ -127,7 +130,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             boolean emailExsist = userRepo.existsByEmail(email);
 
             if (!emailExsist) {
-                User user = new User(firstname, lastname, email, role, true);
+                User user = new User(firstname, lastname, email, role.toUpperCase(), true);
                 userRepo.save(user);
             }
 
