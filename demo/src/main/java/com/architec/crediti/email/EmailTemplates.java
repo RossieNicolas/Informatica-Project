@@ -38,7 +38,7 @@ public class EmailTemplates {
         return mail;
     }
 
-    // voor de student
+    // voor student
     public static String validatedAssignmentStudent(String name) {
         String mail = "Beste,\n\n"+
                 "De ZAP- opdracht ("+ name +") die je ingaf/waarvoor je intekende werd gevalideerd. Om te starten breng je de contracten in orde. " +
@@ -49,6 +49,50 @@ public class EmailTemplates {
                 "\n" +
                 "De coördinator";
 
+        return mail;
+    }
+
+    public static String enrolledAssignmentStudent(String firstname, String lastname, String title, String email, String url, String name) {
+        String mail = "Beste,\n\n"+
+                "Volgende student, " + firstname + " " + lastname + ", heeft zich ingeschreven voor de opdracht ("+ name +") " +
+                "die u via ons ZAP-platform ingaf. \n\n" +
+                email + "naam opdracht: " + title +
+                "\nTe vinden op: "+ url + "\n\n" +
+                "AP-hogeschool";
+
+        return mail;
+    }
+
+    // Voor externe
+    public static String validatedExternal() {
+        String mail = "Beste,\n\n"+
+                "Uw registratie werd goedgekeurd. Nu kunt u inloggen op de pagina.\n\n"+
+                "De coördinator";
+
+        return mail;
+    }
+
+    public static String notValidatedExternal() {
+        String mail = "Beste,\n\n"+
+                "Uw registratie werd geweigerd.\n\n"+
+                "De coördinator";
+
+        return mail;
+    }
+
+    public static String newExternalUser(long userId, String name, String company, String address, String phone, String email) {
+        String mail =
+                "Een externe opdrachtgever heeft zich zojuist geregistreerd.\n\n" +
+                "Enkele gegevens van de opdrachtgever:\n\n" +
+                "Volledige naam: " + name + "\n" +
+                "Bedrijf: " + company + "\n" +
+                "Adres: " + address + "\n" +
+                "Telefoon: " + phone + "\n" +
+                "E-mail: " + email + "\n\n" +
+                        //TODO: vervang localhost door vps092.be na testing
+                "VALIDEER deze externe: http://localhost:8080/validateexternal/" + userId + "\n" +
+                "WEIGER deze externe: http://localhost:8080/deleteexternal/" + userId + "\n\n" +
+                "Lijst van alle ongevalideerde externe: http://localhost:8080/listUnvalidatedExternal";
         return mail;
     }
 

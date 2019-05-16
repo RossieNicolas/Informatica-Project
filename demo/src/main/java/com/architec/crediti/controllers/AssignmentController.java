@@ -32,6 +32,9 @@ public class AssignmentController {
     AssignmentRepository assignmentRepo;
 
     private final
+    StudentRepository studentRepo;
+
+    private final
     UserRepository userRepo;
 
     private final
@@ -41,9 +44,11 @@ public class AssignmentController {
     EmailServiceImpl mail;
 
     @Autowired
-    public AssignmentController(TagRepo tagRepo, AssignmentRepository assignmentRepo, UserRepository userRepo, ArchiveRepository archiveRepo, EmailServiceImpl mail) {
+    public AssignmentController(TagRepo tagRepo, AssignmentRepository assignmentRepo, StudentRepository studentRepo,
+                                UserRepository userRepo, ArchiveRepository archiveRepo, EmailServiceImpl mail) {
         this.tagRepo = tagRepo;
         this.assignmentRepo = assignmentRepo;
+        this.studentRepo = studentRepo;
         this.userRepo = userRepo;
         this.archiveRepo = archiveRepo;
         this.mail = mail;
@@ -65,6 +70,7 @@ public class AssignmentController {
         Set<Tag> set = new HashSet<>();
         User currentUser = userRepo.findByEmail(principal.getName());
 
+        assignment.setTags(set);
         if (tags != null) {
             for (int item : tags) {
                 Tag tag = tagRepo.findBytagId(item);
@@ -77,14 +83,9 @@ public class AssignmentController {
 
         mail.sendSimpleMessage("alina.storme@student.ap.be", "Nieuwe opdracht gecreëerd",
                 EmailTemplates.createdAssignment(assignment.getAssigner(),
-                        assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments", "class group"));
+                        assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments",
+                        "class group"));
         return "successfullAssignment";
-    }
-
-    // error page
-    @GetMapping("/error")
-    public String error() {
-        return "error";
     }
 
     // list all assignments
@@ -165,7 +166,6 @@ public class AssignmentController {
         }
 
         ModelAndView modelAndView = new ModelAndView("listAllAssignments");
-
         int pageSize = 15;
         int buttons = (int) assignmentRepo.count() / pageSize;
 
@@ -203,8 +203,25 @@ public class AssignmentController {
 
     // find specific assignment to edit out of all assignments
     @GetMapping("/allassignments/{assignmentId}")
-    public String getAssignmentsToUpdate(@PathVariable("assignmentId") int assignmentId, Model model) {
+    public String getAssignmentsToUpdate(@PathVariable("assignmentId") int assignmentId, Model model, @Valid Student student, Principal principal) {
         List<Tag> updatetag = tagRepo.findAll();
+        User user = userRepo.findByEmail(principal.getName());
+        student = studentRepo.findByUserId(user);
+        Assignment as = assignmentRepo.findByAssignmentId(assignmentId);
+        boolean ingeschreven = false;
+        boolean volzet = false;
+
+
+        for (Assignment item : student.getAssignments()){
+            if(item.getAssignmentId() == assignmentId){
+                ingeschreven = true;
+            }
+        }
+        if(as.getAmountStudents() == as.getMaxStudents()){
+            volzet = true;
+        }
+        model.addAttribute("volzet", volzet);
+        model.addAttribute("ingeschreven", ingeschreven);
         model.addAttribute("updatetag", updatetag);
         try {
             Assignment a = assignmentRepo.findByAssignmentId(assignmentId);
@@ -225,9 +242,6 @@ public class AssignmentController {
             }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
-            // als er geen assignment is met ingegeven id dan wordt er een lege pagina
-            // weergegeven,
-            // zonder catch krijgt gebruiker een error wat niet de bedoeling is
         }
         return "updateAssignment";
     }
@@ -277,6 +291,7 @@ public class AssignmentController {
                 model.addAttribute("assignments", a);
             }
         } catch (Exception ex) {
+            System.out.println(ex.getMessage());
         }
         return "updateMyAssignment";
     }
@@ -302,6 +317,48 @@ public class AssignmentController {
         return "redirect:/myassignments";
     }
 
+    // assign student to specific assignment
+    @GetMapping("/studentenroll/{assignmentId}")
+    public String enrollAssignment(@PathVariable("assignmentId") int assignmentId, @Valid Student student,
+                                   Principal principal, Model model) {
+        User currentUser = userRepo.findByEmail(principal.getName());
+        Assignment assignment = assignmentRepo.findById((long) assignmentId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid assignment Id:" + assignmentId));
+        User user = userRepo.findByEmail(principal.getName());
+        student = studentRepo.findByUserId(user);
+        try {
+            Set<Assignment> set = new HashSet<>();
+            set.addAll(student.getAssignments());
+            int counter = assignment.getAmountStudents();
+            boolean zelfde = false;
+
+            for (Assignment item : student.getAssignments()) {
+                if (item.getAssignmentId() == assignmentId) {
+                    zelfde = true;
+                }
+            }
+
+            if(!zelfde) {
+                if (assignment.getAmountStudents() < assignment.getMaxStudents()) {
+                    set.add(assignment);
+                    assignment.setAmountStudents(counter + 1);
+                }
+            }else return "alreadyAssigned";
+
+            //TODO vervang 'to' door mail van coordinator
+            mail.sendSimpleMessage("alina.storme@student.ap.be", "Opdracht toegewezen aan student",
+                    EmailTemplates.enrolledAssignmentStudent(currentUser.getFirstname(), currentUser.getLastname(),
+                            assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments",
+                            assignment.getTitle()));
+
+            student.setAssignments(set);
+            studentRepo.save(student);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return "studentenroll";
+    }
+
     // delete specific assignment
     @GetMapping("/deleteassignment/{assignmentId}")
     public String deleteAssignment(@PathVariable("assignmentId") int assignmentId, Model model) {
@@ -323,12 +380,13 @@ public class AssignmentController {
         assignmentRepo.save(assignment);
         model.addAttribute("assignments", assignmentRepo.findAll());
 
-        //mail to coordinator
-        mail.sendSimpleMessage("alina.storme@student.ap.be", "Opdracht gevalideerd",
-                EmailTemplates.validatedAssignment(assignment.getTitle()));
+        long assignerId = assignmentRepo.findByAssignmentId(assignmentId).getAssignerUserId();
+        String assignerEmail = userRepo.findByUserId(assignerId).getEmail();
 
-        //mail to student
-        mail.sendSimpleMessage("alina.storme@student.ap.be", "Opdracht gevalideerd",
+        mail.sendSimpleMessageWithCc(assignerEmail, "Opdracht gevalideerd",
+                EmailTemplates.validatedAssignment(assignment.getTitle()));
+        //TODO currentUser.getEmail() vervangen naar student email die ingeschreven voor deze assignment
+        mail.sendSimpleMessage(currentUser.getEmail(), "Opdracht gevalideerd",
                 EmailTemplates.validatedAssignmentStudent(assignment.getTitle()));
 
         return "redirect:/allassignments";
@@ -359,10 +417,12 @@ public class AssignmentController {
 
         model.addAttribute("assignments", assignmentRepo.findAll());
 
-        //mail to coordinator
+        //TODO vervang 'to' door mail van coordinator
         mail.sendSimpleMessage("alina.storme@student.ap.be", "Opdracht gearchiveerd",
                 EmailTemplates.archivedAssignment(assignment.getAssigner(),
-                        assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments", "class group"));
+                        assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments",
+                        "class group"));
+
 
         return "redirect:/allassignments";
     }

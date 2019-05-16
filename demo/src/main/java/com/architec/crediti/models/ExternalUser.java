@@ -41,7 +41,8 @@ public class ExternalUser {
     public ExternalUser() {
     }
 
-    public ExternalUser(String firstname, String lastname, String company, String phone, String address, String city, String postal, char[] password, byte[] salt) {
+    public ExternalUser(String firstname, String lastname, String company, String phone, String address, String city,
+                        String postal, char[] password, byte[] salt) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.company = company;
@@ -54,7 +55,8 @@ public class ExternalUser {
         this.approved = false;
     }
 
-    public ExternalUser(String firstname, String lastname, String company, String phone, String address, String city, String postal) {
+    public ExternalUser(String firstname, String lastname, String company, String phone, String address, String city,
+                        String postal) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.company = company;

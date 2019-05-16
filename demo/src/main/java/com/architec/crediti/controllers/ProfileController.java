@@ -15,10 +15,16 @@ import java.security.Principal;
 @Controller
 public class ProfileController {
 
-    @Autowired
+    final
     UserRepository userRepo;
-    @Autowired
+    final
     StudentRepository stuRepo;
+
+    @Autowired
+    public ProfileController(UserRepository userRepo, StudentRepository stuRepo) {
+        this.userRepo = userRepo;
+        this.stuRepo = stuRepo;
+    }
 
     @GetMapping("liststudents/{studentennummer}")
     public String getStudentProfile(Principal principal, @PathVariable("studentennummer") int studentennummer, Model model){

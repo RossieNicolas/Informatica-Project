@@ -6,61 +6,7 @@
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
 <body class="background">
-<header>
-    <div class="nav-main navbackground">
-        <div class="container">
-            <div class="wrap-all col-xs-12">
-                <div class="left">
-                    <a class="logo" href="/main">
-                        <img th:src="@{/images/logo-ap.svg}">
-                    </a>
-                </div>
-                <div class="right">
-                    <div class="region-header-menu">
-                        <nav>
-                            <ul class="nav">
-                                <li>
-                                    <div class="dropdown dropdownleft">
-                                        <span>Opdrachten</span>
-                                        <div class="dropdown-content">
-                                            <a href="/allassignments">Lopende taken</a>
-                                            <a href="/assignment">Taak toevoegen</a>
-                                            <a href="/myassignments">Mijn taken</a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="dropdown">
-                                        <span>Profiel</span>
-                                        <div class="dropdown-content">
-                                            <a href="">Mijn profiel</a>
-                                            <a href="">Mijn portfolio</a>
-                                            <a href="">Portfolios</a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        <span>Documentatie</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <div class="dropdown">
-                                        <span>Coördinator</span>
-                                        <div class="dropdown-content">
-                                            <a href="/tag">Tag toevoegen</a>
-                                            <a href="/listAllTags">Lijst van tags</a>
-                                            <a href="/archive">Archief</a>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<header th:insert="fragments/generalMenu.html :: header">
 </header>
 <div class="container ">
     <h2 class="extra">Archief</h2>
@@ -121,17 +67,7 @@
         </ul>
     </div>
 </div>
-<footer>
-    <div class="footer-bot">
-        <div class="container">
-            <div class="left col-sm-6 col-xs-12">
-                <p>Ontworpen door studenten Toegepaste Informatica</p>
-            </div>
-            <div class="right col-sm-6 col-xs-12">
-                <p>© 2019 All rights reserved.</p>
-            </div>
-        </div>
-    </div>
+<footer th:insert="fragments/generalMenu.html :: footer">
 </footer>
 </body>
 </html>

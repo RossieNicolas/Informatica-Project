@@ -20,7 +20,19 @@ public class EmailServiceImpl implements EmailService {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
             message.setTo(to);
-            message.setCc("alina@cebit.be");
+            message.setSubject(subject);
+            message.setText(text);
+            emailSender.send(message);
+        } catch (MailException exception) {
+            exception.printStackTrace();
+        }
+    }
+    public void sendSimpleMessageWithCc(String to,String subject, String text) {
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(to);
+            //TODO mail van coordinator moet toegevoegd worden in de cc
+            message.setCc();
             message.setSubject(subject);
             message.setText(text);
             emailSender.send(message);

@@ -25,7 +25,9 @@ import java.util.stream.Collectors;
 public class ArchiveController {
     private final
     ArchiveRepository archiveRepo;
+
     private int initialPage = 0;
+
     private int pageSize = 15;
     private final
     TagRepo tagRepo;

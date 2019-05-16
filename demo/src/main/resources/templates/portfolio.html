@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Crediti - Portfolio</title>
+    <link rel="stylesheet" th:href="@{/css/APcss3.css}">
+</head>
+<body>
+<div class="background">
+    <header th:insert="fragments/generalMenu.html :: header">
+    </header>
+    <div class="block">
+        <section class="find-edu">
+            <div class="container ">
+                <div class="wrap-all col-xs-6">
+                    <h2 class="extra">Mijn portfolio</h2>
+                </div>
+                <div>
+                    <a href="/uploadfile" class="button">Bestanden toevoegen</a>
+                </div>
+            </div>
+        </section>
+            <div class="container">
+                <table class="smalltable">
+                    <thead>
+                    <tr>
+                        <th style="padding-left: 1%; width: 5%">Nr</th>
+                        <th>Title</th>
+                        <th width="18%"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="file : ${files}" class="tablebackground">
+                        <td th:text="${file.getFileId()}"></td>
+                        <td th:text="${file.getTitle()}"></td>
+                        <td><a th:href="${file.getDownloadLink()}" class="button">Download</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+    </div>
+</div>
+<footer th:insert="fragments/generalMenu.html :: footer">
+
+</footer>
+</body>
+</html>

@@ -42,7 +42,7 @@ public class StudentController {
                              @RequestParam(value = "mobility", required = false) String mobility) {
 
         User currentUser = userRepo.findByEmail(principal.getName());
-        Student student = new Student(gsm, Integer.parseInt(currentUser.getEmail().substring(1,7)), currentUser);
+        Student student = new Student(gsm,currentUser.getEmail().substring(1,7), currentUser);
 
         boolean existsStudent = studentRepo.existsByStudentennummer(currentUser.getEmail().substring(1,7));
 

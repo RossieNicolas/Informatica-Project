@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Crediti - Upload files</title>
+    <link rel="stylesheet" href="/css/APcss3.css"/>
+</head>
+<body>
+<div class="background">
+    <header th:insert="fragments/generalMenu.html :: header">
+    </header>
+    <div class="upload-container">
+        <div class="upload-header">
+            <h2>Upload files naar jouw portfolio</h2>
+        </div>
+        <div class="upload-content">
+            <div class="multiple-upload">
+                <h3 class="upload-title">Upload jouw bestanden</h3>
+                <form id="multipleUploadForm" name="multipleUploadForm" th:action="@{/uploadfile}" method="POST"
+                      enctype="multipart/form-data">
+                    <input id="multipleFileUploadInput" type="file" name="files" class="file-input" multiple required/>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="/js/main.js"></script>
+</div>
+<footer th:insert="fragments/generalMenu.html :: footer">
+
+</footer>
+</body>
+</html>
