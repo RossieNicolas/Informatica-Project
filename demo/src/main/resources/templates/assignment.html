@@ -38,14 +38,14 @@
                     <label for="maxStudents">Max Studenten:</label>
                     <input name="maxStudents" id="maxStudents" type="number" required="required" min="1"><br>
                     <label>Tags:</label>
-                        <ul>
-                            <th:block th:each='tag: ${updatetag}'>
-                                <label class="inputTag" th:value='${tag.getTagId()}' for="tag">
-                                    <input class="inputTag"  type="checkbox" id="tag" name="tag" th:value='${tag.getTagId()}' th:text='${tag.getTagName()}'/>
-                                </label>
-                            </th:block>
-                        </ul>
-                    <br/>
+                    <ul>
+                        <th:block th:each='tag: ${updatetag}'>
+                            <label th:value='${tag.getTagId()}' for="tag">
+                                <input type="checkbox" id="tag" name="tag" th:value='${tag.getTagId()}'
+                                       th:text='${tag.getTagName()}'/>
+                            </label>
+                        </th:block>
+                    </ul>
                     <input class="button" type="SUBMIT" value="Opdracht aanmaken">
 
                 </form>
@@ -65,8 +65,7 @@
                 alert("De startdatum moet kleiner zijn dan de einddatum van uw opdracht!");
                 document.getElementById('end_date').value = "";
                 return false;
-            }
-            else if (endDate < startDate){
+            } else if (endDate < startDate) {
                 alert("De startdatum moet kleiner zijn dan de einddatum!");
                 document.getElementById('end_date').value = "";
                 return false;

@@ -262,7 +262,7 @@ input[type=text], input[type=email], input[type=password] {
 
 label {
 	padding: 10px 10px 10px 0;
-	display: inline-block;
+	display: inline;
 	width: 15%;
 }
 
@@ -8909,7 +8909,7 @@ input[type=checkbox]+label {
 }
 
 input[type=checkbox]+label {
-	display: inline-block;
+	display: inline;
 	font-style: normal;
 	font-size: 16px;
 	padding-left: 32px;
@@ -8926,7 +8926,7 @@ input[type=checkbox]+label {
 }
 
 input[type=checkbox]+label:before {
-	display: inline-block;
+	display: inline;
 	content: "";
 	width: 20px;
 	height: 20px;
@@ -10636,7 +10636,7 @@ form.standard-form .checkbox-wrap {
 
 .page form label,
 form.standard-form label {
-	display: block;
+	display: inline-block;
 	font-family: foco, Helvetica, Arial, sans-serif;
 	font-weight: 700;
 	font-style: normal;
@@ -10751,7 +10751,7 @@ form.standard-form input[type=checkbox] {
 .page form input[type=checkbox]+label,
 form.standard-form input[type=checkbox]+label {
 	position: relative;
-	display: inline-block;
+	display: inline;
 	font-family: foco, Helvetica, Arial, sans-serif;
 	font-weight: 400;
 	font-style: normal;
@@ -10765,7 +10765,7 @@ form.standard-form input[type=checkbox]+label {
 
 .page form input[type=checkbox]+label:before,
 form.standard-form input[type=checkbox]+label:before {
-	display: inline-block;
+	display: inline;
 	content: "";
 	width: 20px;
 	height: 20px;
@@ -14470,6 +14470,5 @@ ul.meta2 li.twitter a:hover:before {
 #tag {
 	display: block;
 	float: left;
-	margin-top: 12px;
 	margin-right: 11px;
 }
