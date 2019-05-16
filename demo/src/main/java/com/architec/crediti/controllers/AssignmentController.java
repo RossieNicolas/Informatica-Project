@@ -103,6 +103,7 @@ public class AssignmentController {
         int evalPage = (page.orElse(0) < 1) ? initialPage : page.get() - 1;
 
         Page<Assignment> fiches = assignmentRepo.findAll(PageRequest.of(evalPage, pageSize));
+
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
 
         modelAndView.addObject("persons", fiches);
@@ -110,6 +111,39 @@ public class AssignmentController {
         modelAndView.addObject("selectedPageSize", pageSize);
         modelAndView.addObject("pager", pager);
         return modelAndView;
+    }
+
+    // list all assignments which are full
+    @GetMapping("/allFullAssignments")
+    public String getAllFullAssignment(Model model , @RequestParam("page") Optional<Integer> page) {
+
+        List<Assignment> fullas = new ArrayList<>();
+        for (Assignment item: assignmentRepo.findAll()) {
+            if (item.getAmountStudents() == item.getMaxStudents()) {
+
+                fullas.add(item);
+            }
+        }
+        model.addAttribute("assignments", fullas);
+
+        ModelAndView modelAndView = new ModelAndView("listAllAssignments");
+        int pageSize = 15;
+        int buttons = (int) assignmentRepo.count() / pageSize;
+
+        if (assignmentRepo.count() % pageSize != 0) {
+            buttons++;
+        }
+        int initialPage = 0;
+        int evalPage = (page.orElse(0) < 1) ? initialPage : page.get() - 1;
+
+        Page<Assignment> fiches = assignmentRepo.findAll(PageRequest.of(evalPage, pageSize));
+        Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
+
+        model.addAttribute("persons", fiches);
+        model.addAttribute("selectedPageSize", pageSize);
+        model.addAttribute("pager", pager);
+
+        return "listAllFullAssignments";
     }
 
     // list all unvalidated assignments
@@ -131,7 +165,7 @@ public class AssignmentController {
 
     // search assignments
     @PostMapping("/allassignments")
-    String getAssignment(@RequestParam("searchbar") String name, Model model , @RequestParam("page") Optional<Integer> page) {
+    public String getAssignment(@RequestParam("searchbar") String name, Model model , @RequestParam("page") Optional<Integer> page) {
 
         try {
             Assignment a = assignmentRepo.findByAssignmentId((Integer.parseInt(name)));
