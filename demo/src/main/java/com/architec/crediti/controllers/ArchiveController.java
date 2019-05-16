@@ -1,8 +1,11 @@
 package com.architec.crediti.controllers;
 
 import com.architec.crediti.models.ArchivedAssignment;
+import com.architec.crediti.models.Assignment;
 import com.architec.crediti.models.Pager;
 import com.architec.crediti.repositories.ArchiveRepository;
+import com.architec.crediti.repositories.AssignmentMethods;
+import com.architec.crediti.repositories.TagRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,7 +16,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 public class ArchiveController {
@@ -23,10 +29,13 @@ public class ArchiveController {
     private int initialPage = 0;
 
     private int pageSize = 15;
+    private final
+    TagRepo tagRepo;
 
     @Autowired
-    public ArchiveController(ArchiveRepository archiveRepo) {
+    public ArchiveController(ArchiveRepository archiveRepo, TagRepo tagRepo) {
         this.archiveRepo = archiveRepo;
+        this.tagRepo = tagRepo;
     }
 
     //get archive page
@@ -47,19 +56,40 @@ public class ArchiveController {
         modelAndView.addObject("assignments", fiches);
         modelAndView.addObject("selectedPageSize", pageSize);
         modelAndView.addObject("pager", pager);
+        modelAndView.addObject("tags", tagRepo.findAll());
         return modelAndView;
     }
 
     //search in archive
     @PostMapping("/archive")
-    String getArchivedAssignment(@RequestParam("searchbar") String name, Model model, @RequestParam("page") Optional<Integer> page) {
+    String getArchivedAssignment(@RequestParam("searchbar") String name, Model model, @RequestParam("page") Optional<Integer> page,
+                                 @RequestParam(required = false , value = "tag") int[] tags) {
 
-        try {
-            ArchivedAssignment a = archiveRepo.findByAssignmentId((Integer.parseInt(name)));
-            model.addAttribute("assignments", a);
+        if(tags == null){
+            try {
+                ArchivedAssignment a = archiveRepo.findByAssignmentId((Integer.parseInt(name)));
+                model.addAttribute("assignments", a);
 
-        } catch (Exception e) {
-            model.addAttribute("assignments", archiveRepo.findByTitleContaining(name));
+            } catch (Exception e) {
+                model.addAttribute("assignments", archiveRepo.findByTitleContaining(name));
+            }
+
+        }
+        else {
+            List<ArchivedAssignment> list = archiveRepo.findByTitleContaining(name);
+            List<ArchivedAssignment> list2 = new ArrayList<>();
+            for (int item : tags) {
+                for (ArchivedAssignment a : list) {
+                    if (a.getTags().contains(tagRepo.findBytagId(item))) {
+                        list2.add(a);
+                    }
+                }
+            }
+
+            //delete double assignments in search
+            list2 = list2.stream().distinct().collect(Collectors.toList());
+
+            model.addAttribute("assignments", list2);
         }
 
         ModelAndView modelAndView = new ModelAndView("Archive");
@@ -77,6 +107,7 @@ public class ArchiveController {
         model.addAttribute("persons", fiches);
         model.addAttribute("selectedPageSize", pageSize);
         model.addAttribute("pager", pager);
+        model.addAttribute("tags", tagRepo.findAll());
 
         return "archive";
     }

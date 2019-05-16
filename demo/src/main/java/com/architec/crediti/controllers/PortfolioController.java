@@ -36,17 +36,21 @@ public class PortfolioController {
 
     private static final Logger logger = LoggerFactory.getLogger(PortfolioController.class);
 
-    @Autowired
-    private PortfolioUtil portfolioUtil;
+    private final PortfolioUtil portfolioUtil;
+
+    private final FileStorageService fileStorageService;
+
+    private final FileRepository fileRepo;
+
+    private final UserRepository userRepo;
 
     @Autowired
-    private FileStorageService fileStorageService;
-
-    @Autowired
-    private FileRepository fileRepo;
-
-    @Autowired
-    private UserRepository userRepo;
+    public PortfolioController(PortfolioUtil portfolioUtil, FileStorageService fileStorageService, FileRepository fileRepo, UserRepository userRepo) {
+        this.portfolioUtil = portfolioUtil;
+        this.fileStorageService = fileStorageService;
+        this.fileRepo = fileRepo;
+        this.userRepo = userRepo;
+    }
 
     @GetMapping("/portfolio")
     public String getPortfolio(Model model, Principal principal) {

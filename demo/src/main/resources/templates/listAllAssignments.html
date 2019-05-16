@@ -16,6 +16,13 @@
         <label for='searchbar'>Zoekwaarde: </label>
         <input type='search' class='form-control' name='searchbar' id='searchbar'>
         <input type='SUBMIT' id="zoekKnop" value="Zoek" class="button"/>
+        <tr th:each="a : ${tags}">
+            <td th:text="${a.getTagName()}"></td>
+            <input type="checkbox" name="tag" th:tr='${a.getTagName()}' th:value='${a.getTagId()}'/>
+            </td>
+            &nbsp;&nbsp;&nbsp;
+        </tr>
+
     </form>
 </div>
 <div id='overview'>

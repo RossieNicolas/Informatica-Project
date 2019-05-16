@@ -50,10 +50,12 @@
 
                         <label>Tags:</label>
                         <ul>
-                            <th:block th:each='tag, iter: ${updatetag}'>
-                                <label th:value='${tag.getTagId()}' for="tag">
-                                    <input th:checked="${status[iter.index]}" type="checkbox" id="tag" name="tag" th:value='${tag.getTagId()}' th:text='${tag.getTagName()}'/>
-                                </label>
+                            <th:block th:each='tag,iter: ${updatetag}'>
+                                <input class="inputTag" th:checked="${status[iter.index]}" type="checkbox" id="tag"
+                                       name="tag" th:tr='${tag.getTagName()}'
+                                       th:value='${tag.getTagId()}'/>
+                                <label class="inputTag" for="tag" th:text='${tag.getTagName()}'></label>
+                                &nbsp;&nbsp;
                             </th:block>
                         </ul>
                         <br/>

@@ -50,21 +50,18 @@
                         <input name="maxStudents" id="maxStudents" type="number" th:value="*{a.getMaxStudents()}"
                                min="1" required="required"><br>
 
-                        <table class="tagsAssignments">
-                            <tr>
-                                <th>Tags</th>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <th:block th:each='tag,iter: ${updatetag}'>
-                                        <input class="inputTag" th:checked="${status[iter.index]}" type="checkbox"
-                                               id="tag" name="tag" th:tr='${tag.getTagName()}'
-                                               th:value='${tag.getTagId()}'/>
-                                        <label class="inputTag" for="tag" th:text='${tag.getTagName()}'></label>
-                                    </th:block>
-                                </td>
-                            </tr>
-                        </table>
+                        <label>Tags:</label>
+                        <ul>
+                            <th:block th:each='tag,iter: ${updatetag}'>
+                                <input class="inputTag" th:checked="${status[iter.index]}" type="checkbox" id="tag"
+                                       name="tag" th:tr='${tag.getTagName()}'
+                                       th:value='${tag.getTagId()}'/>
+                                <label class="inputTag" for="tag" th:text='${tag.getTagName()}'></label>
+                                &nbsp;&nbsp;
+
+                            </th:block>
+                        </ul>
+                        <br/>
                     </fieldset>
                     <br/>
                     <input th:if="${!a.isValidated()}" type="submit" value="💾 BEWAREN" class="button"
@@ -80,8 +77,7 @@
                     <a th:if="${!a.isValidated()}" th:href="@{/validateassignment/{id} (id=${a.assignmentId})}"
                        class="button">✔️ VALIDEREN</a>
                     &nbsp;&nbsp;&nbsp;
-                    <a th:if="${a.isValidated()}" th:href="@{/archiveassignment/{id} (id=${a.assignmentId})}"
-                       class="button">🗄️ ARCHIVEREN</a>
+                    <a th:if="${a.isValidated()}" th:href="@{/archiveassignment/{id} (id=${a.assignmentId})}" class="button">🗄️ ARCHIVEREN</a>
                 </form>
             </div>
         </div>

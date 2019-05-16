@@ -11,6 +11,9 @@ import javax.crypto.spec.PBEKeySpec;
 import org.apache.commons.codec.binary.Hex;
 
 public class HashPass {
+    private HashPass() {
+    }
+
 
 
     public static byte[] generateSalt() {
