@@ -78,12 +78,16 @@
                        th:if="${a.isValidated()} and ${!ingeschreven} and ${!volzet}"
                        th:href="@{/studentenroll/{id} (id=${a.assignmentId})}"
                        class="button">➕ Inschrijven</a>
-                    &nbsp;&nbsp;&nbsp;
-                    <a th:href="@{/deleteassignment/{id} (id=${a.assignmentId})}" class="button">🗑️ VERWIJDEREN</a>
-                    &nbsp;&nbsp;&nbsp;
+
+                    <a th:if="${!a.isValidated() and status}"
+                       th:href="@{/deleteassignment/{id} (id=${a.assignmentId})}" class="button">🗑️ VERWIJDEREN</a>
+
+                    <a sec:authorize="hasRole('COORDINATOR')" th:if="${a.isValidated()}"
+                       th:href="@{/deleteassignment/{id} (id=${a.assignmentId})}" class="button">🗑️ VERWIJDEREN</a>
+                    
                     <a th:if="${!a.isValidated()}" th:href="@{/validateassignment/{id} (id=${a.assignmentId})}"
                        class="button">✔️ VALIDEREN</a>
-                    &nbsp;&nbsp;&nbsp;
+                    
                     <a th:if="${a.isValidated()}" th:href="@{/archiveassignment/{id} (id=${a.assignmentId})}"
                        class="button">🗄️ ARCHIVEREN</a>
                 </form>
