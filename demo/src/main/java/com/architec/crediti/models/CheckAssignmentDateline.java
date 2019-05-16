@@ -29,7 +29,7 @@ public class CheckAssignmentDateline {
     public CheckAssignmentDateline(EmailServiceImpl mail) {
         this.mail = mail;
     }
-    @Scheduled(fixedRate = 2000)
+    @Scheduled(cron = "0 51 12 * * ?")
     public void create() {
              for (Student student : stRepo.findAll()) {
                  for ( Assignment as : student.getAssignments()){
