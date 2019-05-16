@@ -33,9 +33,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 //pagina's die niet-ingelogde gebruikers zien
                 .antMatchers(staticResources).permitAll()
+
+                //Everyone can see these pages
                 .antMatchers("/login", "/", "/createexternaluser","/registersucces", "/createexternal", "/passwordRecovery", "/notapproved").permitAll()
+
+                //Only for EXTERNAL
                 .antMatchers("/externalUserProfile").hasRole("EXTERNE")
-                .antMatchers("/listAllAssignments").hasAnyRole("STUDENT", "DOCENT", "COORDINATOR")
+
+                //Only for STUDENTS
+                .antMatchers("/portfolio").hasRole("STUDENT")
+
+                //Only for COORDINATOR
+                .antMatchers("/tag", "/listAllTags", "/listUnvalidatedExternal", "/archive", "/listStudents").hasRole("COORDINATOR")
+
+                //For all but EXTERN
+                .antMatchers("/listAllAssignments", "/allassignments", "/documentation").hasAnyRole("STUDENT", "DOCENT", "COORDINATOR")
+
                 //Alle andere pagina's blokkeren
                 .anyRequest().fullyAuthenticated()
                 .and()
