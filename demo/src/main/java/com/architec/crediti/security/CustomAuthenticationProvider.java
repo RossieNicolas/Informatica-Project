@@ -121,16 +121,15 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             String rawFirstname = res.getAttributes().get("givenname").toString();
             String rawLastname = res.getAttributes().get("sn").toString();
             String rawRole = res.getAttributes().get("extensionAttribute1").toString();
-            String email = username;
 
             String firstname = (rawFirstname.substring(rawFirstname.lastIndexOf(' ') + 1));
             String lastname = (rawLastname.substring(rawLastname.lastIndexOf(' ') + 1));
             String role = (rawRole.substring(rawRole.lastIndexOf(' ') + 1));
 
-            boolean emailExsist = userRepo.existsByEmail(email);
+            boolean emailExsist = userRepo.existsByEmail(username);
 
             if (!emailExsist) {
-                User user = new User(firstname, lastname, email, findRole(role), true);
+                User user = new User(firstname, lastname, username, findRole(role), true);
                 userRepo.save(user);
             }
 
