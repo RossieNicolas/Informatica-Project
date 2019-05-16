@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.print.Doc;
 import javax.servlet.http.HttpServletRequest;
 
 import com.architec.crediti.repositories.FileRepository;
@@ -26,6 +27,7 @@ import com.architec.crediti.utils.PortfolioUtil;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 /*
 Some functions from
@@ -119,6 +121,14 @@ public class PortfolioController {
         for (MultipartFile item: files) {
             portfolioUtil.uploadDocumentation(item);
         }
+
+        return "redirect:/documentation";
+    }
+
+    @GetMapping("/deletedocumentation/{id}")
+    public String deleteDocumentation(@PathVariable("id") int id) {
+        Documentation doc = docRepo.findByDocumentId(id).orElseThrow(() -> new IllegalArgumentException("Invalid documentation Id:" + id));
+        docRepo.delete(doc);
 
         return "redirect:/documentation";
     }

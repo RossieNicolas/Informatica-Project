@@ -20,7 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -159,7 +158,7 @@ public class AssignmentController {
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
 
         model.addAttribute("persons", fiches);
-        model.addAttribute("selectedPageSize", pageSize);
+        model.addAttribute("assignments", fiches);
         model.addAttribute("pager", pager);
 
         return "listAllAssignments";

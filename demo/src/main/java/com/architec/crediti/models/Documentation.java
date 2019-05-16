@@ -8,7 +8,7 @@ public class Documentation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "fileId")
-    private int fileId;
+    private int documentId;
 
     @Column(name = "title", nullable = false)
     private String title;
@@ -24,12 +24,12 @@ public class Documentation {
         this.downloadLink = download;
     }
 
-    public int getFileId() {
-        return fileId;
+    public int getId() {
+        return documentId;
     }
 
-    public void setFileId(int fileId) {
-        this.fileId = fileId;
+    public void setId(int fileId) {
+        this.documentId = fileId;
     }
 
     public String getTitle() {

@@ -5,8 +5,7 @@
     <title>Crediti - Documentatie</title>
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
-<body>
-<div class="background">
+<body class="background">
     <header>
         <div class="nav-main navbackground">
             <div class="container">
@@ -79,19 +78,22 @@
                 <thead>
                 <tr>
                     <th>Title</th>
-                    <th width="18%"></th>
+                    <th width="26%"></th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="file : ${files}" class="tablebackground">
                     <td th:text="${file.getTitle()}"></td>
-                    <td><a th:href="${file.getDownloadLink()}" class="button">Download</a></td>
+                    <td>
+                        <a th:href="${file.getDownloadLink()}" class="button">Download</a>
+                        &nbsp;&nbsp;&nbsp;
+                        <a th:href="@{/deletedocumentation/{id} (id=${file.getId()})}" class="button">🗑️</a>
+                    </td>
                 </tr>
                 </tbody>
             </table>
         </div>
     </div>
-</div>
 <footer>
     <div class="footer-bot">
         <div class="container">
