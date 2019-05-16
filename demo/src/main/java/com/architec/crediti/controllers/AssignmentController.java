@@ -294,56 +294,6 @@ public class AssignmentController {
         return "redirect:/allassignments";
     }
 
-    // find specific assignment to edit out of all assignments
-    @GetMapping("/myassignments/{assignmentId}")
-    public String getMyAssignmentsToUpdate(@PathVariable("assignmentId") int assignmentId, Model model) {
-        List<Tag> updatetag = tagRepo.findAll();
-
-        model.addAttribute("updatetag", updatetag);
-        try {
-            Assignment a = assignmentRepo.findByAssignmentId(assignmentId);
-            Set<Tag> tags = a.getTags();
-            boolean[] status = new boolean[updatetag.size()];
-
-            for (int i = 0; i < updatetag.size(); i++) {
-                for (Tag item : tags) {
-                    if (updatetag.get(i).getTagId() == item.getTagId()) {
-                        status[i] = true;
-                    }
-                }
-            }
-
-            model.addAttribute("status", status);
-            if (a.getAmountStudents() != a.getMaxStudents() && !a.isArchived()) {
-                model.addAttribute("assignments", a);
-            }
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
-        return "updateMyAssignment";
-    }
-
-    // update specific assignment
-    @PostMapping(value = "/myassignments/{assignmentId}")
-    public String updateMyAssignment(Principal principal, @PathVariable("assignmentId") int assignmentId,
-                                     @Valid Assignment assignment, @RequestParam(required = false, value = "tag") int[] tags) {
-        Set<Tag> set = new HashSet<>();
-        User currentUser = userRepo.findByEmail(principal.getName());
-
-        if (tags != null) {
-            for (int item : tags) {
-                Tag tag = tagRepo.findBytagId(item);
-                set.add(tag);
-            }
-        }
-
-        assignment.setTags(set);
-        assignment.setAssignerUserId(currentUser);
-        assignment.setAssignmentId(assignmentId);
-        assignmentRepo.save(assignment);
-        return "redirect:/myassignments";
-    }
-
     // assign student to specific assignment
     @GetMapping("/studentenroll/{assignmentId}")
     public String enrollAssignment(@PathVariable("assignmentId") int assignmentId, @Valid Student student,

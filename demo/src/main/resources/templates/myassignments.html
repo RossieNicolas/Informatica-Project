@@ -25,7 +25,7 @@
             <th>Gevalideerd</th>
         </tr>
         <tr th:each="a : ${assignments}" class="tablebackground">
-            <td><a th:href="${'/myassignments/' + a.getAssignmentId()}" class="button">📃</a>
+            <td><a th:href="${'/allassignments/' + a.getAssignmentId()}" class="button">📃</a>
                 &nbsp;&nbsp;&nbsp;
             <td th:text="${a.getAssignmentId()}"></td>
             <td th:text="${a.getType()}"></td>

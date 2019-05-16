@@ -14,7 +14,7 @@
             <div class="wrap-all col-xs-12 ">
                 <h2>Opdracht bewerken</h2>
                 <form th:each="a: ${assignments}" class="standard-form" method="post"
-                      th:action="@{/myassignments/{id}(id=${a.assignmentId})}">
+                      th:action="@{/allassignments/{id}(id=${a.assignmentId})}">
                     <input type="button" value="✏️BEWERKEN" class="button" onclick="toggleForm();">
                     <br><br>
                     <fieldset disabled="disabled" id="assignmentInfo">
