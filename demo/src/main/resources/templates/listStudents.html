@@ -86,7 +86,7 @@
         </thead>
         <tbody>
         <tr th:each="a : ${students}" class="tablebackground">
-            <td><a th:href="${'/liststudents/' + a.getStudentennummer()}" class="button">📃</a>
+         <td><a th:href="${'/liststudents/' + a.getStudentennummer()}" class="button">📃</a>
             <td th:text="${a.getStudentennummer()}"></td>
             <td th:text="${a.getUserId()}"></td>
             <td th:text="${a.findEmail()}"></td>

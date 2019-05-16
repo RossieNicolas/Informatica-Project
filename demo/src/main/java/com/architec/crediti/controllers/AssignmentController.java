@@ -4,6 +4,14 @@ import com.architec.crediti.email.EmailServiceImpl;
 import com.architec.crediti.email.EmailTemplates;
 import com.architec.crediti.models.*;
 import com.architec.crediti.repositories.*;
+import com.architec.crediti.models.Assignment;
+import com.architec.crediti.models.Pager;
+import com.architec.crediti.models.Tag;
+import com.architec.crediti.models.User;
+import com.architec.crediti.repositories.AssignmentRepository;
+import com.architec.crediti.repositories.Methods;
+import com.architec.crediti.repositories.TagRepo;
+import com.architec.crediti.repositories.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
