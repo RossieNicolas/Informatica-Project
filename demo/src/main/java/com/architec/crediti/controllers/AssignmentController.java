@@ -13,6 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.stream.Collectors;
+
+
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.*;
@@ -47,8 +50,8 @@ public class AssignmentController {
     }
 
     // get assignment form
-    @GetMapping(value = "/assignment")
-    public String tag(Model model){
+    @GetMapping("/assignment")
+    public String tag(Model model) {
         List<Tag> updatetag = tagRepo.findAll();
 
         model.addAttribute("updatetag", updatetag);
@@ -73,8 +76,8 @@ public class AssignmentController {
         assignmentRepo.save(assignment);
 
         mail.sendSimpleMessage("alina.storme@student.ap.be", "Nieuwe opdracht gecreëerd",
-        EmailTemplates.createdAssignment(assignment.getAssigner(),
-                assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments", "class group"));
+                EmailTemplates.createdAssignment(assignment.getAssigner(),
+                        assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments", "class group"));
         return "successfullAssignment";
     }
 
@@ -104,8 +107,8 @@ public class AssignmentController {
 
         modelAndView.addObject("persons", fiches);
         modelAndView.addObject("assignments", fiches);
-        modelAndView.addObject("selectedPageSize", pageSize);
         modelAndView.addObject("pager", pager);
+        modelAndView.addObject("tags", tagRepo.findAll());
         return modelAndView;
     }
 
@@ -128,19 +131,41 @@ public class AssignmentController {
 
     // search assignments
     @PostMapping("/allassignments")
-    String getAssignment(@RequestParam("searchbar") String name, Model model , @RequestParam("page") Optional<Integer> page) {
+    String getAssignment(@RequestParam("searchbar") String name,
+                         Model model, @RequestParam("page") Optional<Integer> page,
+                         @RequestParam(required = false, value = "tag") int[] tags) {
 
-        try {
-            Assignment a = assignmentRepo.findByAssignmentId((Integer.parseInt(name)));
-            if (a.getAmountStudents() != a.getMaxStudents() && !a.isArchived()) {
-                model.addAttribute("assignments", a);
+        //if no tags checked search on all assignments
+        if (tags == null) {
+            try {
+                Assignment a = assignmentRepo.findByAssignmentId((Integer.parseInt(name)));
+                if (a.getAmountStudents() != a.getMaxStudents() && !a.isArchived()) {
+                    model.addAttribute("assignments", a);
+                }
+
+
+            } catch (Exception e) {
+                model.addAttribute("assignments", AssignmentMethods.removeFullAssignments(assignmentRepo.findByTitleContainingAndArchived(name, false)));
+            }
+        } else {
+            List<Assignment> list = AssignmentMethods.removeFullAssignments(assignmentRepo.findByTitleContainingAndArchived(name, false));
+            List<Assignment> list2 = new ArrayList<>();
+            for (int item : tags) {
+                for (Assignment a : list) {
+                    if (a.getTags().contains(tagRepo.findBytagId(item))) {
+                        list2.add(a);
+                    }
+                }
             }
 
-        } catch (Exception e) {
-            model.addAttribute("assignments", AssignmentMethods.removeFullAssignments(assignmentRepo.findByTitleContainingAndArchived(name, false)));
+            //delete double assignments in search
+            list2 = list2.stream().distinct().collect(Collectors.toList());
+
+            model.addAttribute("assignments", list2);
         }
 
         ModelAndView modelAndView = new ModelAndView("listAllAssignments");
+
         int pageSize = 15;
         int buttons = (int) assignmentRepo.count() / pageSize;
 
@@ -156,16 +181,17 @@ public class AssignmentController {
         model.addAttribute("persons", fiches);
         model.addAttribute("selectedPageSize", pageSize);
         model.addAttribute("pager", pager);
+        model.addAttribute("tags", tagRepo.findAll());
 
         return "listAllAssignments";
     }
 
-    @GetMapping(value = "/myassignments")
+    @GetMapping("/myassignments")
     public String assignments(Principal principal, Model model) {
         User currentUser = userRepo.findByEmail(principal.getName());
         Iterable<Assignment> assignments = assignmentRepo.findAll();
         ArrayList<Assignment> myAssignments = new ArrayList<>();
-        for (Assignment a : assignments){
+        for (Assignment a : assignments) {
             if (currentUser.getUserId() == a.getAssignerUserId()) {
                 myAssignments.add(a);
             }
@@ -176,7 +202,7 @@ public class AssignmentController {
     }
 
     // find specific assignment to edit out of all assignments
-    @GetMapping(value = "/allassignments/{assignmentId}")
+    @GetMapping("/allassignments/{assignmentId}")
     public String getAssignmentsToUpdate(@PathVariable("assignmentId") int assignmentId, Model model) {
         List<Tag> updatetag = tagRepo.findAll();
         model.addAttribute("updatetag", updatetag);
@@ -310,16 +336,27 @@ public class AssignmentController {
 
     //archive assignment
     @GetMapping("/archiveassignment/{assignmentId}")
-    public String archiveAssignment(Principal principal, @PathVariable("assignmentId") int assignmentId, Model model) {
+    public String archiveAssignment(Principal principal, @PathVariable("assignmentId") int assignmentId, Model model, @RequestParam(required = false, value = "tag") int[] tags) {
         User currentUser = userRepo.findByEmail(principal.getName());
+        Set<Tag> set = new HashSet<>();
         Assignment assignment = assignmentRepo.findById((long) assignmentId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid assignment Id:" + assignmentId));
-        assignment.setArchived(true);
+
         assignmentRepo.save(assignment);
         ArchivedAssignment archivedAssignment = new ArchivedAssignment();
         archivedAssignment.fillArchivedAssignment(assignment);
-        archiveRepo.save(archivedAssignment);
+
+        /*if (assignment.getTags() != null) {
+            for (Tag item : assignment.getTags()) {
+                set.add(item);
+            }
+        }
+
+        archivedAssignment.setTags(set);*/
         assignmentRepo.delete(assignment);
+        archiveRepo.save(archivedAssignment);
+        //assignment.setArchived(true);
+
         model.addAttribute("assignments", assignmentRepo.findAll());
 
         //mail to coordinator

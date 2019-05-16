@@ -432,7 +432,7 @@ input[type=search]::-webkit-search-decoration {
 }
 
 fieldset {
-    border: 1px solid silver;
+    border: 0;
     margin: 0 2px;
     padding: .35em .625em .75em
 }
@@ -14282,7 +14282,7 @@ ul.meta2 li.twitter a:hover:before {
 }
 
 .sidebar .container .webform-submission-form fieldset {
-    border: 1px solid #e2e2e2
+    /*border: 1px solid #e2e2e2*/
 }
 
 .aparts-button {
@@ -14593,5 +14593,5 @@ ul.meta2 li.twitter a:hover:before {
 }
 
 .inputTag {
-    display: inline-block;
+    display: inline;
 }

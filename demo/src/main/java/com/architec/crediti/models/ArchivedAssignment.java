@@ -9,6 +9,7 @@ import java.util.Set;
 @Table(name = "archive")
 public class ArchivedAssignment {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long assignmentId;
 
     @NotNull(message = "Titel mag niet leeg zijn!")
@@ -47,9 +48,6 @@ public class ArchivedAssignment {
     @Column(name = "end_date")
     private String end_date;
 
-    @Column(name = "tagAssign")
-    private String tagAssign;
-
     @Column(name = "assigner_user")
     private String assignerUser;
 
@@ -59,12 +57,11 @@ public class ArchivedAssignment {
             joinColumns = @JoinColumn(name = "assign_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
     Set<Tag> tags;
-
     public ArchivedAssignment() {
     }
 
     public ArchivedAssignment(String title, String type, String task, int amountHours, int maxStudents, String start_date,
-                      String end_date, boolean archived, boolean validated, String assignerUser) {
+                      String end_date, String assignerUser) {
         this.title = title;
         this.type = type;
         this.task = task;
@@ -77,7 +74,9 @@ public class ArchivedAssignment {
     }
 
     public void fillArchivedAssignment(Assignment a){
-        this.assignmentId = a.getAssignmentId();
+        //TODO
+        //mag niet dezelfde id zijn (Cannot insert duplicate key in object 'dbo.tag_assign'. The duplicate key value is (101, 7))
+        //this.assignmentId = a.getAssignmentId();
         this.title = a.getTitle();
         this.type = a.getType();
         this.task = a.getTask();
@@ -87,7 +86,6 @@ public class ArchivedAssignment {
         this.start_date = a.getStart_date();
         this.end_date = a.getEnd_date();
         this.assignerUser = a.getAssigner();
-        this.tags= a.tags;
     }
 
     public long getAssignmentId() {

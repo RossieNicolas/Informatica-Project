@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Crediti - Alle opdrachten</title>
+    <title>Crediti - Opdracht bewerken</title>
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
 <body class="background">
@@ -21,7 +21,7 @@
                             <ul class="nav">
                                 <li>
                                     <div class="dropdown dropdownleft">
-                                        <span>Opdrachten</span>
+                                        <span>Student</span>
                                         <div class="dropdown-content">
                                             <a href="/allassignments">Lopende taken</a>
                                             <a href="/assignment">Taak toevoegen</a>
@@ -50,7 +50,7 @@
                                         <div class="dropdown-content">
                                             <a href="/tag">Tag toevoegen</a>
                                             <a href="/listAllTags">Lijst van tags</a>
-                                            <a href="/archive">Archief</a>
+                                            <a href="">Archief</a>
                                         </div>
                                     </div>
                                 </li>
@@ -62,72 +62,38 @@
         </div>
     </div>
 </header>
-<div class="container ">
-    <h2 class="extra">Alle opdrachten</h2>
-</div>
-<div class="container">
-    <form th:action='@{/allassignments}' method='POST'>
-        <label for='searchbar'>Zoekwaarde: </label>
-        <input type='search' class='form-control' name='searchbar' id='searchbar'>
-        <input type='SUBMIT' id="zoekKnop" value="Zoek" class="button"/>
-        <tr th:each="a : ${tags}">
-            <td th:text="${a.getTagName()}"></td>
-            <input type="checkbox" name="tag" th:tr='${a.getTagName()}' th:value='${a.getTagId()}'/>
-            </td>
-            &nbsp;&nbsp;&nbsp;
-        </tr>
+<div class="block">
+    <section class="find-edu">
+        <div class="container ">
+            <div class="wrap-all col-xs-12 ">
+                <h2>Detail student</h2>
 
-    </form>
-</div>
-<div id='overview'>
+                <form th:each="a: ${student}" class="standard-form" method="post"
+                      th:action="@{/liststudents/{id}(id=${a.studentennummer})}">
+                    <br><br>
+                    <fieldset disabled="disabled" id="assignmentInfo">
+                        <label for="nummer">Studenten nummer:</label>
+                        <input name="nummer" id="nummer" type="text" th:value="*{a.getStudentennummer()}" required="required"><br>
 
-    <table>
-        <thead>
-        <tr>
-            <th style="padding-left: 2.5%">Info</th>
-            <th>Nr</th>
-            <th>Opdrachtgever</th>
-            <th>Type</th>
-            <th>Naam</th>
-            <th>Begin</th>
-            <th>Einde</th>
-            <th>Aantal uren</th>
-            <th>Gevalideerd</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="a : ${assignments}" class="tablebackground" th:if="${!a.isArchived()}">
-            <td><a th:href="${'/allassignments/' + a.getAssignmentId()}" class="button">📃</a>
-            <td th:text="${a.getAssignmentId()}"></td>
-            <td th:text="${a.getAssigner()}"></td>
-            <td th:text="${a.getType()}"></td>
-            <td th:text="${a.getTitle()}" class="cell"></td>
-            <td th:text="${a.getStartDate()}"></td>
-            <td th:text="${a.getEnd_date()}"></td>
-            <td style="padding-left: 3.8%" th:text="${a.getAmountHours()}"></td>
-            <td style="padding-left: 2.5%">
-                <span th:if="${a.isValidated()}">✔️</span>
-                <span th:unless="${a.isValidated()}">❌</span>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-<div class="container">
-    <div th:if="${persons.totalPages !=1}">
-        <ul class="pagination">
-            <li th:class="${persons.number == 0} ? disabled">
-                <a class="pageLink" th:href="@{/allassignments/(page=${persons.number})}">&laquo;</a>
-            </li>
-            <li th:class="${persons.number == (page - 1)} ? 'active pointer-disabled'"
-                th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
-                <a class="pageLink" th:href="@{/allassignments/(page=${page})}" th:text="${page}"></a>
-            </li>
-            <li th:class="${persons.number + 1 == persons.totalPages} ? disabled">
-                <a class="pageLink" th:href="@{/allassignments/(page=${persons.number + 2})}">&raquo;</a>
-            </li>
-        </ul>
-    </div>
+                        <label for="Naam">Naam:</label>
+                        <input name="Naam" id="Naam" type="text" th:value="*{a.getUserId()}" required="required"><br>
+
+                        <label for="Email">Email:</label>
+                        <input name="Email" id="Email" th:value="*{a.findEmail()}" type="text" required="required"><br>
+
+                        <label for="Gsm">Gsm:</label><br>
+                        <input name="Gsm" id="Gsm" type="text" th:value="*{a.getGsm()}"
+                               required="required"><br>
+
+                        <label>Soort:</label><br>
+                        <input th:if="${a.isMobility()}" type="text" value="Mobility">
+                        <input th:if="${!a.isMobility()}"  type="text" value="Zap" >
+
+
+                </form>
+            </div>
+        </div>
+    </section>
 </div>
 <footer>
     <div class="footer-bot">
@@ -141,5 +107,6 @@
         </div>
     </div>
 </footer>
+
 </body>
 </html>
