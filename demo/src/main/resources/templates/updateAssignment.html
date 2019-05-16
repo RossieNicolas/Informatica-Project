@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8"/>
     <title>Crediti - Opdracht bewerken</title>
@@ -16,8 +17,13 @@
 
                 <form th:each="a: ${assignments}" class="standard-form" method="post"
                       th:action="@{/allassignments/{id}(id=${a.assignmentId})}">
-                    <input th:if="${!a.isValidated()}" type="button" value="✏️ BEWERKEN" class="button"
+
+                    <input th:if="${!a.isValidated() and status}"  type="button" value="✏️ BEWERKEN" class="button"
                            onclick="toggleForm();">
+
+                    <input sec:authorize="hasRole('COORDINATOR')" th:if="${a.isValidated()}"  type="button" value="✏️ BEWERKEN" class="button"
+                           onclick="toggleForm();">
+
                     <br><br>
                     <fieldset disabled="disabled" id="assignmentInfo">
                         <label for="title">Titel:</label>
@@ -65,6 +71,8 @@
                     <input th:if="${!a.isValidated()}" type="submit" value="💾 BEWAREN" class="button"
                            style="visibility: hidden;" id="save"
                            disabled>
+
+                    <input sec:authorize="hasRole('COORDINATOR')" th:if="${a.isValidated()}" type="submit" value="💾 BEWAREN" class="button">
 
                     <a th:if="${a.isValidated()} and ${!ingeschreven} and ${!volzet}"
                        th:href="@{/studentenroll/{id} (id=${a.assignmentId})}"

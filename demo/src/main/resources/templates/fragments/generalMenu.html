@@ -36,9 +36,9 @@
                                             <span>Profiel</span>
                                             <div class="dropdown-content">
                                                 <a sec:authorize="hasRole('EXTERNE')" href="/externalUserProfile">Mijn profiel</a>
-                                                <a sec:authorize="hasRole('STUDENT')" href="/">Mijn profiel</a>
+                                                <a sec:authorize="hasRole('STUDENT')" href="/">Mijn profiel TODO</a> <!--todo: add link-->
                                                 <a sec:authorize="hasRole('STUDENT')" href="/portfolio">Mijn portfolio</a>
-                                                <a sec:authorize="hasRole('COORDINATOR')" href="">Portfolios</a>
+                                                <a sec:authorize="hasRole('COORDINATOR')" href="">Portfolios TODO</a><!--todo: add link-->
                                             </div>
                                         </div>
                                     </li>
@@ -54,6 +54,7 @@
                                                 <a href="/tag">Tag toevoegen</a>
                                                 <a href="/listAllTags">Lijst van tags</a>
                                                 <a href="/listUnvalidatedExternal">Ongevalideerde Externe</a>
+                                                <a href="/listStudents">Alle Studenten</a>
                                                 <a href="/archive">Archief</a>
                                             </div>
                                         </div>
