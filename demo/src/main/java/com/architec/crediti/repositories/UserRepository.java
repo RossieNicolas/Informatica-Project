@@ -17,5 +17,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findAllByRole(String role);
     ArrayList<User> findByFirstnameContainingOrLastnameContaining(String firstname, String lastname);
-    ArrayList<User> findByFirstnameContainingOrLastnameContaining(String firstname, String lastname);
 }
