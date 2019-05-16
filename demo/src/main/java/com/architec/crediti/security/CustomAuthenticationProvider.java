@@ -13,6 +13,8 @@ import org.springframework.security.authentication.AuthenticationCredentialsNotF
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import javax.naming.Context;
@@ -26,6 +28,7 @@ import javax.naming.ldap.LdapContext;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Hashtable;
+import java.util.List;
 
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
@@ -53,12 +56,14 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         String username = auth.getName();
         String password = auth.getCredentials().toString();
+        List<GrantedAuthority> grantedAuths = new ArrayList<>();
 
         if (isLdapRegisteredUser(username, password)) {
             log.info("LDAP successful");
             return new UsernamePasswordAuthenticationToken(username, password, new ArrayList<>());
         } else if (isExternalUser(username, password)) {
-            return new UsernamePasswordAuthenticationToken(username, password, new ArrayList<>());
+            grantedAuths.add(new SimpleGrantedAuthority("ROLE_EXTERNE"));
+            return new UsernamePasswordAuthenticationToken(username, password, grantedAuths);
         } else {
             throw new AuthenticationCredentialsNotFoundException("Invalid Credentials!");
         }
