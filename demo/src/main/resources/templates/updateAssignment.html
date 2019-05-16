@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8"/>
     <title>Crediti - Opdracht bewerken</title>
@@ -16,8 +17,13 @@
 
                 <form th:each="a: ${assignments}" class="standard-form" method="post"
                       th:action="@{/allassignments/{id}(id=${a.assignmentId})}">
-                    <input th:if="${!a.isValidated()}" type="button" value="✏️ BEWERKEN" class="button"
+
+                    <input th:if="${!a.isValidated() and status}"  type="button" value="✏️ BEWERKEN" class="button"
                            onclick="toggleForm();">
+
+                    <input sec:authorize="hasRole('COORDINATOR')" th:if="${a.isValidated()}"  type="button" value="✏️ BEWERKEN" class="button"
+                           onclick="toggleForm();">
+
                     <br><br>
                     <fieldset disabled="disabled" id="assignmentInfo">
                         <label for="title">Titel:</label>
@@ -41,11 +47,6 @@
                         <input name="amountHours" id="amountHours" type="number" th:value="*{a.getAmountHours()}"
                                min="1" required="required"><br>
 
-                        <label for="amountStudents">Aantal ingeschreven studenten:</label>
-                        <input name="amountStudents" id="amountStudents" type="number"
-                               th:value="*{a.getAmountStudents()}"
-                               required="required" readonly><br>
-
                         <label for="maxStudents">Max Studenten:</label>
                         <input name="maxStudents" id="maxStudents" type="number" th:value="*{a.getMaxStudents()}"
                                min="1" required="required"><br>
@@ -68,16 +69,26 @@
                            style="visibility: hidden;" id="save"
                            disabled>
 
-                    <a th:if="${a.isValidated()} and ${!ingeschreven} and ${!volzet}"
+                    <input sec:authorize="hasRole('COORDINATOR')" th:if="${a.isValidated()}" type="submit" value="💾 BEWAREN" class="button">
+
+                    <a sec:authorize="hasRole('STUDENT')"
+                       th:if="${a.isValidated()} and ${!ingeschreven} and ${!volzet}"
                        th:href="@{/studentenroll/{id} (id=${a.assignmentId})}"
                        class="button">➕ Inschrijven</a>
-                    &nbsp;&nbsp;&nbsp;
-                    <a th:href="@{/deleteassignment/{id} (id=${a.assignmentId})}" class="button">🗑️ VERWIJDEREN</a>
-                    &nbsp;&nbsp;&nbsp;
-                    <a th:if="${!a.isValidated()}" th:href="@{/validateassignment/{id} (id=${a.assignmentId})}"
+
+                    <a th:if="${!a.isValidated() and status}"
+                       th:href="@{/deleteassignment/{id} (id=${a.assignmentId})}" class="button">🗑️ VERWIJDEREN</a>
+
+                    <a sec:authorize="hasRole('COORDINATOR')" th:if="${a.isValidated()}"
+                       th:href="@{/deleteassignment/{id} (id=${a.assignmentId})}" class="button">🗑️ VERWIJDEREN</a>
+
+                    <a sec:authorize="hasRole('COORDINATOR')"
+                       th:if="${!a.isValidated()}" th:href="@{/validateassignment/{id} (id=${a.assignmentId}}"
                        class="button">✔️ VALIDEREN</a>
-                    &nbsp;&nbsp;&nbsp;
-                    <a th:if="${a.isValidated()}" th:href="@{/archiveassignment/{id} (id=${a.assignmentId})}" class="button">🗄️ ARCHIVEREN</a>
+
+                    <a sec:authorize="hasRole('COORDINATOR')"
+                       th:if="${a.isValidated()}" th:href="@{/archiveassignment/{id} (id=${a.assignmentId})}"
+                       class="button">🗄️ ARCHIVEREN</a>
                 </form>
             </div>
         </div>

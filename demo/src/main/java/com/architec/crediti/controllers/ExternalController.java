@@ -7,6 +7,7 @@ import com.architec.crediti.models.User;
 import com.architec.crediti.repositories.ExternalUserRepository;
 import com.architec.crediti.repositories.HashPass;
 import com.architec.crediti.repositories.UserRepository;
+import com.architec.crediti.security.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -58,7 +59,7 @@ public class ExternalController {
         ExternalUser externalUser = new ExternalUser(firstname, lastname, company, phone, address, city, postal,
                 hashedBytes[0].toString().toCharArray(),(byte[]) hashedBytes[1]);
         // create a internal user
-        User user = new User(firstname, lastname, email, "Externe",false);
+        User user = new User(firstname, lastname, email, Role.EXTERNE,false);
         // set the foreign key
         externalUser.setUserId(user);
 
@@ -135,7 +136,7 @@ public class ExternalController {
 
     @GetMapping("/listUnvalidatedExternal")
     public String listUnvalidatedExternal(Model model) {
-        List<User> users = userRepository.findAllByRole("Externe");
+        List<User> users = userRepository.findAllByRole(Role.EXTERNE);
         List<ExternalUser> externalUsers = new ArrayList<>();
         for (User u : users) {
             if (!externalUserRepository.findByUserId(u).isApproved()) {

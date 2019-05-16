@@ -14,7 +14,7 @@
             <div class="wrap-all col-xs-12 ">
                 <h2>Opdracht bewerken</h2>
                 <form th:each="a: ${assignments}" class="standard-form" method="post"
-                      th:action="@{/myassignments/{id}(id=${a.assignmentId})}">
+                      th:action="@{/allassignments/{id}(id=${a.assignmentId})}">
                     <input type="button" value="✏️BEWERKEN" class="button" onclick="toggleForm();">
                     <br><br>
                     <fieldset disabled="disabled" id="assignmentInfo">
@@ -38,11 +38,6 @@
                         <label for="amountHours">Totaal uur:</label>
                         <input name="amountHours" id="amountHours" type="number" th:value="*{a.getAmountHours()}"
                                min="1" required="required"><br>
-
-                        <label for="amountStudents">Aantal ingeschreven studenten:</label>
-                        <input name="amountStudents" id="amountStudents" type="number"
-                               th:value="*{a.getAmountStudents()}"
-                               required="required" readonly><br>
 
                         <label for="maxStudents">Max Studenten:</label>
                         <input name="maxStudents" id="maxStudents" type="number" th:value="*{a.getMaxStudents()}"

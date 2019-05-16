@@ -3,12 +3,14 @@ package com.architec.crediti.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 @EnableWebSecurity
 @Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final CustomAuthenticationProvider customAuthProvider;
@@ -31,7 +33,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 //pagina's die niet-ingelogde gebruikers zien
                 .antMatchers(staticResources).permitAll()
+
+                //Everyone can see these pages
                 .antMatchers("/login", "/", "/createexternaluser","/registersucces", "/createexternal", "/passwordRecovery", "/notapproved").permitAll()
+
+                //COORDINATOR && DOCENT
+                .antMatchers("/allFullAssignments").hasAnyRole("DOCENT", "COORDINATOR")
+
+                //Only for EXTERNAL
+                .antMatchers("/externalUserProfile").hasRole("EXTERNE")
+
+                //Only for STUDENTS
+                .antMatchers("/portfolio").hasRole("STUDENT")
+
+                //Only for COORDINATOR
+                .antMatchers("/tag", "/listAllTags", "/listUnvalidatedExternal", "/archive", "/listStudents").hasRole("COORDINATOR")
+
+                //For all but EXTERN
+                .antMatchers("/listAllAssignments", "/allassignments", "/documentation").hasAnyRole("STUDENT", "DOCENT", "COORDINATOR")
+
                 //Alle andere pagina's blokkeren
                 .anyRequest().fullyAuthenticated()
                 .and()

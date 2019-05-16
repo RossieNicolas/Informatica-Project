@@ -1,5 +1,7 @@
 package com.architec.crediti.models;
 
+import com.architec.crediti.security.Role;
+
 import javax.persistence.*;
 
 @Entity
@@ -20,7 +22,8 @@ public class User {
     private String lastname;
 
     @Column(name = "role", nullable = false)
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @Column(name = "first_login", nullable = false)
     private boolean firstLogin;
@@ -29,7 +32,7 @@ public class User {
     public User() {
     }
 
-    public User(String firstname, String lastname, String email, String role, boolean firstLogin) {
+    public User(String firstname, String lastname, String email, Role role, boolean firstLogin) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
@@ -70,11 +73,11 @@ public class User {
         this.email = email;
     }
 
-    public String getRole() {
-        return this.role;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8"/>
     <title>Crediti - Taak toegevoegd</title>
@@ -12,7 +13,7 @@
     <div class="container extra">
         <h2>Opdracht is aangemaakt!</h2>
         <a class="button" href="/assignment">Nieuwe taak</a>
-        <a class="button" href="/allassignments">Alle taken</a>
+        <a sec:authorize="!hasRole('EXTERNE')" class="button" href="/allassignments">Alle taken</a>
         <a class="button" href="/myassignments">Mijn taken</a>
     </div>
 </div>
