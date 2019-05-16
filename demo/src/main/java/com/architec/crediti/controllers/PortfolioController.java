@@ -1,5 +1,7 @@
 package com.architec.crediti.controllers;
 
+import com.architec.crediti.models.Documentation;
+import com.architec.crediti.repositories.DocumentationRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +25,7 @@ import com.architec.crediti.utils.PortfolioUtil;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /*
 Some functions from
@@ -45,6 +45,9 @@ public class PortfolioController {
 
     @Autowired
     private FileRepository fileRepo;
+
+    @Autowired
+    private DocumentationRepository docRepo;
 
     @Autowired
     private UserRepository userRepo;
@@ -99,8 +102,25 @@ public class PortfolioController {
     }
 
     @GetMapping("/documentation")
-    public String getDocumentation() {
+    public String getDocumentation(Model model) {
+        List<Documentation> files = docRepo.findAll();
+        model.addAttribute("files", files);
         return "documentation";
+    }
+
+    @GetMapping("/uploaddocumentation")
+    public String getUploadDoc() {
+        return "uploadDocumentation";
+    }
+
+    @PostMapping("/uploaddocumentation")
+    public String uploadDocumentation(@RequestParam("files") MultipartFile[] files) {
+
+        for (MultipartFile item: files) {
+            portfolioUtil.uploadDocumentation(item);
+        }
+
+        return "redirect:/documentation";
     }
 
 }
