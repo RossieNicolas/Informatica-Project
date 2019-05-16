@@ -38,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login", "/", "/createexternaluser","/registersucces", "/createexternal", "/passwordRecovery", "/notapproved").permitAll()
 
                 //COORDINATOR && DOCENT
-                .antMatchers("/allFullAssignments").hasAnyRole("DOCENT", "COORDINATOR")
+                .antMatchers("/allFullAssignments", "/listStudents").hasAnyRole("DOCENT", "COORDINATOR")
 
                 //Only for EXTERNAL
                 .antMatchers("/externalUserProfile").hasRole("EXTERNE")
@@ -47,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/portfolio").hasRole("STUDENT")
 
                 //Only for COORDINATOR
-                .antMatchers("/tag", "/listAllTags", "/listUnvalidatedExternal", "/archive", "/listStudents").hasRole("COORDINATOR")
+                .antMatchers("/tag", "/listAllTags", "/listUnvalidatedExternal", "/archive").hasRole("COORDINATOR")
 
                 //For all but EXTERN
                 .antMatchers("/listAllAssignments", "/allassignments", "/documentation").hasAnyRole("STUDENT", "DOCENT", "COORDINATOR")

@@ -12,27 +12,14 @@ public class AssignmentMethods {
 
     }
 
-    public static List<Assignment> removeFullAssignments (List<Assignment> assignments ){
+    public static List<Assignment> removeFullAssignments (List<Assignment> assignments ) {
         Iterator<Assignment> list = assignments.iterator();
         while (list.hasNext()) {
             Assignment item = list.next();
-            if(item.getAmountStudents() == item.getMaxStudents()){
+            if (item.getAmountStudents() == item.getMaxStudents()) {
                 list.remove();
             }
         }
         return assignments;
-
-    } public static boolean isStudent(User user){
-        return user.getRole().toLowerCase().equals("student".toLowerCase());
-
     }
-    public static boolean isCoordinator(User user){
-        return user.getRole().toLowerCase().equals("coordinator".toLowerCase());
-
-    }
-    public static boolean isLector(User user){
-        return user.getRole().toLowerCase().equals("docent".toLowerCase());
-
-    }
-
 }

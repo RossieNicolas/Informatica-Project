@@ -11,6 +11,16 @@ body, figure {
 	height: 100%;
 }
 
+select:disabled {
+	background-color: rgb(235, 235, 228);
+}
+
+#profilePortfolio{
+	margin-top: 40px;
+	margin-left: 0;
+}
+
+
 .invisible, .swiper-invisible-blank-slide {
 	visibility: hidden
 }

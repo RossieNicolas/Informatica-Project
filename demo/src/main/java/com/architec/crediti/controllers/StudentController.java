@@ -57,12 +57,9 @@ public class StudentController {
         return "redirect:/main";
     }
     @GetMapping("/liststudents")
-    public String listStudents(Principal principal, Model model){
-        if(AssignmentMethods.isCoordinator(userRepo.findByEmail(principal.getName())) || AssignmentMethods.isLector(userRepo.findByEmail(principal.getName())) ){
+    public String listStudents(Model model){
             model.addAttribute("students", studentRepo.findAll());
             return "listStudents";
-        }
-        return "main";
     }
 
     @PostMapping("/liststudents")

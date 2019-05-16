@@ -30,7 +30,11 @@
                         <input name="title" id="title" type="text" th:value="*{a.getTitle()}" required="required"><br>
 
                         <label for="type">Type:</label>
-                        <input name="type" id="type" type="text" th:value="*{a.getType()}" required="required"><br>
+                        <select name="type" id="type" required>
+                            <option value="" disabled selected>Kies een type</option>
+                            <option th:text="ZAP"></option>
+                            <option th:text="Mobility"></option>
+                        </select>
 
                         <label for="task">Omschrijving opdracht:</label>
                         <input name="task" id="task" th:value="*{a.getTask()}" type="text" required="required"><br>
