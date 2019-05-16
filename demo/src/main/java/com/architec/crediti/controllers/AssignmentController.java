@@ -323,11 +323,12 @@ public class AssignmentController {
                 }
             }else return "alreadyAssigned";
 
-            //TODO vervang 'to' door mail van coordinator
-            mail.sendSimpleMessage("alina.storme@student.ap.be", "Opdracht toegewezen aan student",
+            long assignerId = assignmentRepo.findByAssignmentId(assignmentId).getAssignerUserId();
+            String assignerEmail = userRepo.findByUserId(assignerId).getEmail();
+
+            mail.sendSimpleMessage(assignerEmail, "Opdracht toegewezen aan student",
                     EmailTemplates.enrolledAssignmentStudent(currentUser.getFirstname(), currentUser.getLastname(),
-                            assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments",
-                            assignment.getTitle()));
+                            currentUser.getEmail(), "http://vps092.ap.be/allassignments", assignment.getTitle()));
 
             student.setAssignments(set);
             studentRepo.save(student);
@@ -361,11 +362,13 @@ public class AssignmentController {
         long assignerId = assignmentRepo.findByAssignmentId(assignmentId).getAssignerUserId();
         String assignerEmail = userRepo.findByUserId(assignerId).getEmail();
 
-        mail.sendSimpleMessageWithCc(assignerEmail, "Opdracht gevalideerd",
+        mail.sendSimpleMessage(assignerEmail, "Opdracht gevalideerd",
                 EmailTemplates.validatedAssignment(assignment.getTitle()));
-        //TODO currentUser.getEmail() vervangen naar student email die ingeschreven voor deze assignment
-        mail.sendSimpleMessage(currentUser.getEmail(), "Opdracht gevalideerd",
-                EmailTemplates.validatedAssignmentStudent(assignment.getTitle()));
+
+        for (Student student : studentRepo.findAll()) {
+                mail.sendSimpleMessage(student.getEmail(), "Opdracht gevalideerd",
+                        EmailTemplates.validatedAssignmentStudent(assignment.getTitle()));
+        }
 
         return "redirect:/allassignments";
     }
@@ -389,7 +392,6 @@ public class AssignmentController {
                 EmailTemplates.archivedAssignment(assignment.getAssigner(),
                         assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments",
                         "class group"));
-
 
         return "redirect:/allassignments";
     }

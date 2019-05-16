@@ -41,6 +41,7 @@ public class EmailTemplates {
     // voor student
     public static String validatedAssignmentStudent(String name) {
         String mail = "Beste,\n\n"+
+                //TODO intekenen na validatie? Wachten op mail casal
                 "De ZAP- opdracht ("+ name +") die je ingaf/waarvoor je intekende werd gevalideerd. Om te starten breng je de contracten in orde. " +
                 "Pas na ondertekening door de opdrachtgever en de hogeschool mag en kan je starten.\n\n" +
                 "Na het beëindigen van de opdracht, ondertekent de opdrachtgever het bewijsdocument, " +
@@ -52,11 +53,11 @@ public class EmailTemplates {
         return mail;
     }
 
-    public static String enrolledAssignmentStudent(String firstname, String lastname, String title, String email, String url, String name) {
+    public static String enrolledAssignmentStudent(String firstname, String lastname, String email, String url, String name) {
         String mail = "Beste,\n\n"+
                 "Volgende student, " + firstname + " " + lastname + ", heeft zich ingeschreven voor de opdracht ("+ name +") " +
                 "die u via ons ZAP-platform ingaf. \n\n" +
-                email + "naam opdracht: " + title +
+                email +
                 "\nTe vinden op: "+ url + "\n\n" +
                 "AP-hogeschool";
 
@@ -95,5 +96,4 @@ public class EmailTemplates {
                 "Lijst van alle ongevalideerde externe: http://localhost:8080/listUnvalidatedExternal";
         return mail;
     }
-
 }

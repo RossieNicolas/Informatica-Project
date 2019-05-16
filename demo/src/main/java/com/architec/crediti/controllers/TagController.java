@@ -71,7 +71,7 @@ public class TagController {
     }
 
     // list specific tag
-    @GetMapping("/listAllTags/{tag_id}")
+    @GetMapping(value = {"/editTag", "/listAllTags/{tag_id}"})
     public String tags(@PathVariable("tag_id") int tagId, Model model) {
 
         Tag tag = tagRepo.findBytagId(tagId);
@@ -82,18 +82,15 @@ public class TagController {
 
     // update specific tag
     @PostMapping(value = "/listAllTags/{id}")
-    public String saveTag(Model model, @PathVariable("id") int id, @Valid Tag tag, @RequestParam("tagName") String tagName, @RequestParam("tagDescription") String tagDescription) {
+    public String saveTag(Model model, @PathVariable("id") int id, @Valid Tag tag, @RequestParam("tagName") String tagName) {
         Tag tagForId = tagRepo.findBytagId(id);
-
         boolean existsName = tagRepo.existsByTagName(tagName);
-        if (!existsName || tag.getTagName().equals(tagForId.getTagName())) {
-            if (!tag.getTagName().equals(tagForId.getTagName())){
-                tag.setTagName(tagName);
-            }
-            tag.setTagDescription(tagDescription);
-            tagRepo.save(tag);
-            tagRepo.delete(tagForId);
-        } else {
+
+        if(tagForId!= null && (!existsName || tagForId.getTagName().equals(tag.getTagName())))  {
+            tagForId.setTagName(tag.getTagName());
+            tagForId.setTagDescription(tag.getTagDescription());
+            tagRepo.save(tagForId);
+        } else{
             model.addAttribute("error", "Tag naam bestaat al!");
             model.addAttribute("tags", tagForId);
             return "editTag";
@@ -101,11 +98,13 @@ public class TagController {
         return "redirect:/listAllTags";
     }
 
+
     // delete specific tag
     @GetMapping("/deletetag/{id}")
     public String deleteTag(@PathVariable("id") int id, Model model) {
         Tag tag = tagRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid tag Id:" + id));
         tagRepo.delete(tag);
+
         model.addAttribute("tags", tagRepo.findAll());
         return "redirect:/listAllTags";
     }

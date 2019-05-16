@@ -95,4 +95,8 @@ public class Student {
     public User getUserId() {
         return userId;
     }
+
+    public String getEmail(){
+        return userId.getEmail();
+    }
 }

@@ -20,17 +20,6 @@ public class EmailServiceImpl implements EmailService {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
             message.setTo(to);
-            message.setSubject(subject);
-            message.setText(text);
-            emailSender.send(message);
-        } catch (MailException exception) {
-            exception.printStackTrace();
-        }
-    }
-    public void sendSimpleMessageWithCc(String to,String subject, String text) {
-        try {
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setTo(to);
             //TODO mail van coordinator moet toegevoegd worden in de cc
             message.setCc();
             message.setSubject(subject);
@@ -40,6 +29,7 @@ public class EmailServiceImpl implements EmailService {
             exception.printStackTrace();
         }
     }
+
     @Override
     public void sendSimpleMessageUsingTemplate(String to,
                                                String subject,
@@ -48,6 +38,7 @@ public class EmailServiceImpl implements EmailService {
         String text = String.format(template.getText(), templateArgs);
         sendSimpleMessage(to, subject, text);
     }
+
     @Override
     public void sendMessageWithAttachment(String to,
                                           String subject,
