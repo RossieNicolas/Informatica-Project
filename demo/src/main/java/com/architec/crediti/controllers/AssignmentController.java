@@ -5,9 +5,11 @@ import com.architec.crediti.email.EmailTemplates;
 import com.architec.crediti.models.*;
 import com.architec.crediti.repositories.*;
 
+import com.architec.crediti.security.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.expression.spel.ast.Assign;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -220,16 +222,24 @@ public class AssignmentController {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
+
+        boolean status = false;
+
+        if (as.getAssignerUserId() == user.getUserId() || user.getRole() == Role.COORDINATOR) {
+            status = true;
+        }
+
+        model.addAttribute("status", status);
         return "updateAssignment";
     }
 
 
     // update specific assignment
     @PostMapping(value = "/allassignments/{assignmentId}")
-    public String updateAssignment(Principal principal, @PathVariable("assignmentId") int assignmentId,
+    public String updateAssignment(@PathVariable("assignmentId") int assignmentId,
                                    @Valid Assignment assignment, @RequestParam(required = false, value = "tag") int[] tags) {
         Set<Tag> set = new HashSet<>();
-        User currentUser = userRepo.findByEmail(principal.getName());
+        Assignment a = assignmentRepo.findByAssignmentId(assignmentId);
 
         if (tags != null) {
             for (int item : tags) {
@@ -239,7 +249,7 @@ public class AssignmentController {
         }
 
         assignment.setTags(set);
-        assignment.setAssignerUserId(currentUser);
+        assignment.setAssignerUserId(userRepo.findByUserId(a.getAssignerUserId()));
         assignment.setAssignmentId(assignmentId);
         assignmentRepo.save(assignment);
         return "redirect:/allassignments";
