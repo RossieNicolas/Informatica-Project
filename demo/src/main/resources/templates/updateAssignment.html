@@ -85,10 +85,12 @@
                     <a sec:authorize="hasRole('COORDINATOR')" th:if="${a.isValidated()}"
                        th:href="@{/deleteassignment/{id} (id=${a.assignmentId})}" class="button">🗑️ VERWIJDEREN</a>
                     
-                    <a th:if="${!a.isValidated()}" th:href="@{/validateassignment/{id} (id=${a.assignmentId})}"
+                    <a sec:authorize="hasRole('COORDINATOR')"
+                       th:if="${!a.isValidated()}" th:href="@{/validateassignment/{id} (id=${a.assignmentId}}"
                        class="button">✔️ VALIDEREN</a>
                     
-                    <a th:if="${a.isValidated()}" th:href="@{/archiveassignment/{id} (id=${a.assignmentId})}"
+                    <a sec:authorize="hasRole('COORDINATOR')"
+                       th:if="${a.isValidated()}" th:href="@{/archiveassignment/{id} (id=${a.assignmentId})}"
                        class="button">🗄️ ARCHIVEREN</a>
                 </form>
             </div>
