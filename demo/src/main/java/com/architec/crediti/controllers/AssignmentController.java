@@ -94,7 +94,7 @@ public class AssignmentController {
 
         List<Assignment> fullas = new ArrayList<>();
         for (Assignment item: assignmentRepo.findAll()) {
-            if (item.getAmountStudents() != item.getMaxStudents()) {
+            if (item.getAmountStudents() != item.getMaxStudents() && !item.isArchived()) {
 
                 fullas.add(item);
             }
@@ -126,7 +126,7 @@ public class AssignmentController {
 
         List<Assignment> fullas = new ArrayList<>();
         for (Assignment item: assignmentRepo.findAll()) {
-            if (item.getAmountStudents() == item.getMaxStudents()) {
+            if (item.getAmountStudents() == item.getMaxStudents() && !item.isArchived()) {
 
                 fullas.add(item);
             }
