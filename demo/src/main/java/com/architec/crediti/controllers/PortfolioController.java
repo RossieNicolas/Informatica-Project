@@ -1,5 +1,7 @@
 package com.architec.crediti.controllers;
 
+import com.architec.crediti.models.Documentation;
+import com.architec.crediti.repositories.DocumentationRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,12 +46,15 @@ public class PortfolioController {
 
     private final UserRepository userRepo;
 
+    private final DocumentationRepository docRepo;
+
     @Autowired
-    public PortfolioController(PortfolioUtil portfolioUtil, FileStorageService fileStorageService, FileRepository fileRepo, UserRepository userRepo) {
+    public PortfolioController(PortfolioUtil portfolioUtil, FileStorageService fileStorageService, FileRepository fileRepo, UserRepository userRepo, DocumentationRepository docRepo) {
         this.portfolioUtil = portfolioUtil;
         this.fileStorageService = fileStorageService;
         this.fileRepo = fileRepo;
         this.userRepo = userRepo;
+        this.docRepo = docRepo;
     }
 
     @GetMapping("/portfolio")
@@ -102,8 +107,33 @@ public class PortfolioController {
     }
 
     @GetMapping("/documentation")
-    public String getDocumentation() {
+    public String getDocumentation(Model model) {
+        List<Documentation> files = docRepo.findAll();
+        model.addAttribute("files", files);
         return "documentation";
+    }
+
+    @GetMapping("/uploaddocumentation")
+    public String getUploadDoc() {
+        return "uploadDocumentation";
+    }
+
+    @PostMapping("/uploaddocumentation")
+    public String uploadDocumentation(@RequestParam("files") MultipartFile[] files) {
+
+        for (MultipartFile item: files) {
+            portfolioUtil.uploadDocumentation(item);
+        }
+
+        return "redirect:/documentation";
+    }
+
+    @GetMapping("/deletedocumentation/{id}")
+    public String deleteDocumentation(@PathVariable("id") int id) {
+        Documentation doc = docRepo.findByDocumentId(id).orElseThrow(() -> new IllegalArgumentException("Invalid documentation Id:" + id));
+        docRepo.delete(doc);
+
+        return "redirect:/documentation";
     }
 
 }

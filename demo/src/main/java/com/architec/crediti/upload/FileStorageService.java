@@ -75,6 +75,33 @@ public class FileStorageService {
 
     }
 
+    public String storeDocumentation(MultipartFile file) {
+        // Normalize file name
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+
+        try {
+            // Check if the file's name contains invalid characters
+            if (fileName.contains("..")) {
+                throw new FileStorageException("Sorry! Filename contains invalid path sequence " + fileName);
+            }
+
+            // Mapje maken
+            File dir = makeDir("documentation");
+
+            // Save file
+            if (dir.isDirectory()) {
+                File serverFile = new File(dir, fileName);
+                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+                stream.write(file.getBytes());
+                stream.close();
+            }
+
+            return fileName;
+        } catch (IOException ex) {
+            throw new FileStorageException("Could not store file " + fileName + ". Please try again!", ex);
+        }
+    }
+
     public Resource loadFileAsResource(String fileName, String userId) {
         try {
             Path filePath = Paths.get(this.fileStorageLocation.toString(), userId + "").toAbsolutePath().normalize();

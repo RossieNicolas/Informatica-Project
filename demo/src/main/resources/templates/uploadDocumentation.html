@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8"/>
-    <title>Crediti - Documentatie</title>
-    <link rel="stylesheet" th:href="@{/css/APcss3.css}">
-</head>
-<body class="background">
+    <head>
+        <meta charset="UTF-8">
+        <title>Crediti - Upload documentatie</title>
+        <link rel="stylesheet" href="/css/APcss3.css" />
+    </head>
+    <body>
+    <div class="background">
     <header>
         <div class="nav-main navbackground">
             <div class="container">
@@ -62,49 +63,32 @@
             </div>
         </div>
     </header>
-    <div class="block">
-        <section class="find-edu">
-            <div class="container ">
-                <div class="wrap-all col-xs-6">
-                    <h2 class="extra">Documentatie</h2>
-                </div>
-                <div>
-                    <a href="/uploaddocumentation" class="button">Bestanden toevoegen</a>
-                </div>
+        <div class="upload-container">
+            <div class="upload-header">
+                <h2>Upload files naar jouw portfolio</h2>
             </div>
-        </section>
-        <div class="container">
-            <table class="smalltable">
-                <thead>
-                <tr>
-                    <th>Title</th>
-                    <th width="26%"></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="file : ${files}" class="tablebackground">
-                    <td th:text="${file.getTitle()}"></td>
-                    <td>
-                        <a th:href="${file.getDownloadLink()}" class="button">Download</a>
-                        &nbsp;&nbsp;&nbsp;
-                        <a th:href="@{/deletedocumentation/{id} (id=${file.getId()})}" class="button">🗑️</a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-<footer>
-    <div class="footer-bot">
-        <div class="container">
-            <div class="left col-sm-6 col-xs-12">
-                <p>Ontworpen door studenten Toegepaste Informatica</p>
-            </div>
-            <div class="right col-sm-6 col-xs-12">
-                <p>© 2019 All rights reserved.</p>
+            <div class="upload-content">
+                <div class="multiple-upload">
+                    <h3 class="upload-title">Upload de documentatie</h3>
+                    <form id="multipleUploadForm" name="multipleUploadForm" th:action="@{/uploaddocumentation}" method="POST" enctype="multipart/form-data">
+                        <input id="multipleFileUploadInput" type="file" name="files" class="file-input" multiple required />
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
-</footer>
-</body>
+        </div>
+        <footer>
+            <div class="footer-bot">
+                <div class="container">
+                    <div class="left col-sm-6 col-xs-12">
+                        <p>Ontworpen door studenten Toegepaste Informatica</p>
+                    </div>
+                    <div class="right col-sm-6 col-xs-12">
+                        <p>© 2019 All rights reserved.</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </body>
 </html>
