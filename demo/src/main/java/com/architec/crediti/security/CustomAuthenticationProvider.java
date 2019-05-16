@@ -60,12 +60,12 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         if (isLdapRegisteredUser(username, password)) {
             log.info("LDAP successful");
-            String role = userRepo.findByEmail(username).getRole();
-            grantedAuths.add(new SimpleGrantedAuthority("ROLE_" + role.toUpperCase()));
+            Role role = userRepo.findByEmail(username).getRole();
+            grantedAuths.add(new SimpleGrantedAuthority("ROLE_" + role));
             return new UsernamePasswordAuthenticationToken(username, password, grantedAuths);
         } else if (isExternalUser(username, password)) {
-            String role = userRepo.findByEmail(username).getRole();
-            grantedAuths.add(new SimpleGrantedAuthority("ROLE_" + role.toUpperCase()));
+            Role role = userRepo.findByEmail(username).getRole();
+            grantedAuths.add(new SimpleGrantedAuthority("ROLE_" + role));
             return new UsernamePasswordAuthenticationToken(username, password, grantedAuths);
         } else {
             throw new AuthenticationCredentialsNotFoundException("Invalid Credentials!");
@@ -130,7 +130,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             boolean emailExsist = userRepo.existsByEmail(email);
 
             if (!emailExsist) {
-                User user = new User(firstname, lastname, email, role.toUpperCase(), true);
+                User user = new User(firstname, lastname, email, findRole(role), true);
                 userRepo.save(user);
             }
 
@@ -150,6 +150,21 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             }
         }
         return result;
+    }
+
+    private Role findRole(String roleFormLdap) {
+        Role role;
+        switch (roleFormLdap.toLowerCase()) {
+            case "student":
+                role = Role.STUDENT;
+                break;
+            case "docent":
+                role = Role.DOCENT;
+                break;
+            default:
+                role = Role.NONE;
+        }
+        return role;
     }
 
     @Override
