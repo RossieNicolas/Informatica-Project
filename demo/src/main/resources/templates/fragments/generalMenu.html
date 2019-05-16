@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8"/>
     <title>Crediti - Thuispagina</title>
@@ -34,7 +35,7 @@
                                         <div class="dropdown">
                                             <span>Profiel</span>
                                             <div class="dropdown-content">
-                                                <a href="">Mijn profiel</a>
+                                                <a sec:authorize="hasRole('EXTERNE')" href="/externalUserProfile">Mijn profiel</a>
                                                 <a href="/portfolio">Mijn portfolio</a>
                                                 <a href="">Portfolios</a>
                                             </div>
