@@ -25,33 +25,35 @@
                                         <div class="dropdown dropdownleft">
                                             <span>Opdrachten</span>
                                             <div class="dropdown-content">
-                                                <a href="/allassignments">Lopende taken</a>
+                                                <a sec:authorize="!hasRole('EXTERNE')" href="/allassignments">Lopende taken</a>
                                                 <a href="/assignment">Taak toevoegen</a>
                                                 <a href="/myassignments">Mijn taken</a>
                                             </div>
                                         </div>
                                     </li>
-                                    <li>
+                                    <li sec:authorize="!hasRole('DOCENT')">
                                         <div class="dropdown">
                                             <span>Profiel</span>
                                             <div class="dropdown-content">
                                                 <a sec:authorize="hasRole('EXTERNE')" href="/externalUserProfile">Mijn profiel</a>
-                                                <a href="/portfolio">Mijn portfolio</a>
-                                                <a href="">Portfolios</a>
+                                                <a sec:authorize="hasRole('STUDENT')" href="/">Mijn profiel</a>
+                                                <a sec:authorize="hasRole('STUDENT')" href="/portfolio">Mijn portfolio</a>
+                                                <a sec:authorize="hasRole('COORDINATOR')" href="">Portfolios</a>
                                             </div>
                                         </div>
                                     </li>
                                     <li>
-                                        <a href="/documentation">
+                                        <a sec:authorize="!hasRole('EXTERNE')" href="/documentation">
                                             <span>Documentatie</span>
                                         </a>
                                     </li>
-                                    <li>
+                                    <li sec:authorize="hasRole('COORDINATOR')">
                                         <div class="dropdown">
                                             <span>Coördinator</span>
                                             <div class="dropdown-content">
                                                 <a href="/tag">Tag toevoegen</a>
                                                 <a href="/listAllTags">Lijst van tags</a>
+                                                <a href="/listUnvalidatedExternal">Ongevalideerde Externe</a>
                                                 <a href="/archive">Archief</a>
                                             </div>
                                         </div>

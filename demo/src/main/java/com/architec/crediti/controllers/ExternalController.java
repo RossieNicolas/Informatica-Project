@@ -136,7 +136,7 @@ public class ExternalController {
 
     @GetMapping("/listUnvalidatedExternal")
     public String listUnvalidatedExternal(Model model) {
-        List<User> users = userRepository.findAllByRole("Externe");
+        List<User> users = userRepository.findAllByRole(Role.EXTERNE);
         List<ExternalUser> externalUsers = new ArrayList<>();
         for (User u : users) {
             if (!externalUserRepository.findByUserId(u).isApproved()) {

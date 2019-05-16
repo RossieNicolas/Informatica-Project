@@ -2,6 +2,7 @@ package com.architec.crediti.repositories;
 
 import com.architec.crediti.models.User;
 
+import com.architec.crediti.security.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,5 +16,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findByUserId (long userId);
 
-    List<User> findAllByRole(String role);
+    List<User> findAllByRole(Role role);
 }

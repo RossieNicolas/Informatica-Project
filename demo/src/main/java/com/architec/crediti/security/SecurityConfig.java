@@ -35,6 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(staticResources).permitAll()
                 .antMatchers("/login", "/", "/createexternaluser","/registersucces", "/createexternal", "/passwordRecovery", "/notapproved").permitAll()
                 .antMatchers("/externalUserProfile").hasRole("EXTERNE")
+                .antMatchers("/listAllAssignments").hasAnyRole("STUDENT", "DOCENT", "COORDINATOR")
                 //Alle andere pagina's blokkeren
                 .anyRequest().fullyAuthenticated()
                 .and()
