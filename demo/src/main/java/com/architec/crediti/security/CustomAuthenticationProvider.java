@@ -39,7 +39,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     private static final String GIVEN_NAME = "givenName"; //firstname
     private static final String SN = "sn"; //lastname
     private static final String EXTENSION_ATTRIBUTE_1 = "extensionAttribute1"; //Contains 'Student' or 'Docent'
-    private static final String LDAP_SEARCH = "OU=Users,OU=DWAP,DC=alpaca,DC=int"; //This is where we get all attributes
+    private static final String LDAP_SEARCH = "OU=Users,OU=DWAP,DC=alpaca,DC=int"; //Search string for LDAP
 
     @Value("${spring.ldap.urls}")
     private String ldapUrl;
@@ -67,11 +67,11 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         if (isLdapRegisteredUser(username, password)) {
             log.info("LDAP successful");
             Role role = userRepo.findByEmail(username).getRole();
-            grantedAuths.add(new SimpleGrantedAuthority("ROLE_" + role));
+            grantedAuths.add(new SimpleGrantedAuthority("ROLE_" + role)); //student or docent
             return new UsernamePasswordAuthenticationToken(username, password, grantedAuths);
         } else if (isExternalUser(username, password)) {
             Role role = userRepo.findByEmail(username).getRole();
-            grantedAuths.add(new SimpleGrantedAuthority("ROLE_" + role));
+            grantedAuths.add(new SimpleGrantedAuthority("ROLE_" + role)); //should be externe
             return new UsernamePasswordAuthenticationToken(username, password, grantedAuths);
         } else {
             throw new AuthenticationCredentialsNotFoundException("Invalid Credentials!");
