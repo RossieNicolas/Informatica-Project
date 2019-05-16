@@ -38,28 +38,26 @@ public class EmailTemplates {
         return mail;
     }
 
-    // voor student
-    public static String validatedAssignmentStudent(String name) {
+    public static String enrolledAssignment( String title, String assigner, String email, String group) {
         String mail = "Beste,\n\n"+
-                //TODO intekenen na validatie? Wachten op mail casal
-                "De ZAP- opdracht ("+ name +") die je ingaf/waarvoor je intekende werd gevalideerd. Om te starten breng je de contracten in orde. " +
+                "Nieuwe inschrijving van volgende ZAP-opdracht: "+ title +".\n" +
+                "Naam student(e): "+ assigner + "\n" +
+                "Groep: " + group + "\n" +
+                "E-mailadres: " + email;
+
+        return mail;
+    }
+
+    // voor student
+    public static String enrolledAssignmentStudent(String name) {
+        String mail = "Beste,\n\n"+
+                "Je hebt je ingeschreven voor volgende ZAP- opdracht, "+ name +". Om te starten breng je de contracten in orde. " +
                 "Pas na ondertekening door de opdrachtgever en de hogeschool mag en kan je starten.\n\n" +
                 "Na het beëindigen van de opdracht, ondertekent de opdrachtgever het bewijsdocument, " +
                 "vul je de zelfevaluatie in en verzamel je de nodige bewijsstukken voor je portfolio.\n\n" +
                 "Succes.\n" +
                 "\n" +
                 "De coördinator";
-
-        return mail;
-    }
-
-    public static String enrolledAssignmentStudent(String firstname, String lastname, String email, String url, String name) {
-        String mail = "Beste,\n\n"+
-                "Volgende student, " + firstname + " " + lastname + ", heeft zich ingeschreven voor de opdracht ("+ name +") " +
-                "die u via ons ZAP-platform ingaf. \n\n" +
-                email +
-                "\nTe vinden op: "+ url + "\n\n" +
-                "AP-hogeschool";
 
         return mail;
     }

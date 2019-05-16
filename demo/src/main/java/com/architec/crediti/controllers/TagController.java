@@ -98,7 +98,6 @@ public class TagController {
         return "redirect:/listAllTags";
     }
 
-
     // delete specific tag
     @GetMapping("/deletetag/{id}")
     public String deleteTag(@PathVariable("id") int id, Model model) {
@@ -112,7 +111,6 @@ public class TagController {
         }catch (Exception ex){
             return "tagStillAssigned";
         }
-
 
     }
 

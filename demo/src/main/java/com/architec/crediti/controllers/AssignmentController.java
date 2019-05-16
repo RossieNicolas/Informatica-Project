@@ -333,6 +333,9 @@ public class AssignmentController {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid assignment Id:" + assignmentId));
         User user = userRepo.findByEmail(principal.getName());
         student = studentRepo.findByUserId(user);
+        long assignerId = assignmentRepo.findByAssignmentId(assignmentId).getAssignerUserId();
+        String assignerEmail = userRepo.findByUserId(assignerId).getEmail();
+
         try {
             Set<Assignment> set = new HashSet<>();
             set.addAll(student.getAssignments());
@@ -352,15 +355,13 @@ public class AssignmentController {
                 }
             }else return "alreadyAssigned";
 
-            long assignerId = assignmentRepo.findByAssignmentId(assignmentId).getAssignerUserId();
-            String assignerEmail = userRepo.findByUserId(assignerId).getEmail();
-
-            mail.sendSimpleMessage(assignerEmail, "Opdracht toegewezen aan student",
-                    EmailTemplates.enrolledAssignmentStudent(currentUser.getFirstname(), currentUser.getLastname(),
-                            currentUser.getEmail(), "http://vps092.ap.be/allassignments", assignment.getTitle()));
-
             student.setAssignments(set);
             studentRepo.save(student);
+
+            mail.sendSimpleMessage(student.getEmail(), "Inschrijving opdracht",
+                    EmailTemplates.enrolledAssignmentStudent(assignment.getTitle()));
+            mail.sendSimpleMessage(assignerEmail, "Inschrijving opdracht",
+                    EmailTemplates.enrolledAssignment(assignment.getTitle(), student.getUserId().toString(), student.getEmail(), "class group"));
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -393,11 +394,6 @@ public class AssignmentController {
 
         mail.sendSimpleMessage(assignerEmail, "Opdracht gevalideerd",
                 EmailTemplates.validatedAssignment(assignment.getTitle()));
-
-        for (Student student : studentRepo.findAll()) {
-                mail.sendSimpleMessage(student.getEmail(), "Opdracht gevalideerd",
-                        EmailTemplates.validatedAssignmentStudent(assignment.getTitle()));
-        }
 
         return "redirect:/allassignments";
     }
