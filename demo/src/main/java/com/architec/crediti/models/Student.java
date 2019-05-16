@@ -23,7 +23,7 @@ public class Student {
     @Column(name = "mobility")
     private boolean mobility;
 
-    @ManyToMany
+    @ManyToMany()
     @JoinTable(
             name = "student_assign",
             joinColumns = @JoinColumn(name = "student_id"),
@@ -94,5 +94,9 @@ public class Student {
 
     public User getUserId() {
         return userId;
+    }
+
+    public String getEmail(){
+        return userId.getEmail();
     }
 }
