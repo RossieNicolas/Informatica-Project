@@ -25,13 +25,14 @@ import com.architec.crediti.utils.PortfolioUtil;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
-/**
- * Some functions from
- * @author Rajeev Kumar Singh
- * @author Callicoder
-*/
+/*
+Some functions from
+https://github.com/callicoder/spring-boot-file-upload-download-rest-api-example/blob/master/src/main/java/com/example/filedemo/controller/FileController.java
+ */
 
 @Controller
 public class PortfolioController {

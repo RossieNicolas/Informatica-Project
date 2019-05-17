@@ -29,7 +29,6 @@ public class EmailServiceImpl implements EmailService {
             exception.printStackTrace();
         }
     }
-
     @Override
     public void sendSimpleMessageUsingTemplate(String to,
                                                String subject,

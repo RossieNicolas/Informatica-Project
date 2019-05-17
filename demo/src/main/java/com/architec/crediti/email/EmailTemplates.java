@@ -94,4 +94,13 @@ public class EmailTemplates {
                 "Lijst van alle ongevalideerde externe: http://localhost:8080/listUnvalidatedExternal";
         return mail;
     }
+    public static String reminder(String opdrachtTitel ) {
+        String mail = "Beste,\n\n"+
+                "De deadline van opdracht : " + opdrachtTitel + " is morgen";
+
+        return mail;
+
+
+    }
+
 }

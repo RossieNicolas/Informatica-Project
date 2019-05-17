@@ -5,7 +5,6 @@ package com.architec.crediti.models;
  *
  * @author Branislav Lazic
  * @author Bruno Raljic
- *
  */
 public class Pager {
 
