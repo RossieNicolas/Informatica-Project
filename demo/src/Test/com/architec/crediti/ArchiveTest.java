@@ -20,7 +20,7 @@ public class ArchiveTest {
     @Test
     public void addNewArchivedAssignmentShouldIncreaseInDB() {
 
-        //arange
+        //arrange
         List<ArchivedAssignment> list = (List<ArchivedAssignment>) archive.findAll();
         int length = list.size();
 
@@ -29,9 +29,13 @@ public class ArchiveTest {
         archive.save(a);
         List<ArchivedAssignment> list2 = (List<ArchivedAssignment>) archive.findAll();
         int length2 = list2.size();
+        length++;
 
         //assert
-        assertEquals(length +1, length2);
+        assertEquals(length, length2);
+
+        //undo operation
+        archive.delete(a);
     }
     @Test
     public void findByIdArchiveShouldReturnCorrectArchivedAssignment() {
@@ -46,6 +50,9 @@ public class ArchiveTest {
 
         //assert
         assertEquals(assignmentIdForA, copyA.getAssignmentId());
+
+        //undo operation
+        archive.delete(a);
     }
     @Test
     public void findByNameArchiveShouldReturnCorrectArchivedAssignment() {
