@@ -18,7 +18,7 @@ import net.bytebuddy.asm.Advice.Local;
 
 @Transactional
 @Component
-public class CheckAssignmentDateline {
+public class CheckAssignmentDeadline {
     @Autowired
     AssignmentRepository asRepo ; 
     @Autowired
@@ -26,7 +26,7 @@ public class CheckAssignmentDateline {
     @Autowired
     UserRepository usRepo;
     private final EmailServiceImpl mail;
-    public CheckAssignmentDateline(EmailServiceImpl mail) {
+    public CheckAssignmentDeadline(EmailServiceImpl mail) {
         this.mail = mail;
     }
     @Scheduled(cron = "0 00 05 * * ?")
