@@ -1640,14 +1640,6 @@ hr {
 	border: 1px solid orange
 }
 
-@font-face {
-	font-family: icomoon;
-	src: url(/themes/custom/ap_hogeschool/src/fonts/icomoon.eot?jb2msf=);
-	src: url(/themes/custom/ap_hogeschool/src/fonts/icomoon.eot?jb2msf=#iefix) format("embedded-opentype"), url(/themes/custom/ap_hogeschool/src/fonts/icomoon.woff2?jb2msf=) format("woff2"), url(/themes/custom/ap_hogeschool/src/fonts/icomoon.ttf?jb2msf=) format("truetype"), url(/themes/custom/ap_hogeschool/src/fonts/icomoon.woff?jb2msf=) format("woff"), url(/themes/custom/ap_hogeschool/src/fonts/icomoon.svg?jb2msf=#icomoon) format("svg");
-	font-weight: 400;
-	font-style: normal
-}
-
 .aparts-button a:after,
 .article ul.accordeon li>a:after,
 .audio-player a.play:before,
