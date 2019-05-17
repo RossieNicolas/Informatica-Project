@@ -15,7 +15,7 @@ public class Student {
     private String gsm;
 
     @Column(name = "studentennummer", nullable = false)
-    private int studentennummer;
+    private String studentennummer;
 
     @Column(name = "zap")
     private boolean zap;
@@ -28,7 +28,7 @@ public class Student {
             name = "student_assign",
             joinColumns = @JoinColumn(name = "student_id"),
             inverseJoinColumns = @JoinColumn(name = "assign_id"))
-    Set<Assignment> assignments;
+    private Set<Assignment> assignments;
 
     @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.REMOVE })
@@ -38,7 +38,7 @@ public class Student {
     public Student() {
     }
 
-    public Student(String gsm, int studentennummer, User userId) {
+    public Student(String gsm, String studentennummer, User userId) {
         this.gsm = gsm;
         this.studentennummer = studentennummer;
         this.userId = userId;
@@ -68,13 +68,14 @@ public class Student {
         this.gsm = gsm;
     }
 
-    public int getStudentennummer() {
+    public String getStudentennummer() {
         return studentennummer;
     }
 
-    public void setStudentennummer(int studentennummer) {
+    public void setStudentennummer(String studentennummer) {
         this.studentennummer = studentennummer;
     }
+
     public String findEmail(){
         return this.userId.getEmail();
     }
