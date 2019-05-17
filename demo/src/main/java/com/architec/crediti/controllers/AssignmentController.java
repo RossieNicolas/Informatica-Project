@@ -389,13 +389,13 @@ public class AssignmentController {
         ArchivedAssignment archivedAssignment = new ArchivedAssignment();
         archivedAssignment.fillArchivedAssignment(assignment);
 
-        /*if (assignment.getTags() != null) {
+        if (assignment.getTags() != null) {
             for (Tag item : assignment.getTags()) {
                 set.add(item);
             }
         }
 
-        archivedAssignment.setTags(set);*/
+        archivedAssignment.setTags(set);
         assignmentRepo.delete(assignment);
         archiveRepo.save(archivedAssignment);
         //assignment.setArchived(true);
