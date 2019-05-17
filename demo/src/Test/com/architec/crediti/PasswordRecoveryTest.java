@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class PasswordRecoveryTests {
+public class PasswordRecoveryTest {
 
     @Autowired
     private UserRepository userRepo;
