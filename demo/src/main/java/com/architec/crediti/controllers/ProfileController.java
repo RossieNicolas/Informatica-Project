@@ -5,6 +5,7 @@ import com.architec.crediti.models.Student;
 import com.architec.crediti.repositories.FileRepository;
 import com.architec.crediti.repositories.StudentRepository;
 import com.architec.crediti.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,16 +16,17 @@ import java.util.List;
 
 @Controller
 public class ProfileController {
-    final
+    private final
     UserRepository userRepo;
 
-    final
+    private final
     StudentRepository stuRepo;
 
 
-    final
+    private final
     FileRepository fileRepo;
 
+    @Autowired
     public ProfileController(UserRepository userRepo, StudentRepository stuRepo , FileRepository fileRepo) {
         this.userRepo = userRepo;
         this.stuRepo = stuRepo;
