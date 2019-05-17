@@ -87,7 +87,7 @@
                        th:href="@{/deleteassignment/{id} (id=${a.assignmentId})}" class="button">🗑️ VERWIJDEREN</a>
 
                     <a sec:authorize="hasRole('COORDINATOR')"
-                       th:if="${!a.isValidated()}" th:href="@{/validateassignment/{id} (id=${a.assignmentId}}"
+                       th:if="${!a.isValidated()}" th:href="@{/validateassignment/{id} (id=${a.assignmentId})}"
                        class="button">✔️ VALIDEREN</a>
 
                     <a sec:authorize="hasRole('COORDINATOR')"
