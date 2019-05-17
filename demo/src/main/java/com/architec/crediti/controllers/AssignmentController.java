@@ -272,13 +272,13 @@ public class AssignmentController {
             System.out.println(ex.getMessage());
         }
 
-        boolean status = false;
+        boolean roles = false;
 
         if (as.getAssignerUserId() == user.getUserId() || user.getRole() == Role.COORDINATOR) {
-            status = true;
+            roles = true;
         }
 
-        model.addAttribute("status", status);
+        model.addAttribute("roles", roles);
         return "updateAssignment";
     }
 

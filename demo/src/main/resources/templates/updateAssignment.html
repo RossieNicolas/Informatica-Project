@@ -18,7 +18,7 @@
                 <form th:each="a: ${assignments}" class="standard-form" method="post"
                       th:action="@{/allassignments/{id}(id=${a.assignmentId})}">
 
-                    <input th:if="${!a.isValidated() and status}"  type="button" value="✏️ BEWERKEN" class="button"
+                    <input th:if="${!a.isValidated() and roles}"  type="button" value="✏️ BEWERKEN" class="button"
                            onclick="toggleForm();">
 
                     <input sec:authorize="hasRole('COORDINATOR')" th:if="${a.isValidated()}"  type="button" value="✏️ BEWERKEN" class="button"
