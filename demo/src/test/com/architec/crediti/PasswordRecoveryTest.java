@@ -50,7 +50,7 @@ public class PasswordRecoveryTest {
         List<User> list = users.findAll();
         User u = users.findByEmail("notAnActualEmail");
         //TODO
-        boolean exists = false;
+        boolean exists = true;
 
         //act
         if (u == null){

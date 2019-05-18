@@ -61,6 +61,7 @@ public class ArchiveTest {
         int count = 0;
 
         //act
+        // no mock archivedAssignment needs to be made because multiple archivedAssignments can have the same name
         for(ArchivedAssignment a : archive.findAll()){
             if(a.getTitle().equalsIgnoreCase("test")){
                 count++;
