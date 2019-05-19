@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -51,6 +52,22 @@ public class TagTest {
         assertEquals(tagIdAdded, found.getTagId());
 
         //undo operation
+        tags.delete(t);
+    }
+    @Test
+    public void findByTagNameExistsShouldReturnCorrectTag(){
+
+        //arrange
+        Tag t = new Tag("test", "test");
+        tags.save(t);
+
+        //act
+        boolean found = tags.existsByTagName(t.getTagName());
+
+        //assert
+        assertTrue(found);
+
+        //undo operations
         tags.delete(t);
     }
 

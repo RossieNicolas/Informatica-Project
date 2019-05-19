@@ -1,13 +1,11 @@
 package com.architec.crediti;
 import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.architec.crediti.models.Assignment;
 import com.architec.crediti.models.User;
 import com.architec.crediti.repositories.AssignmentRepository;
-import com.architec.crediti.repositories.AssignmentMethods;
 
 import com.architec.crediti.repositories.UserRepository;
 import com.architec.crediti.security.Role;

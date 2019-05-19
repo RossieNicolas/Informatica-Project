@@ -49,7 +49,6 @@ public class PasswordRecoveryTest {
         //arrange
         List<User> list = users.findAll();
         User u = users.findByEmail("notAnActualEmail");
-        //TODO
         boolean exists = true;
 
         //act
