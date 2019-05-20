@@ -75,7 +75,7 @@ public class AssignmentController {
 
     // add assignment
     @PostMapping("/assignment")
-    public String createAssignment(Principal principal, @Valid Assignment assignment,
+    public String createAssignment( Principal principal, @Valid Assignment assignment,
                                    @RequestParam(required = false, value = "tag") int[] tags) {
         Set<Tag> set = new HashSet<>();
         User currentUser = userRepo.findByEmail(principal.getName());
@@ -90,6 +90,8 @@ public class AssignmentController {
         assignment.setTags(set);
         assignment.setAssignerUserId(currentUser);
         assignmentRepo.save(assignment);
+
+
 
         mail.sendSimpleMessage("alina.storme@student.ap.be", "Nieuwe opdracht gecreëerd",
                 EmailTemplates.createdAssignment(assignment.getAssigner(),
