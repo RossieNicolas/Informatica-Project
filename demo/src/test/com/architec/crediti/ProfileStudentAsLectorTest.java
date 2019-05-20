@@ -27,6 +27,8 @@ public class ProfileStudentAsLectorTest {
     JavascriptExecutor js;
     @Before
     public void setUp() {
+        // moet aanwezig zijn
+        System.setProperty("webdriver.gecko.driver", "C:\\Users\\Vladik\\Desktop\\geckodriver.exe");
         driver = new FirefoxDriver();
         js = (JavascriptExecutor) driver;
         vars = new HashMap<String, Object>();
@@ -36,27 +38,18 @@ public class ProfileStudentAsLectorTest {
         driver.quit();
     }
     @Test
-    public void ProfileStudentAsLector() {
+    public void ProfileStudentAsStudent() {
         driver.get("http://localhost:8080/");
         driver.manage().window().setSize(new Dimension(1358, 692));
-        driver.findElement(By.cssSelector("li:nth-child(1) span")).click();
+        driver.findElement(By.cssSelector("li:nth-child(1) > a")).click();
         driver.findElement(By.id("username")).click();
-        driver.findElement(By.id("username")).click();
-        {
-            WebElement element = driver.findElement(By.id("username"));
-            Actions builder = new Actions(driver);
-            builder.doubleClick(element).perform();
-        }
         driver.findElement(By.id("username")).sendKeys("s093027@ap.be");
         driver.findElement(By.id("password")).click();
         driver.findElement(By.id("password")).sendKeys("2Q=hV$pW");
         driver.findElement(By.cssSelector("button")).click();
-        driver.findElement(By.cssSelector(".find-edu")).click();
-        driver.findElement(By.cssSelector("li:nth-child(3) > .dropdown")).click();
-        driver.findElement(By.cssSelector("li:nth-child(3) a")).click();
-        driver.findElement(By.linkText("📃")).click();
-        driver.findElement(By.cssSelector(".nav")).click();
-        driver.findElement(By.cssSelector("li:nth-child(3) a")).click();
-        driver.findElement(By.cssSelector(".tablebackground:nth-child(3) .button")).click();
+        WebElement div = driver.findElement(By.cssSelector("div[@class='dropdown']"));
+        div.click();
+        WebElement li = div.findElement(By.xpath("div[@class='nav-main']/div[@class='container']/div[@class='wrap-all col-xs-12']/div[@class='right']/div[@class='region-header-menu']/div[@class='nav']/div[@class='dropdown']/li:nth-child(2) a:nth-child(2)"));
+        li.click();
     }
 }

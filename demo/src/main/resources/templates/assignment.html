@@ -37,7 +37,7 @@
                     <input name="end_date" id="end_date" type="date" onchange="TDate()" required="required"><br><br>
 
                     <label for="amountHours">Totaal uur:</label>
-                    <input name="amountHours" id="amountHours" type="number" required="required" min="1"><br>
+                    <input name="amountHours" id="amountHours" type="number" onchange="amoutH()" required="required" min="1"><br>
 
                     <label for="maxStudents">Max Studenten:</label>
                     <input name="maxStudents" id="maxStudents" type="number" required="required" min="1"><br>
@@ -61,9 +61,22 @@
 <footer th:insert="fragments/generalMenu.html :: footer">
 </footer>
 <script>
+    function amoutH(){
+        var amountHours = document.getElementById("amountHours").value;
+        var test = parseInt(amountHours);
+        if (test % 3 != 0){
+                alert("Totaal uur moet drievoud zijn!");
+                document.getElementById('amountHours').value = "";
+                return false;
+            }
+            return true
+    
+        
+    }
     function TDate() {
         var startDate = document.getElementById("start_date").value;
         var endDate = document.getElementById("end_date").value;
+        
         if (startDate != null && endDate != null) {
             if (startDate >= endDate) {
                 alert("De startdatum moet kleiner zijn dan de einddatum van uw opdracht!");
@@ -74,6 +87,7 @@
                 document.getElementById('end_date').value = "";
                 return false;
             }
+            
             return true;
         }
     }
