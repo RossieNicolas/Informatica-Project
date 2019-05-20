@@ -13,7 +13,7 @@
         <div class="wrap-all col-xs-12 ">
             <h2 class="extra">Log In</h2>
             <p th:if="${loginError}" class="error">Wrong user or password</p>
-            <form class="form-signin" name="loginForm" th:action="@{/login}" action="/login" method="post">
+            <form class="standard-form" name="loginForm" th:action="@{/login}" action="/login" method="post">
                 <label for="username">Email: </label>
                 <input type="email" name="username" id="username" required="required" autofocus="autofocus">
                 <br/><br/>
