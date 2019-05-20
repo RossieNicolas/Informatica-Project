@@ -184,6 +184,11 @@ public class Assignment {
         return assignerUserId.getFirstname() + " " + assignerUserId.getLastname();
     }
 
+    public String getAssignerEmail() {
+        return "Naam: " + assignerUserId.getFirstname() + " " + assignerUserId.getLastname() + " \t Email: " + assignerUserId.getEmail();
+    }
+
+
     public void setAssignerUserId(User assignerUserId) {
         this.assignerUserId = assignerUserId;
     }

@@ -239,6 +239,8 @@ public class AssignmentController {
         boolean volzet = false;
 
 
+
+
         for (Assignment item : student.getAssignments()){
             if(item.getAssignmentId() == assignmentId){
                 ingeschreven = true;
@@ -254,6 +256,7 @@ public class AssignmentController {
             Assignment a = assignmentRepo.findByAssignmentId(assignmentId);
             Set<Tag> tags = a.getTags();
             boolean[] status = new boolean[updatetag.size()];
+            String getType = a.getType();
 
             for (int i = 0; i < updatetag.size(); i++) {
                 for (Tag item : tags) {
@@ -263,6 +266,7 @@ public class AssignmentController {
                 }
             }
 
+            model.addAttribute("getType", getType);
             model.addAttribute("status", status);
             if (a.getAmountStudents() != a.getMaxStudents() && !a.isArchived()) {
                 model.addAttribute("assignments", a);
@@ -380,24 +384,24 @@ public class AssignmentController {
     @GetMapping("/archiveassignment/{assignmentId}")
     public String archiveAssignment(Principal principal, @PathVariable("assignmentId") int assignmentId, Model model, @RequestParam(required = false, value = "tag") int[] tags) {
         User currentUser = userRepo.findByEmail(principal.getName());
-        Set<Tag> set = new HashSet<>();
+        ArrayList<Integer> list = new ArrayList<>();
+
         Assignment assignment = assignmentRepo.findById((long) assignmentId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid assignment Id:" + assignmentId));
 
-        assignmentRepo.save(assignment);
         ArchivedAssignment archivedAssignment = new ArchivedAssignment();
         archivedAssignment.fillArchivedAssignment(assignment);
 
         if (assignment.getTags() != null) {
             for (Tag item : assignment.getTags()) {
-                set.add(item);
+                Tag tag = tagRepo.findBytagId(item.getTagId());
+                list.add(tag.getTagId());
             }
+            archivedAssignment.setTag_ids(list.toString());
         }
-
-        archivedAssignment.setTags(set);
-        assignmentRepo.delete(assignment);
+        
         archiveRepo.save(archivedAssignment);
-        //assignment.setArchived(true);
+        assignmentRepo.delete(assignment);
 
         model.addAttribute("assignments", assignmentRepo.findAll());
 

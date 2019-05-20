@@ -27,13 +27,13 @@
                     </select>
 
                     <label for="task">Omschrijving opdracht:</label>
-                    <textarea name="task" id="task" rows="10" cols="30" required="required"></textarea><br>
+                    <textarea name="task" id="task" th:text="*{a.getTask()}" type="text" required="required"></textarea><br>
 
                     <label for="start_date">Begindatum:</label><br>
-                    <input name="start_date" id="start_date" type="date" onchange="SDate()" required="required"><br>
+                    <input name="start_date" id="start_date" type="date" onblur="SDate()" required="required"><br>
 
                     <label for="end_date">Einddatum:</label><br>
-                    <input name="end_date" id="end_date" type="date" onchange="TDate()" required="required"><br><br>
+                    <input name="end_date" id="end_date" type="date" onblur="TDate()" required="required"><br><br>
 
                     <label for="amountHours">Totaal uur:</label>
                     <input name="amountHours" id="amountHours" type="number" onchange="amoutH()" required="required" min="1"><br>
@@ -76,7 +76,7 @@
         var endDate = document.getElementById("end_date").value;
         
         if (startDate != null && endDate != null) {
-            if (startDate >= endDate) {
+            if (startDate > endDate) {
                 alert("De startdatum moet kleiner zijn dan de einddatum van uw opdracht!");
                 document.getElementById('end_date').value = "";
                 return false;
