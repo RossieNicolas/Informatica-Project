@@ -61,12 +61,12 @@ public class Assignment {
             name = "tag_assign",
             joinColumns = @JoinColumn(name = "assign_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    Set<Tag> tags;
+    private Set<Tag> tags;
 
     @ManyToMany(mappedBy = "assignments")
-    Set<Student> assignStudents;
+    private Set<Student> assignStudents;
 
-    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "assigner_user_id", referencedColumnName = "user_id")
     private User assignerUserId;
 

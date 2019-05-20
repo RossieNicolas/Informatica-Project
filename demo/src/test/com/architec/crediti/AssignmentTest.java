@@ -32,13 +32,13 @@ public class AssignmentTest {
         //arrange
         User u = new User("test","test","test@test.test", Role.COORDINATOR,false);
         users.save(u);
-        Assignment a = new Assignment("test","test","test",5,6,"2019-05-05","2019-05-06",false,false,u);
-        assignments.save(a);
         List<Assignment> list = (List<Assignment>) assignments.findAll();
         int length = list.size();
+        Assignment a = new Assignment("test","test","test",5,6,"2019-05-05","2019-05-06",false,false,u);
+        assignments.save(a);
+
 
         //act
-
         List<Assignment> list2 = (List<Assignment>) assignments.findAll();
         int length2 = list2.size();
         length++;
