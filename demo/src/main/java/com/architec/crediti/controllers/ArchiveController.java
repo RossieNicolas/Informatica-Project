@@ -77,11 +77,12 @@ public class ArchiveController {
             List<ArchivedAssignment> list = archiveRepo.findByTitleContaining(name);
             List<ArchivedAssignment> list2 = new ArrayList<>();
             for (int item : tags) {
-                for (ArchivedAssignment a : list) {
-                    if (a.getTags().contains(tagRepo.findBytagId(item))) {
+                //TODO
+/*                for (ArchivedAssignment a : list) {
+                    if (a.getTag_ids().contains(tagRepo.findBytagId(item))) {
                         list2.add(a);
                     }
-                }
+                }*/
             }
 
             //delete double assignments in search
