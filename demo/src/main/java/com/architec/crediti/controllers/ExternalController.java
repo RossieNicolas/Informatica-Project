@@ -45,7 +45,8 @@ public class ExternalController {
     }
 
     @PostMapping("/createexternal")
-    public String createUser(@RequestParam("lastname") String lastname, @RequestParam("firstname") String firstname,
+    public String createUser(Model model,
+                            @RequestParam("lastname") String lastname, @RequestParam("firstname") String firstname,
                              @RequestParam("company") String company, @RequestParam("address") String address,
                              @RequestParam("postal") String postal, @RequestParam("city") String city, @RequestParam("phone") String phone,
                              @RequestParam("email") String email, @RequestParam("password") String password) {
@@ -68,7 +69,11 @@ public class ExternalController {
             String fullAddress = address + ", " + postal + " " + city;
             //TODO: vervang 's097086@ap.be' door mail van coordinator
             mail.sendSimpleMessage("s097086@ap.be", "Nieuwe externe registratie",
-                    EmailTemplates.newExternalUser(userId, name, company, fullAddress, phone, email));
+            EmailTemplates.newExternalUser(userId, name, company, fullAddress, phone, email));
+        }
+        else{
+            model.addAttribute("error" , "Email bestaal al");
+            return "createExternal";
         }
 
         return "redirect:/registersucces";

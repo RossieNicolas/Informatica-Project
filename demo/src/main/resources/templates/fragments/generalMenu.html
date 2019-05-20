@@ -49,15 +49,15 @@
                                             <span>Documentatie</span>
                                         </a>
                                     </li>
-                                    <li sec:authorize="hasRole('COORDINATOR')">
+                                    <li sec:authorize="hasAnyRole('COORDINATOR','DOCENT')">
                                         <div class="dropdown">
-                                            <span>Coördinator</span>
+                                            <span>Extra's</span>
                                             <div class="dropdown-content">
-                                                <a href="/tag">Tag toevoegen</a>
-                                                <a href="/listAllTags">Lijst van tags</a>
-                                                <a href="/listUnvalidatedExternal">Ongevalideerde Externe</a>
-                                                <a href="/liststudents">Alle Studenten</a>
-                                                <a href="/archive">Archief</a>
+                                                <a sec:authorize="hasRole('COORDINATOR')" href="/tag">Tag toevoegen</a>
+                                                <a sec:authorize="hasRole('COORDINATOR')" href="/listAllTags">Lijst van tags</a>
+                                                <a sec:authorize="hasRole('COORDINATOR')" href="/listUnvalidatedExternal">Ongevalideerde Externe</a>
+                                                <a sec:authorize="hasAnyRole('COORDINATOR','DOCENT')" href="/liststudents">Alle Studenten</a>
+                                                <a sec:authorize="hasRole('COORDINATOR')" href="/archive">Archief</a>
                                             </div>
                                         </div>
                                     </li>
