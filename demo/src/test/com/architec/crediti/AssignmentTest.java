@@ -26,6 +26,7 @@ public class AssignmentTest {
 
 
     @Test
+    //id= 2
     public void addNewAssignmentShouldIncreaseInDB() {
 
         //arrange
@@ -50,6 +51,7 @@ public class AssignmentTest {
         users.delete(u);
     }
     @Test
+    //id= 16
     public void findByAssignmentIdShouldReturnCorrectAssignment() {
 
         //arrange
@@ -70,6 +72,7 @@ public class AssignmentTest {
         users.delete(u);
     }
     @Test
+    //id= 15
     public void findByNameAssignmentShouldReturnCorrectAssignment() {
 
         //arrange
@@ -89,6 +92,7 @@ public class AssignmentTest {
         assertEquals(count, totalCount);
     }
     @Test
+    //id= 8
     public void deleteAssignmentShouldDeleteFromDB(){
 
         //arrange
@@ -110,6 +114,7 @@ public class AssignmentTest {
         users.delete(u);
     }
     @Test
+    //id= 10
     public void updateAssignmentShouldUpdateInDB(){
 
         //arrange

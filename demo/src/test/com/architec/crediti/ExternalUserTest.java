@@ -17,11 +17,14 @@ public class ExternalUserTest {
     ExternalUserRepository externalUsers;
 
     @Test
+    //id= 26
     public void addExternalUserShouldIncreaseInDB(){
 
         //arrange
         int count = (int) externalUsers.count();
-        ExternalUser e = new ExternalUser("test", "test", "test","00000000000","test","test","test");
+        char[] password = new char[10];
+        byte[] salt = new byte[10];
+        ExternalUser e = new ExternalUser("test", "test", "test","00000000000","test","test","test", password, salt);
 
         //act
         externalUsers.save(e);
@@ -36,11 +39,15 @@ public class ExternalUserTest {
     }
 
     @Test
+    //TODO write in testplan
+    //id=
     public void deleteExternalUserShouldDecreaseInDB(){
 
         //arrange
         int count = (int) externalUsers.count();
-        ExternalUser e = new ExternalUser("test", "test", "test","00000000000","test","test","test");
+        char[] password = new char[10];
+        byte[] salt = new byte[10];
+        ExternalUser e = new ExternalUser("test", "test", "test","00000000000","test","test","test", password, salt);
         externalUsers.save(e);
 
         //act
@@ -52,10 +59,13 @@ public class ExternalUserTest {
     }
 
     @Test
+    //id= 33
     public void editExternalUserShouldChangeInDB(){
 
         //arrange
-        ExternalUser e = new ExternalUser("test", "test", "test","00000000000","test","test","test");
+        char[] password = new char[10];
+        byte[] salt = new byte[10];
+        ExternalUser e = new ExternalUser("test", "test", "test","00000000000","test","test","test", password, salt);
         externalUsers.save(e);
         String input = "success";
 

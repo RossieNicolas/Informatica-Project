@@ -21,6 +21,7 @@ public class UserTest {
     UserRepository users;
 
     @Test
+    //TODO write in testplan
     public void addUserShouldIncreaseInDB() {
 
         //arrange
@@ -40,6 +41,7 @@ public class UserTest {
     }
 
     @Test
+    //TODO write in testplan
     public void deleteUserShouldDecreaseInDB() {
 
         //arrange
@@ -56,6 +58,7 @@ public class UserTest {
     }
 
     @Test
+    //TODO write in testplan
     public void editUserShouldChangeInDB() {
 
         //arrange
@@ -75,6 +78,7 @@ public class UserTest {
     }
 
     @Test
+    //TODO write in testplan
     public void findByUserIdShouldReturnCorrectUser() {
 
         //arrange
@@ -93,6 +97,7 @@ public class UserTest {
     }
 
     @Test
+    //TODO write in testplan
     public void existByUserEmailShouldReturnExistingUser() {
 
         //arrange
@@ -111,6 +116,7 @@ public class UserTest {
     }
 
     @Test
+    //TODO write in testplan
     public void findByNameUserShouldReturnCorrectUsers() {
 
         //arrange
@@ -132,6 +138,7 @@ public class UserTest {
     }
 
     @Test
+    //TODO write in testplan
     public void findByRoleUserShouldReturnCorrectUsers() {
 
         //arrange

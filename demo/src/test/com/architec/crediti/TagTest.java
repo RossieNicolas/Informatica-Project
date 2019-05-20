@@ -19,6 +19,7 @@ public class TagTest {
     private TagRepo tags;
 
     @Test
+    //id = 17
     public void addTagShouldReturnIncreaseInDB(){
 
         //arrange
@@ -38,6 +39,7 @@ public class TagTest {
     }
 
     @Test
+    //TODO write in testplan
     public void findByIdTagShouldReturnCorrectTag() {
 
         //arrange
@@ -55,6 +57,7 @@ public class TagTest {
         tags.delete(t);
     }
     @Test
+    //TODO write in testplan
     public void findByTagNameExistsShouldReturnCorrectTag(){
 
         //arrange
@@ -72,6 +75,7 @@ public class TagTest {
     }
 
     @Test
+    //id = 22
     public void RemoveTagShouldRemoveTagFromDB() {
 
         //arrange
@@ -89,6 +93,7 @@ public class TagTest {
     }
 
     @Test
+    //id = 23
     public void editTagNameShouldReturnEditedTag() {
 
         //arrange
@@ -107,6 +112,7 @@ public class TagTest {
     }
 
     @Test
+    //id = 23
     public void editTagDescriptionShouldReturnEditedTag() {
 
         //arrange

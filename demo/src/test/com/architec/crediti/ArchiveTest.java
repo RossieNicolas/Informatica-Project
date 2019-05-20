@@ -2,11 +2,8 @@ package com.architec.crediti;
 import static org.junit.Assert.assertEquals;
 
 
-import java.util.ArrayList;
 import java.util.List;
 import com.architec.crediti.models.ArchivedAssignment;
-import com.architec.crediti.models.Student;
-import com.architec.crediti.models.User;
 import com.architec.crediti.repositories.ArchiveRepository;
 
 import com.architec.crediti.repositories.StudentRepository;
@@ -28,7 +25,9 @@ public class ArchiveTest {
 
     @Autowired
     private StudentRepository stuRepo;
+
     @Test
+    //id= 48
     public void addNewArchivedAssignmentShouldIncreaseInDB() {
 
         //arange
@@ -45,6 +44,7 @@ public class ArchiveTest {
         assertEquals(length +1, length2);
     }
     @Test
+    //id= 51
     public void findByIdArchiveShouldReturnCorrectArchivedAssignment() {
 
         //arrange
@@ -59,6 +59,7 @@ public class ArchiveTest {
         assertEquals(assignmentIdForA, copyA.getAssignmentId());
     }
     @Test
+    //id= 52
     public void findByNameArchiveShouldReturnCorrectArchivedAssignment() {
 
         //arrange
@@ -77,22 +78,4 @@ public class ArchiveTest {
         assertEquals(count, totalCount);
     }
 
-    @Test
-    public void findStudentByNameShouldReturnCorrentStudent(){
-        List<User> users = userRepo.findByFirstnameContainingOrLastnameContaining("vladislav", "Mataganov");
-        User user = null;
-        for (User item : users) {
-            user = item;
-        }
-
-        assertEquals(user.getUserId() , 9);
-    }
-
-    @Test
-    public void findStudentByuUserIdShouldReturnCorrentStudent(){
-        Student student = stuRepo.findByUserId(userRepo.findByUserId(9));
-
-
-        assertEquals(student.getStudentId() , 10);
-    }
 }

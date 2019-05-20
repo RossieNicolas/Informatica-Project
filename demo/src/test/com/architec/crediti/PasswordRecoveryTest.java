@@ -21,7 +21,9 @@ public class PasswordRecoveryTest {
 
     @Autowired
     private UserRepository users;
+
     @Test
+    //id= 34
     public void FindByEmailShouldReturnCorrectUser() {
 
         //arrange
@@ -44,6 +46,7 @@ public class PasswordRecoveryTest {
     }
 
     @Test
+    //id= 35
     public void NotExistingEmailShouldReturnFalse() {
 
         //arrange
