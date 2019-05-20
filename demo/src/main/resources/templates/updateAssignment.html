@@ -41,11 +41,11 @@
                         <input name="task" id="task" th:value="*{a.getTask()}" type="text" required="required"><br>
 
                         <label for="start_date">Begindatum:</label><br>
-                        <input name="start_date" id="start_date" type="date" th:value="*{a.getStartDate()}"
+                        <input name="start_date" id="start_date" type="date" onblur="SDate()" th:value="*{a.getStartDate()}"
                                required="required"><br>
 
                         <label for="end_date">Einddatum:</label><br>
-                        <input name="end_date" id="end_date" type="date" th:value="*{a.getEnd_date()}"
+                        <input name="end_date" id="end_date" type="date" onblur="TDate()" th:value="*{a.getEnd_date()}"
                                required="required"><br><br>
 
                         <label for="amountHours">Totaal uur:</label>
@@ -89,7 +89,7 @@
                        th:href="@{/deleteassignment/{id} (id=${a.assignmentId})}" class="button">🗑️ VERWIJDEREN</a>
 
                     <a sec:authorize="hasRole('COORDINATOR')"
-                       th:if="${!a.isValidated()}" th:href="@{/validateassignment/{id} (id=${a.assignmentId}}"
+                       th:if="${!a.isValidated()}" th:href="@{/validateassignment/{id} (id=${a.assignmentId})}"
                        class="button">✔️ VALIDEREN</a>
 
                     <a sec:authorize="hasRole('COORDINATOR')"
@@ -101,7 +101,6 @@
     </section>
 </div>
 <footer th:insert="fragments/generalMenu.html :: footer">
-
 </footer>
 <script>
     SelectElement("type", getType);
@@ -110,7 +109,7 @@
         if (getType != null) {
             var element = document.getElementById(id);
             element.value = getType;
-        }else {
+        } else {
             var element = document.getElementById(id);
             element.value = "";
         }
@@ -136,7 +135,7 @@
         var startDate = document.getElementById("start_date").value;
         var endDate = document.getElementById("end_date").value;
         if (startDate != null && endDate != null) {
-            if (startDate >= endDate) {
+            if (startDate > endDate) {
                 alert("De startdatum moet kleiner zijn dan de einddatum van uw opdracht!");
                 document.getElementById('end_date').value = "";
                 return false;
