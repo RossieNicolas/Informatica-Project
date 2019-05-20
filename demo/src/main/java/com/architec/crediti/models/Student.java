@@ -23,7 +23,7 @@ public class Student {
     @Column(name = "mobility")
     private boolean mobility;
 
-    @ManyToMany()
+    @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(
             name = "student_assign",
             joinColumns = @JoinColumn(name = "student_id"),

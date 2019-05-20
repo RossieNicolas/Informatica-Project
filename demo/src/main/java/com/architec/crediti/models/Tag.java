@@ -16,7 +16,7 @@ public class Tag {
     @Column(name = "tagDescription")
     private String tagDescription;
 
-    @ManyToMany(mappedBy = "tags")
+    @ManyToMany(mappedBy = "tags", cascade = CascadeType.REMOVE)
     Set<Assignment> assignedTags;
 
     public int getTagId() {

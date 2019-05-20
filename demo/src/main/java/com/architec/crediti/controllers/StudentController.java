@@ -67,7 +67,7 @@ public class StudentController {
         List<Student> students = new ArrayList();
 
         try {
-            Student st = studentRepo.findByStudentennummer(Integer.parseInt(name));
+            Student st = studentRepo.findByStudentennummer(name);
             model.addAttribute("students", st);
         } catch (Exception e) {
             if(!name.equals("")){

@@ -34,7 +34,7 @@ public class ProfileController {
     }
 
     @GetMapping("liststudents/{studentennummer}")
-    public String getStudentProfile(Principal principal, @PathVariable("studentennummer") int studentennummer, Model model){
+    public String getStudentProfile(Principal principal, @PathVariable("studentennummer") String studentennummer, Model model){
 
         Student st = stuRepo.findByStudentennummer(studentennummer);
         List<File> files = fileRepo.findByUser(st.getUserId());
