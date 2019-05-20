@@ -34,6 +34,7 @@ public class AssignmentController {
 
     private Iterable<Assignment> fiches;
     private static final int PAGE_SIZE = 15;
+    private static final int INITAL_PAGE = 0;
 
     private final
     TagRepo tagRepo;
@@ -119,8 +120,8 @@ public class AssignmentController {
         if (assignmentRepo.count() % PAGE_SIZE != 0) {
             buttons++;
         }
-        int initialPage = 0;
-        int evalPage = (page.orElse(0) < 1) ? initialPage : page.get() - 1;
+
+        int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
 
         Page<Assignment> fiches = assignmentRepo.findAll(PageRequest.of(evalPage, PAGE_SIZE));
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
@@ -151,8 +152,8 @@ public class AssignmentController {
         if (assignmentRepo.count() % PAGE_SIZE != 0) {
             buttons++;
         }
-        int initialPage = 0;
-        int evalPage = (page.orElse(0) < 1) ? initialPage : page.get() - 1;
+
+        int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
 
         Page<Assignment> fiches = assignmentRepo.findAll(PageRequest.of(evalPage, PAGE_SIZE));
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
@@ -200,8 +201,8 @@ public class AssignmentController {
         if (assignmentRepo.count() % PAGE_SIZE != 0) {
             buttons++;
         }
-        int initialPage = 0;
-        int evalPage = (page.orElse(0) < 1) ? initialPage : page.get() - 1;
+
+        int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
 
         Page<Assignment> fiches = assignmentRepo.findAll(PageRequest.of(evalPage, PAGE_SIZE));
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
