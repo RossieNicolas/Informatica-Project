@@ -100,7 +100,8 @@ public class AssignmentController {
 
     // list all assignments
     @GetMapping("/allassignments")
-    public String getAllAssignments(Model model ,@RequestParam("page") Optional<Integer> page) {
+    public ModelAndView getAllAssignments(Model model ,@RequestParam("page") Optional<Integer> page) {
+        ModelAndView view = new ModelAndView("listAllAssignments");
 
         List<Assignment> fullas = new ArrayList<>();
         for (Assignment item: assignmentRepo.findAll()) {
@@ -111,7 +112,7 @@ public class AssignmentController {
         }
         model.addAttribute("assignments", fullas);
 
-        int pageSize = PAGE_SIZE;
+        int pageSize = 15;
         int buttons = (int) assignmentRepo.count() / pageSize;
 
         if (assignmentRepo.count() % pageSize != 0) {
@@ -123,11 +124,11 @@ public class AssignmentController {
         Page<Assignment> fiches = assignmentRepo.findAll(PageRequest.of(evalPage, pageSize));
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
 
-        model.addAttribute("persons", fiches);
-        model.addAttribute("selectedPageSize", pageSize);
-        model.addAttribute("pager", pager);
+        view.addObject("assignments", fiches);
+        view.addObject("persons", fiches);
+        view.addObject("pager", pager);
 
-        return "listAllAssignments";
+        return view;
     }
 
     // list all assignments which are full
