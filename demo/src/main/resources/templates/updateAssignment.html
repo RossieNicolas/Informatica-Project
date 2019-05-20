@@ -54,7 +54,7 @@
 
                         <label for="amountHours">Totaal uur:</label>
                         <input name="amountHours" id="amountHours" type="number" th:value="*{a.getAmountHours()}"
-                               min="1" required="required"><br>
+                               min="1" onblur="amoutH()" required="required"><br>
 
                         <label for="maxStudents">Max Studenten:</label>
                         <input name="maxStudents" id="maxStudents" type="number" th:value="*{a.getMaxStudents()}"
@@ -112,6 +112,19 @@
     function SelectElement(id, getType) {
         var element = document.getElementById(id);
         element.value = getType;
+    }
+
+    function amoutH(){
+        var amountHours = document.getElementById("amountHours").value;
+        var test = parseInt(amountHours);
+        if (test % 3 != 0){
+            alert("Totaal uur moet drievoud zijn!");
+            document.getElementById('amountHours').value = "";
+            return false;
+        }
+        return true
+
+
     }
 
     function toggleForm() {
