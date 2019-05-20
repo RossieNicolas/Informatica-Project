@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -77,12 +78,17 @@ public class ArchiveController {
             List<ArchivedAssignment> list = archiveRepo.findByTitleContaining(name);
             List<ArchivedAssignment> list2 = new ArrayList<>();
             for (int item : tags) {
-                //TODO
-/*                for (ArchivedAssignment a : list) {
-                    if (a.getTag_ids().contains(tagRepo.findBytagId(item))) {
-                        list2.add(a);
+                for (ArchivedAssignment a : list) {
+                    int tag = tagRepo.findBytagId(item).getTagId();
+                    String archiveTag = a.getTag_ids();
+                    List<String> items = Arrays.asList(archiveTag.replace("[", "").replace("]", "").split("\\s*,\\s*"));
+
+                    for(int i = 0; i<items.size();i++){
+                        if(Integer.toString(tag).contains(items.get(i)) && !archiveTag.equals("[]")){
+                            list2.add(a);
+                        }
                     }
-                }*/
+                }
             }
 
             //delete double assignments in search

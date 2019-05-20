@@ -398,10 +398,9 @@ public class AssignmentController {
             }
             archivedAssignment.setTag_ids(list.toString());
         }
-
-        assignmentRepo.delete(assignment);
+        
         archiveRepo.save(archivedAssignment);
-        //assignment.setArchived(true);
+        assignmentRepo.delete(assignment);
 
         model.addAttribute("assignments", assignmentRepo.findAll());
 
