@@ -80,7 +80,7 @@
                        th:href="@{/studentenroll/{id} (id=${a.assignmentId})}"
                        class="button">➕ Inschrijven</a>
 
-                    <a th:if="${!a.isValidated() and status}"
+                    <a th:if="${!a.isValidated() and roles}"
                        th:href="@{/deleteassignment/{id} (id=${a.assignmentId})}" class="button">🗑️ VERWIJDEREN</a>
 
                     <a sec:authorize="hasRole('COORDINATOR')" th:if="${a.isValidated()}"

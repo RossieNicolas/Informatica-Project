@@ -234,10 +234,10 @@ public class AssignmentController {
 
     // find specific assignment to edit out of all assignments
     @GetMapping("/allassignments/{assignmentId}")
-    public String getAssignmentsToUpdate(@PathVariable("assignmentId") int assignmentId, Model model, @Valid Student student, Principal principal) {
+    public String getAssignmentsToUpdate(@PathVariable("assignmentId") int assignmentId, Model model, Principal principal) {
         List<Tag> updatetag = tagRepo.findAll();
         User user = userRepo.findByEmail(principal.getName());
-        student = studentRepo.findByUserId(user);
+        Student student = studentRepo.findByUserId(user);
         Assignment as = assignmentRepo.findByAssignmentId(assignmentId);
         boolean ingeschreven = false;
         boolean volzet = false;
