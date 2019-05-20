@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Crediti - taak niet gevalideerd</title>
+    <title>Crediti - Taken niet gevalideerd</title>
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
 <body class="background">
@@ -16,24 +16,22 @@
         <tr>
             <th></th>
             <th>Nr</th>
+            <th>Titel</th>
             <th>Opdrachtgever</th>
             <th>Type</th>
             <th>Taak</th>
             <th>Begin</th>
             <th>Einde</th>
-            <th>Gevalideerd</th>
-            <th>Volzet</th>
         </tr>
         <tr th:each="a : ${assignments}" class="tablebackground">
-            <td><input type="submit" value="Detail" class="button"></td>
+            <td><a th:href="${'/allassignments/' + a.getAssignmentId()}" class="button">📃</a>
             <td th:text="${a.getAssignmentId()}"></td>
+            <td th:text="${a.getTitle()}"></td>
             <td th:text="${a.getAssignerUserId()}"></td>
             <td th:text="${a.getType()}"></td>
             <td th:text="${a.getTask()}" class="cell"></td>
             <td th:text="${a.getStartDate()}"></td>
-            <td th:text="${a.getEndDate()}"></td>
-            <td th:text="${a.isValidated()}"></td>
-            <td th:text="${a.isArchived()}"></td>
+            <td th:text="${a.getEnd_date()}"></td>
         </tr>
     </table>
 </div>
