@@ -128,6 +128,7 @@ public class AssignmentController {
         view.addObject("assignments", fiches);
         view.addObject("persons", fiches);
         view.addObject("pager", pager);
+        view.addObject("tags", tagRepo.findAll());
 
         return view;
     }
