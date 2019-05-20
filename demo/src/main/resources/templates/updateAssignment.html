@@ -88,7 +88,7 @@
 
                     <a sec:authorize="hasRole('COORDINATOR')"
                        th:if="${!a.isValidated()}" th:href="@{/validateassignment/{id} (id=${a.assignmentId})}"
-                       class="button">✔️ VALIDEREN</a>
+                       class="button">✔️VALIDEREN</a>
 
                     <a sec:authorize="hasRole('COORDINATOR')"
                        th:if="${a.isValidated()}" th:href="@{/archiveassignment/{id} (id=${a.assignmentId})}"

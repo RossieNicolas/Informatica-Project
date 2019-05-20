@@ -7,62 +7,8 @@
     </head>
     <body>
     <div class="background">
-    <header>
-        <div class="nav-main navbackground">
-            <div class="container">
-                <div class="wrap-all col-xs-12">
-                    <div class="left">
-                        <a class="logo" href="/main">
-                            <img th:src="@{/images/logo-ap.svg}">
-                        </a>
-                    </div>
-                    <div class="right">
-                        <div class="region-header-menu">
-                            <nav>
-                                <ul class="nav">
-                                    <li>
-                                        <div class="dropdown dropdownleft">
-                                            <span>Opdrachten</span>
-                                            <div class="dropdown-content">
-                                                <a href="/allassignments">Lopende taken</a>
-                                                <a href="/assignment">Taak toevoegen</a>
-                                                <a href="/myassignments">Mijn taken</a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="dropdown">
-                                            <span>Profiel</span>
-                                            <div class="dropdown-content">
-                                                <a href="">Mijn profiel</a>
-                                                <a href="/portfolio">Mijn portfolio</a>
-                                                <a href="">Portfolios</a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a href="/documentation">
-                                            <span>Documentatie</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <div class="dropdown">
-                                            <span>Coördinator</span>
-                                            <div class="dropdown-content">
-                                                <a href="/tag">Tag toevoegen</a>
-                                                <a href="/listAllTags">Lijst van tags</a>
-                                                <a href="/archive">Archief</a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
+        <header th:insert="fragments/generalMenu.html :: header">
+        </header>
         <div class="upload-container">
             <div class="upload-header">
                 <h2>Upload files naar jouw portfolio</h2>

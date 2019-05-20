@@ -114,16 +114,15 @@ public class AssignmentController {
         }
         model.addAttribute("assignments", fullas);
 
-        int pageSize = 15;
-        int buttons = (int) assignmentRepo.count() / pageSize;
+        int buttons = (int) assignmentRepo.count() / PAGE_SIZE;
 
-        if (assignmentRepo.count() % pageSize != 0) {
+        if (assignmentRepo.count() % PAGE_SIZE != 0) {
             buttons++;
         }
         int initialPage = 0;
         int evalPage = (page.orElse(0) < 1) ? initialPage : page.get() - 1;
 
-        Page<Assignment> fiches = assignmentRepo.findAll(PageRequest.of(evalPage, pageSize));
+        Page<Assignment> fiches = assignmentRepo.findAll(PageRequest.of(evalPage, PAGE_SIZE));
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
 
         view.addObject("assignments", fiches);
@@ -146,20 +145,18 @@ public class AssignmentController {
         }
         model.addAttribute("assignments", fullas);
 
-        int pageSize = PAGE_SIZE;
-        int buttons = (int) assignmentRepo.count() / pageSize;
+        int buttons = (int) assignmentRepo.count() / PAGE_SIZE;
 
-        if (assignmentRepo.count() % pageSize != 0) {
+        if (assignmentRepo.count() % PAGE_SIZE != 0) {
             buttons++;
         }
         int initialPage = 0;
         int evalPage = (page.orElse(0) < 1) ? initialPage : page.get() - 1;
 
-        Page<Assignment> fiches = assignmentRepo.findAll(PageRequest.of(evalPage, pageSize));
+        Page<Assignment> fiches = assignmentRepo.findAll(PageRequest.of(evalPage, PAGE_SIZE));
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
 
         model.addAttribute("persons", fiches);
-        model.addAttribute("selectedPageSize", pageSize);
         model.addAttribute("pager", pager);
 
         return "listAllFullAssignments";
@@ -197,20 +194,18 @@ public class AssignmentController {
                     .findByTitleContainingAndArchived(name, false)));
         }
 
-        int pageSize = PAGE_SIZE;
-        int buttons = (int) assignmentRepo.count() / pageSize;
+        int buttons = (int) assignmentRepo.count() / PAGE_SIZE;
 
-        if (assignmentRepo.count() % pageSize != 0) {
+        if (assignmentRepo.count() % PAGE_SIZE != 0) {
             buttons++;
         }
         int initialPage = 0;
         int evalPage = (page.orElse(0) < 1) ? initialPage : page.get() - 1;
 
-        Page<Assignment> fiches = assignmentRepo.findAll(PageRequest.of(evalPage, pageSize));
+        Page<Assignment> fiches = assignmentRepo.findAll(PageRequest.of(evalPage, PAGE_SIZE));
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
 
         model.addAttribute("persons", fiches);
-        model.addAttribute("selectedPageSize", pageSize);
         model.addAttribute("pager", pager);
         model.addAttribute("tags", tagRepo.findAll());
 
