@@ -51,16 +51,21 @@ public class AssignmentController {
     ArchiveRepository archiveRepo;
 
     private final
+    EnrolledRepository enrolledRepo;
+
+
+    private final
     EmailServiceImpl mail;
 
     @Autowired
     public AssignmentController(TagRepo tagRepo, AssignmentRepository assignmentRepo, StudentRepository studentRepo,
-                                UserRepository userRepo, ArchiveRepository archiveRepo, EmailServiceImpl mail) {
+                                UserRepository userRepo, ArchiveRepository archiveRepo, EnrolledRepository enrolledRepo, EmailServiceImpl mail) {
         this.tagRepo = tagRepo;
         this.assignmentRepo = assignmentRepo;
         this.studentRepo = studentRepo;
         this.userRepo = userRepo;
         this.archiveRepo = archiveRepo;
+        this.enrolledRepo = enrolledRepo;
         this.mail = mail;
     }
 
@@ -75,7 +80,7 @@ public class AssignmentController {
 
     // add assignment
     @PostMapping("/assignment")
-    public String createAssignment( Principal principal, @Valid Assignment assignment,
+    public String createAssignment(Principal principal, @Valid Assignment assignment,
                                    @RequestParam(required = false, value = "tag") int[] tags) {
         Set<Tag> set = new HashSet<>();
         User currentUser = userRepo.findByEmail(principal.getName());
@@ -92,7 +97,6 @@ public class AssignmentController {
         assignmentRepo.save(assignment);
 
 
-
         mail.sendSimpleMessage("alina.storme@student.ap.be", "Nieuwe opdracht gecreëerd",
                 EmailTemplates.createdAssignment(assignment.getAssigner(),
                         assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments",
@@ -102,11 +106,11 @@ public class AssignmentController {
 
     // list all assignments
     @GetMapping("/allassignments")
-    public ModelAndView getAllAssignments(Model model ,@RequestParam("page") Optional<Integer> page) {
+    public ModelAndView getAllAssignments(Model model, @RequestParam("page") Optional<Integer> page) {
         ModelAndView view = new ModelAndView("listAllAssignments");
 
         List<Assignment> fullas = new ArrayList<>();
-        for (Assignment item: assignmentRepo.findAll()) {
+        for (Assignment item : assignmentRepo.findAll()) {
             if (item.getAmountStudents() != item.getMaxStudents() && !item.isArchived()) {
 
                 fullas.add(item);
@@ -135,10 +139,10 @@ public class AssignmentController {
 
     // list all assignments which are full
     @GetMapping("/allFullAssignments")
-    public String getAllFullAssignment(Model model , @RequestParam("page") Optional<Integer> page) {
+    public String getAllFullAssignment(Model model, @RequestParam("page") Optional<Integer> page) {
 
         List<Assignment> fullas = new ArrayList<>();
-        for (Assignment item: assignmentRepo.findAll()) {
+        for (Assignment item : assignmentRepo.findAll()) {
             if (item.getAmountStudents() == item.getMaxStudents() && !item.isArchived()) {
 
                 fullas.add(item);
@@ -182,7 +186,7 @@ public class AssignmentController {
 
     // search assignments
     @PostMapping("/allassignments")
-    public String getAssignment(@RequestParam("searchbar") String name, Model model , @RequestParam("page") Optional<Integer> page) {
+    public String getAssignment(@RequestParam("searchbar") String name, Model model, @RequestParam("page") Optional<Integer> page) {
 
         try {
             Assignment a = assignmentRepo.findByAssignmentId((Integer.parseInt(name)));
@@ -239,14 +243,12 @@ public class AssignmentController {
         boolean volzet = false;
 
 
-
-
-        for (Assignment item : student.getAssignments()){
-            if(item.getAssignmentId() == assignmentId){
+        for (Assignment item : student.getAssignments()) {
+            if (item.getAssignmentId() == assignmentId) {
                 ingeschreven = true;
             }
         }
-        if(as.getAmountStudents() == as.getMaxStudents()){
+        if (as.getAmountStudents() == as.getMaxStudents()) {
             volzet = true;
         }
         model.addAttribute("volzet", volzet);
@@ -330,12 +332,16 @@ public class AssignmentController {
                 }
             }
 
-            if(!zelfde) {
+            if (!zelfde) {
                 if (assignment.getAmountStudents() < assignment.getMaxStudents()) {
                     set.add(assignment);
                     assignment.setAmountStudents(counter + 1);
                 }
-            }else return "alreadyAssigned";
+            } else return "alreadyAssigned";
+
+
+            Enrolled enrolled = new Enrolled(user.getFirstname() + " " + user.getLastname(), user.getEmail(), assignment.getAssignmentId(), assignment.getTitle(), user.getUserId());
+            enrolledRepo.save(enrolled);
 
             student.setAssignments(set);
             studentRepo.save(student);
@@ -348,6 +354,53 @@ public class AssignmentController {
             System.out.println(ex.getMessage());
         }
         return "studentenroll";
+    }
+
+    // show list of unapproved assignments and make possible to approve
+    //TODO: email initialization
+    @GetMapping("/unapprovedEnrollments")
+    public String unapprovedEnroll(Model model) {
+        List<Enrolled> unapproved = enrolledRepo.findAll();
+        model.addAttribute("unapproved", unapproved);
+        return "listUnapprovedEnrollment";
+    }
+
+
+    @GetMapping("/approveEnroll/{id}")
+    public String validateEnroll(@PathVariable("id") int enrolledid) {
+        Enrolled enrolled = enrolledRepo.findByEnrolledId(enrolledid);
+        enrolledRepo.delete(enrolled);
+
+        //TODO
+//        mail.sendSimpleMessage(userRepository.findByUserId(externalId).getEmail(), "externe gevalideerd",
+//                EmailTemplates.validatedExternal());
+
+        return "redirect:/unapprovedEnrollments";
+    }
+
+    @GetMapping("/deleteEnroll/{id}")
+    public String deleteEnroll(@PathVariable("id") int enrolledid) {
+        Enrolled enrolled = enrolledRepo.findByEnrolledId(enrolledid);
+        enrolledRepo.delete(enrolled);
+
+        Student student = studentRepo.findByUserId(userRepo.findByUserId(enrolled.getUserId()));
+        for (Assignment item : student.getAssignments()) {
+            if (item.getAssignmentId() == enrolled.getAssignment()) {
+                Set<Assignment> set = student.getAssignments();
+                for (Iterator<Assignment> iterator = set.iterator(); iterator.hasNext(); ) {
+                    Assignment a = iterator.next();
+                    if (a.getAssignmentId() == enrolled.getAssignment()) {
+                        iterator.remove();
+                        studentRepo.save(student);
+                    }
+                }
+            }
+        }
+        //TODO
+//        mail.sendSimpleMessage(userRepository.findByUserId(externalId).getEmail(), "externe gevalideerd",
+//                EmailTemplates.validatedExternal());
+
+        return "redirect:/unapprovedEnrollments";
     }
 
     // delete specific assignment
@@ -399,7 +452,7 @@ public class AssignmentController {
             }
             archivedAssignment.setTag_ids(list.toString());
         }
-        
+
         archiveRepo.save(archivedAssignment);
         assignmentRepo.delete(assignment);
 

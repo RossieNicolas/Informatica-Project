@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Crediti - Ongevalideerde participaties</title>
+    <link rel="stylesheet" th:href="@{/css/APcss3.css}">
+</head>
+<body class="background">
+<header th:insert="fragments/generalMenu.html :: header">
+</header>
+<div class="container ">
+    <h2 class="extra">Ongevalideerde participaties</h2>
+</div>
+<div id='overview'>
+    <table>
+        <thead>
+        <tr class="ext_table">
+            <th></th>
+            <th>Assignment ID</th>
+            <th>Titel</th>
+            <th>Voor-en achternaam</th>
+            <th>E-mail aanvrager</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="e : ${unapproved}" class="tablebackground ext_table">
+            <td>
+                <a th:href="@{/approveEnroll/{id} (id=${e.getEnrolledId()})}" class="button">✔️</a>
+            </td>
+            <td th:text="${e.getAssignment()}"></td>
+            <td th:text="${e.getTitle()}"></td>
+            <td th:text="${e.getFullname()}"></td>
+            <td th:text="${e.getEmail()}"></td>
+            <td><a th:href="@{/deleteEnroll/{id} (id=${e.getEnrolledId()})}">🗑️</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div style="height: 45%"></div>
+<footer th:insert="fragments/generalMenu.html :: footer">
+</footer>
+</body>
+</html>
