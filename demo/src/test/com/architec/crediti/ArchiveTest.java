@@ -20,12 +20,6 @@ public class ArchiveTest {
     @Autowired
     private ArchiveRepository archive;
 
-    @Autowired
-    private UserRepository userRepo;
-
-    @Autowired
-    private StudentRepository stuRepo;
-
     @Test
     //id= 48
     public void addNewArchivedAssignmentShouldIncreaseInDB() {
@@ -42,6 +36,9 @@ public class ArchiveTest {
 
         //assert
         assertEquals(length +1, length2);
+
+        //undo operations
+        archive.delete(a);
     }
     @Test
     //id= 51
@@ -57,6 +54,9 @@ public class ArchiveTest {
 
         //assert
         assertEquals(assignmentIdForA, copyA.getAssignmentId());
+
+        //undo operations
+        archive.delete(a);
     }
     @Test
     //id= 52
@@ -64,18 +64,21 @@ public class ArchiveTest {
 
         //arrange
         int count = 0;
+        String input = "findByNameArchiveShouldReturnCorrectArchivedAssignment";
 
         //act
         for(ArchivedAssignment a : archive.findAll()){
-            if(a.getTitle().equalsIgnoreCase("test")){
+            if(a.getTitle().contains(input)){
                 count++;
             }
         }
-        List<ArchivedAssignment> list = archive.findByTitleContaining("test");
+        List<ArchivedAssignment> list = archive.findByTitleContaining(input);
         int totalCount = list.size();
 
         //assert
         assertEquals(count, totalCount);
+
+
     }
 
 }

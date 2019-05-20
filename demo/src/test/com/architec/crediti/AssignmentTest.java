@@ -77,15 +77,16 @@ public class AssignmentTest {
 
         //arrange
         int count = 0;
+        String input = "findByNameAssignmentShouldReturnCorrectAssignment";
 
         //act
         // no mock assignment needs to be made because multiple assignments can have the same name
         for(Assignment a : assignments.findAll()){
-            if(a.getTitle().equalsIgnoreCase("test")){
+            if(a.getTitle().contains(input)){
                 count++;
             }
         }
-        List<Assignment> list = assignments.findByTitleContainingAndArchived("test",true);
+        List<Assignment> list = assignments.findByTitleContainingAndArchived(input,true);
         int totalCount = list.size();
 
         //assert
