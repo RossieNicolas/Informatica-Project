@@ -68,6 +68,7 @@ public class StudentTest {
         assertEquals(count, count2);
 
         //undo operations
+        students.delete(s);
         users.delete(u);
     }
 
@@ -99,7 +100,7 @@ public class StudentTest {
     public void findByUserIdShouldReturnCorrectStudent(){
 
         //arrange
-        User u = new User("testUser", "testUser","test@test.test", Role.COORDINATOR,false);
+        User u = new User("testUser", "testUser","test@test.test", Role.STUDENT,false);
         users.save(u);
         Student s = new Student("0000000000","000000",u);
         students.save(s);
@@ -108,7 +109,7 @@ public class StudentTest {
         Student found = students.findByUserId(u);
 
         //arrange
-        assertEquals(s.getUserId(),found.getUserId());
+        assertEquals(s.getUserId().getUserId(),found.getUserId().getUserId());
 
         //undo operations
         students.delete(s);

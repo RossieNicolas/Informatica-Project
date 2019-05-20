@@ -30,7 +30,7 @@ public class Student {
             inverseJoinColumns = @JoinColumn(name = "assign_id"))
     private Set<Assignment> assignments;
 
-    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
+    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = { CascadeType.MERGE,
             CascadeType.REMOVE })
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User userId;
