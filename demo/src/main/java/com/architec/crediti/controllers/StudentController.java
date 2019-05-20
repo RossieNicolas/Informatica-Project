@@ -1,6 +1,8 @@
 package com.architec.crediti.controllers;
 
+import com.architec.crediti.models.Assignment;
 import com.architec.crediti.repositories.AssignmentMethods;
+import com.architec.crediti.repositories.AssignmentRepository;
 import com.architec.crediti.repositories.UserRepository;
 import com.architec.crediti.models.Student;
 import com.architec.crediti.models.User;
@@ -25,10 +27,15 @@ public class StudentController {
     private final
     StudentRepository studentRepo;
 
+    private final
+    AssignmentRepository asRepo;
+
+
     @Autowired
-    public StudentController(UserRepository userRepo, StudentRepository studentRepo) {
+    public StudentController(UserRepository userRepo, StudentRepository studentRepo , AssignmentRepository asRepo) {
         this.userRepo = userRepo;
         this.studentRepo = studentRepo;
+        this.asRepo = asRepo;
     }
 
     @GetMapping("/createstudentprofile")
@@ -83,6 +90,16 @@ public class StudentController {
 
         return "listStudents";
     }
+
+    @GetMapping("/studentProfile")
+    String getProfileOfCurrentStudent(Model model, Principal principal){
+        Student currentStudent = studentRepo.findByUserId(userRepo.findByEmail(principal.getName()));
+        List<Assignment> assignments = asRepo.findByAssignerUserId(currentStudent.getUserId());
+        model.addAttribute("student", currentStudent);
+        model.addAttribute("assignments", assignments);
+        return "studentProfile";
+    }
+
 
 
 }

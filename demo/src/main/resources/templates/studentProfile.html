@@ -13,9 +13,7 @@
         <div class="container ">
             <div class="wrap-all col-xs-12 ">
                 <h2>Detail student</h2>
-
-                <form th:each="a: ${student}" class="standard-form" method="post"
-                      th:action="@{/liststudents/{id}(id=${a.studentennummer})}">
+                <form th:each="a: ${student}" class="standard-form" method="post"   >
                     <br><br>
                     <fieldset disabled="disabled" id="assignmentInfo">
                         <label for="nummer">Studenten nummer:</label>
@@ -31,39 +29,49 @@
                         <input name="Gsm" id="Gsm" type="text" th:value="*{a.getGsm()}"
                                required="required"><br>
 
-                        <label for="amoutnHours">Afgeronde uren:</label><br>
-                        <input name="amoutnHours" id="amoutnHours" type="text" th:value="*{a.getAmoutHours()}"
-                               required="required"><br>
-
-
                         <label>Soort:</label><br>
                         <input th:if="${a.isMobility()}" type="text" value="Mobility">
                         <input th:if="${!a.isMobility()}"  type="text" value="Zap" >
 
                     </fieldset>
                 </form>
-
-
-                <table id ="tablePortfolio">
+                <h2>Uw aangemaakte opdrachten</h2>
+                <table id = "profileTable">
                     <thead>
                     <tr>
-                        <th>Naam van een bestand</th>
-                        <th style="width: 18%"></th>
+                        <th>Nr</th>
+                        <th>Opdrachtgever</th>
+                        <th>Type</th>
+                        <th>Naam</th>
+                        <th>Begin</th>
+                        <th>Einde</th>
+                        <th>Aantal uren</th>
+                        <th>Gevalideerd</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <div id ="profilePortfolio">
-                        <tr th:each="file : ${files}" class="tablebackground" >
-                            <td th:text="${file.getTitle()}"></td>
-                            <td><a th:href="${file.getDownloadLink()}" class="button">Download</a></td>
-                        </tr>
-                    </div>
+                    <tr th:each="a : ${assignments}" class="tablebackground ">
+                        <td th:text="${a.getAssignmentId()}"></td>
+                        <td th:text="${a.getAssigner()}"></td>
+                        <td th:text="${a.getType()}"></td>
+                        <td th:text="${a.getTitle()}" class="cell"></td>
+                        <td th:text="${a.getStartDate()}"></td>
+                        <td th:text="${a.getEnd_date()}"></td>
+                        <td style="padding-left: 3.8%" th:text="${a.getAmountHours()}"></td>
+                        <td style="padding-left: 2.5%">
+                            <span th:if="${a.isValidated()}">✔️</span>
+                            <span th:unless="${a.isValidated()}">❌</span>
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
+
+
+
             </div>
-            </div>
-    </section>
         </div>
+    </section>
+</div>
 <footer th:insert="fragments/generalMenu.html :: footer">
 </footer>
 </body>

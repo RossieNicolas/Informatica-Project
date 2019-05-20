@@ -23,6 +23,10 @@ public class Student {
     @Column(name = "mobility")
     private boolean mobility;
 
+    @Column(name = "amoutHours")
+    private double amoutHours ;
+
+
     @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(
             name = "student_assign",
@@ -42,6 +46,7 @@ public class Student {
         this.gsm = gsm;
         this.studentennummer = studentennummer;
         this.userId = userId;
+        this.amoutHours = 0;
     }
 
     public boolean isZap() {
@@ -104,4 +109,12 @@ public class Student {
     public String getEmail(){
         return userId.getEmail();
     }
+    public double getAmoutHours() {
+        return this.amoutHours;
+    }
+
+    public void setAmoutHours(double amoutHours) {
+        this.amoutHours = amoutHours;
+    }
+
 }
