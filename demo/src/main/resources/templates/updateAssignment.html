@@ -27,21 +27,25 @@
 
                     <br><br>
                     <fieldset disabled="disabled" id="assignmentInfo">
+                        <label for="opdrachtgever">Opdrachtgever:</label>
+                        <input name="opdrachtgever" id="opdrachtgever" type="text" th:value="*{a.getAssignerEmail()}" style="width: 40%; background-color: rgb(235, 235, 228);" readonly><br>
+
                         <label for="title">Titel:</label>
                         <input name="title" id="title" type="text" th:value="*{a.getTitle()}" required="required"><br>
 
                         <label for="type">Type:</label>
                         <select name="type" id="type" required>
                             <option value="" disabled>Kies een type</option>
-                            <option value="ZAP">ZAP</option>
                             <option value="Mobility">Mobility</option>
+                            <option value="ZAP">ZAP</option>
                         </select>
 
                         <label for="task">Omschrijving opdracht:</label>
-                        <input name="task" id="task" th:value="*{a.getTask()}" type="text" required="required"><br>
+                        <textarea name="task" id="task" th:text="*{a.getTask()}" type="text" required="required"></textarea><br>
 
                         <label for="start_date">Begindatum:</label><br>
-                        <input name="start_date" id="start_date" type="date" onblur="SDate()" th:value="*{a.getStartDate()}"
+                        <input name="start_date" id="start_date" type="date" onblur="SDate()"
+                               th:value="*{a.getStartDate()}"
                                required="required"><br>
 
                         <label for="end_date">Einddatum:</label><br>
@@ -106,13 +110,8 @@
     SelectElement("type", getType);
 
     function SelectElement(id, getType) {
-        if (getType != null) {
-            var element = document.getElementById(id);
-            element.value = getType;
-        } else {
-            var element = document.getElementById(id);
-            element.value = "";
-        }
+        var element = document.getElementById(id);
+        element.value = getType;
     }
 
     function toggleForm() {

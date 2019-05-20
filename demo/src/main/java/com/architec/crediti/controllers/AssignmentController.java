@@ -240,6 +240,8 @@ public class AssignmentController {
         boolean volzet = false;
 
 
+
+
         for (Assignment item : student.getAssignments()){
             if(item.getAssignmentId() == assignmentId){
                 ingeschreven = true;
@@ -255,7 +257,7 @@ public class AssignmentController {
             Assignment a = assignmentRepo.findByAssignmentId(assignmentId);
             Set<Tag> tags = a.getTags();
             boolean[] status = new boolean[updatetag.size()];
-            String type = a.getType();
+            String getType = a.getType();
 
             for (int i = 0; i < updatetag.size(); i++) {
                 for (Tag item : tags) {
@@ -265,7 +267,7 @@ public class AssignmentController {
                 }
             }
 
-            model.addAttribute("getType", type);
+            model.addAttribute("getType", getType);
             model.addAttribute("status", status);
             if (a.getAmountStudents() != a.getMaxStudents() && !a.isArchived()) {
                 model.addAttribute("assignments", a);
