@@ -140,7 +140,8 @@ public class EnrollController {
             }
         }
 
-
+        mail.sendSimpleMessage(student.getEmail(), "Inschrijving geweigerd",
+                EmailTemplates.declinedEnrolledAssignmentStudent(enrolled.getTitle()));
         return "redirect:/unapprovedEnrollments";
     }
 }
