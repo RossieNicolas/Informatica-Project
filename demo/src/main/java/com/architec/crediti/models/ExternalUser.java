@@ -33,10 +33,14 @@ public class ExternalUser {
     @Column(name = "salt")
     private byte[] salt;
 
+    @Column(name = "reset_token")
+    private String resettoken;
+
     @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.REMOVE})
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User userId;
+
 
     public ExternalUser() {
     }
@@ -158,5 +162,16 @@ public class ExternalUser {
 
     public void setUserId(User userId) {
         this.userId = userId;
+    }
+
+    public String getResetToken() {
+        return resettoken;
+    }
+
+    public void setResetToken(String resetToken) {
+        this.resettoken = resetToken;
+    }
+    public String getEmail(){
+        return userId.getEmail();
     }
 }
