@@ -49,10 +49,8 @@ public class PortfolioUtil {
         List<File> docs = fileRepo.findAll();
 
         for (File item : docs) {
-            if (item.getTitle().equals(fileName)) {
-                if (item.getUser().equals(current)) {
-                    fileRepo.delete(item);
-                }
+            if (item.getTitle().equals(fileName) && item.getUser().equals(current)) {
+                fileRepo.delete(item);
             }
         }
 

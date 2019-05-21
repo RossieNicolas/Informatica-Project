@@ -16,13 +16,10 @@ import com.architec.crediti.security.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.expression.spel.ast.Assign;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.stream.Collectors;
 
 
 import javax.validation.Valid;
@@ -32,7 +29,6 @@ import java.util.*;
 @Controller
 public class AssignmentController {
 
-    private Iterable<Assignment> fiches;
     private static final int PAGE_SIZE = 15;
     private static final int INITAL_PAGE = 0;
 
@@ -167,7 +163,7 @@ public class AssignmentController {
     // list all unvalidated assignments
     @GetMapping("/unvalidatedassignments")
     public String getUnvalidatedAssingments(Model model) {
-        fiches = assignmentRepo.findAll();
+        Iterable<Assignment> fiches = assignmentRepo.findAll();
         List<Assignment> unvalidatedFiches = new ArrayList<>();
 
         for (Assignment item : fiches) {
@@ -309,13 +305,13 @@ public class AssignmentController {
 
     // assign student to specific assignment
     @GetMapping("/studentenroll/{assignmentId}")
-    public String enrollAssignment(@PathVariable("assignmentId") int assignmentId, @Valid Student student,
+    public String enrollAssignment(@PathVariable("assignmentId") int assignmentId,
                                    Principal principal, Model model) {
-        User currentUser = userRepo.findByEmail(principal.getName());
+
         Assignment assignment = assignmentRepo.findById((long) assignmentId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid assignment Id:" + assignmentId));
         User user = userRepo.findByEmail(principal.getName());
-        student = studentRepo.findByUserId(user);
+        Student student = studentRepo.findByUserId(user);
         long assignerId = assignmentRepo.findByAssignmentId(assignmentId).getAssignerUserId();
         String assignerEmail = userRepo.findByUserId(assignerId).getEmail();
 
@@ -363,8 +359,7 @@ public class AssignmentController {
 
     // validate specific assignment
     @GetMapping("/validateassignment/{assignmentId}")
-    public String validateAssignment(@PathVariable("assignmentId") int assignmentId, Model model, Principal principal) {
-        User currentUser = userRepo.findByEmail(principal.getName());
+    public String validateAssignment(@PathVariable("assignmentId") int assignmentId, Model model) {
 
         Assignment assignment = assignmentRepo.findById((long) assignmentId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid assignment Id:" + assignmentId));
@@ -398,7 +393,7 @@ public class AssignmentController {
                 Tag tag = tagRepo.findBytagId(item.getTagId());
                 list.add(tag.getTagId());
             }
-            archivedAssignment.setTag_ids(list.toString());
+            archivedAssignment.setTagIds(list.toString());
         }
         
         archiveRepo.save(archivedAssignment);

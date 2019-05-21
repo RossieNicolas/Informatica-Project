@@ -1,7 +1,6 @@
 package com.architec.crediti.controllers;
 
 import com.architec.crediti.models.Assignment;
-import com.architec.crediti.repositories.AssignmentMethods;
 import com.architec.crediti.repositories.AssignmentRepository;
 import com.architec.crediti.repositories.UserRepository;
 import com.architec.crediti.models.Student;
@@ -70,7 +69,7 @@ public class StudentController {
     }
 
     @PostMapping("/liststudents")
-    String getStudents(@RequestParam("searchbar") String name, Model model) {
+    public String getStudents(@RequestParam("searchbar") String name, Model model) {
         List<Student> students = new ArrayList();
 
         try {

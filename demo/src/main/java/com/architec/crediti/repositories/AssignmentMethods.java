@@ -4,7 +4,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.architec.crediti.models.Assignment;
-import com.architec.crediti.models.User;
 
 public class AssignmentMethods {
 

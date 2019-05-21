@@ -32,10 +32,9 @@ public class MainController {
             return "redirect:createstudentprofile";
         }
 
-        if (exRepo.findByUserId(currentUser) != null) {
-            if (!exRepo.findByUserId(currentUser).isApproved()) {
-                return "redirect:notapproved";
-            }
+        if (exRepo.findByUserId(currentUser) != null && !exRepo.findByUserId(currentUser).isApproved()) {
+            return "redirect:notapproved";
+
         }
 
         return "main";

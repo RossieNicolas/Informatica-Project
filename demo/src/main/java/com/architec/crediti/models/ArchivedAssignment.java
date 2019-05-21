@@ -3,7 +3,6 @@ package com.architec.crediti.models;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @Entity
 @Table(name = "archive")
@@ -41,33 +40,40 @@ public class ArchivedAssignment {
     @NotNull(message = "Startdatum mag niet leeg zijn!")
     @NotBlank
     @Column(name = "start_date")
-    private String start_date;
+    private String startDate;
 
     @NotNull(message = "Einddatum mag niet leeg zijn!")
     @NotBlank
     @Column(name = "end_date")
-    private String end_date;
+    private String endDate;
 
     @Column(name = "assigner_user")
     private String assignerUser;
 
     @Column(name="tag_ids")
-    private String tag_ids;
+    private String tagIds;
 
     public ArchivedAssignment() {
     }
 
-    public ArchivedAssignment(@NotNull(message = "Titel mag niet leeg zijn!") @NotBlank String title, @NotNull(message = "Type mag niet leeg zijn!") @NotBlank String type, @NotNull(message = "Beschrijving mag niet leeg zijn!") @NotBlank String task, @NotNull(message = "Totaal uur mag niet leeg zijn!") int amountHours, int amountStudents, @NotNull(message = "Max studenten mag niet leeg zijn!") int maxStudents, @NotNull(message = "Startdatum mag niet leeg zijn!") @NotBlank String start_date, @NotNull(message = "Einddatum mag niet leeg zijn!") @NotBlank String end_date, String assignerUser, String tag_ids) {
+    public ArchivedAssignment(@NotNull(message = "Titel mag niet leeg zijn!") @NotBlank String title,
+                              @NotNull(message = "Type mag niet leeg zijn!") @NotBlank String type,
+                              @NotNull(message = "Beschrijving mag niet leeg zijn!") @NotBlank String task,
+                              @NotNull(message = "Totaal uur mag niet leeg zijn!") int amountHours, int amountStudents,
+                              @NotNull(message = "Max studenten mag niet leeg zijn!") int maxStudents,
+                              @NotNull(message = "Startdatum mag niet leeg zijn!") @NotBlank String startDate,
+                              @NotNull(message = "Einddatum mag niet leeg zijn!") @NotBlank String endDate,
+                              String assignerUser, String tag_ids) {
         this.title = title;
         this.type = type;
         this.task = task;
         this.amountHours = amountHours;
         this.amountStudents = amountStudents;
         this.maxStudents = maxStudents;
-        this.start_date = start_date;
-        this.end_date = end_date;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.assignerUser = assignerUser;
-        this.tag_ids = tag_ids;
+        this.tagIds = tag_ids;
     }
 
     public void fillArchivedAssignment(Assignment a){
@@ -78,8 +84,8 @@ public class ArchivedAssignment {
         this.amountHours = a.getAmountHours();
         this.amountStudents = a.getAmountStudents();
         this.maxStudents = a.getMaxStudents();
-        this.start_date = a.getStart_date();
-        this.end_date = a.getEnd_date();
+        this.startDate = a.getStartDate();
+        this.endDate = a.getEndDate();
         this.assignerUser = a.getAssigner();
     }
 
@@ -139,20 +145,20 @@ public class ArchivedAssignment {
         this.maxStudents = maxStudents;
     }
 
-    public String getStart_date() {
-        return start_date;
+    public String getStartDate() {
+        return startDate;
     }
 
-    public void setStart_date(String start_date) {
-        this.start_date = start_date;
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
     }
 
-    public String getEnd_date() {
-        return end_date;
+    public String getEndDate() {
+        return endDate;
     }
 
-    public void setEnd_date(String end_date) {
-        this.end_date = end_date;
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 
     public String getAssignerUser() {
@@ -163,11 +169,11 @@ public class ArchivedAssignment {
         this.assignerUser = assignerUser;
     }
 
-    public String getTag_ids() {
-        return tag_ids;
+    public String getTagIds() {
+        return tagIds;
     }
 
-    public void setTag_ids(String tag_ids) {
-        this.tag_ids = tag_ids;
+    public void setTagIds(String tagIds) {
+        this.tagIds = tagIds;
     }
 }
