@@ -32,7 +32,7 @@ public class CheckHoursOfStudents {
         for (Student student : stRepo.findAll()) {
             for ( Assignment as : student.getAssignments()){
                 Assignment currentas = asRepo.findByAssignmentId(as.getAssignmentId());
-                LocalDate dateline = LocalDate.parse(currentas.getEnd_date());
+                LocalDate dateline = LocalDate.parse(currentas.getEndDate());
                 LocalDate date = LocalDate.now();
                 if(dateline.equals(date)){
                     student.setAmoutHours(student.getAmoutHours() + as.getAmountHours());
