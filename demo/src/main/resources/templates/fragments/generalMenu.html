@@ -27,7 +27,7 @@
                                             <div class="dropdown-content">
                                                 <a sec:authorize="!hasRole('EXTERNE')" href="/allassignments">Lopende taken</a>
                                                 <a href="/assignment">Taak toevoegen</a>
-                                                <a href="/myassignments">Mijn taken</a>
+                                                <a sec:authorize="!hasRole('EXTERNE')" href="/myassignments">Mijn taken</a>
                                             </div>
                                         </div>
                                     </li>

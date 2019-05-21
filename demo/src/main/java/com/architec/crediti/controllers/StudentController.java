@@ -91,7 +91,7 @@ public class StudentController {
     }
 
     @GetMapping("/studentProfile")
-    String getProfileOfCurrentStudent(Model model, Principal principal){
+    public String getProfileOfCurrentStudent(Model model, Principal principal){
         Student currentStudent = studentRepo.findByUserId(userRepo.findByEmail(principal.getName()));
         List<Assignment> assignments = asRepo.findByAssignerUserId(currentStudent.getUserId());
         model.addAttribute("student", currentStudent);
