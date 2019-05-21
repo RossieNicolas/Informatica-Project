@@ -1,10 +1,8 @@
 package com.architec.crediti.controllers;
 
 import com.architec.crediti.models.ArchivedAssignment;
-import com.architec.crediti.models.Assignment;
 import com.architec.crediti.models.Pager;
 import com.architec.crediti.repositories.ArchiveRepository;
-import com.architec.crediti.repositories.AssignmentMethods;
 import com.architec.crediti.repositories.TagRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,8 +24,8 @@ import java.util.stream.Collectors;
 public class ArchiveController {
     private final
     ArchiveRepository archiveRepo;
-    private int initialPage = 0;
-    private int pageSize = 15;
+    private static final int INITIAL_PAGE = 0;
+    private static final int PAGE_SIZE = 15;
     private final
     TagRepo tagRepo;
 
@@ -42,18 +40,18 @@ public class ArchiveController {
     public ModelAndView showPersonsPage(@RequestParam("page") Optional<Integer> page) {
         ModelAndView modelAndView = new ModelAndView("archive");
 
-        int buttons = (int) archiveRepo.count() / pageSize;
-        if (archiveRepo.count() % pageSize != 0) {
+        int buttons = (int) archiveRepo.count() / PAGE_SIZE;
+        if (archiveRepo.count() % PAGE_SIZE != 0) {
             buttons++;
         }
-        int evalPage = (page.orElse(0) < 1) ? initialPage : page.get() - 1;
+        int evalPage = (page.orElse(0) < 1) ? INITIAL_PAGE : page.get() - 1;
 
-        Page<ArchivedAssignment> fiches = archiveRepo.findAll(PageRequest.of(evalPage, pageSize));
+        Page<ArchivedAssignment> fiches = archiveRepo.findAll(PageRequest.of(evalPage, PAGE_SIZE));
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
 
         modelAndView.addObject("persons", fiches);
         modelAndView.addObject("assignments", fiches);
-        modelAndView.addObject("selectedPageSize", pageSize);
+        modelAndView.addObject("selectedPageSize", PAGE_SIZE);
         modelAndView.addObject("pager", pager);
         modelAndView.addObject("tags", tagRepo.findAll());
         return modelAndView;
@@ -61,7 +59,7 @@ public class ArchiveController {
 
     //search in archive
     @PostMapping("/archive")
-    String getArchivedAssignment(@RequestParam("searchbar") String name, Model model, @RequestParam("page") Optional<Integer> page,
+    public String getArchivedAssignment(@RequestParam("searchbar") String name, Model model, @RequestParam("page") Optional<Integer> page,
                                  @RequestParam(required = false , value = "tag") int[] tags) {
 
         if(tags == null){
@@ -80,7 +78,7 @@ public class ArchiveController {
             for (int item : tags) {
                 for (ArchivedAssignment a : list) {
                     int tag = tagRepo.findBytagId(item).getTagId();
-                    String archiveTag = a.getTag_ids();
+                    String archiveTag = a.getTagIds();
                     List<String> items = Arrays.asList(archiveTag.replace("[", "").replace("]", "").split("\\s*,\\s*"));
 
                     for(int i = 0; i<items.size();i++){
@@ -97,20 +95,18 @@ public class ArchiveController {
             model.addAttribute("assignments", list2);
         }
 
-        ModelAndView modelAndView = new ModelAndView("Archive");
-
-        int buttons = (int) archiveRepo.count() / pageSize;
-        if (archiveRepo.count() % pageSize != 0) {
+        int buttons = (int) archiveRepo.count() / PAGE_SIZE;
+        if (archiveRepo.count() % PAGE_SIZE != 0) {
             buttons++;
         }
 
-        int evalPage = (page.orElse(0) < 1) ? initialPage : page.get() - 1;
+        int evalPage = (page.orElse(0) < 1) ? INITIAL_PAGE : page.get() - 1;
 
-        Page<ArchivedAssignment> fiches = archiveRepo.findAll(PageRequest.of(evalPage, pageSize));
+        Page<ArchivedAssignment> fiches = archiveRepo.findAll(PageRequest.of(evalPage, PAGE_SIZE));
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
 
         model.addAttribute("persons", fiches);
-        model.addAttribute("selectedPageSize", pageSize);
+        model.addAttribute("selectedPageSize", PAGE_SIZE);
         model.addAttribute("pager", pager);
         model.addAttribute("tags", tagRepo.findAll());
 
