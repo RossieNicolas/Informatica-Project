@@ -88,7 +88,7 @@ public class EnrollController {
             studentRepo.save(student);
 
             mail.sendSimpleMessage(student.getEmail(), "Inschrijving opdracht",
-                    EmailTemplates.enrolledAssignmentStudent(assignment.getTitle()));
+                    EmailTemplates.waitValidationEnrolledAssignmentStudent(assignment.getTitle()));
             mail.sendSimpleMessage(assignerEmail, "Inschrijving opdracht",
                     EmailTemplates.enrolledAssignment(assignment.getTitle(), student.getUserId().toString(), student.getEmail(), "class group"));
         } catch (Exception ex) {
@@ -98,7 +98,6 @@ public class EnrollController {
     }
 
     // show list of unapproved assignments and make possible to approve
-    //TODO: email initialization
     @GetMapping("/unapprovedEnrollments")
     public String unapprovedEnroll(Model model) {
         List<Enrolled> unapproved = enrolledRepo.findAll();
@@ -110,11 +109,11 @@ public class EnrollController {
     @GetMapping("/approveEnroll/{id}")
     public String validateEnroll(@PathVariable("id") int enrolledid) {
         Enrolled enrolled = enrolledRepo.findByEnrolledId(enrolledid);
+        Student student = studentRepo.findByUserId(userRepo.findByUserId(enrolled.getUserId()));
         enrolledRepo.delete(enrolled);
 
-//TODO
-//        mail.sendSimpleMessage(userRepo.findByUserId(externalId).getEmail(), "externe gevalideerd",
-//                EmailTemplates.validatedExternal());
+        mail.sendSimpleMessage(student.getEmail(), "Inschrijving gevalideerd",
+              EmailTemplates.approvedEnrolledAssignmentStudent(enrolled.getTitle()));
 
         return "redirect:/unapprovedEnrollments";
     }
@@ -138,9 +137,9 @@ public class EnrollController {
                 }
             }
         }
-        //TODO
-//        mail.sendSimpleMessage(userRepository.findByUserId(externalId).getEmail(), "externe gevalideerd",
-//                EmailTemplates.validatedExternal());
+
+        mail.sendSimpleMessage(student.getEmail(), "Inschrijving geweigerd",
+                EmailTemplates.declinedEnrolledAssignmentStudent(enrolled.getTitle()));
         return "redirect:/unapprovedEnrollments";
     }
 }
