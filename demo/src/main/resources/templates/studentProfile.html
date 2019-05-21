@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Crediti - Opdracht bewerken</title>
+    <title>Crediti - Student profiel </title>
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
 <body class="background">
@@ -40,7 +40,6 @@
                     <thead>
                     <tr>
                         <th>Nr</th>
-                        <th>Opdrachtgever</th>
                         <th>Type</th>
                         <th>Naam</th>
                         <th>Begin</th>
@@ -52,11 +51,10 @@
                     <tbody>
                     <tr th:each="a : ${assignments}" class="tablebackground ">
                         <td th:text="${a.getAssignmentId()}"></td>
-                        <td th:text="${a.getAssigner()}"></td>
                         <td th:text="${a.getType()}"></td>
                         <td th:text="${a.getTitle()}" class="cell"></td>
                         <td th:text="${a.getStartDate()}"></td>
-                        <td th:text="${a.getEnd_date()}"></td>
+                        <td th:text="${a.getEndDate()}"></td>
                         <td style="padding-left: 3.8%" th:text="${a.getAmountHours()}"></td>
                         <td style="padding-left: 2.5%">
                             <span th:if="${a.isValidated()}">✔️</span>

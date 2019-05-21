@@ -16,8 +16,6 @@ import java.util.List;
 
 @Controller
 public class ProfileController {
-    private final
-    UserRepository userRepo;
 
     private final
     StudentRepository stuRepo;
@@ -27,8 +25,7 @@ public class ProfileController {
     FileRepository fileRepo;
 
     @Autowired
-    public ProfileController(UserRepository userRepo, StudentRepository stuRepo , FileRepository fileRepo) {
-        this.userRepo = userRepo;
+    public ProfileController(StudentRepository stuRepo , FileRepository fileRepo) {
         this.stuRepo = stuRepo;
         this.fileRepo = fileRepo;
     }

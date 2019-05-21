@@ -38,13 +38,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login", "/", "/createexternaluser","/registersucces", "/createexternal", "/forgotPassword", "/notapproved", "/reset").permitAll()
 
                 //COORDINATOR && DOCENT
-                .antMatchers("/allFullAssignments", "/listStudents").hasAnyRole("DOCENT", "COORDINATOR")
+                .antMatchers("/allFullAssignments", "/listStudents", "/unapprovedEnrollments", "/approveEnroll/{id}", "/deleteEnroll/{id}").hasAnyRole("DOCENT", "COORDINATOR")
 
                 //Only for EXTERNAL
                 .antMatchers("/externalUserProfile").hasRole("EXTERNE")
 
                 //Only for STUDENTS
-                .antMatchers("/portfolio").hasRole("STUDENT")
+                .antMatchers("/portfolio", "/studentenroll/{assignmentId}").hasRole("STUDENT")
 
                 //Only for COORDINATOR
                 .antMatchers("/tag", "/listAllTags", "/listUnvalidatedExternal", "/archive").hasRole("COORDINATOR")

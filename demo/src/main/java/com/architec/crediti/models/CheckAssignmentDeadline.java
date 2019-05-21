@@ -14,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import net.bytebuddy.asm.Advice.Local;
-
 @Transactional
 @Component
 public class CheckAssignmentDeadline {
@@ -34,7 +32,7 @@ public class CheckAssignmentDeadline {
              for (Student student : stRepo.findAll()) {
                  for ( Assignment as : student.getAssignments()){
                     Assignment currentas = asRepo.findByAssignmentId(as.getAssignmentId());
-                    LocalDate dateline = LocalDate.parse(currentas.getEnd_date());
+                    LocalDate dateline = LocalDate.parse(currentas.getEndDate());
                     LocalDate date = LocalDate.now().plusDays(1);
                      if(dateline.equals(date)){
                         mail.sendSimpleMessage(student.getEmail(), "Herinnering",

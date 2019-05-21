@@ -20,7 +20,6 @@
             <td th:text="${a.getTagName()}"></td>
             <input type="checkbox" name="tag" th:tr='${a.getTagName()}' th:value='${a.getTagId()}'/>
             </td>
-            &nbsp;&nbsp;&nbsp;
         </tr>
 
     </form>
@@ -49,7 +48,7 @@
             <td th:text="${a.getType()}"></td>
             <td th:text="${a.getTitle()}" class="cell"></td>
             <td th:text="${a.getStartDate()}"></td>
-            <td th:text="${a.getEnd_date()}"></td>
+            <td th:text="${a.getEndDate()}"></td>
             <td style="padding-left: 3.8%" th:text="${a.getAmountHours()}"></td>
             <td style="padding-left: 2.5%">
                 <span th:if="${a.isValidated()}">✔️</span>

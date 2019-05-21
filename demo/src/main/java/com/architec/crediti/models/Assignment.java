@@ -41,12 +41,12 @@ public class Assignment {
     @NotNull(message = "Startdatum mag niet leeg zijn!")
     @NotBlank
     @Column(name = "start_date")
-    private String start_date;
+    private String startDate;
 
     @NotNull(message = "Einddatum mag niet leeg zijn!")
     @NotBlank
     @Column(name = "end_date")
-    private String end_date;
+    private String endDate;
 
     @NotNull
     @Column(name = "archived")
@@ -73,16 +73,15 @@ public class Assignment {
     public Assignment() {
     }
 
-    public Assignment(String title, String type, String task, int amountHours, int maxStudents, String start_date,
-                      String end_date, boolean archived, boolean validated, User assignerUserId) {
+    public Assignment(String title, String type, String task, int amountHours, int maxStudents, String startDate,
+                      String endDate, boolean archived, boolean validated, User assignerUserId) {
         this.title = title;
         this.type = type;
         this.task = task;
         this.amountHours = amountHours;
-        this.amountStudents = amountStudents;
         this.maxStudents = maxStudents;
-        this.start_date = start_date;
-        this.end_date = end_date;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.archived = archived;
         this.validated = validated;
         this.assignerUserId = assignerUserId;
@@ -117,11 +116,11 @@ public class Assignment {
     }
 
     public String getStartDate() {
-        return start_date;
+        return startDate;
     }
 
-    public String getEnd_date() {
-        return end_date;
+    public String getEndDate() {
+        return endDate;
     }
 
     public boolean isArchived() {
@@ -164,12 +163,12 @@ public class Assignment {
         this.maxStudents = maxStudents;
     }
 
-    public void setStart_date(String start_date) {
-        this.start_date = start_date;
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
     }
 
-    public void setEnd_date(String end_date) {
-        this.end_date = end_date;
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 
     public void setArchived(boolean archived) {
@@ -193,10 +192,6 @@ public class Assignment {
         this.assignerUserId = assignerUserId;
     }
 
-    public String getStart_date() {
-        return start_date;
-    }
-
     public Set<Student> getAssignStudents() {
         return assignStudents;
     }
@@ -211,5 +206,11 @@ public class Assignment {
 
     public void setTags(Set<Tag> tags) {
         this.tags = tags;
+    }
+    public String getEmail(){
+        return assignerUserId.getEmail();
+    }
+    public String getName(){
+        return assignerUserId.getFirstname() + " " + assignerUserId.getLastname();
     }
 }
