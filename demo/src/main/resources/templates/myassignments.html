@@ -17,6 +17,7 @@
         <tr>
             <th style="padding-left: 2.5%">Info</th>
             <th>Nr</th>
+             <th>Opdrachtgever</th>
             <th>Type</th>
             <th>Naam</th>
             <th>Begin</th>
@@ -28,6 +29,7 @@
             <td><a th:href="${'/allassignments/' + a.getAssignmentId()}" class="button">📃</a>
                 &nbsp;&nbsp;&nbsp;
             <td th:text="${a.getAssignmentId()}"></td>
+            <td th:text="${a.getAssigner()}"></td>
             <td th:text="${a.getType()}"></td>
             <td th:text="${a.getTitle()}" class="cell"></td>
             <td th:text="${a.getStartDate()}"></td>

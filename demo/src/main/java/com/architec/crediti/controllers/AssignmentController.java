@@ -212,14 +212,8 @@ public class AssignmentController {
 
     @GetMapping("/myassignments")
     public String assignments(Principal principal, Model model) {
-        User currentUser = userRepo.findByEmail(principal.getName());
-        Iterable<Assignment> assignments = assignmentRepo.findAll();
-        ArrayList<Assignment> myAssignments = new ArrayList<>();
-        for (Assignment a : assignments) {
-            if (currentUser.getUserId() == a.getAssignerUserId()) {
-                myAssignments.add(a);
-            }
-        }
+        Student currentStudent = studentRepo.findByUserId(userRepo.findByEmail(principal.getName()));
+        Set<Assignment> myAssignments = currentStudent.getAssignments();
         model.addAttribute("assignments", myAssignments);
 
         return "myassignments";

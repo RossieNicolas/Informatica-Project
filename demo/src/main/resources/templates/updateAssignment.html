@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8"/>
-    <title>Crediti - Opdracht bewerken</title>
+    <title>Crediti - Opdracht details</title>
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
 <body class="background">
@@ -13,7 +13,7 @@
     <section class="find-edu">
         <div class="container ">
             <div class="wrap-all col-xs-12 ">
-                <h2>Opdracht bewerken</h2>
+                <h2>Detail opdracht</h2>
 
                 <form th:each="a: ${assignments}" class="standard-form" method="post"
                       th:action="@{/allassignments/{id}(id=${a.assignmentId})}">
