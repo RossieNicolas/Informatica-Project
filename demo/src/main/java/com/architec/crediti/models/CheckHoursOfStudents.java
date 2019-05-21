@@ -25,8 +25,12 @@ public class CheckHoursOfStudents {
     StudentRepository stRepo;
     @Autowired
     UserRepository usRepo;
+
+    @Autowired
     public CheckHoursOfStudents() {
+
     }
+
     @Scheduled(cron = "0 01 15 * * ?")
     public void create() {
         for (Student student : stRepo.findAll()) {

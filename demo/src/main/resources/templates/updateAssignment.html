@@ -31,7 +31,7 @@
                         <input name="opdrachtgever" id="opdrachtgever" type="text" th:value="*{a.getName()}" style="width: 40%; background-color: rgb(235, 235, 228);" readonly><br>
 
                         <label for="title">Opdrachtgever email :</label>
-                        <input name="title" id="title" type="text" th:value="*{a.getEmail()}" required="required"><br>
+                        <input name="title" id="opdrachtgeveremail" type="text" th:value="*{a.getEmail()}" required="required"><br>
 
                         <label for="title">Titel:</label>
                         <input name="title" id="title" type="text" th:value="*{a.getTitle()}" required="required"><br>
@@ -52,7 +52,7 @@
                                required="required"><br>
 
                         <label for="end_date">Einddatum:</label><br>
-                        <input name="end_date" id="end_date" type="date" onblur="TDate()" th:value="*{a.getEnd_date()}"
+                        <input name="end_date" id="end_date" type="date" onblur="TDate()" th:value="*{a.getEndDate()}"
                                required="required"><br><br>
 
                         <label for="amountHours">Totaal uur:</label>
