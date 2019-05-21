@@ -46,13 +46,13 @@
                         <label for="task">Omschrijving opdracht:</label>
                         <textarea name="task" id="task" th:text="*{a.getTask()}" required maxlength="255"></textarea><br>
 
-                        <label for="start_date">Begindatum:</label><br>
-                        <input name="start_date" id="start_date" type="date" onblur="SDate()"
+                        <label for="startDate">Begindatum:</label><br>
+                        <input name="startDate" id="startDate" type="date" onblur="SDate()"
                                th:value="*{a.getStartDate()}"
                                required="required"><br>
 
-                        <label for="end_date">Einddatum:</label><br>
-                        <input name="end_date" id="end_date" type="date" onblur="TDate()" th:value="*{a.getEndDate()}"
+                        <label for="endDate">Einddatum:</label><br>
+                        <input name="endDate" id="endDate" type="date" onblur="TDate()" th:value="*{a.getEndDate()}"
                                required="required"><br><br>
 
                         <label for="amountHours">Totaal uur:</label>
@@ -147,12 +147,12 @@
     });
 
     function TDate() {
-        var startDate = document.getElementById("start_date").value;
-        var endDate = document.getElementById("end_date").value;
+        var startDate = document.getElementById("startDate").value;
+        var endDate = document.getElementById("endDate").value;
         if (startDate != null && endDate != null) {
             if (startDate > endDate) {
                 alert("De startdatum moet kleiner zijn dan de einddatum van uw opdracht!");
-                document.getElementById('end_date').value = "";
+                document.getElementById('endDate').value = "";
                 return false;
             }
             return true;
@@ -160,13 +160,13 @@
     }
 
     function SDate() {
-        var startDate = document.getElementById("start_date").value;
+        var startDate = document.getElementById("startDate").value;
         var currentDate = new Date().toISOString().split('T')[0];
 
         if (startDate != null) {
             if (startDate < currentDate) {
                 alert("De startdatum moet groter of gelijk zijn aan de datum van vandaag!");
-                document.getElementById('start_date').value = "";
+                document.getElementById('startDate').value = "";
                 return false;
             }
             return true

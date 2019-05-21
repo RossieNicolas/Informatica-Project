@@ -74,17 +74,17 @@
     }
 
     function TDate() {
-        var startDate = document.getElementById("start_date").value;
-        var endDate = document.getElementById("end_date").value;
+        var startDate = document.getElementById("startDate").value;
+        var endDate = document.getElementById("endDate").value;
 
         if (startDate != null && endDate != null) {
             if (startDate > endDate) {
                 alert("De startdatum moet kleiner zijn dan de einddatum van uw opdracht!");
-                document.getElementById('end_date').value = "";
+                document.getElementById('endDate').value = "";
                 return false;
             } else if (endDate < startDate) {
                 alert("De startdatum moet kleiner zijn dan de einddatum!");
-                document.getElementById('end_date').value = "";
+                document.getElementById('endDate').value = "";
                 return false;
             }
 
@@ -93,14 +93,14 @@
     }
 
     function SDate() {
-        var startDate = document.getElementById("start_date").value;
-        var endDate = document.getElementById("end_date").value;
+        var startDate = document.getElementById("startDate").value;
+        var endDate = document.getElementById("endDate").value;
         var currentDate = new Date().toISOString().split('T')[0];
 
         if (startDate != null) {
             if (startDate < currentDate) {
                 alert("De startdatum moet groter of gelijk zijn aan de datum van vandaag!");
-                document.getElementById('start_date').value = "";
+                document.getElementById('startDate').value = "";
                 return false;
             }
 
