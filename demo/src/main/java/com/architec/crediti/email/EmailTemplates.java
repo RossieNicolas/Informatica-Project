@@ -51,6 +51,27 @@ public class EmailTemplates {
     // voor student
     public static String enrolledAssignmentStudent(String name) {
         String mail = "Beste,\n\n"+
+                "Je ingeschrijving voor volgende ZAP- opdracht, "+ name +" werd goedgekeurd. Om te starten breng je de contracten in orde. " +
+                "Pas na ondertekening door de opdrachtgever en de hogeschool mag en kan je starten.\n\n" +
+                "Na het beëindigen van de opdracht, ondertekent de opdrachtgever het bewijsdocument, " +
+                "vul je de zelfevaluatie in en verzamel je de nodige bewijsstukken voor je portfolio.\n\n" +
+                "Succes.\n" +
+                "\n" +
+                "De coördinator";
+
+        return mail;
+    }
+    public static String unvalidatedEnrolledAssignmentStudent(String name) {
+        String mail = "Beste,\n\n"+
+                "Je hebt je ingeschreven voor volgende ZAP- opdracht, "+ name +". Om te starten moet je wachten " +
+                "op een bevestiging van de opdrachtgevr. " +
+                "\n" +
+                "De coördinator";
+
+        return mail;
+    }
+    public static String ValidatedEnrolledAssignmentStudent(String name) {
+        String mail = "Beste,\n\n"+
                 "Je hebt je ingeschreven voor volgende ZAP- opdracht, "+ name +". Om te starten breng je de contracten in orde. " +
                 "Pas na ondertekening door de opdrachtgever en de hogeschool mag en kan je starten.\n\n" +
                 "Na het beëindigen van de opdracht, ondertekent de opdrachtgever het bewijsdocument, " +

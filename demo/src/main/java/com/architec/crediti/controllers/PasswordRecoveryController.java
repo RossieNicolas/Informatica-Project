@@ -98,20 +98,23 @@ public class PasswordRecoveryController {
     }
 
     // Process reset password form
-    @RequestMapping(value = "/reset ", method = RequestMethod.POST)
-    public ModelAndView setNewPassword(ModelAndView modelAndView, @RequestParam Map<String, String> requestParams, RedirectAttributes redir) {
+    @PostMapping("/reset")
+    public ModelAndView setNewPassword(ModelAndView modelAndView,
+                                       @RequestParam Map<String, String> requestParams,
+                                       RedirectAttributes redir,
+                                        @RequestParam("newpassword") String password) {
 
         // Find the user associated with the reset token
         ExternalUser extUser = externalUserRepo.findByResettoken(requestParams.get("token"));
 
         // This should always be non-null but we check just in case
         if (extUser != null) {
-            Object[] hashBytes = HashPass.convertToPbkdf2(requestParams.get("password").toCharArray());
+            Object[] hashBytes = HashPass.convertToPbkdf2(password.toCharArray());
 
-            extUser.setSalt((byte[]) hashBytes[1]);
 
             // Set new password
             extUser.setPassword(hashBytes[0].toString().toCharArray());
+            extUser.setSalt((byte[]) hashBytes[1]);
 
             // Set the reset token to null so it cannot be used again
             extUser.setResetToken(null);
