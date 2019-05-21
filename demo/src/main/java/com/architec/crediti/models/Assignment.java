@@ -212,4 +212,10 @@ public class Assignment {
     public void setTags(Set<Tag> tags) {
         this.tags = tags;
     }
+    public String getEmail(){
+        return assignerUserId.getEmail();
+    }
+    public String getName(){
+        return assignerUserId.getFirstname() + " " + assignerUserId.getLastname();
+    }
 }
