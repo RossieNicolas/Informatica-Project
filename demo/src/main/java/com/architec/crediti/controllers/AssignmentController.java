@@ -25,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 public class AssignmentController {
@@ -179,36 +180,56 @@ public class AssignmentController {
 
     // search assignments
     @PostMapping("/allassignments")
-    public String getAssignment(@RequestParam("searchbar") String name, Model model , @RequestParam("page") Optional<Integer> page) {
+    public String getAssignment(@RequestParam("searchbar") String name,
+                         Model model, @RequestParam("page") Optional<Integer> page,
+                         @RequestParam(required = false , value = "tag") int[] tags) {
 
-        try {
-            Assignment a = assignmentRepo.findByAssignmentId((Integer.parseInt(name)));
-            if (a.getAmountStudents() != a.getMaxStudents() && !a.isArchived()) {
-                model.addAttribute("assignments", a);
+        if(tags == null){
+            try {
+                Assignment a = assignmentRepo.findByAssignmentId((Integer.parseInt(name)));
+                if (a.getAmountStudents() != a.getMaxStudents() && !a.isArchived()) {
+                    model.addAttribute("assignments", a);
+                }
+
+            } catch (Exception e) {
+                model.addAttribute("assignments", AssignmentMethods.removeFullAssignments(assignmentRepo.findByTitleContainingAndArchived(name, false)));
             }
-
-        } catch (Exception e) {
-            model.addAttribute("assignments", AssignmentMethods.removeFullAssignments(assignmentRepo
-                    .findByTitleContainingAndArchived(name, false)));
         }
+        else{
+            List<Assignment> list = AssignmentMethods.removeFullAssignments(assignmentRepo.findByTitleContainingAndArchived(name , false));
+            List<Assignment> list2 = new ArrayList<>();
+            for (int item : tags) {
+                for (Assignment a : list) {
+                    if(a.getTags().contains(tagRepo.findBytagId(item))){
+                        list2.add(a);
+                    }
+                }
+            }
+            list2 = list2.stream().distinct().collect(Collectors.toList());
+
+            model.addAttribute("assignments" , list2);
+        }
+
+        ModelAndView modelAndView = new ModelAndView("listAllAssignments");
 
         int buttons = (int) assignmentRepo.count() / PAGE_SIZE;
 
         if (assignmentRepo.count() % PAGE_SIZE != 0) {
             buttons++;
         }
-
         int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
 
         Page<Assignment> fiches = assignmentRepo.findAll(PageRequest.of(evalPage, PAGE_SIZE));
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
 
         model.addAttribute("persons", fiches);
+        model.addAttribute("selectedPageSize", PAGE_SIZE);
         model.addAttribute("pager", pager);
         model.addAttribute("tags", tagRepo.findAll());
-
         return "listAllAssignments";
+
     }
+
 
     @GetMapping("/myassignments")
     public String assignments(Principal principal, Model model) {
