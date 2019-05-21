@@ -72,7 +72,7 @@ public class AssignmentController {
 
     // add assignment
     @PostMapping("/assignment")
-    public String createAssignment( Principal principal, @Valid Assignment assignment,
+    public String createAssignment(Principal principal, @Valid Assignment assignment,
                                    @RequestParam(required = false, value = "tag") int[] tags) {
         Set<Tag> set = new HashSet<>();
         User currentUser = userRepo.findByEmail(principal.getName());
@@ -89,7 +89,6 @@ public class AssignmentController {
         assignmentRepo.save(assignment);
 
 
-
         mail.sendSimpleMessage("alina.storme@student.ap.be", "Nieuwe opdracht gecreëerd",
                 EmailTemplates.createdAssignment(assignment.getAssigner(),
                         assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments",
@@ -99,11 +98,11 @@ public class AssignmentController {
 
     // list all assignments
     @GetMapping("/allassignments")
-    public ModelAndView getAllAssignments(Model model ,@RequestParam("page") Optional<Integer> page) {
+    public ModelAndView getAllAssignments(Model model, @RequestParam("page") Optional<Integer> page) {
         ModelAndView view = new ModelAndView("listAllAssignments");
 
         List<Assignment> fullas = new ArrayList<>();
-        for (Assignment item: assignmentRepo.findAll()) {
+        for (Assignment item : assignmentRepo.findAll()) {
             if (item.getAmountStudents() != item.getMaxStudents() && !item.isArchived()) {
 
                 fullas.add(item);
@@ -132,10 +131,10 @@ public class AssignmentController {
 
     // list all assignments which are full
     @GetMapping("/allFullAssignments")
-    public String getAllFullAssignment(Model model , @RequestParam("page") Optional<Integer> page) {
+    public String getAllFullAssignment(Model model, @RequestParam("page") Optional<Integer> page) {
 
         List<Assignment> fullas = new ArrayList<>();
-        for (Assignment item: assignmentRepo.findAll()) {
+        for (Assignment item : assignmentRepo.findAll()) {
             if (item.getAmountStudents() == item.getMaxStudents() && !item.isArchived()) {
 
                 fullas.add(item);
@@ -179,7 +178,7 @@ public class AssignmentController {
 
     // search assignments
     @PostMapping("/allassignments")
-    public String getAssignment(@RequestParam("searchbar") String name, Model model , @RequestParam("page") Optional<Integer> page) {
+    public String getAssignment(@RequestParam("searchbar") String name, Model model, @RequestParam("page") Optional<Integer> page) {
 
         try {
             Assignment a = assignmentRepo.findByAssignmentId((Integer.parseInt(name)));
@@ -230,14 +229,12 @@ public class AssignmentController {
         boolean volzet = false;
 
 
-
-
-        for (Assignment item : student.getAssignments()){
-            if(item.getAssignmentId() == assignmentId){
+        for (Assignment item : student.getAssignments()) {
+            if (item.getAssignmentId() == assignmentId) {
                 ingeschreven = true;
             }
         }
-        if(as.getAmountStudents() == as.getMaxStudents()){
+        if (as.getAmountStudents() == as.getMaxStudents()) {
             volzet = true;
         }
         model.addAttribute("volzet", volzet);
@@ -297,49 +294,6 @@ public class AssignmentController {
         return "redirect:/allassignments";
     }
 
-    // assign student to specific assignment
-    @GetMapping("/studentenroll/{assignmentId}")
-    public String enrollAssignment(@PathVariable("assignmentId") int assignmentId,
-                                   Principal principal, Model model) {
-
-        Assignment assignment = assignmentRepo.findById((long) assignmentId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid assignment Id:" + assignmentId));
-        User user = userRepo.findByEmail(principal.getName());
-        Student student = studentRepo.findByUserId(user);
-        long assignerId = assignmentRepo.findByAssignmentId(assignmentId).getAssignerUserId();
-        String assignerEmail = userRepo.findByUserId(assignerId).getEmail();
-
-        try {
-            Set<Assignment> set = new HashSet<>();
-            set.addAll(student.getAssignments());
-            int counter = assignment.getAmountStudents();
-            boolean zelfde = false;
-
-            for (Assignment item : student.getAssignments()) {
-                if (item.getAssignmentId() == assignmentId) {
-                    zelfde = true;
-                }
-            }
-
-            if(!zelfde) {
-                if (assignment.getAmountStudents() < assignment.getMaxStudents()) {
-                    set.add(assignment);
-                    assignment.setAmountStudents(counter + 1);
-                }
-            }else return "alreadyAssigned";
-
-            student.setAssignments(set);
-            studentRepo.save(student);
-
-            mail.sendSimpleMessage(student.getEmail(), "Inschrijving opdracht",
-                    EmailTemplates.enrolledAssignmentStudent(assignment.getTitle()));
-            mail.sendSimpleMessage(assignerEmail, "Inschrijving opdracht",
-                    EmailTemplates.enrolledAssignment(assignment.getTitle(), student.getUserId().toString(), student.getEmail(), "class group"));
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
-        return "studentenroll";
-    }
 
     // delete specific assignment
     @GetMapping("/deleteassignment/{assignmentId}")
@@ -389,7 +343,7 @@ public class AssignmentController {
             }
             archivedAssignment.setTagIds(list.toString());
         }
-        
+
         archiveRepo.save(archivedAssignment);
         assignmentRepo.delete(assignment);
 
