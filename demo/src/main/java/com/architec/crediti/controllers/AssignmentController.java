@@ -251,14 +251,12 @@ public class AssignmentController {
         boolean volzet = false;
 
 
-
-
-        for (Assignment item : student.getAssignments()){
-            if(item.getAssignmentId() == assignmentId){
+        for (Assignment item : student.getAssignments()) {
+            if (item.getAssignmentId() == assignmentId) {
                 ingeschreven = true;
             }
         }
-        if(as.getAmountStudents() == as.getMaxStudents()){
+        if (as.getAmountStudents() == as.getMaxStudents()) {
             volzet = true;
         }
         model.addAttribute("volzet", volzet);
@@ -318,49 +316,6 @@ public class AssignmentController {
         return "redirect:/allassignments";
     }
 
-    // assign student to specific assignment
-    @GetMapping("/studentenroll/{assignmentId}")
-    public String enrollAssignment(@PathVariable("assignmentId") int assignmentId,
-                                   Principal principal, Model model) {
-
-        Assignment assignment = assignmentRepo.findById((long) assignmentId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid assignment Id:" + assignmentId));
-        User user = userRepo.findByEmail(principal.getName());
-        Student student = studentRepo.findByUserId(user);
-        long assignerId = assignmentRepo.findByAssignmentId(assignmentId).getAssignerUserId();
-        String assignerEmail = userRepo.findByUserId(assignerId).getEmail();
-
-        try {
-            Set<Assignment> set = new HashSet<>();
-            set.addAll(student.getAssignments());
-            int counter = assignment.getAmountStudents();
-            boolean zelfde = false;
-
-            for (Assignment item : student.getAssignments()) {
-                if (item.getAssignmentId() == assignmentId) {
-                    zelfde = true;
-                }
-            }
-
-            if(!zelfde) {
-                if (assignment.getAmountStudents() < assignment.getMaxStudents()) {
-                    set.add(assignment);
-                    assignment.setAmountStudents(counter + 1);
-                }
-            }else return "alreadyAssigned";
-
-            student.setAssignments(set);
-            studentRepo.save(student);
-
-            mail.sendSimpleMessage(student.getEmail(), "Inschrijving opdracht",
-                    EmailTemplates.enrolledAssignmentStudent(assignment.getTitle()));
-            mail.sendSimpleMessage(assignerEmail, "Inschrijving opdracht",
-                    EmailTemplates.enrolledAssignment(assignment.getTitle(), student.getUserId().toString(), student.getEmail(), "class group"));
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
-        return "studentenroll";
-    }
 
     // delete specific assignment
     @GetMapping("/deleteassignment/{assignmentId}")
@@ -410,7 +365,7 @@ public class AssignmentController {
             }
             archivedAssignment.setTagIds(list.toString());
         }
-        
+
         archiveRepo.save(archivedAssignment);
         assignmentRepo.delete(assignment);
 

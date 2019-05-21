@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
 public interface ExternalUserRepository extends JpaRepository<ExternalUser, Long> {
 
     ExternalUser findByUserId(User user);
-
+    ExternalUser findByResettoken(String resetToken);
 }
