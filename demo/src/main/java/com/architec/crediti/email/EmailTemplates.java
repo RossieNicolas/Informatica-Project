@@ -47,7 +47,7 @@ public class EmailTemplates {
         return"Beste,\n\n"+
                 "Je hebt je ingeschreven voor volgende ZAP- opdracht: "+ name +". " +
                 "\nOm te starten moet je wachten op een bevestiging van de opdrachtgever. " +
-                "\n" +
+                "\n\n" +
                 "De coördinator";
     }
 
