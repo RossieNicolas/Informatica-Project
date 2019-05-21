@@ -22,9 +22,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.stream.Collectors;
-
-
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.*;
@@ -51,21 +48,16 @@ public class AssignmentController {
     ArchiveRepository archiveRepo;
 
     private final
-    EnrolledRepository enrolledRepo;
-
-
-    private final
     EmailServiceImpl mail;
 
     @Autowired
     public AssignmentController(TagRepo tagRepo, AssignmentRepository assignmentRepo, StudentRepository studentRepo,
-                                UserRepository userRepo, ArchiveRepository archiveRepo, EnrolledRepository enrolledRepo, EmailServiceImpl mail) {
+                                UserRepository userRepo, ArchiveRepository archiveRepo, EmailServiceImpl mail) {
         this.tagRepo = tagRepo;
         this.assignmentRepo = assignmentRepo;
         this.studentRepo = studentRepo;
         this.userRepo = userRepo;
         this.archiveRepo = archiveRepo;
-        this.enrolledRepo = enrolledRepo;
         this.mail = mail;
     }
 
@@ -308,100 +300,6 @@ public class AssignmentController {
         return "redirect:/allassignments";
     }
 
-    // assign student to specific assignment
-    @GetMapping("/studentenroll/{assignmentId}")
-    public String enrollAssignment(@PathVariable("assignmentId") int assignmentId, @Valid Student student,
-                                   Principal principal, Model model) {
-        User currentUser = userRepo.findByEmail(principal.getName());
-        Assignment assignment = assignmentRepo.findById((long) assignmentId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid assignment Id:" + assignmentId));
-        User user = userRepo.findByEmail(principal.getName());
-        student = studentRepo.findByUserId(user);
-        long assignerId = assignmentRepo.findByAssignmentId(assignmentId).getAssignerUserId();
-        String assignerEmail = userRepo.findByUserId(assignerId).getEmail();
-
-        try {
-            Set<Assignment> set = new HashSet<>();
-            set.addAll(student.getAssignments());
-            int counter = assignment.getAmountStudents();
-            boolean zelfde = false;
-
-            for (Assignment item : student.getAssignments()) {
-                if (item.getAssignmentId() == assignmentId) {
-                    zelfde = true;
-                }
-            }
-
-            if (!zelfde) {
-                if (assignment.getAmountStudents() < assignment.getMaxStudents()) {
-                    set.add(assignment);
-                    assignment.setAmountStudents(counter + 1);
-                }
-            } else return "alreadyAssigned";
-
-
-            Enrolled enrolled = new Enrolled(user.getFirstname() + " " + user.getLastname(), user.getEmail(), assignment.getAssignmentId(), assignment.getTitle(), user.getUserId());
-            enrolledRepo.save(enrolled);
-
-            student.setAssignments(set);
-            studentRepo.save(student);
-
-            mail.sendSimpleMessage(student.getEmail(), "Inschrijving opdracht",
-                    EmailTemplates.enrolledAssignmentStudent(assignment.getTitle()));
-            mail.sendSimpleMessage(assignerEmail, "Inschrijving opdracht",
-                    EmailTemplates.enrolledAssignment(assignment.getTitle(), student.getUserId().toString(), student.getEmail(), "class group"));
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
-        return "studentenroll";
-    }
-
-    // show list of unapproved assignments and make possible to approve
-    //TODO: email initialization
-    @GetMapping("/unapprovedEnrollments")
-    public String unapprovedEnroll(Model model) {
-        List<Enrolled> unapproved = enrolledRepo.findAll();
-        model.addAttribute("unapproved", unapproved);
-        return "listUnapprovedEnrollment";
-    }
-
-
-    @GetMapping("/approveEnroll/{id}")
-    public String validateEnroll(@PathVariable("id") int enrolledid) {
-        Enrolled enrolled = enrolledRepo.findByEnrolledId(enrolledid);
-        enrolledRepo.delete(enrolled);
-
-        //TODO
-//        mail.sendSimpleMessage(userRepository.findByUserId(externalId).getEmail(), "externe gevalideerd",
-//                EmailTemplates.validatedExternal());
-
-        return "redirect:/unapprovedEnrollments";
-    }
-
-    @GetMapping("/deleteEnroll/{id}")
-    public String deleteEnroll(@PathVariable("id") int enrolledid) {
-        Enrolled enrolled = enrolledRepo.findByEnrolledId(enrolledid);
-        enrolledRepo.delete(enrolled);
-
-        Student student = studentRepo.findByUserId(userRepo.findByUserId(enrolled.getUserId()));
-        for (Assignment item : student.getAssignments()) {
-            if (item.getAssignmentId() == enrolled.getAssignment()) {
-                Set<Assignment> set = student.getAssignments();
-                for (Iterator<Assignment> iterator = set.iterator(); iterator.hasNext(); ) {
-                    Assignment a = iterator.next();
-                    if (a.getAssignmentId() == enrolled.getAssignment()) {
-                        iterator.remove();
-                        studentRepo.save(student);
-                    }
-                }
-            }
-        }
-        //TODO
-//        mail.sendSimpleMessage(userRepository.findByUserId(externalId).getEmail(), "externe gevalideerd",
-//                EmailTemplates.validatedExternal());
-
-        return "redirect:/unapprovedEnrollments";
-    }
 
     // delete specific assignment
     @GetMapping("/deleteassignment/{assignmentId}")
