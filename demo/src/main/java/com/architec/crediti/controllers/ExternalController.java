@@ -68,7 +68,7 @@ public class ExternalController {
             String name = firstname + " " + lastname;
             String fullAddress = address + ", " + postal + " " + city;
             //TODO: vervang 's097086@ap.be' door mail van coordinator
-            mail.sendSimpleMessage("s097086@ap.be", "Nieuwe externe registratie",
+            mail.sendSimpleMessage("s100605@ap.be", "Nieuwe externe registratie",
             EmailTemplates.newExternalUser(userId, name, company, fullAddress, phone, email));
         }
         else{
