@@ -113,7 +113,7 @@ public class EnrollController {
         enrolledRepo.delete(enrolled);
 
         mail.sendSimpleMessage(student.getEmail(), "Inschrijving gevalideerd",
-              EmailTemplates.approvedEnrolledAssignmentStudent(enrolled.getTitle()));
+                EmailTemplates.approvedEnrolledAssignmentStudent(enrolled.getTitle()));
 
         return "redirect:/unapprovedEnrollments";
     }
@@ -139,9 +139,6 @@ public class EnrollController {
                 }
             }
         }
-
-        mail.sendSimpleMessage(student.getEmail(), "Inschrijving geweigerd",
-                EmailTemplates.declinedEnrolledAssignmentStudent(enrolled.getTitle()));
         return "redirect:/unapprovedEnrollments";
     }
 }
