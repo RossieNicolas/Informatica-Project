@@ -5,7 +5,7 @@
     <title>Crediti - Mijn opdrachten</title>
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
-<body class="background">
+<body class="background" onload="tableFill()">
 <header th:insert="fragments/generalMenu.html :: header (name=${name})">
 </header>
 <div class="block">
@@ -13,7 +13,7 @@
         <h2 class="extra">Mijn opdrachten</h2>
         <p>Lijst van al uw opdrachten. Klik op een opdracht voor meer informatie.</p>
     </div>
-    <table>
+    <table id="tabel" tableC>
         <tr>
             <th style="padding-left: 2.5%">Info</th>
             <th>Nr</th>
@@ -44,5 +44,14 @@
 </div>
 <footer th:insert="fragments/generalMenu.html :: footer">
 </footer>
+<script>
+    function tableFill() {
+        var tbl = document.getElementById('tabel');
+        if (tbl.rows.length == 1) {
+            var x = tbl.insertRow(1)
+            x.innerHTML="U bent nog voor geen enkel opdracht ingeschreven.";
+        }
+    }
+</script>
 </body>
 </html>
