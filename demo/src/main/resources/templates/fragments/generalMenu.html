@@ -26,6 +26,7 @@
                                             <span>Opdrachten</span>
                                             <div class="dropdown-content">
                                                 <a sec:authorize="!hasRole('EXTERNE')" href="/allassignments">Lopende taken</a>
+                                                <a sec:authorize="hasAnyRole('COORDINATOR', 'DOCENT')" href="/allFullAssignments">Volzette taken</a>
                                                 <a href="/assignment">Taak toevoegen</a>
                                                 <a sec:authorize="!hasRole('EXTERNE')" href="/myassignments">Ingeschreven taken</a>
                                             </div>
