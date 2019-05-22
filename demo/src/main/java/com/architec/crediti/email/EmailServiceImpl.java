@@ -34,7 +34,7 @@ public class EmailServiceImpl implements EmailService {
                                                String subject,
                                                SimpleMailMessage template,
                                                String ...templateArgs) {
-        String text = String.format(template.getText(), templateArgs);
+        String text = String.format(template.getText(),  (Object[]) templateArgs);
         sendSimpleMessage(to, subject, text);
     }
 
