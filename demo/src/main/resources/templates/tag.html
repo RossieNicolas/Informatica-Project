@@ -16,10 +16,10 @@
                 <div class="wrap-all col-xs-12 ">
                     <h2>Tag toevoegen</h2>
                     <p th:if="${error}" th:text="${error}">No error</p>
-                    <form th:action='@{/tag}' method='POST'>
+                    <form class="standard-form" th:action='@{/tag}' method='POST'>
                         <label for='tagName'>Tag: </label>
                         <input type='text' name='tagName' id='tagName' maxlength="50" placeholder="tagnaam" required>
-                        <br/><br/>
+                        <br/>
                         <label for='tagDescription'>Beschrijving: </label>
                         <input type='text' name='tagDescription' id='tagDescription' maxlength="250"
                                placeholder="korte beschrijving" required>
