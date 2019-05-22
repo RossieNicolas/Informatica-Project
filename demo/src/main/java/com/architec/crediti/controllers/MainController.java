@@ -5,6 +5,7 @@ import com.architec.crediti.repositories.ExternalUserRepository;
 import com.architec.crediti.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.security.Principal;
@@ -25,7 +26,7 @@ public class MainController {
     }
 
     @GetMapping("/main")
-    public String getDashboard(Principal principal) {
+    public String getDashboard(Principal principal, Model model) {
         User currentUser = userRepo.findByEmail(principal.getName());
 
         if (currentUser.isFirstLogin()) {
@@ -36,7 +37,7 @@ public class MainController {
             return "redirect:notapproved";
 
         }
-
+        model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname());
         return "main";
     }
 }
