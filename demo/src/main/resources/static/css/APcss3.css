@@ -1890,7 +1890,7 @@ input[type=checkbox]+label {
 	display: inline;
 	font-style: normal;
 	font-size: 16px;
-	padding-left: 32px;
+	padding-left: 2px;
 	cursor: pointer;
 	user-select: none
 }
@@ -2312,4 +2312,16 @@ p {
 
 #save, #coorSave{
 	display: none;
+}
+
+input[type='checkbox'] {
+	-webkit-appearance:none;
+	width:20px;
+	height:20px;
+	background:white;
+	border-radius:5px;
+	border:2px solid #555;
+}
+input[type='checkbox']:checked {
+	background: #e60005;
 }
