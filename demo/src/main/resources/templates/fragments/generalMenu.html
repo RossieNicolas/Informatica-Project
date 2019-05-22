@@ -31,16 +31,6 @@
                                             </div>
                                         </div>
                                     </li>
-                                    <li sec:authorize="!hasAnyRole('DOCENT', 'COORDINATOR')">
-                                        <div class="dropdown">
-                                            <span>Profiel</span>
-                                            <div class="dropdown-content">
-                                                <a sec:authorize="hasRole('EXTERNE')" href="/externalUserProfile">Mijn profiel</a>
-                                                <a sec:authorize="hasRole('STUDENT')" href="/studentProfile">Mijn profiel</a>
-                                                <a sec:authorize="hasRole('STUDENT')" href="/portfolio">Mijn portfolio</a>
-                                            </div>
-                                        </div>
-                                    </li>
                                     <li>
                                         <a sec:authorize="!hasRole('EXTERNE')" href="/documentation">
                                             Documentatie
