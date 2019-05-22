@@ -266,7 +266,7 @@ public class AssignmentController {
             Assignment a = assignmentRepo.findByAssignmentId(assignmentId);
             Set<Tag> tags = a.getTags();
             boolean[] status = new boolean[updatetag.size()];
-            String getType = a.getType();
+            String type = a.getType();
 
             for (int i = 0; i < updatetag.size(); i++) {
                 for (Tag item : tags) {
@@ -276,7 +276,7 @@ public class AssignmentController {
                 }
             }
 
-            model.addAttribute("getType", getType);
+            model.addAttribute("type", type);
             model.addAttribute("status", status);
             if (a.getAmountStudents() != a.getMaxStudents() && !a.isArchived()) {
                 model.addAttribute("assignments", a);

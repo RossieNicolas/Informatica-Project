@@ -28,10 +28,12 @@
                     <br><br>
                     <fieldset disabled="disabled" id="assignmentInfo">
                         <label for="opdrachtgever">Opdrachtgever naam:</label>
-                        <input name="opdrachtgever" id="opdrachtgever" type="text" th:value="*{a.getName()}" style="width: 40%; background-color: rgb(235, 235, 228);" readonly><br>
+                        <input name="opdrachtgever" id="opdrachtgever" type="text" th:value="*{a.getName()}"
+                               style="width: 40%; background-color: rgb(235, 235, 228);" readonly><br>
 
                         <label for="opdrachtgeveremail">Opdrachtgever email :</label>
-                        <input name="opdrachtgeveremail" id="opdrachtgeveremail" type="text" th:value="*{a.getEmail()}" style="width: 40%; background-color: rgb(235, 235, 228);" readonly><br>
+                        <input name="opdrachtgeveremail" id="opdrachtgeveremail" type="text" th:value="*{a.getEmail()}"
+                               style="width: 40%; background-color: rgb(235, 235, 228);" readonly><br>
 
                         <label for="title">Titel:</label>
                         <input name="title" id="title" type="text" th:value="*{a.getTitle()}" required="required"><br>
@@ -44,7 +46,8 @@
                         </select>
 
                         <label for="task">Omschrijving opdracht:</label>
-                        <textarea name="task" id="task" th:text="*{a.getTask()}" required maxlength="255"></textarea><br>
+                        <textarea name="task" id="task" th:text="*{a.getTask()}" required
+                                  maxlength="255"></textarea><br>
 
                         <label for="startDate">Begindatum:</label><br>
                         <input name="startDate" id="startDate" type="date" onblur="SDate()"
@@ -57,7 +60,7 @@
 
                         <label for="amountHours">Totaal uur:</label>
                         <input name="amountHours" id="amountHours" type="number" th:value="*{a.getAmountHours()}"
-                               min="1" onblur="amoutH()" required="required"><br>
+                               min="1" max="78" onblur="amoutH()" required="required"><br>
 
                         <label for="maxStudents">Max Studenten:</label>
                         <input name="maxStudents" id="maxStudents" type="number" th:value="*{a.getMaxStudents()}"
@@ -77,12 +80,10 @@
                         <br/>
                     </fieldset>
                     <br/>
-                    <input th:if="${!a.isValidated()}" type="submit" value="💾 BEWAREN" class="button"
-                           style="visibility: hidden;" id="save"
-                           disabled>
+                    <input th:if="${!a.isValidated()}" type="submit" value="💾 BEWAREN" class="button" id="save">
 
                     <input sec:authorize="hasRole('COORDINATOR')" th:if="${a.isValidated()}" type="submit"
-                           value="💾 BEWAREN" class="button">
+                           value="💾 BEWAREN" class="button" id="coorSave">
 
                     <a sec:authorize="hasRole('STUDENT')"
                        th:if="${a.isValidated()} and ${!ingeschreven} and ${!volzet}"
@@ -110,18 +111,18 @@
 <footer th:insert="fragments/generalMenu.html :: footer">
 </footer>
 <script>
-    SelectElement("type", getType);
+    SelectElement("type", type);
 
-    function SelectElement(id, getType) {
+    function SelectElement(id, type) {
         var element = document.getElementById(id);
-        element.value = getType;
+        element.value = type;
     }
 
-    function amoutH(){
+    function amoutH() {
         var amountHours = document.getElementById("amountHours").value;
         var test = parseInt(amountHours);
-        if (test % 3 != 0){
-            alert("Totaal uur moet drievoud zijn!");
+        if (test % 3 != 0 && test <= 78) {
+            alert("Totaal uur moet drievoud zijn en kleiner of gelijk aan 78.");
             document.getElementById('amountHours').value = "";
             return false;
         }
@@ -132,8 +133,10 @@
 
     function toggleForm() {
         document.getElementById('assignmentInfo').removeAttribute('disabled');
-        document.getElementById("save").disabled = false;
-        document.getElementById("save").style.visibility = "visible";
+        if (document.getElementById("save") != null) {
+
+            document.getElementById("save").style.display = "inline-block";
+        }else document.getElementById("coorSave").style.display = "inline-block";
     }
 
     const numInputs = document.querySelectorAll('input[type=number]');

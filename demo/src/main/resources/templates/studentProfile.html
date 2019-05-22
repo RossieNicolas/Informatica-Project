@@ -13,11 +13,12 @@
         <div class="container ">
             <div class="wrap-all col-xs-12 ">
                 <h2>Detail student</h2>
-                <form th:each="a: ${student}" class="standard-form" method="post"   >
+                <form th:each="a: ${student}" class="standard-form" method="post">
                     <br><br>
                     <fieldset disabled="disabled" id="assignmentInfo">
                         <label for="nummer">Studenten nummer:</label>
-                        <input name="nummer" id="nummer" type="text" th:value="*{a.getStudentennummer()}" required="required"><br>
+                        <input name="nummer" id="nummer" type="text" th:value="*{a.getStudentennummer()}"
+                               required="required"><br>
 
                         <label for="Naam">Naam:</label>
                         <input name="Naam" id="Naam" type="text" th:value="*{a.getUserId()}" required="required"><br>
@@ -31,12 +32,15 @@
 
                         <label>Soort:</label><br>
                         <input th:if="${a.isMobility()}" type="text" value="Mobility">
-                        <input th:if="${!a.isMobility()}"  type="text" value="Zap" >
+                        <input th:if="${!a.isMobility()}" type="text" value="Zap">
+
+                        <label for="amountHours">Totaal uur:</label>
+                        <input name="amountHours" id="amountHours" type="text" th:value="*{a.getAmountHours()}" required="required"><br>
 
                     </fieldset>
                 </form>
                 <h2>Uw aangemaakte opdrachten</h2>
-                <table id = "profileTable">
+                <table id="profileTable">
                     <thead>
                     <tr>
                         <th>Nr</th>
@@ -63,7 +67,6 @@
                     </tr>
                     </tbody>
                 </table>
-
 
 
             </div>
