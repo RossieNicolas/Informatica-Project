@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="background">
-    <header th:fragment="header">
+    <header th:fragment="header (name)">
         <div class="nav-main navbackground">
             <div class="container">
                 <div class="wrap-all col-xs-12">
@@ -31,24 +31,24 @@
                                             </div>
                                         </div>
                                     </li>
-                                    <li sec:authorize="!hasRole('DOCENT')">
+                                    <li sec:authorize="!hasAnyRole('DOCENT', 'COORDINATOR')">
                                         <div class="dropdown">
                                             <span>Profiel</span>
                                             <div class="dropdown-content">
                                                 <a sec:authorize="hasRole('EXTERNE')" href="/externalUserProfile">Mijn profiel</a>
-                                                <a sec:authorize="hasRole('STUDENT')" href="/studentProfile">Mijn profiel</a> <!--todo: add link-->
+                                                <a sec:authorize="hasRole('STUDENT')" href="/studentProfile">Mijn profiel</a>
                                                 <a sec:authorize="hasRole('STUDENT')" href="/portfolio">Mijn portfolio</a>
                                             </div>
                                         </div>
                                     </li>
                                     <li>
                                         <a sec:authorize="!hasRole('EXTERNE')" href="/documentation">
-                                            <span>Documentatie</span>
+                                            Documentatie
                                         </a>
                                     </li>
                                     <li sec:authorize="hasAnyRole('COORDINATOR','DOCENT')">
                                         <div class="dropdown">
-                                            <span>Extra's</span>
+                                            <span class="header-text">Extra's</span>
                                             <div class="dropdown-content">
                                                 <a sec:authorize="hasRole('COORDINATOR')" href="/tag">Tag toevoegen</a>
                                                 <a sec:authorize="hasRole('COORDINATOR')" href="/listAllTags">Lijst van tags</a>
@@ -57,6 +57,18 @@
                                                 <a sec:authorize="hasAnyRole('COORDINATOR','DOCENT')" href="/liststudents">Alle Studenten</a>
                                                 <a sec:authorize="hasRole('COORDINATOR')" href="/archive">Archief</a>
                                                 <a sec:authorize="hasAnyRole('COORDINATOR','DOCENT')" href="/unapprovedEnrollments">Ongevalideerde inschrijvingen</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="dropdown">
+                                            <span class="header-text" th:text="${name}"></span>
+                                            <div class="dropdown-content">
+                                                <a href="/main">Mijn startpagina</a>
+                                                <a sec:authorize="hasRole('EXTERNE')" href="/externalUserProfile">Mijn profiel</a>
+                                                <a sec:authorize="hasRole('STUDENT')" href="/studentProfile">Mijn profiel</a>
+                                                <a sec:authorize="hasRole('STUDENT')" href="/portfolio">Mijn portfolio</a>
+                                                <a href="/logout">Log uit</a>
                                             </div>
                                         </div>
                                     </li>

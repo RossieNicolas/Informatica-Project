@@ -105,6 +105,14 @@ public class PortfolioController {
                 .body(resource);
     }
 
+    @GetMapping("/deletefile/{id}")
+    public String deleteFile(@PathVariable("id") int id) {
+        File doc = fileRepo.findByFileId(id).orElseThrow(() -> new IllegalArgumentException("Invalid documentation Id:" + id));
+        fileRepo.delete(doc);
+
+        return "redirect:/portfolio";
+    }
+
     @GetMapping("/documentation")
     public String getDocumentation(Model model) {
         List<Documentation> files = docRepo.findAll();
