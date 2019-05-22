@@ -40,7 +40,6 @@ public class ExternalController {
 
     @GetMapping("/createexternaluser")
     public String getCreateUser() {
-
         return "createExternal";
     }
 
@@ -100,6 +99,8 @@ public class ExternalController {
         ExternalUser externalUser = externalUserRepository.findByUserId(user);
 
         model.addAttribute("externalUsers", externalUser);
+        //pass username to header fragment
+        model.addAttribute("name",user.getFirstname() + " " + user.getLastname().substring(0,1) + ".");
         return "externalUserProfile";
     }
 
@@ -136,7 +137,7 @@ public class ExternalController {
     }
 
     @GetMapping("/listUnvalidatedExternal")
-    public String listUnvalidatedExternal(Model model) {
+    public String listUnvalidatedExternal(Principal principal, Model model) {
         List<User> users = userRepository.findAllByRole(Role.EXTERNE);
         List<ExternalUser> externalUsers = new ArrayList<>();
         for (User u : users) {
@@ -147,6 +148,9 @@ public class ExternalController {
 
         model.addAttribute("externe", externalUsers);
         model.addAttribute("users", users);
+        //pass username to header fragment
+        User currentUser = userRepository.findByEmail(principal.getName());
+        model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
         return "listUnvalidatedExternal";
     }
 

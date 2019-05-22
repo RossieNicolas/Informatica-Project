@@ -2,6 +2,7 @@ package com.architec.crediti.controllers;
 
 import com.architec.crediti.models.File;
 import com.architec.crediti.models.Student;
+import com.architec.crediti.models.User;
 import com.architec.crediti.repositories.FileRepository;
 import com.architec.crediti.repositories.StudentRepository;
 import com.architec.crediti.repositories.UserRepository;
@@ -19,15 +20,17 @@ public class ProfileController {
 
     private final
     StudentRepository stuRepo;
+    private final UserRepository userRepo;
 
 
     private final
     FileRepository fileRepo;
 
     @Autowired
-    public ProfileController(StudentRepository stuRepo , FileRepository fileRepo) {
+    public ProfileController(StudentRepository stuRepo , FileRepository fileRepo, UserRepository userRepo) {
         this.stuRepo = stuRepo;
         this.fileRepo = fileRepo;
+        this.userRepo = userRepo;
     }
 
     @GetMapping("liststudents/{studentennummer}")
@@ -38,6 +41,9 @@ public class ProfileController {
 
         model.addAttribute("student", st);
         model.addAttribute("files", files);
+        //pass username to header fragment
+        User currentUser = userRepo.findByEmail(principal.getName());
+        model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
         return "studentDetail";
 
     }

@@ -34,8 +34,10 @@
                         <input th:if="${a.isMobility()}" type="text" value="Mobility">
                         <input th:if="${!a.isMobility()}" type="text" value="Zap">
 
-                        <label for="amountHours">Totaal uur:</label>
-                        <input name="amountHours" id="amountHours" type="text" th:value="*{a.getAmountHours()}" required="required"><br>
+                        <label for="amoutHours">Aantal uur:</label><br>
+                        <input name="amoutHours" id="amoutHours" type="text" th:value="*{a.getAmoutHours()}"
+                               required="required"><br>
+                        
 
                     </fieldset>
                 </form>

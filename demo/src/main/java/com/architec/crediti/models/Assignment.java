@@ -1,8 +1,13 @@
 package com.architec.crediti.models;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Set;
 
 @Entity
@@ -120,6 +125,20 @@ public class Assignment {
     }
 
     public String getEndDate() {
+        return endDate;
+    }
+
+    public String getFormatStartDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        startDate= LocalDate.parse(startDate, formatter2).format(formatter);
+        return startDate;
+    }
+
+    public String getFormatEndDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        endDate= LocalDate.parse(endDate, formatter2).format(formatter);
         return endDate;
     }
 
