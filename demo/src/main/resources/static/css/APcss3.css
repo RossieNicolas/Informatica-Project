@@ -2300,3 +2300,8 @@ p {
 #profileTable{
 	margin-left: 0 ;
 }
+
+/* Padding tussen de titels in header */
+.header-text {
+	padding: 20px 0px 20px 20px;
+}

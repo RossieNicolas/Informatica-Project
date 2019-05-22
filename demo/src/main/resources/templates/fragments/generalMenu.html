@@ -36,19 +36,19 @@
                                             <span>Profiel</span>
                                             <div class="dropdown-content">
                                                 <a sec:authorize="hasRole('EXTERNE')" href="/externalUserProfile">Mijn profiel</a>
-                                                <a sec:authorize="hasRole('STUDENT')" href="/studentProfile">Mijn profiel</a> <!--todo: add link-->
+                                                <a sec:authorize="hasRole('STUDENT')" href="/studentProfile">Mijn profiel</a>
                                                 <a sec:authorize="hasRole('STUDENT')" href="/portfolio">Mijn portfolio</a>
                                             </div>
                                         </div>
                                     </li>
                                     <li>
                                         <a sec:authorize="!hasRole('EXTERNE')" href="/documentation">
-                                            <span>Documentatie</span>
+                                            Documentatie
                                         </a>
                                     </li>
                                     <li sec:authorize="hasAnyRole('COORDINATOR','DOCENT')">
                                         <div class="dropdown">
-                                            <span>Extra's</span>
+                                            <span class="header-text">Extra's</span>
                                             <div class="dropdown-content">
                                                 <a sec:authorize="hasRole('COORDINATOR')" href="/tag">Tag toevoegen</a>
                                                 <a sec:authorize="hasRole('COORDINATOR')" href="/listAllTags">Lijst van tags</a>
@@ -62,15 +62,13 @@
                                     </li>
                                     <li>
                                         <div class="dropdown">
-                                            <span th:text="${name}"></span>
+                                            <span class="header-text" th:text="${name}"></span>
                                             <div class="dropdown-content">
-                                                <a sec:authorize="hasRole('COORDINATOR')" href="/tag">Tag toevoegen</a>
-                                                <a sec:authorize="hasRole('COORDINATOR')" href="/listAllTags">Lijst van tags</a>
-                                                <a sec:authorize="hasRole('COORDINATOR')" href="/unvalidatedassignments">Ongevalideerde Taken</a>
-                                                <a sec:authorize="hasRole('COORDINATOR')" href="/listUnvalidatedExternal">Ongevalideerde Externe</a>
-                                                <a sec:authorize="hasAnyRole('COORDINATOR','DOCENT')" href="/liststudents">Alle Studenten</a>
-                                                <a sec:authorize="hasRole('COORDINATOR')" href="/archive">Archief</a>
-                                                <a sec:authorize="hasAnyRole('COORDINATOR','DOCENT')" href="/unapprovedEnrollments">Ongevalideerde inschrijvingen</a>
+                                                <a href="/main">Mijn startpagina</a>
+                                                <a sec:authorize="hasRole('EXTERNE')" href="/externalUserProfile">Mijn profiel</a>
+                                                <a sec:authorize="hasRole('STUDENT')" href="/studentProfile">Mijn profiel</a>
+                                                <a sec:authorize="hasRole('STUDENT')" href="/portfolio">Mijn portfolio</a>
+                                                <a href="/logout">Log uit</a>
                                             </div>
                                         </div>
                                     </li>
