@@ -59,23 +59,22 @@ public class DocumentationTest {
     }
 
     @Test
-    //TODO write in testplan
-    //id=
-    public void findByDocumentIdShouldReturnCorrectDocument(){
+    //id= 62
+    public void findByDocumentTitleShouldReturnCorrectDocument(){
 
         //arrange
         Documentation d = new Documentation("test","test.com");
         documents.save(d);
         int documentId = d.getId();
+        String input = "test";
 
         //act
-        Optional<Documentation> found = documents.findByDocumentId(documentId);
+        Documentation found = documents.findByTitle(input);
 
         //assert
-        assertEquals(documentId, found.get().getId());
+        assertEquals(documentId, found.getId());
 
         //undo operations
         documents.delete(d);
-
     }
 }

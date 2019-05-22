@@ -39,7 +39,7 @@ public class TagTest {
     }
 
     @Test
-    //TODO write in testplan
+    //id= 71
     public void findByIdTagShouldReturnCorrectTag() {
 
         //arrange
@@ -57,7 +57,7 @@ public class TagTest {
         tags.delete(t);
     }
     @Test
-    //TODO write in testplan
+    //id= 72
     public void findByTagNameExistsShouldReturnCorrectTag(){
 
         //arrange

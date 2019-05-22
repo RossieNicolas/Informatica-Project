@@ -39,8 +39,7 @@ public class ExternalUserTest {
     }
 
     @Test
-    //TODO write in testplan
-    //id=
+    //id= 63
     public void deleteExternalUserShouldDecreaseInDB(){
 
         //arrange
