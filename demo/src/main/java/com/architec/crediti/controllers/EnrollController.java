@@ -52,7 +52,7 @@ public class EnrollController {
 
     // assign student to specific assignment
     @GetMapping("/studentenroll/{assignmentId}")
-    public String enrollAssignment(@PathVariable("assignmentId") int assignmentId, @Valid Student student,
+    public String enrollAssignment(Model model, @PathVariable("assignmentId") int assignmentId, @Valid Student student,
                                    Principal principal) {
         Assignment assignment = assignmentRepo.findById((long) assignmentId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid assignment Id:" + assignmentId));
@@ -94,14 +94,20 @@ public class EnrollController {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
+        //pass username to header fragment
+        User currentUser = userRepo.findByEmail(principal.getName());
+        model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
         return "studentenroll";
     }
 
     // show list of unapproved assignments and make possible to approve
     @GetMapping("/unapprovedEnrollments")
-    public String unapprovedEnroll(Model model) {
+    public String unapprovedEnroll(Model model, Principal principal) {
         List<Enrolled> unapproved = enrolledRepo.findAll();
         model.addAttribute("unapproved", unapproved);
+        //pass username to header fragment
+        User currentUser = userRepo.findByEmail(principal.getName());
+        model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
         return "listUnapprovedEnrollment";
     }
 

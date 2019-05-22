@@ -2,7 +2,9 @@ package com.architec.crediti.controllers;
 
 import com.architec.crediti.models.Pager;
 import com.architec.crediti.models.Tag;
+import com.architec.crediti.models.User;
 import com.architec.crediti.repositories.TagRepo;
+import com.architec.crediti.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,21 +14,27 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.Optional;
 
 @Controller
 public class TagController {
     private final
     TagRepo tagRepo;
+    private final UserRepository userRepo;
 
     @Autowired
-    public TagController(TagRepo tagRepo) {
+    public TagController(TagRepo tagRepo, UserRepository userRepo) {
         this.tagRepo = tagRepo;
+        this.userRepo = userRepo;
     }
 
     // get create tag page
     @GetMapping("/tag")
-    public String tag() {
+    public String tag(Model model, Principal principal) {
+        //pass username to header fragment
+        User currentUser = userRepo.findByEmail(principal.getName());
+        model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
         return "tag";
     }
 
@@ -47,7 +55,7 @@ public class TagController {
 
     // list all tags
     @GetMapping("/listAllTags")
-    public ModelAndView listAllTags(@RequestParam("page") Optional<Integer> page) {
+    public ModelAndView listAllTags(@RequestParam("page") Optional<Integer> page, Model model, Principal principal) {
         ModelAndView modelAndView = new ModelAndView("listAllTags");
 
         int initialPage = 0;
@@ -66,16 +74,23 @@ public class TagController {
         modelAndView.addObject("listAllTags", fiches);
         modelAndView.addObject("selectedPageSize", pageSize);
         modelAndView.addObject("pager", pager);
+        //pass username to header fragment
+        User currentUser = userRepo.findByEmail(principal.getName());
+        model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
         return modelAndView;
     }
 
     // list specific tag
     @GetMapping(value = {"/editTag", "/listAllTags/{tag_id}"})
-    public String tags(@PathVariable("tag_id") int tagId, Model model) {
+    public String tags(@PathVariable("tag_id") int tagId, Model model, Principal principal) {
 
         Tag tag = tagRepo.findBytagId(tagId);
 
         model.addAttribute("tags", tag);
+
+        //pass username to header fragment
+        User currentUser = userRepo.findByEmail(principal.getName());
+        model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
         return "editTag";
     }
 

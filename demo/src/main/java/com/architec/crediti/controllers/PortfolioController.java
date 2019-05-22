@@ -61,11 +61,16 @@ public class PortfolioController {
         User currentUser = userRepo.findByEmail(principal.getName());
         List<File> files = fileRepo.findByUser(currentUser);
         model.addAttribute("files", files);
+        //pass username to header fragment
+        model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
         return "portfolio";
     }
 
     @GetMapping("/uploadfile")
-    public String getUploadFile() {
+    public String getUploadFile(Model model, Principal principal) {
+        //pass username to header fragment
+        User currentUser = userRepo.findByEmail(principal.getName());
+        model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
         return "upload";
     }
 
@@ -114,14 +119,20 @@ public class PortfolioController {
     }
 
     @GetMapping("/documentation")
-    public String getDocumentation(Model model) {
+    public String getDocumentation(Model model, Principal principal) {
         List<Documentation> files = docRepo.findAll();
         model.addAttribute("files", files);
+        //pass username to header fragment
+        User currentUser = userRepo.findByEmail(principal.getName());
+        model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
         return "documentation";
     }
 
     @GetMapping("/uploaddocumentation")
-    public String getUploadDoc() {
+    public String getUploadDoc(Model model, Principal principal) {
+        //pass username to header fragment
+        User currentUser = userRepo.findByEmail(principal.getName());
+        model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
         return "uploadDocumentation";
     }
 

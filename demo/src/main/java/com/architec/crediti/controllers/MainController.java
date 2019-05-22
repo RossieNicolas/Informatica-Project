@@ -4,6 +4,8 @@ import com.architec.crediti.models.User;
 import com.architec.crediti.repositories.ExternalUserRepository;
 import com.architec.crediti.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,7 +39,7 @@ public class MainController {
             return "redirect:notapproved";
 
         }
-        model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname());
+        model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
         return "main";
     }
 }

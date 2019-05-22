@@ -63,8 +63,11 @@ public class StudentController {
         return "redirect:/main";
     }
     @GetMapping("/liststudents")
-    public String listStudents(Model model){
+    public String listStudents(Model model, Principal principal){
             model.addAttribute("students", studentRepo.findAll());
+        //pass username to header fragment
+        User currentUser = userRepo.findByEmail(principal.getName());
+        model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
             return "listStudents";
     }
 
@@ -96,6 +99,9 @@ public class StudentController {
         List<Assignment> assignments = asRepo.findByAssignerUserId(currentStudent.getUserId());
         model.addAttribute("student", currentStudent);
         model.addAttribute("assignments", assignments);
+        //pass username to header fragment
+        User currentUser = userRepo.findByEmail(principal.getName());
+        model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
         return "studentProfile";
     }
 

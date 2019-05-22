@@ -2,8 +2,10 @@ package com.architec.crediti.controllers;
 
 import com.architec.crediti.models.ArchivedAssignment;
 import com.architec.crediti.models.Pager;
+import com.architec.crediti.models.User;
 import com.architec.crediti.repositories.ArchiveRepository;
 import com.architec.crediti.repositories.TagRepo;
+import com.architec.crediti.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -28,16 +31,18 @@ public class ArchiveController {
     private static final int PAGE_SIZE = 15;
     private final
     TagRepo tagRepo;
+    private final UserRepository userRepo;
 
     @Autowired
-    public ArchiveController(ArchiveRepository archiveRepo, TagRepo tagRepo) {
+    public ArchiveController(ArchiveRepository archiveRepo, TagRepo tagRepo, UserRepository userRepo) {
         this.archiveRepo = archiveRepo;
         this.tagRepo = tagRepo;
+        this.userRepo = userRepo;
     }
 
     //get archive page
     @GetMapping("/archive")
-    public ModelAndView showPersonsPage(@RequestParam("page") Optional<Integer> page) {
+    public ModelAndView showPersonsPage(@RequestParam("page") Optional<Integer> page, Principal principal) {
         ModelAndView modelAndView = new ModelAndView("archive");
 
         int buttons = (int) archiveRepo.count() / PAGE_SIZE;
@@ -49,11 +54,13 @@ public class ArchiveController {
         Page<ArchivedAssignment> fiches = archiveRepo.findAll(PageRequest.of(evalPage, PAGE_SIZE));
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
 
+        User currentUser = userRepo.findByEmail(principal.getName());
         modelAndView.addObject("persons", fiches);
         modelAndView.addObject("assignments", fiches);
         modelAndView.addObject("selectedPageSize", PAGE_SIZE);
         modelAndView.addObject("pager", pager);
         modelAndView.addObject("tags", tagRepo.findAll());
+        modelAndView.addObject("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
         return modelAndView;
     }
 

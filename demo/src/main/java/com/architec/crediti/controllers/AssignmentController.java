@@ -64,10 +64,13 @@ public class AssignmentController {
 
     // get assignment form
     @GetMapping("/assignment")
-    public String tag(Model model) {
+    public String tag(Model model, Principal principal) {
         List<Tag> updatetag = tagRepo.findAll();
 
         model.addAttribute("updatetag", updatetag);
+        //pass username to header fragment
+        User currentUser = userRepo.findByEmail(principal.getName());
+        model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
         return "assignment";
     }
 
@@ -99,7 +102,7 @@ public class AssignmentController {
 
     // list all assignments
     @GetMapping("/allassignments")
-    public ModelAndView getAllAssignments(Model model, @RequestParam("page") Optional<Integer> page) {
+    public ModelAndView getAllAssignments(Model model ,@RequestParam("page") Optional<Integer> page, Principal principal) {
         ModelAndView view = new ModelAndView("listAllAssignments");
 
         List<Assignment> fullas = new ArrayList<>();
@@ -126,13 +129,15 @@ public class AssignmentController {
         view.addObject("persons", fiches);
         view.addObject("pager", pager);
         view.addObject("tags", tagRepo.findAll());
-
+        //pass username to header fragment
+        User currentUser = userRepo.findByEmail(principal.getName());
+        model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
         return view;
     }
 
     // list all assignments which are full
     @GetMapping("/allFullAssignments")
-    public String getAllFullAssignment(Model model, @RequestParam("page") Optional<Integer> page) {
+    public String getAllFullAssignment(Model model , @RequestParam("page") Optional<Integer> page, Principal principal) {
 
         List<Assignment> fullas = new ArrayList<>();
         for (Assignment item : assignmentRepo.findAll()) {
@@ -156,13 +161,15 @@ public class AssignmentController {
 
         model.addAttribute("persons", fiches);
         model.addAttribute("pager", pager);
-
+        //pass username to header fragment
+        User currentUser = userRepo.findByEmail(principal.getName());
+        model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
         return "listAllFullAssignments";
     }
 
     // list all unvalidated assignments
     @GetMapping("/unvalidatedassignments")
-    public String getUnvalidatedAssingments(Model model) {
+    public String getUnvalidatedAssingments(Model model, Principal principal) {
         Iterable<Assignment> fiches = assignmentRepo.findAll();
         List<Assignment> unvalidatedFiches = new ArrayList<>();
 
@@ -173,7 +180,9 @@ public class AssignmentController {
         }
 
         model.addAttribute("assignments", unvalidatedFiches);
-
+        //pass username to header fragment
+        User currentUser = userRepo.findByEmail(principal.getName());
+        model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
         return "listUnvalidatedAssignments";
     }
 
@@ -234,7 +243,9 @@ public class AssignmentController {
         Student currentStudent = studentRepo.findByUserId(userRepo.findByEmail(principal.getName()));
         Set<Assignment> myAssignments = currentStudent.getAssignments();
         model.addAttribute("assignments", myAssignments);
-
+        //pass username to header fragment
+        User currentUser = userRepo.findByEmail(principal.getName());
+        model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
         return "myassignments";
     }
 
@@ -293,6 +304,9 @@ public class AssignmentController {
         }
 
         model.addAttribute("roles", roles);
+        //pass username to header fragment
+        User currentUser = userRepo.findByEmail(principal.getName());
+        model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
         return "updateAssignment";
     }
 
