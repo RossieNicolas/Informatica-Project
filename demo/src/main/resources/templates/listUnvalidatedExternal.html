@@ -34,7 +34,7 @@
             <td th:text="${e.getUserId().getEmail()}"></td>
             <td th:text="${e.getPhone()}"></td>
             <td th:text="${e.getAddress()} + ', ' + ${e.getPostal()} + ' ' + ${e.getCity()}"></td>
-            <td><a th:href="@{/deleteexternal/{id} (id=${e.getUserId().getUserId()})}">🗑️</a></td>
+            <td><a th:href="@{/deleteexternal/{id} (id=${e.getUserId().getUserId()})}" class="button">🗑️</a></td>
         </tr>
         </tbody>
     </table>
