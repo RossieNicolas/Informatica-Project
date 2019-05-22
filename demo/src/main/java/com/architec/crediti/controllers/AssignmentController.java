@@ -15,6 +15,7 @@ import com.architec.crediti.repositories.UserRepository;
 import com.architec.crediti.security.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -102,16 +103,6 @@ public class AssignmentController {
     @GetMapping("/allassignments")
     public ModelAndView getAllAssignments(Model model ,@RequestParam("page") Optional<Integer> page) {
         ModelAndView view = new ModelAndView("listAllAssignments");
-
-        List<Assignment> fullas = new ArrayList<>();
-        for (Assignment item: assignmentRepo.findAll()) {
-            if (item.getAmountStudents() != item.getMaxStudents() && !item.isArchived()) {
-
-                fullas.add(item);
-            }
-        }
-        model.addAttribute("assignments", fullas);
-
         int buttons = (int) assignmentRepo.count() / PAGE_SIZE;
 
         if (assignmentRepo.count() % PAGE_SIZE != 0) {
@@ -119,8 +110,9 @@ public class AssignmentController {
         }
 
         int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
-
+        //Page<Assignment> fiches = AssignmentMethods.removeFullAssignmentsPage((List<Assignment>) assignmentRepo.findAll(PageRequest.of(evalPage, PAGE_SIZE)));
         Page<Assignment> fiches = assignmentRepo.findAll(PageRequest.of(evalPage, PAGE_SIZE));
+        fiches = AssignmentMethods.removeFullAssignmentsPage(fiches);
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
 
         view.addObject("assignments", fiches);
@@ -184,15 +176,27 @@ public class AssignmentController {
                          Model model, @RequestParam("page") Optional<Integer> page,
                          @RequestParam(required = false , value = "tag") int[] tags) {
 
+        Page<Assignment> fiches = null;
+        int buttons = (int) assignmentRepo.count() / PAGE_SIZE;
+
+        if (assignmentRepo.count() % PAGE_SIZE != 0) {
+            buttons++;
+        }
+
+        int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
         if(tags == null){
             try {
                 Assignment a = assignmentRepo.findByAssignmentId((Integer.parseInt(name)));
                 if (a.getAmountStudents() != a.getMaxStudents() && !a.isArchived()) {
                     model.addAttribute("assignments", a);
+                    List<Assignment> list = new ArrayList();
+                    list.add(a);
+                    fiches = new PageImpl<>(list);
                 }
 
             } catch (Exception e) {
                 model.addAttribute("assignments", AssignmentMethods.removeFullAssignments(assignmentRepo.findByTitleContainingAndArchived(name, false)));
+                fiches = AssignmentMethods.removeFullAssignmentsPage(assignmentRepo.findByTitleContainingAndArchived(name, false,PageRequest.of(evalPage, PAGE_SIZE)));
             }
         }
         else{
@@ -206,20 +210,12 @@ public class AssignmentController {
                 }
             }
             list2 = list2.stream().distinct().collect(Collectors.toList());
-
+            fiches = new PageImpl<>(list2);
             model.addAttribute("assignments" , list2);
         }
 
         ModelAndView modelAndView = new ModelAndView("listAllAssignments");
 
-        int buttons = (int) assignmentRepo.count() / PAGE_SIZE;
-
-        if (assignmentRepo.count() % PAGE_SIZE != 0) {
-            buttons++;
-        }
-        int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
-
-        Page<Assignment> fiches = assignmentRepo.findAll(PageRequest.of(evalPage, PAGE_SIZE));
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
 
         model.addAttribute("persons", fiches);
