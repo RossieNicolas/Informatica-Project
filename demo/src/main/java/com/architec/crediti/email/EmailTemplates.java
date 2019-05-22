@@ -65,7 +65,7 @@ public class EmailTemplates {
     public static String declinedEnrolledAssignmentStudent(String name) {
         return "Beste,\n\n"+
                 "Je inschrijving voor ZAP- opdracht, "+ name +", werd geweigerd. " +
-                "\n" +
+                "\n\n" +
                 "De coördinator";
     }
 
