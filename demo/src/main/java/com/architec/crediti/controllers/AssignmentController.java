@@ -65,9 +65,9 @@ public class AssignmentController {
     // get assignment form
     @GetMapping("/assignment")
     public String tag(Model model, Principal principal) {
-        List<Tag> updatetag = tagRepo.findAll();
+        List<Tag> tags = tagRepo.findAll();
 
-        model.addAttribute("updatetag", updatetag);
+        model.addAttribute("tags", tags);
         //pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());
         model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
