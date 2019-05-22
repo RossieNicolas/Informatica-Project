@@ -114,7 +114,7 @@ public class AssignmentController {
 
         int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
         //Page<Assignment> fiches = AssignmentMethods.removeFullAssignmentsPage((List<Assignment>) assignmentRepo.findAll(PageRequest.of(evalPage, PAGE_SIZE)));
-        Page<Assignment> fiches = assignmentRepo.findAll(PageRequest.of(evalPage, PAGE_SIZE));
+        Page<Assignment> fiches = assignmentRepo.findAllByOrderByAssignmentIdDesc(PageRequest.of(evalPage, PAGE_SIZE));
         fiches = AssignmentMethods.removeFullAssignmentsPage(fiches);
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
 

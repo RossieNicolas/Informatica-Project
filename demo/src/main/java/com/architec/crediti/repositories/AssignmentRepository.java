@@ -17,6 +17,8 @@ public interface AssignmentRepository extends PagingAndSortingRepository<Assignm
     List<Assignment> findByTitleContainingAndArchived(String title, boolean archived);
     List<Assignment> findByAssignerUserId(User user);
     Page<Assignment> findByTitleContainingAndArchived(String title, boolean archived,Pageable pageable);
+    Page<Assignment> findAllByOrderByAssignmentIdDesc(Pageable var1);
+
     
 
 }
