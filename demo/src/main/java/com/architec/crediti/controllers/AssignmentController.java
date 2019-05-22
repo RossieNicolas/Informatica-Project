@@ -73,7 +73,7 @@ public class AssignmentController {
 
     // add assignment
     @PostMapping("/assignment")
-    public String createAssignment( Principal principal, @Valid Assignment assignment,
+    public String createAssignment(Principal principal, @Valid Assignment assignment,
                                    @RequestParam(required = false, value = "tag") int[] tags) {
         Set<Tag> set = new HashSet<>();
         User currentUser = userRepo.findByEmail(principal.getName());
@@ -90,7 +90,6 @@ public class AssignmentController {
         assignmentRepo.save(assignment);
 
 
-
         mail.sendSimpleMessage("alina.storme@student.ap.be", "Nieuwe opdracht gecreëerd",
                 EmailTemplates.createdAssignment(assignment.getAssigner(),
                         assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments",
@@ -100,11 +99,11 @@ public class AssignmentController {
 
     // list all assignments
     @GetMapping("/allassignments")
-    public ModelAndView getAllAssignments(Model model ,@RequestParam("page") Optional<Integer> page) {
+    public ModelAndView getAllAssignments(Model model, @RequestParam("page") Optional<Integer> page) {
         ModelAndView view = new ModelAndView("listAllAssignments");
 
         List<Assignment> fullas = new ArrayList<>();
-        for (Assignment item: assignmentRepo.findAll()) {
+        for (Assignment item : assignmentRepo.findAll()) {
             if (item.getAmountStudents() != item.getMaxStudents() && !item.isArchived()) {
 
                 fullas.add(item);
@@ -133,10 +132,10 @@ public class AssignmentController {
 
     // list all assignments which are full
     @GetMapping("/allFullAssignments")
-    public String getAllFullAssignment(Model model , @RequestParam("page") Optional<Integer> page) {
+    public String getAllFullAssignment(Model model, @RequestParam("page") Optional<Integer> page) {
 
         List<Assignment> fullas = new ArrayList<>();
-        for (Assignment item: assignmentRepo.findAll()) {
+        for (Assignment item : assignmentRepo.findAll()) {
             if (item.getAmountStudents() == item.getMaxStudents() && !item.isArchived()) {
 
                 fullas.add(item);
@@ -181,10 +180,10 @@ public class AssignmentController {
     // search assignments
     @PostMapping("/allassignments")
     public String getAssignment(@RequestParam("searchbar") String name,
-                         Model model, @RequestParam("page") Optional<Integer> page,
-                         @RequestParam(required = false , value = "tag") int[] tags) {
+                                Model model, @RequestParam("page") Optional<Integer> page,
+                                @RequestParam(required = false, value = "tag") int[] tags) {
 
-        if(tags == null){
+        if (tags == null) {
             try {
                 Assignment a = assignmentRepo.findByAssignmentId((Integer.parseInt(name)));
                 if (a.getAmountStudents() != a.getMaxStudents() && !a.isArchived()) {
@@ -194,20 +193,19 @@ public class AssignmentController {
             } catch (Exception e) {
                 model.addAttribute("assignments", AssignmentMethods.removeFullAssignments(assignmentRepo.findByTitleContainingAndArchived(name, false)));
             }
-        }
-        else{
-            List<Assignment> list = AssignmentMethods.removeFullAssignments(assignmentRepo.findByTitleContainingAndArchived(name , false));
+        } else {
+            List<Assignment> list = AssignmentMethods.removeFullAssignments(assignmentRepo.findByTitleContainingAndArchived(name, false));
             List<Assignment> list2 = new ArrayList<>();
             for (int item : tags) {
                 for (Assignment a : list) {
-                    if(a.getTags().contains(tagRepo.findBytagId(item))){
+                    if (a.getTags().contains(tagRepo.findBytagId(item))) {
                         list2.add(a);
                     }
                 }
             }
             list2 = list2.stream().distinct().collect(Collectors.toList());
 
-            model.addAttribute("assignments" , list2);
+            model.addAttribute("assignments", list2);
         }
 
         ModelAndView modelAndView = new ModelAndView("listAllAssignments");
@@ -256,12 +254,15 @@ public class AssignmentController {
                 ingeschreven = true;
             }
         }
+
         if (as.getAmountStudents() == as.getMaxStudents()) {
             volzet = true;
         }
+
         model.addAttribute("volzet", volzet);
         model.addAttribute("ingeschreven", ingeschreven);
         model.addAttribute("updatetag", updatetag);
+
         try {
             Assignment a = assignmentRepo.findByAssignmentId(assignmentId);
             Set<Tag> tags = a.getTags();
