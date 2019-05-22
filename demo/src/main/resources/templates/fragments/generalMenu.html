@@ -31,7 +31,7 @@
                                             </div>
                                         </div>
                                     </li>
-                                    <li sec:authorize="!hasRole('DOCENT')">
+                                    <li sec:authorize="!hasAnyRole('DOCENT', 'COORDINATOR')">
                                         <div class="dropdown">
                                             <span>Profiel</span>
                                             <div class="dropdown-content">
