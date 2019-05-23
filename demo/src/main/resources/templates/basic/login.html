@@ -6,8 +6,7 @@
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
 <body class="background">
-<header th:insert="fragments/general.html :: header">
-</header>
+<header th:insert="fragments/general.html :: header"></header>
 <div class="block">
     <div class="container">
         <div class="wrap-all col-xs-12 ">
@@ -22,15 +21,12 @@
                 <br/><br>
                 <button type="submit">Log in</button>
                 <br><br>
-                <a href="/forgotPassword"><b>Wachtwoord vergeten?</b></a>
-                <br/>
+                <a href="/forgotPassword"><b>Wachtwoord vergeten?</b></a><br/>
                 <p>Nieuwe gebruiker? Klik <a href="/createexternaluser"><b>hier</b></a> om u te registreren.</p>
             </form>
         </div>
     </div>
 </div>
-<div style="height: 37%"></div>
-<footer th:insert="fragments/generalMenu.html :: footer">
-</footer>
+<footer th:insert="fragments/generalMenu.html :: footer"></footer>
 </body>
 </html>

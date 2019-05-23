@@ -142,7 +142,6 @@ public class ExternalController {
         externalUserRepository.save(externalUser);
 
         return "redirect:/externalUserProfile";
-
     }
 
     @GetMapping("/listUnvalidatedExternal")

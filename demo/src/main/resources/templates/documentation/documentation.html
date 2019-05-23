@@ -1,50 +1,51 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8"/>
     <title>Crediti - Documentatie</title>
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
 <body class="background" onload="tableFill()">
-<header th:insert="fragments/generalMenu.html :: header (name=${name})">
-</header>
-    <div class="block">
-        <section class="find-edu">
-            <div class="container ">
-                <div class="wrap-all col-xs-6">
-                    <h2 class="extra">Documentatie</h2>
-                </div>
-                <div sec:authorize="hasRole('COORDINATOR')" >
-                    <a href="/uploaddocumentation" class="button">Bestanden toevoegen</a>
-                </div>
+<header th:insert="fragments/generalMenu.html :: header (name=${name})"></header>
+<div class="block">
+    <section class="find-edu">
+        <div class="container ">
+            <div class="wrap-all col-xs-6">
+                <h2 class="extra">Documentatie</h2>
             </div>
-        </section>
-        <div class="container">
-            <table class="smalltable" id="tabel">
-                <thead>
-                <tr>
-                    <th>Title</th>
-                    <th width="26%"></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="file : ${files}" class="tablebackground">
-                    <td th:text="${file.getTitle()}"></td>
-                    <td style="
+            <div sec:authorize="hasRole('COORDINATOR')">
+                <a href="/uploaddocumentation" class="button">Bestanden toevoegen</a>
+            </div>
+        </div>
+    </section>
+    <div class="container">
+        <table class="smalltable" id="tabel">
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th width="26%"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="file : ${files}" class="tablebackground">
+                <td th:text="${file.getTitle()}"></td>
+                <td style="
 
 
                     float: right">
-                        <a th:href="${file.getDownloadLink()}" class="button">Download</a>
-                        &nbsp;&nbsp;&nbsp;
-                        <a sec:authorize="hasRole('COORDINATOR')" th:href="@{/deletedocumentation/{id} (id=${file.getId()})}" class="button">🗑️</a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+                    <a th:href="${file.getDownloadLink()}" class="button">Download</a>
+                    &nbsp;&nbsp;&nbsp;
+                    <a sec:authorize="hasRole('COORDINATOR')"
+                       th:href="@{/deletedocumentation/{id} (id=${file.getId()})}" class="button">🗑️</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
-<footer th:insert="fragments/generalMenu.html :: footer">
-</footer>
+</div>
+<div style="height: 30%"></div>
+<footer th:insert="fragments/generalMenu.html :: footer"></footer>
 <script>
     function tableFill() {
         var tbl = document.getElementById('tabel');

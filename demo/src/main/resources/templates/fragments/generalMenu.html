@@ -25,8 +25,10 @@
                                         <div class="dropdown dropdownleft">
                                             <span>Opdrachten</span>
                                             <div class="dropdown-content">
-                                                <a sec:authorize="!hasRole('EXTERN')" href="/allassignments">Lopende taken</a>
-                                                <a sec:authorize="hasAnyRole('COORDINATOR', 'DOCENT')" href="/allFullAssignments">Volzette taken</a>
+                                                <a sec:authorize="!hasRole('EXTERN')" href="/allassignments">Lopende
+                                                    taken</a>
+                                                <a sec:authorize="hasAnyRole('COORDINATOR', 'DOCENT')"
+                                                   href="/allFullAssignments">Volzette taken</a>
                                                 <a href="/assignment">Taak toevoegen</a>
                                                 <a sec:authorize="hasRole('STUDENT')" href="/myassignments">Ingeschreven taken</a>
                                             </div>
@@ -42,12 +44,17 @@
                                             <span class="header-text">Extra's</span>
                                             <div class="dropdown-content">
                                                 <a sec:authorize="hasRole('COORDINATOR')" href="/tag">Tag toevoegen</a>
-                                                <a sec:authorize="hasRole('COORDINATOR')" href="/listAllTags">Lijst van tags</a>
-                                                <a sec:authorize="hasRole('COORDINATOR')" href="/unvalidatedassignments">Ongevalideerde Taken</a>
-                                                <a sec:authorize="hasRole('COORDINATOR')" href="/listUnvalidatedExternal">Ongevalideerde Externe</a>
-                                                <a sec:authorize="hasAnyRole('COORDINATOR','DOCENT')" href="/liststudents">Alle Studenten</a>
+                                                <a sec:authorize="hasRole('COORDINATOR')" href="/listAllTags">Lijst van
+                                                    tags</a>
+                                                <a sec:authorize="hasRole('COORDINATOR')"
+                                                   href="/unvalidatedassignments">Ongevalideerde Taken</a>
+                                                <a sec:authorize="hasRole('COORDINATOR')"
+                                                   href="/listUnvalidatedExternal">Ongevalideerde Externe</a>
+                                                <a sec:authorize="hasAnyRole('COORDINATOR','DOCENT')"
+                                                   href="/liststudents">Alle Studenten</a>
                                                 <a sec:authorize="hasRole('COORDINATOR')" href="/archive">Archief</a>
-                                                <a sec:authorize="hasAnyRole('COORDINATOR','DOCENT')" href="/unapprovedEnrollments">Ongevalideerde inschrijvingen</a>
+                                                <a sec:authorize="hasAnyRole('COORDINATOR','DOCENT')"
+                                                   href="/unapprovedEnrollments">Ongevalideerde inschrijvingen</a>
                                             </div>
                                         </div>
                                     </li>

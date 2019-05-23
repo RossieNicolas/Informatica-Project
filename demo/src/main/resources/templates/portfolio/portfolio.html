@@ -7,8 +7,7 @@
 </head>
 <body onload="tableFill()">
 <div class="background">
-    <header th:insert="fragments/generalMenu.html :: header (name=${name})">
-    </header>
+    <header th:insert="fragments/generalMenu.html :: header (name=${name})"></header>
     <div class="block">
         <section class="find-edu">
             <div class="container ">
@@ -20,33 +19,31 @@
                 </div>
             </div>
         </section>
-            <div class="container">
-                <table class="smalltable" id="tabel">
-                    <thead>
-                    <tr>
-                        <th style="padding-left: 1%; width: 5%">Nr</th>
-                        <th>Title</th>
-                        <th width="26%"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="file : ${files}" class="tablebackground">
-                        <td th:text="${file.getFileId()}"></td>
-                        <td th:text="${file.getTitle()}"></td>
-                        <td style="float: right">
-                            <a th:href="${file.getDownloadLink()}" class="button">📥</a>
-                            &nbsp;&nbsp;&nbsp;
-                            <a th:href="@{/deletefile/{id} (id=${file.getFileId()})}" class="button">🗑️</a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+        <div class="container">
+            <table class="smalltable" id="tabel">
+                <thead>
+                <tr>
+                    <th style="padding-left: 1%; width: 5%">Nr</th>
+                    <th>Title</th>
+                    <th width="26%"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="file : ${files}" class="tablebackground">
+                    <td th:text="${file.getFileId()}"></td>
+                    <td th:text="${file.getTitle()}"></td>
+                    <td style="float: right">
+                        <a th:href="${file.getDownloadLink()}" class="button">📥</a>
+                        &nbsp;&nbsp;&nbsp;
+                        <a th:href="@{/deletefile/{id} (id=${file.getFileId()})}" class="button">🗑️</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
-<footer th:insert="fragments/generalMenu.html :: footer">
-
-</footer>
+<footer th:insert="fragments/generalMenu.html :: footer"></footer>
 <script>
     function tableFill() {
         var tbl = document.getElementById('tabel');
@@ -54,7 +51,7 @@
             var x = tbl.insertRow(1);
             var cell1 = x.insertCell(0)
             var cell2 = x.insertCell(1)
-            cell2.innerHTML="Momenteel is je portfolio nog leeg.";
+            cell2.innerHTML = "Momenteel is je portfolio nog leeg.";
         }
     }
 </script>

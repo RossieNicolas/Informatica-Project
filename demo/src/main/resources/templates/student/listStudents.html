@@ -6,8 +6,7 @@
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
 <body class="background">
-<header th:insert="fragments/generalMenu.html :: header (name=${name})">
-</header>
+<header th:insert="fragments/generalMenu.html :: header (name=${name})"></header>
 <div class="container ">
     <h2 class="extra">Alle studenten</h2>
 </div>
@@ -19,7 +18,6 @@
     </form>
 </div>
 <div id='overview'>
-
     <table>
         <thead>
         <tr>
@@ -32,18 +30,16 @@
         </thead>
         <tbody>
         <tr th:each="a : ${students}" class="tablebackground">
-         <td><a th:href="${'/liststudents/' + a.getStudentNumber()}" class="button">📃</a>
+            <td><a th:href="${'/liststudents/' + a.getStudentNumber()}" class="button">📃</a>
             <td th:text="${a.getStudentNumber()}"></td>
             <td th:text="${a.getUserId()}"></td>
             <td th:text="${a.findEmail()}"></td>
             <td th:text="${a.getGsm()}"></td>
-
         </tr>
         </tbody>
     </table>
 </div>
-
-<footer th:insert="fragments/generalMenu.html :: footer">
-</footer>
+<div style="height: 20%"></div>
+<footer th:insert="fragments/generalMenu.html :: footer"></footer>
 </body>
 </html>

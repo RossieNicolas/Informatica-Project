@@ -7,8 +7,7 @@
 </head>
 <body>
 <div class="background">
-    <header th:insert="fragments/generalMenu.html :: header (name=${name})">
-    </header>
+    <header th:insert="fragments/generalMenu.html :: header (name=${name})"></header>
     <div class="upload-container">
         <div class="upload-header">
             <h2>Upload files naar mijn portfolio</h2>
@@ -26,8 +25,6 @@
     </div>
     <script src="/js/main.js"></script>
 </div>
-<footer th:insert="fragments/generalMenu.html :: footer">
-
-</footer>
+<footer th:insert="fragments/generalMenu.html :: footer"></footer>
 </body>
 </html>

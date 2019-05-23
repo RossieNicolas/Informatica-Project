@@ -7,20 +7,17 @@
 </head>
 <body>
 <div class="background">
-    <header th:insert="/fragments/generalMenu.html :: header (name=${name})">
-
-    </header>
+    <header th:insert="/fragments/generalMenu.html :: header (name=${name})"></header>
     <div class="block">
         <section class="find-edu">
             <div class="container ">
                 <div class="wrap-all col-xs-6 extra">
-                    <h2>Startpagina</h2>
+                    <h2 class="extra">Startpagina</h2>
                 </div>
             </div>
         </section>
     </div>
 </div>
-<footer th:insert="/fragments/generalMenu.html :: footer">
-</footer>
+<footer th:insert="/fragments/generalMenu.html :: footer"></footer>
 </body>
 </html>

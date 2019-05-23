@@ -6,39 +6,30 @@
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
 <body class="background">
-<header th:insert="fragments/generalMenu.html :: header  (name=${name})">
-</header>
+<header th:insert="fragments/generalMenu.html :: header  (name=${name})"></header>
 <div class="block">
     <section class="find-edu card">
         <div class="container">
             <div class="wrap-all col-xs-12 ">
-
-                <h2>Invoerformulier voor opdrachtgevers</h2>
+                <h2 class="extra">Invoerformulier voor opdrachtgevers</h2>
                 <form th:action='@{/assignment}' method='POST' class="standard-form">
-
                     <label for="title">Titel:</label>
                     <input name="title" id="title" type="text" required="required"><br>
-
                     <label for="type">Type:</label>
                     <select name="type" id="type" required>
                         <option value="" disabled selected>Kies een type</option>
                         <option th:text="ZAP"></option>
                         <option th:text="Mobility"></option>
                     </select>
-
                     <label for="task">Omschrijving opdracht:</label>
                     <textarea name="task" id="task" required="required"></textarea><br>
-
                     <label for="startDate">Begindatum:</label><br>
                     <input name="startDate" id="startDate" type="date" onblur="SDate()" required="required"><br>
-
                     <label for="endDate">Einddatum:</label><br>
                     <input name="endDate" id="endDate" type="date" onblur="TDate()" required="required"><br><br>
-
                     <label for="amountHours">Totaal uur:</label>
                     <input name="amountHours" id="amountHours" type="number" onblur="amoutH()" required="required"
                            min="1" max="78"><br>
-
                     <label for="maxStudents">Max Studenten:</label>
                     <input name="maxStudents" id="maxStudents" type="number" required="required" min="1"><br>
                     <label>Tags:</label>
@@ -51,7 +42,6 @@
                         </th:block>
                     </ul>
                     <input class="button" type="SUBMIT" value="Opdracht aanmaken">
-
                 </form>
             </div>
         </div>
@@ -69,10 +59,7 @@
             return false;
         }
         return true
-
-
     }
-
     function TDate() {
         var startDate = document.getElementById("startDate").value;
         var endDate = document.getElementById("endDate").value;
@@ -87,23 +74,19 @@
                 document.getElementById('endDate').value = "";
                 return false;
             }
-
             return true;
         }
     }
-
     function SDate() {
         var startDate = document.getElementById("startDate").value;
         var endDate = document.getElementById("endDate").value;
         var currentDate = new Date().toISOString().split('T')[0];
-
         if (startDate != null) {
             if (startDate < currentDate) {
                 alert("De startdatum moet groter of gelijk zijn aan de datum van vandaag!");
                 document.getElementById('startDate').value = "";
                 return false;
             }
-
             return true
         }
     }
