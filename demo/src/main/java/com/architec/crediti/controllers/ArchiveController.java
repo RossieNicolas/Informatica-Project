@@ -117,6 +117,6 @@ public class ArchiveController {
         model.addAttribute("pager", pager);
         model.addAttribute("tags", tagRepo.findAll());
 
-        return "archive";
+        return "archive/archive";
     }
 }

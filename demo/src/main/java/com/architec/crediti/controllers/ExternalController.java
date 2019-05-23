@@ -40,7 +40,7 @@ public class ExternalController {
 
     @GetMapping("/createexternaluser")
     public String getCreateUser() {
-        return "createExternal";
+        return "external/createExternal";
     }
 
     @PostMapping("/createexternal")
@@ -69,6 +69,8 @@ public class ExternalController {
             //TODO: vervang 's097086@ap.be' door mail van coordinator
             mail.sendSimpleMessage("s100605@ap.be", "Nieuwe externe registratie",
             EmailTemplates.newExternalUser(userId, name, company, fullAddress, phone, email));
+
+            mail.sendSimpleMessage(externalUser.getEmail(),"Registratie", EmailTemplates.newExternal());
         }
         else{
             model.addAttribute("error" , "Email bestaat al");
@@ -81,7 +83,7 @@ public class ExternalController {
 
     @GetMapping("/registersucces")
     public String getSucces() {
-        return "registerSucces";
+        return "external/registerSucces";
     }
 
     @GetMapping("/notapproved")
@@ -89,7 +91,7 @@ public class ExternalController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         auth.setAuthenticated(false);
         SecurityContextHolder.clearContext();
-        return "notapproved";
+        return "external/notapproved";
     }
 
 
@@ -101,7 +103,7 @@ public class ExternalController {
         model.addAttribute("externalUsers", externalUser);
         //pass username to header fragment
         model.addAttribute("name",user.getFirstname() + " " + user.getLastname().substring(0,1) + ".");
-        return "externalUserProfile";
+        return "external/externalUserProfile";
     }
 
     @PostMapping("/externalUserProfile")
@@ -151,7 +153,7 @@ public class ExternalController {
         //pass username to header fragment
         User currentUser = userRepository.findByEmail(principal.getName());
         model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
-        return "listUnvalidatedExternal";
+        return "external/listUnvalidatedExternal";
     }
 
     @GetMapping("/validateexternal/{externalId}")

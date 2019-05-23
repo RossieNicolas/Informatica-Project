@@ -78,7 +78,7 @@ public class EnrollController {
                     set.add(assignment);
                     assignment.setAmountStudents(counter + 1);
                 }
-            } else return "alreadyAssigned";
+            } else return "assignments/alreadyAssigned";
 
 
             Enrolled enrolled = new Enrolled(user.getFirstname() + " " + user.getLastname(), user.getEmail(), assignment.getAssignmentId(), assignment.getTitle(), user.getUserId());
@@ -97,7 +97,7 @@ public class EnrollController {
         //pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());
         model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
-        return "studentenroll";
+        return "enroll/studentenroll";
     }
 
     // show list of unapproved assignments and make possible to approve
@@ -108,7 +108,7 @@ public class EnrollController {
         //pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());
         model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
-        return "listUnapprovedEnrollment";
+        return "enroll/listUnapprovedEnrollment";
     }
 
 

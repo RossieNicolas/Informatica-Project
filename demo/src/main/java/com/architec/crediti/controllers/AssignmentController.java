@@ -73,7 +73,7 @@ public class AssignmentController {
         //pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());
         model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
-        return "assignment";
+        return "assignments/assignment";
     }
 
     // add assignment
@@ -98,7 +98,7 @@ public class AssignmentController {
         mail.sendSimpleMessage("alina.storme@student.ap.be", "Nieuwe opdracht gecreëerd",
                 EmailTemplates.createdAssignment(assignment.getAssigner(),
                         assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments"));
-        return "successfullAssignment";
+        return "assignments/successfullAssignment";
     }
 
     // list all assignments
@@ -112,9 +112,7 @@ public class AssignmentController {
         }
 
         int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
-        //Page<Assignment> fiches = AssignmentMethods.removeFullAssignmentsPage((List<Assignment>) assignmentRepo.findAll(PageRequest.of(evalPage, PAGE_SIZE)));
-        Page<Assignment> fiches = assignmentRepo.findAllByOrderByAssignmentIdDesc(PageRequest.of(evalPage, PAGE_SIZE));
-        fiches = AssignmentMethods.removeFullAssignmentsPage(fiches);
+        Page<Assignment> fiches = assignmentRepo.findByFull(false, PageRequest.of(evalPage, PAGE_SIZE));
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
 
         view.addObject("assignments", fiches);
@@ -156,7 +154,7 @@ public class AssignmentController {
         //pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());
         model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
-        return "listAllFullAssignments";
+        return "assignments/listAllFullAssignments";
     }
 
     // list all unvalidated assignments
@@ -175,7 +173,7 @@ public class AssignmentController {
         //pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());
         model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
-        return "listUnvalidatedAssignments";
+        return "assignments/listUnvalidatedAssignments";
     }
 
     // search assignments
@@ -231,7 +229,7 @@ public class AssignmentController {
         model.addAttribute("selectedPageSize", PAGE_SIZE);
         model.addAttribute("pager", pager);
         model.addAttribute("tags", tagRepo.findAll());
-        return "listAllAssignments";
+        return "assignments/listAllAssignments";
 
     }
 
@@ -244,7 +242,7 @@ public class AssignmentController {
         //pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());
         model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
-        return "myassignments";
+        return "assignments/myassignments";
     }
 
     // find specific assignment to edit out of all assignments
@@ -305,7 +303,7 @@ public class AssignmentController {
         //pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());
         model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
-        return "updateAssignment";
+        return "assignments/updateAssignment";
     }
 
     // update specific assignment

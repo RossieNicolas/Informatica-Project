@@ -75,7 +75,7 @@ public class PasswordRecoveryController {
                     "Er is een email verstuurd naar: " + userEmail);
         }
 
-        modelAndView.setViewName("forgotPassword");
+        modelAndView.setViewName("/basic/forgotPassword");
         return modelAndView;
 
     }
@@ -92,7 +92,7 @@ public class PasswordRecoveryController {
             modelAndView.addObject("errorMessage", "Oops!  Dit is een ongeldige link voor het opnieuw instellen van het wachtwoord.");
         }
 
-        modelAndView.setViewName("updatePassword");
+        modelAndView.setViewName("/basic/updatePassword");
         return modelAndView;
     }
 
@@ -127,13 +127,13 @@ public class PasswordRecoveryController {
                     "62/5000\n" +
                     "U hebt met succes uw wachtwoord opnieuw ingesteld. U kunt nu inloggen.");
 
-            modelAndView.setViewName("redirect:login");
+            modelAndView.setViewName("redirect:/login");
             return modelAndView;
 
         } else {
             modelAndView.addObject("errorMessage",
                     "Oops!  Dit is een ongeldige link voor het opnieuw instellen van het wachtwoord.");
-            modelAndView.setViewName("updatePassword");
+            modelAndView.setViewName("/basic/updatePassword");
         }
 
         return modelAndView;
@@ -142,6 +142,6 @@ public class PasswordRecoveryController {
     // Going to reset page without a token redirects to login page
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public ModelAndView handleMissingParams(MissingServletRequestParameterException ex) {
-        return new ModelAndView("redirect:login");
+        return new ModelAndView("redirect:/login");
     }
 }

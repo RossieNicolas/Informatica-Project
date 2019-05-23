@@ -45,7 +45,7 @@ public class EmailTemplates {
                 "Je hebt je ingeschreven voor volgende ZAP- opdracht: "+ name +". " +
                 "\nOm te starten moet je wachten op een bevestiging van de opdrachtgever. " +
                 "\n\n" +
-                "De coördinator";
+                "AP-hogeschool";
     }
 
     public static String approvedEnrolledAssignmentStudent(String name) {
@@ -63,32 +63,20 @@ public class EmailTemplates {
         return "Beste,\n\n"+
                 "Je inschrijving voor ZAP- opdracht, "+ name +", werd geweigerd. " +
                 "\n\n" +
-                "De coördinator";
-    }
-
-    public static String unvalidatedEnrolledAssignmentStudent(String name) {
-        return "Beste,\n\n"+
-                "Je hebt je ingeschreven voor volgende ZAP- opdracht, "+ name +". Om te starten breng je de contracten in orde. " +
-                "Pas na ondertekening door de opdrachtgever en de hogeschool mag en kan je starten.\n\n" +
-                "Na het beëindigen van de opdracht, ondertekent de opdrachtgever het bewijsdocument, " +
-                "vul je de zelfevaluatie in en verzamel je de nodige bewijsstukken voor je portfolio.\n\n" +
-                "Succes.\n" +
-                "\n" +
-                "De coördinator";
-
+                "DAP-hogeschool";
     }
 
     // Voor externe
     public static String validatedExternal() {
         return  "Beste,\n\n"+
                 "Uw registratie werd goedgekeurd. Nu kunt u inloggen op de pagina.\n\n"+
-                "De coördinator";
+                "AP-hogeschool";
     }
 
     public static String notValidatedExternal() {
         return "Beste,\n\n"+
                 "Uw registratie werd geweigerd.\n\n"+
-                "De coördinator";
+                "AP-hogeschool";
     }
 
     public static String newExternalUser(long userId, String name, String company, String address, String phone, String email) {
@@ -104,9 +92,16 @@ public class EmailTemplates {
                 "WEIGER deze externe: http://localhost:8080/deleteexternal/" + userId + "\n\n" +
                 "Lijst van alle ongevalideerde externe: http://localhost:8080/listUnvalidatedExternal";
     }
+
+    public static String newExternal() {
+        return  "Beste,\n\n"+
+                "U heeft zich zojuist geregistreerd. Gelieve te wachten op de validatie van de coördinator.\n\n" +
+                "AP-hogeschool";
+    }
     public static String reminder(String opdrachtTitel ) {
         return "Beste,\n\n"+
-                "De deadline van opdracht : " + opdrachtTitel + " is morgen";
+                "De deadline van opdracht : " + opdrachtTitel + " is morgen.\n\n" +
+                "AP-hogeschool";
     }
 
 }
