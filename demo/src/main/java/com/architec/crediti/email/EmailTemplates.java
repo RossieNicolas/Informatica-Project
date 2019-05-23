@@ -7,7 +7,7 @@ public class EmailTemplates {
     //voor coördinator
     public static String createdAssignment(String assigner, String title, String email, String url) {
         return "Beste,\n"+
-                "Nieuwe ZAP-opdracht van student(e) "+ assigner +".\n" +
+                "Nieuwe ZAP-opdracht van lector/externe/student(e) "+ assigner +".\n" +
                 email + " naam opdracht: "+ title +
                 "\nTe vinden op: "+ url;
     }
