@@ -39,7 +39,7 @@ public class PasswordRecoveryController {
     // Display forgotPassword page
     @GetMapping("/forgotPassword")
     public ModelAndView displayForgotPasswordPage() {
-        return new ModelAndView("forgotPassword");
+        return new ModelAndView("/basic/forgotPassword");
     }
 
     @PostMapping(value = "/forgotPassword")

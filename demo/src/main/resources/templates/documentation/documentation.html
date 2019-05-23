@@ -30,7 +30,10 @@
                 <tbody>
                 <tr th:each="file : ${files}" class="tablebackground">
                     <td th:text="${file.getTitle()}"></td>
-                    <td style="float: right">
+                    <td style="
+
+
+                    float: right">
                         <a th:href="${file.getDownloadLink()}" class="button">Download</a>
                         &nbsp;&nbsp;&nbsp;
                         <a sec:authorize="hasRole('COORDINATOR')" th:href="@{/deletedocumentation/{id} (id=${file.getId()})}" class="button">🗑️</a>
