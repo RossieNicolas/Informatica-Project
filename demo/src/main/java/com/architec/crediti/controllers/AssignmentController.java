@@ -104,7 +104,10 @@ public class AssignmentController {
     // list all assignments
     @GetMapping("/allassignments")
     public ModelAndView getAllAssignments(Model model, @RequestParam("page") Optional<Integer> page, Principal principal) {
-        ModelAndView view = new ModelAndView("listAllAssignments");
+        ModelAndView view = new ModelAndView("/assignments/listAllAssignments");
+        //pass username to header fragment
+        User currentUser = userRepo.findByEmail(principal.getName());
+        model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
         int buttons = (int) assignmentRepo.count() / PAGE_SIZE;
 
         if (assignmentRepo.count() % PAGE_SIZE != 0) {
@@ -119,9 +122,7 @@ public class AssignmentController {
         view.addObject("persons", fiches);
         view.addObject("pager", pager);
         view.addObject("tags", tagRepo.findAll());
-        //pass username to header fragment
-        User currentUser = userRepo.findByEmail(principal.getName());
-        model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
+
         return view;
     }
 
@@ -221,15 +222,18 @@ public class AssignmentController {
             model.addAttribute("assignments", list2);
         }
 
-        ModelAndView modelAndView = new ModelAndView("listAllAssignments");
+        ModelAndView modelAndView = new ModelAndView("/assignments/listAllAssignments");
 
-        Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
+        Pager pager = null;
+        if (fiches != null) {
+            pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
+        }
 
         model.addAttribute("persons", fiches);
         model.addAttribute("selectedPageSize", PAGE_SIZE);
         model.addAttribute("pager", pager);
         model.addAttribute("tags", tagRepo.findAll());
-        return "assignments/listAllAssignments";
+        return "/assignments/listAllAssignments";
 
     }
 
