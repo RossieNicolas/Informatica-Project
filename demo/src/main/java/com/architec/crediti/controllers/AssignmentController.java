@@ -364,6 +364,7 @@ public class AssignmentController {
     public String archiveAssignment(Principal principal, @PathVariable("assignmentId") int assignmentId, Model model, @RequestParam(required = false, value = "tag") int[] tags) {
         User currentUser = userRepo.findByEmail(principal.getName());
         ArrayList<Integer> list = new ArrayList<>();
+        ArrayList<String> listNames = new ArrayList<>();
 
         Assignment assignment = assignmentRepo.findById((long) assignmentId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid assignment Id:" + assignmentId));
@@ -375,8 +376,10 @@ public class AssignmentController {
             for (Tag item : assignment.getTags()) {
                 Tag tag = tagRepo.findBytagId(item.getTagId());
                 list.add(tag.getTagId());
+                listNames.add(tag.getTagName());
             }
             archivedAssignment.setTagIds(list.toString());
+            archivedAssignment.setTagName(listNames.toString());
         }
 
         archiveRepo.save(archivedAssignment);

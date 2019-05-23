@@ -53,6 +53,17 @@ public class ArchivedAssignment {
     @Column(name="tag_ids")
     private String tagIds;
 
+    public String getTagName() {
+        return tagName;
+    }
+
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
+    }
+
+    @Column(name="tag_name")
+    private String tagName;
+
     public ArchivedAssignment() {
     }
 
