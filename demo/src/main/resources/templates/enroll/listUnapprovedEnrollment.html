@@ -31,7 +31,7 @@
             <td th:text="${e.getTitle()}"></td>
             <td th:text="${e.getFullname()}"></td>
             <td th:text="${e.getEmail()}"></td>
-            <td><a th:href="@{/deleteEnroll/{id} (id=${e.getEnrolledId()})}">🗑️</a></td>
+            <td><a class="button" th:href="@{/deleteEnroll/{id} (id=${e.getEnrolledId()})}">🗑️</a></td>
         </tr>
         </tbody>
     </table>
