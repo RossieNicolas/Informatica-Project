@@ -15,7 +15,7 @@
             <div class="wrap-all col-xs-12 ">
                 <h2>Detail opdracht</h2>
 
-                <form th:each="a: ${assignments}" class="standard-form" method="post"
+                <form id="form" th:each="a: ${assignments}" class="standard-form" method="post"
                       th:action="@{/allassignments/{id}(id=${a.assignmentId})}">
 
                     <input th:if="${!a.isValidated() and roles}" type="button" value="✏️ BEWERKEN" class="button"
@@ -110,7 +110,8 @@
 </div>
 <footer th:insert="fragments/generalMenu.html :: footer">
 </footer>
-<script>
+<script th:inline="javascript">
+    var type = /*[[${type}]]*/ 'kies een type';
     SelectElement("type", type);
 
     function SelectElement(id, type) {
@@ -136,7 +137,7 @@
         if (document.getElementById("save") != null) {
 
             document.getElementById("save").style.display = "inline-block";
-        }else document.getElementById("coorSave").style.display = "inline-block";
+        } else document.getElementById("coorSave").style.display = "inline-block";
     }
 
     const numInputs = document.querySelectorAll('input[type=number]');
