@@ -5,6 +5,8 @@ package com.architec.crediti.models;
  *
  * @author Branislav Lazic
  * @author Bruno Raljic
+ *
+ * https://github.com/BranislavLazic/spring-thymeleaf-pagination/blob/master/src/main/java/org/paginationdemo/domain/Pager.java
  */
 public class Pager {
 

@@ -142,13 +142,13 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             log.info("LDAP Connection Successful!");
 
         } catch (NamingException nex) {
-            System.out.println("LDAP Connection: FAILED");
+            log.info("LDAP Connection: FAILED");
         } finally {
             if (ctx != null) {
                 try {
                     ctx.close();
                 } catch (Exception ex) {
-                    ex.printStackTrace();
+                    log.error(ex.toString());
                 }
             }
         }
