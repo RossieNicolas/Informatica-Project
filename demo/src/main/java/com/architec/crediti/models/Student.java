@@ -15,7 +15,7 @@ public class Student {
     private String gsm;
 
     @Column(name = "studentennummer", nullable = false)
-    private String studentnumber;
+    private String studentNumber;
 
     @Column(name = "zap")
     private boolean zap;
@@ -42,9 +42,9 @@ public class Student {
     public Student() {
     }
 
-    public Student(String gsm, String studentnumber, User userId) {
+    public Student(String gsm, String studentNumber, User userId) {
         this.gsm = gsm;
-        this.studentnumber = studentnumber;
+        this.studentNumber = studentNumber;
         this.userId = userId;
         this.amoutHours = 0;
     }
@@ -73,12 +73,12 @@ public class Student {
         this.gsm = gsm;
     }
 
-    public String getStudentnumber() {
-        return studentnumber;
+    public String getStudentNumber() {
+        return studentNumber;
     }
 
-    public void setStudentnumber(String studentnumber) {
-        this.studentnumber = studentnumber;
+    public void setStudentNumber(String studentNumber) {
+        this.studentNumber = studentNumber;
     }
 
     public String findEmail(){

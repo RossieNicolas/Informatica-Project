@@ -15,10 +15,10 @@
                 <h2>Detail student</h2>
 
                 <form th:each="a: ${student}" class="standard-form" method="post"
-                      th:action="@{/liststudents/{id}(id=${a.studentennummer})}">
+                      th:action="@{/liststudents/{id}(id=${a.studentNumber})}">
                     <fieldset disabled="disabled" id="assignmentInfo">
                         <label for="nummer">Studenten nummer:</label>
-                        <input name="nummer" id="nummer" type="text" th:value="*{a.getStudentennummer()}"
+                        <input name="nummer" id="nummer" type="text" th:value="*{a.getStudentNumber()}"
                                required="required"><br>
 
                         <label for="Naam">Naam:</label>

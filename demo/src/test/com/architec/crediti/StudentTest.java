@@ -84,11 +84,11 @@ public class StudentTest {
         String input = "success";
 
         //act
-        s.setStudentnumber(input);
+        s.setStudentNumber(input);
         students.save(s);
 
         //assert
-        assertEquals(input, s.getStudentnumber());
+        assertEquals(input, s.getStudentNumber());
 
         //undo operations
         students.delete(s);
@@ -128,10 +128,10 @@ public class StudentTest {
         students.save(s);
 
         //act
-        Student found = students.findByStudentnumber(studentNumber);
+        Student found = students.findByStudentNumber(studentNumber);
 
         //assert
-        assertEquals(found.getStudentnumber(), s.getStudentnumber());
+        assertEquals(found.getStudentNumber(), s.getStudentNumber());
 
         //undo operations
         students.delete(s);
@@ -150,7 +150,7 @@ public class StudentTest {
         students.save(s);
 
         //act
-        boolean found = students.existsByStudentnumber(studentNumber);
+        boolean found = students.existsByStudentNumber(studentNumber);
 
         //assert
         assertTrue(found);
