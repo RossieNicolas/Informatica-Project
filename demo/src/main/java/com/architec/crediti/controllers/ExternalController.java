@@ -71,7 +71,7 @@ public class ExternalController {
             EmailTemplates.newExternalUser(userId, name, company, fullAddress, phone, email));
         }
         else{
-            model.addAttribute("error" , "Email bestaal al");
+            model.addAttribute("error" , "Email bestaat al");
             return "createExternal";
         }
 
