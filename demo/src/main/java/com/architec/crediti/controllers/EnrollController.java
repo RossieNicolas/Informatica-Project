@@ -90,7 +90,7 @@ public class EnrollController {
             mail.sendSimpleMessage(student.getEmail(), "Inschrijving opdracht",
                     EmailTemplates.waitValidationEnrolledAssignmentStudent(assignment.getTitle()));
             mail.sendSimpleMessage(assignerEmail, "Inschrijving opdracht",
-                    EmailTemplates.enrolledAssignment(assignment.getTitle(), student.getUserId().toString(), student.getEmail(), "class group"));
+                    EmailTemplates.enrolledAssignment(assignment.getTitle(), student.getUserId().toString(), student.getEmail()));
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
