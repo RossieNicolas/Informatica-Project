@@ -6,51 +6,37 @@
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
 <body class="background">
-<header th:insert="fragments/general.html :: header">
-</header>
+<header th:insert="fragments/general.html :: header"></header>
 <div class="block">
     <div class="container ">
         <div class="wrap-all col-xs-12 ">
-        <h2 class="extra">Profiel aanmaken</h2>
-		 <h5 th:text="${error}" id = "externalError"></h5>
-        <form th:action='@{/createexternal}' method='POST' class="standard-form">
-				
-			<label for="lastname">Naam:</label>
-			<input name="lastname" type="text" id="lastname" required><br>
-
-			<label for="firstname">Voornaam:</label>
-			<input name="firstname" type="text" id="firstname" required><br>
-
-			<label for="company">Naam bedrijf:</label>
-			<input name="company" type="text" id="company" required><br>
-
-			<label for="address">Adres:</label>
-			<input name="address" type="text" id="address" required><br>
-
-			<label for="postal">Postcode:</label>
-			<input name="postal" type="text" id="postal" required><br>
-
-			<label for="city">Gemeente:</label>
-			<input name="city" type="text" id="city" required><br>
-
-            <label for='phone'>Telefoonnummer: </label>
-            <input type='tel' name='phone' id='phone' maxlength="50"
-                   pattern="([(+]*[0-9]+[()+. -]*)" required><br>
-
-			<label for="email">E-mail:</label>
-            <input type='email' name='email' id='email' maxlength="50" required>
-			<br>
-
-			<label for="password">Wachtwoord:</label>
-			<input name="password" type="password" id="password" required><br>
-
-			<label></label>
-			<input value="Registreer" type="SUBMIT" class="button">
-		</form>
+            <h2 class="extra">Profiel aanmaken</h2>
+            <h5 th:text="${error}" id="externalError"></h5>
+            <form th:action='@{/createexternal}' method='POST' class="standard-form">
+                <label for="lastname">Naam:</label>
+                <input name="lastname" type="text" id="lastname" required><br>
+                <label for="firstname">Voornaam:</label>
+                <input name="firstname" type="text" id="firstname" required><br>
+                <label for="company">Naam bedrijf:</label>
+                <input name="company" type="text" id="company" required><br>
+                <label for="address">Adres:</label>
+                <input name="address" type="text" id="address" required><br>
+                <label for="postal">Postcode:</label>
+                <input name="postal" type="text" id="postal" required><br>
+                <label for="city">Gemeente:</label>
+                <input name="city" type="text" id="city" required><br>
+                <label for='phone'>Telefoonnummer: </label>
+                <input type='tel' name='phone' id='phone' maxlength="50" pattern="([(+]*[0-9]+[()+. -]*)" required><br>
+                <label for="email">E-mail:</label>
+                <input type='email' name='email' id='email' maxlength="50" required>
+                <br>
+                <label for="password">Wachtwoord:</label>
+                <input name="password" type="password" id="password" required><br>
+                <input value="Registreer" type="SUBMIT" class="button">
+            </form>
         </div>
     </div>
 </div>
-<footer th:insert="fragments/general.html :: footer">
-</footer>
+<footer th:insert="fragments/general.html :: footer"></footer>
 </body>
 </html>

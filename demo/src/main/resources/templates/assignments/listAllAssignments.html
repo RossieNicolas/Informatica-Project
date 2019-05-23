@@ -6,8 +6,7 @@
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
 <body class="background">
-<header th:insert="fragments/generalMenu.html :: header (name=${name})">
-</header>
+<header th:insert="fragments/generalMenu.html :: header (name=${name})"></header>
 <div class="container ">
     <h2 class="extra">Alle opdrachten</h2>
 </div>
@@ -23,7 +22,6 @@
     </form>
 </div>
 <div id='overview'>
-
     <table>
         <thead>
         <tr>
@@ -72,8 +70,6 @@
         </ul>
     </div>
 </div>
-<footer th:insert="fragments/generalMenu.html :: footer">
-
-</footer>
+<footer th:insert="fragments/generalMenu.html :: footer"></footer>
 </body>
 </html>

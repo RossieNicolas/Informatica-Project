@@ -6,8 +6,7 @@
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
 <body class="background" onload="tableFill()">
-<header th:insert="fragments/generalMenu.html :: header (name=${name})">
-</header>
+<header th:insert="fragments/generalMenu.html :: header (name=${name})"></header>
 <div class="block">
     <div class="container">
         <h2 class="extra">Mijn opdrachten</h2>
@@ -17,7 +16,7 @@
         <tr>
             <th style="padding-left: 2.5%">Info</th>
             <th>Nr</th>
-             <th>Opdrachtgever</th>
+            <th>Opdrachtgever</th>
             <th>Type</th>
             <th>Naam</th>
             <th>Begin</th>
@@ -42,8 +41,8 @@
         </tr>
     </table>
 </div>
-<footer th:insert="fragments/generalMenu.html :: footer">
-</footer>
+<div style="height: 55%"></div>
+<footer th:insert="fragments/generalMenu.html :: footer"></footer>
 <script>
     function tableFill() {
         var tbl = document.getElementById('tabel');

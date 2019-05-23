@@ -7,25 +7,20 @@
 </head>
 <body>
 <div class="background">
-    <header th:insert="fragments/generalMenu.html :: header (name=${name})">
-
-    </header>
+    <header th:insert="fragments/generalMenu.html :: header (name=${name})"></header>
     <div class="block">
         <section class="find-edu">
             <div class="container ">
                 <div class="wrap-all col-xs-12 ">
-                    <h2>Tag toevoegen</h2>
+                    <h2 class="extra">Tag toevoegen</h2>
                     <p th:if="${error}" th:text="${error}">No error</p>
                     <form class="standard-form" th:action='@{/tag}' method='POST'>
                         <label for='tagName'>Tag: </label>
-                        <input type='text' name='tagName' id='tagName' maxlength="50" placeholder="tagnaam" required>
-                        <br/>
+                        <input type='text' name='tagName' id='tagName' maxlength="50" placeholder="tagnaam" required><br/>
                         <label for='tagDescription'>Beschrijving: </label>
                         <input type='text' name='tagDescription' id='tagDescription' maxlength="250"
-                               placeholder="korte beschrijving" required>
-                        <br/>
+                               placeholder="korte beschrijving" required><br/>
                         <input type='submit' value='Voeg toe' class="button">
-
                     </form>
                 </div>
             </div>
@@ -36,12 +31,6 @@
         </section>
     </div>
 </div>
-<footer th:insert="fragments/generalMenu.html :: footer">
-</footer>
-<script>
-    function submission() {
-        document.getElementById("panel").style.display = "block";
-    }
-</script>
+<footer th:insert="fragments/generalMenu.html :: footer"></footer>
 </body>
 </html>

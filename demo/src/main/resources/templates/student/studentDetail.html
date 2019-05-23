@@ -6,44 +6,33 @@
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
 <body class="background">
-<header th:insert="fragments/generalMenu.html :: header (name=${name})">
-</header>
+<header th:insert="fragments/generalMenu.html :: header (name=${name})"></header>
 <div class="block">
     <section class="find-edu">
         <div class="container ">
             <div class="wrap-all col-xs-12 ">
-                <h2>Detail student</h2>
-
+                <h2 class="extra">Detail student</h2>
                 <form th:each="a: ${student}" class="standard-form" method="post"
                       th:action="@{/liststudents/{id}(id=${a.studentNumber})}">
                     <fieldset disabled="disabled" id="assignmentInfo">
                         <label for="nummer">Studenten nummer:</label>
                         <input name="nummer" id="nummer" type="text" th:value="*{a.getStudentNumber()}"
                                required="required"><br>
-
                         <label for="Naam">Naam:</label>
                         <input name="Naam" id="Naam" type="text" th:value="*{a.getUserId()}" required="required"><br>
-
                         <label for="Email">Email:</label>
                         <input name="Email" id="Email" th:value="*{a.findEmail()}" type="text" required="required"><br>
-
                         <label for="Gsm">Gsm:</label><br>
                         <input name="Gsm" id="Gsm" type="text" th:value="*{a.getGsm()}"
                                required="required"><br>
-
                         <label for="amoutnHours">Afgeronde uren:</label><br>
                         <input name="amoutnHours" id="amoutnHours" type="text" th:value="*{a.getAmoutHours()}"
                                required="required"><br>
-
-
                         <label>Soort:</label><br>
                         <input th:if="${a.isMobility()}" type="text" value="Mobility">
                         <input th:if="${!a.isMobility()}" type="text" value="Zap">
-
                     </fieldset>
                 </form>
-
-
                 <table id="tablePortfolio">
                     <thead>
                     <tr>
@@ -64,7 +53,6 @@
         </div>
     </section>
 </div>
-<footer th:insert="fragments/generalMenu.html :: footer">
-</footer>
+<footer th:insert="fragments/generalMenu.html :: footer"></footer>
 </body>
 </html>
