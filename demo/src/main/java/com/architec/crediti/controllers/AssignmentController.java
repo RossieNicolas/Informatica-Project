@@ -97,8 +97,7 @@ public class AssignmentController {
 
         mail.sendSimpleMessage("alina.storme@student.ap.be", "Nieuwe opdracht gecreëerd",
                 EmailTemplates.createdAssignment(assignment.getAssigner(),
-                        assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments",
-                        "class group"));
+                        assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments"));
         return "successfullAssignment";
     }
 
@@ -402,8 +401,7 @@ public class AssignmentController {
         //TODO vervang 'to' door mail van coordinator
         mail.sendSimpleMessage("alina.storme@student.ap.be", "Opdracht gearchiveerd",
                 EmailTemplates.archivedAssignment(assignment.getAssigner(),
-                        assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments",
-                        "class group"));
+                        assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments"));
 
         return "redirect:/allassignments";
     }

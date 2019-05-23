@@ -5,18 +5,16 @@ public class EmailTemplates {
     private EmailTemplates() {}
 
     //voor coördinator
-    public static String createdAssignment(String assigner, String title, String email, String url, String group) {
+    public static String createdAssignment(String assigner, String title, String email, String url) {
         return "Beste,\n"+
                 "Nieuwe ZAP-opdracht van student(e) "+ assigner +".\n" +
-                group + "\n" +
                 email + " naam opdracht: "+ title +
                 "\nTe vinden op: "+ url;
     }
 
-    public static String archivedAssignment(String assigner, String title, String email, String url, String group) {
+    public static String archivedAssignment(String assigner, String title, String email, String url) {
         return"Beste,\n"+
                 "Volgende ZAP-opdracht van student(e) "+ assigner +" werd gearchiveerd.\n" +
-                group + "\n" +
                 email + " naam opdracht: "+ title +
                 "\nTe vinden op: "+ url;
     }
@@ -34,11 +32,10 @@ public class EmailTemplates {
                 "AP-hogeschool";
     }
 
-    public static String enrolledAssignment( String title, String assigner, String email, String group) {
+    public static String enrolledAssignment( String title, String assigner, String email) {
         return "Beste,\n\n"+
                 "Nieuwe inschrijving van volgende ZAP-opdracht: "+ title +".\n" +
                 "Naam student(e): "+ assigner + "\n" +
-                "Groep: " + group + "\n" +
                 "E-mailadres: " + email;
     }
 
