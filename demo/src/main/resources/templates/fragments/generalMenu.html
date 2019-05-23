@@ -2,97 +2,84 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
-    <meta charset="UTF-8" />
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+
     <title>Crediti - Thuispagina</title>
-    <link rel="stylesheet" th:href="@{/css/APcss3.css}">
+
 </head>
 
-<body>
-    <div class="background">
-        <header th:fragment="header (name)">
-            <div class="nav-main navbackground">
-                <div class="container">
-                    <div class="wrap-all col-xs-12">
-                        <div class="left">
-                            <a class="logo" href="/main">
-                                <img th:src="@{/images/logo-ap.svg}">
-                            </a>
+<body class="background">
+    <header>
+        <nav class="navbar navbar-expand-md navbar-light bg-nav static-top">
+            <img th:src="@{/images/logo-ap.svg}">
+            <!--todo link to /main-->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                <ul class="navbar-nav mr-auto">
+
+                    <!-- OPDRACHTEN-->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="assignments" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Opdrachten</a>
+                        <div class="dropdown-menu" aria-labelledby="assignments">
+                            <a class="dropdown-item" sec:authorize="!hasRole('EXTERNE')" href="/allassignments">Lopende taken</a>
+                            <a class="dropdown-item" href="/assignment">Taak toevoegen</a>
+                            <a class="dropdown-item" sec:authorize="hasRole('STUDENT')" href="/myassignments">Ingeschreven taken</a>
                         </div>
-                        <div class="right">
-                            <div class="region-header-menu">
-                                <nav>
-                                    <ul class="nav">
-                                        <li>
-                                            <div class="dropdown dropdownleft">
-                                                <span>Opdrachten</span>
-                                                <div class="dropdown-content">
-                                                    <a sec:authorize="!hasRole('EXTERNE')" href="/allassignments">Lopende taken</a>
-                                                    <a href="/assignment">Taak toevoegen</a>
-                                                    <a sec:authorize="!hasRole('EXTERNE')" href="/myassignments">Ingeschreven taken</a>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <a sec:authorize="!hasRole('EXTERNE')" href="/documentation">
-                                            Documentatie
-                                        </a>
-                                        </li>
-                                        <li sec:authorize="hasAnyRole('COORDINATOR','DOCENT')">
-                                            <div class="dropdown">
-                                                <span class="header-text">Extra's</span>
-                                                <div class="dropdown-content">
-                                                    <a sec:authorize="hasRole('COORDINATOR')" href="/tag">Tag toevoegen</a>
-                                                    <a sec:authorize="hasRole('COORDINATOR')" href="/listAllTags">Lijst van tags</a>
-                                                    <a sec:authorize="hasRole('COORDINATOR')" href="/unvalidatedassignments">Ongevalideerde Taken</a>
-                                                    <a sec:authorize="hasRole('COORDINATOR')" href="/listUnvalidatedExternal">Ongevalideerde Externe</a>
-                                                    <a sec:authorize="hasAnyRole('COORDINATOR','DOCENT')" href="/liststudents">Alle Studenten</a>
-                                                    <a sec:authorize="hasRole('COORDINATOR')" href="/archive">Archief</a>
-                                                    <a sec:authorize="hasAnyRole('COORDINATOR','DOCENT')" href="/unapprovedEnrollments">Ongevalideerde inschrijvingen</a>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="dropdown">
-                                                <span class="header-text" th:text="${name}"></span>
-                                                <div class="dropdown-content">
-                                                    <a href="/main">Mijn startpagina</a>
-                                                    <a sec:authorize="hasRole('EXTERNE')" href="/externalUserProfile">Mijn profiel</a>
-                                                    <a sec:authorize="hasRole('STUDENT')" href="/studentProfile">Mijn profiel</a>
-                                                    <a sec:authorize="hasRole('STUDENT')" href="/portfolio">Mijn portfolio</a>
-                                                    <a href="/logout">Log uit</a>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
+                    </li>
+
+                    <!--DOCUMENTATIE-->
+                    <li class="nav-item">
+                        <a class="nav-link" sec:authorize="!hasRole('EXTERNE')" href="/documentation">Documentatie</a>
+                    </li>
+
+                    <!--EXTRA's-->
+                    <li sec:authorize="hasAnyRole('COORDINATOR','DOCENT')" class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="extras" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Extra's</a>
+                        <div class="dropdown-menu" aria-labelledby="extras">
+                            <a class="dropdown-item" sec:authorize="hasRole('COORDINATOR')" href="/tag">Tag toevoegen</a>
+                            <a class="dropdown-item" sec:authorize="hasRole('COORDINATOR')" href="/listAllTags">Lijst van tags</a>
+                            <a class="dropdown-item" sec:authorize="hasRole('COORDINATOR')" href="/unvalidatedassignments">Ongevalideerde Taken</a>
+                            <a class="dropdown-item" sec:authorize="hasRole('COORDINATOR')" href="/listUnvalidatedExternal">Ongevalideerde Externe</a>
+                            <a class="dropdown-item" sec:authorize="hasAnyRole('COORDINATOR','DOCENT')" href="/liststudents">Alle Studenten</a>
+                            <a class="dropdown-item" sec:authorize="hasRole('COORDINATOR')" href="/archive">Archief</a>
+                            <a class="dropdown-item" sec:authorize="hasAnyRole('COORDINATOR','DOCENT')" href="/unapprovedEnrollments">Ongevalideerde inschrijvingen</a>
                         </div>
+                    </li>
+
+
+                </ul>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="profile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="${name}"></a>
+                    <div class="dropdown-menu" aria-labelledby="profile">
+                        <a class="dropdown-item" href="/main">Mijn startpagina</a>
+                        <a class="dropdown-item" sec:authorize="hasRole('EXTERNE')" href="/externalUserProfile">Mijn profiel</a>
+                        <a class="dropdown-item" sec:authorize="hasRole('STUDENT')" href="/studentProfile">Mijn profiel</a>
+                        <a class="dropdown-item" sec:authorize="hasRole('STUDENT')" href="/portfolio">Mijn portfolio</a>
+                        <a class="dropdown-item" href="/logout">Log uit</a>
                     </div>
-                </div>
+                </li>
             </div>
-        </header>
-        <div class="block">
-            <section class="find-edu">
-                <div class="container ">
-                    <div class="wrap-all col-xs-6 extra">
-                        <h2>Startpagina</h2>
-                    </div>
-                </div>
-            </section>
-        </div>
-    </div>
-    <footer th:fragment="footer">
-        <div class="footer-bot">
-            <div class="container">
-                <div class="left col-sm-6 col-xs-12">
-                    <p>Ontworpen door studenten Toegepaste Informatica</p>
-                </div>
-                <div class="right col-sm-6 col-xs-12">
-                    <p>© 2019 All rights reserved.</p>
-                </div>
-            </div>
+        </nav>
+    </header>
+
+    <footer class="footer mt-auto py-3">
+        <div class="container">
+            <span>Ontworpen door studenten Toegepaste Informatica. © 2019 All rights reserved.</span>
         </div>
     </footer>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
 </body>
 
 </html>
