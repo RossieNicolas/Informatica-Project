@@ -70,7 +70,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             return new UsernamePasswordAuthenticationToken(username, password, grantedAuths);
         } else if (isExternalUser(username, password)) {
             Role role = userRepo.findByEmail(username).getRole();
-            grantedAuths.add(new SimpleGrantedAuthority("ROLE_" + role)); //should be externe
+            grantedAuths.add(new SimpleGrantedAuthority("ROLE_" + role)); //should be extern
             return new UsernamePasswordAuthenticationToken(username, password, grantedAuths);
         } else {
             throw new AuthenticationCredentialsNotFoundException("Invalid Credentials!");

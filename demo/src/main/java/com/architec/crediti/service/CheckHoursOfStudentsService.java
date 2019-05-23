@@ -4,8 +4,6 @@ import java.time.LocalDate;
 
 import javax.transaction.Transactional;
 
-import com.architec.crediti.email.EmailServiceImpl;
-import com.architec.crediti.email.EmailTemplates;
 import com.architec.crediti.models.Assignment;
 import com.architec.crediti.models.Student;
 import com.architec.crediti.repositories.AssignmentRepository;
@@ -16,21 +14,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import net.bytebuddy.asm.Advice.Local;
-
 @Transactional
 @Component
 public class CheckHoursOfStudentsService {
-    @Autowired
+    private final
     AssignmentRepository asRepo ;
-    @Autowired
+    private final
     StudentRepository stRepo;
-    @Autowired
+    final
     UserRepository usRepo;
 
     @Autowired
-    public CheckHoursOfStudentsService() {
+    public CheckHoursOfStudentsService(AssignmentRepository asRepo, StudentRepository stRepo, UserRepository usRepo) {
 
+        this.asRepo = asRepo;
+        this.stRepo = stRepo;
+        this.usRepo = usRepo;
     }
 
     @Scheduled(cron = "0 01 15 * * ?")

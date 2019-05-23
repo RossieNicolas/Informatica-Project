@@ -18,16 +18,19 @@ import org.springframework.stereotype.Component;
 @Transactional
 @Component
 public class CheckAssignmentDeadlineService {
-    @Autowired
+    private final
     AssignmentRepository asRepo;
 
-    @Autowired
+    private final
     StudentRepository stRepo;
 
     private final EmailServiceImpl mail;
 
-    public CheckAssignmentDeadlineService(EmailServiceImpl mail) {
+    @Autowired
+    public CheckAssignmentDeadlineService(EmailServiceImpl mail, AssignmentRepository asRepo, StudentRepository stRepo) {
         this.mail = mail;
+        this.asRepo = asRepo;
+        this.stRepo = stRepo;
     }
 
     @Scheduled(cron = "0 00 05 * * ?")

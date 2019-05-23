@@ -25,7 +25,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="e : ${externe}" class="tablebackground ext_table">
+        <tr th:each="e : ${extern}" class="tablebackground ext_table">
             <td>
                 <a th:href="@{/validateexternal/{id} (id=${e.getUserId().getUserId()})}" class="button">✔️</a>
             </td>

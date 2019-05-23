@@ -55,7 +55,7 @@ public class ExternalController {
         // create an external user
         ExternalUser externalUser = new ExternalUser(firstname, lastname, company, phone, address, city, postal, hashedBytes[0].toString().toCharArray(),(byte[]) hashedBytes[1]);
         // create a internal user
-        User user = new User(firstname, lastname, email, Role.EXTERNE,false);
+        User user = new User(firstname, lastname, email, Role.EXTERN,false);
         // set the foreign key
         externalUser.setUserId(user);
 
@@ -140,7 +140,7 @@ public class ExternalController {
 
     @GetMapping("/listUnvalidatedExternal")
     public String listUnvalidatedExternal(Principal principal, Model model) {
-        List<User> users = userRepository.findAllByRole(Role.EXTERNE);
+        List<User> users = userRepository.findAllByRole(Role.EXTERN);
         List<ExternalUser> externalUsers = new ArrayList<>();
         for (User u : users) {
             if (!externalUserRepository.findByUserId(u).isApproved()) {
@@ -148,7 +148,7 @@ public class ExternalController {
             }
         }
 
-        model.addAttribute("externe", externalUsers);
+        model.addAttribute("extern", externalUsers);
         model.addAttribute("users", users);
         //pass username to header fragment
         User currentUser = userRepository.findByEmail(principal.getName());
