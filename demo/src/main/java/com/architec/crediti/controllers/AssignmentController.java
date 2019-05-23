@@ -119,7 +119,7 @@ public class AssignmentController {
         }
 
         int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
-        Page<Assignment> fiches = assignmentRepo.findByFull(false, PageRequest.of(evalPage, PAGE_SIZE));
+        Page<Assignment> fiches = assignmentRepo.findByFullOrderByAssignmentIdDesc(false, PageRequest.of(evalPage, PAGE_SIZE));
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
 
         view.addObject("assignments", fiches);
@@ -151,7 +151,7 @@ public class AssignmentController {
 
         int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
 
-        Page<Assignment> fiches = assignmentRepo.findByFull(false, PageRequest.of(evalPage, PAGE_SIZE));
+        Page<Assignment> fiches = assignmentRepo.findByFullOrderByAssignmentIdDesc(false, PageRequest.of(evalPage, PAGE_SIZE));
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
 
         model.addAttribute("persons", fiches);
