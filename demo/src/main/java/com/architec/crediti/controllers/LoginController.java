@@ -17,7 +17,7 @@ public class LoginController {
     @GetMapping("/loginError")
     public String loginError(Model model) {
         model.addAttribute("loginError", true);
-        return "/basic/login.html";
+        return "/basic/loginError.html";
     }
 
     @GetMapping("/loginUnapproved")
