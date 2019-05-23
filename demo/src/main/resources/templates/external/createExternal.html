@@ -1,59 +1,89 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8"/>
-    <title>Crediti - Externe registratie</title>
-    <link rel="stylesheet" th:href="@{/css/APcss3.css}">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+
+    <title>Crediti - Registreren</title>
+
 </head>
-<body class="background">
-<header th:insert="fragments/general.html :: header">
-</header>
-<div class="block">
-    <div class="container ">
-        <div class="wrap-all col-xs-12 ">
-        <h2 class="extra">Profiel aanmaken</h2>
-		 <h5 th:text="${error}" id = "externalError"></h5>
-        <form th:action='@{/createexternal}' method='POST' class="standard-form">
-				
-			<label for="lastname">Naam:</label>
-			<input name="lastname" type="text" id="lastname" required><br>
 
-			<label for="firstname">Voornaam:</label>
-			<input name="firstname" type="text" id="firstname" required><br>
+<body class="bg">
 
-			<label for="company">Naam bedrijf:</label>
-			<input name="company" type="text" id="company" required><br>
+    <header th:insert="fragments/general.html :: header">
+    </header>
 
-			<label for="address">Adres:</label>
-			<input name="address" type="text" id="address" required><br>
+    <main role="main" class="container">
+        <div class="mt-5 mb-5 jumbotron">
+            <h1>Profiel registreren</h1>
+            <form th:action="@{/createexternal}" method="POST">
+                <div class="form-group">
 
-			<label for="postal">Postcode:</label>
-			<input name="postal" type="text" id="postal" required><br>
+                    <div class="col-md-5 pt-3">
+                        <label for="firstname">Voornaam:</label>
+                        <input type="text" class="form-control" name="firstname" id="firstname" maxlength="50" required>
+                    </div>
 
-			<label for="city">Gemeente:</label>
-			<input name="city" type="text" id="city" required><br>
+                    <div class="col-md-5 pt-3">
+                        <label for="lastname">Achternaam:</label>
+                        <input type="text" class="form-control" name="lastname" id="lastname" maxlength="50" required>
+                    </div>
 
-            <label for='phone'>Telefoonnummer: </label>
-            <input type='tel' name='phone' id='phone' maxlength="50"
-                   pattern="([(+]*[0-9]+[()+. -]*)" required><br>
+                    <div class="col-md-5 pt-3">
+                        <label for="company">Naam bedrijf:</label>
+                        <input type="text" class="form-control" name="company" id="company" required>
+                    </div>
 
-			<label for="email">E-mail:</label>
-            <input type='email' name='email' id='email' maxlength="50"
-                   pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-				   oninvalid="this.setCustomValidity('Email mag geen speciale tekens bevatten en moet het volgend patroon respecteren: bv. pieter@hotmail.com ')"
-				   oninput="this.setCustomValidity(' ')" required>
-			<br>
+                    <div class="col-md-5 pt-3">
+                        <label for="address">Adres:</label>
+                        <input type="text" class="form-control" name="address" id="address" required>
+                    </div>
 
-			<label for="password">Wachtwoord:</label>
-			<input name="password" type="password" id="password" required><br>
+                    <div class="col-md-5 pt-3">
+                        <label for="postal">Postcode:</label>
+                        <input type="text" class="form-control" name="postal" id="postal" maxlength="50" required>
+                    </div>
 
-			<label></label>
-			<input value="Registreer" type="SUBMIT" class="button">
-		</form>
+                    <div class="col-md-5 pt-3">
+                        <label for="city">Gemeente:</label>
+                        <input type="text" class="form-control" name="city" id="city" maxlength="50" required>
+                    </div>
+
+                    <div class="col-md-5 pt-3">
+                        <label for="phone">Telefoonnummer:</label>
+                        <input type="text" class="form-control" name="phone" id="phone" maxlength="50" pattern="([(+]*[0-9]+[()+. -]*)" required>
+                    </div>
+
+                    <div class="col-md-5 pt-3">
+                        <label for="email">E-mail:</label>
+                        <input type="email" class="form-control" name="email" id="email" maxlength="50" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>
+                    </div>
+
+                    <div class="col-md-5 pt-3">
+                        <label for="password">Wachtwoord:</label>
+                        <input type="password" class="form-control" name="password" id="password" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg">Registreer</button>
+
+            </form>
         </div>
-    </div>
-</div>
-<footer th:insert="fragments/general.html :: footer">
-</footer>
+
+    </main>
+    <!-- /.container -->
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
+
 </html>
