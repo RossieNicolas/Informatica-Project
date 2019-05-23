@@ -10,4 +10,7 @@ public class HelloController {
     public String index() {
         return "basic/home";
     }
+
+    @GetMapping("/error")
+    public  String error() { return "basic/error"; }
 }

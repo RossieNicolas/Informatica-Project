@@ -7,13 +7,14 @@ import com.architec.crediti.models.Enrolled;
 import com.architec.crediti.models.Student;
 import com.architec.crediti.models.User;
 import com.architec.crediti.repositories.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import javax.validation.Valid;
 import java.security.Principal;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -39,6 +40,8 @@ public class EnrollController {
     private final
     EmailServiceImpl mail;
 
+    private Log log = LogFactory.getLog(this.getClass());
+
     @Autowired
     public EnrollController(AssignmentRepository assignmentRepo, StudentRepository studentRepo,
                             UserRepository userRepo, EnrolledRepository enrolledRepo, EmailServiceImpl mail) {
@@ -52,12 +55,12 @@ public class EnrollController {
 
     // assign student to specific assignment
     @GetMapping("/studentenroll/{assignmentId}")
-    public String enrollAssignment(Model model, @PathVariable("assignmentId") int assignmentId, @Valid Student student,
+    public String enrollAssignment(Model model, @PathVariable("assignmentId") int assignmentId,
                                    Principal principal) {
         Assignment assignment = assignmentRepo.findById((long) assignmentId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid assignment Id:" + assignmentId));
         User user = userRepo.findByEmail(principal.getName());
-        student = studentRepo.findByUserId(user);
+        Student student = studentRepo.findByUserId(user);
         long assignerId = assignmentRepo.findByAssignmentId(assignmentId).getAssignerUserId();
         String assignerEmail = userRepo.findByUserId(assignerId).getEmail();
 
@@ -92,7 +95,7 @@ public class EnrollController {
             mail.sendSimpleMessage(assignerEmail, "Inschrijving opdracht",
                     EmailTemplates.enrolledAssignment(assignment.getTitle(), student.getUserId().toString(), student.getEmail()));
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            log.error(ex.getMessage());
         }
         //pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());

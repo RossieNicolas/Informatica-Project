@@ -1,5 +1,7 @@
 package com.architec.crediti.email;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
@@ -12,6 +14,8 @@ public class EmailServiceImpl implements EmailService {
     @Autowired
     public JavaMailSender emailSender;
 
+    private Log log = LogFactory.getLog(this.getClass());
+
     public void sendSimpleMessage(String to, String subject, String text) {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
@@ -21,8 +25,8 @@ public class EmailServiceImpl implements EmailService {
             message.setSubject(subject);
             message.setText(text);
             emailSender.send(message);
-        } catch (MailException exception) {
-            exception.printStackTrace();
+        } catch (MailException ex) {
+            log.error(ex.toString());
         }
     }
 }

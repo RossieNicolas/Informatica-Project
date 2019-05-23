@@ -10,6 +10,8 @@ import com.architec.crediti.repositories.AssignmentRepository;
 import com.architec.crediti.repositories.StudentRepository;
 import com.architec.crediti.repositories.UserRepository;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -19,10 +21,14 @@ import org.springframework.stereotype.Component;
 public class CheckHoursOfStudentsService {
     private final
     AssignmentRepository asRepo ;
+
     private final
     StudentRepository stRepo;
+
     final
     UserRepository usRepo;
+
+    private Log log = LogFactory.getLog(this.getClass());
 
     @Autowired
     public CheckHoursOfStudentsService(AssignmentRepository asRepo, StudentRepository stRepo, UserRepository usRepo) {
@@ -41,7 +47,7 @@ public class CheckHoursOfStudentsService {
                 LocalDate date = LocalDate.now();
                 if(dateline.equals(date)){
                     student.setAmoutHours(student.getAmoutHours() + as.getAmountHours());
-                    System.out.println(student.getAmoutHours());
+                    log.info(student.getAmoutHours());
                 }
 
             }

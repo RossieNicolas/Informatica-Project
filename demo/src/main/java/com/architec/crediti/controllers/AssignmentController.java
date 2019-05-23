@@ -14,6 +14,8 @@ import com.architec.crediti.repositories.UserRepository;
 
 import com.architec.crediti.security.Role;
 import com.architec.crediti.utils.AssignmentMethods;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -27,6 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.*;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Controller
@@ -34,6 +37,7 @@ public class AssignmentController {
 
     private static final int PAGE_SIZE = 15;
     private static final int INITAL_PAGE = 0;
+    private Log log = LogFactory.getLog(this.getClass());
 
     private final
     TagRepo tagRepo;
@@ -147,11 +151,12 @@ public class AssignmentController {
 
         int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
 
-        Page<Assignment> fiches = assignmentRepo.findAll(PageRequest.of(evalPage, PAGE_SIZE));
+        Page<Assignment> fiches = assignmentRepo.findByFull(false, PageRequest.of(evalPage, PAGE_SIZE));
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
 
         model.addAttribute("persons", fiches);
         model.addAttribute("pager", pager);
+
         //pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());
         model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
@@ -204,7 +209,6 @@ public class AssignmentController {
             } catch (Exception e) {
 
                 fiches = AssignmentMethods.removeFullAssignmentsPage(assignmentRepo.findByTitleContainingAndArchived(name, false, PageRequest.of(evalPage, PAGE_SIZE)));
-                //model.addAttribute("assignments", AssignmentMethods.removeFullAssignments(assignmentRepo.findByTitleContainingAndArchived(name, false)));
                 model.addAttribute("assignments", AssignmentMethods.removeFullAssignments(assignmentRepo.findByTitleContainingAndArchived(name, false)));
             }
         } else {
@@ -221,8 +225,6 @@ public class AssignmentController {
             fiches = new PageImpl<>(list2);
             model.addAttribute("assignments", list2);
         }
-
-        ModelAndView modelAndView = new ModelAndView("/assignments/listAllAssignments");
 
         Pager pager = null;
         if (fiches != null) {
@@ -294,7 +296,7 @@ public class AssignmentController {
                 model.addAttribute("assignments", a);
             }
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            log.error(ex.toString());
         }
 
         boolean roles = false;

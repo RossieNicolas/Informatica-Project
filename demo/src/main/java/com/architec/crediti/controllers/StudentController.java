@@ -99,6 +99,7 @@ public class StudentController {
         List<Assignment> assignments = asRepo.findByAssignerUserId(currentStudent.getUserId());
         model.addAttribute("student", currentStudent);
         model.addAttribute("assignments", assignments);
+
         //pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());
         model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");

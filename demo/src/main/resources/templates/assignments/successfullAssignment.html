@@ -14,7 +14,7 @@
         <h2>Opdracht is aangemaakt!</h2>
         <a class="button" href="/assignment">Nieuwe taak</a>
         <a sec:authorize="!hasRole('EXTERN')" class="button" href="/allassignments">Alle taken</a>
-        <a class="button" href="/myassignments">Ingeschreven taken</a>
+        <a sec:authorize="!hasRole('EXTERN')" class="button" href="/myassignments">Ingeschreven taken</a>
     </div>
 </div>
 <div style="height: 65%"></div>
