@@ -2,8 +2,10 @@ package com.architec.crediti.controllers;
 
 import com.architec.crediti.email.EmailServiceImpl;
 import com.architec.crediti.email.EmailTemplates;
+import com.architec.crediti.models.Assignment;
 import com.architec.crediti.models.ExternalUser;
 import com.architec.crediti.models.User;
+import com.architec.crediti.repositories.AssignmentRepository;
 import com.architec.crediti.repositories.ExternalUserRepository;
 import com.architec.crediti.security.HashPass;
 import com.architec.crediti.repositories.UserRepository;
@@ -31,11 +33,15 @@ public class ExternalController {
     private final
     EmailServiceImpl mail;
 
+    private final
+    AssignmentRepository asRepo;
+
     @Autowired
-    public ExternalController(ExternalUserRepository externalUserRepository, UserRepository userRepository, EmailServiceImpl mail) {
+    public ExternalController(ExternalUserRepository externalUserRepository, UserRepository userRepository, EmailServiceImpl mail, AssignmentRepository asRepo) {
         this.externalUserRepository = externalUserRepository;
         this.userRepository = userRepository;
         this.mail = mail;
+        this.asRepo = asRepo;
     }
 
     @GetMapping("/createexternaluser")
@@ -99,8 +105,9 @@ public class ExternalController {
     public String externalUsers(Principal principal, Model model) {
         User user = userRepository.findByEmail(principal.getName());
         ExternalUser externalUser = externalUserRepository.findByUserId(user);
-
+        List<Assignment> assignments = asRepo.findByAssignerUserId(externalUser.getUserId());
         model.addAttribute("externalUsers", externalUser);
+        model.addAttribute("assignments", assignments);
         //pass username to header fragment
         model.addAttribute("name",user.getFirstname() + " " + user.getLastname().substring(0,1) + ".");
         return "external/externalUserProfile";
