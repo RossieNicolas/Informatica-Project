@@ -20,6 +20,12 @@ public class LoginController {
         return "/basic/login.html";
     }
 
+    @GetMapping("/loginUnapproved")
+    public String loginUnapproved(Model model) {
+        model.addAttribute("unapproved", true);
+        return "/external/loginUnapproved";
+    }
+
     @GetMapping("/logout")
     public String logout() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
