@@ -60,16 +60,16 @@ public class ArchiveController {
         modelAndView.addObject("selectedPageSize", PAGE_SIZE);
         modelAndView.addObject("pager", pager);
         modelAndView.addObject("tags", tagRepo.findAll());
-        modelAndView.addObject("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
+        modelAndView.addObject("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
         return modelAndView;
     }
 
     //search in archive
     @PostMapping("/archive")
     public String getArchivedAssignment(@RequestParam("searchbar") String name, Model model, @RequestParam("page") Optional<Integer> page,
-                                 @RequestParam(required = false , value = "tag") int[] tags) {
+                                        @RequestParam(required = false, value = "tag") int[] tags) {
 
-        if(tags == null){
+        if (tags == null) {
             try {
                 ArchivedAssignment a = archiveRepo.findByAssignmentId((Integer.parseInt(name)));
                 model.addAttribute("assignments", a);
@@ -78,21 +78,21 @@ public class ArchiveController {
                 model.addAttribute("assignments", archiveRepo.findByTitleContaining(name));
             }
 
-        }
-        else {
+        } else {
             List<ArchivedAssignment> list = archiveRepo.findByTitleContaining(name);
             List<ArchivedAssignment> list2 = new ArrayList<>();
             for (int item : tags) {
                 for (ArchivedAssignment a : list) {
-                    int tag = tagRepo.findBytagId(item).getTagId();
-                    String archiveTag = a.getTagIds();
-                    List<String> items = Arrays.asList(archiveTag.replace("[", "").replace("]", "").split("\\s*,\\s*"));
+                    String archiveTag = tagRepo.findBytagId(item).getTagName();
+                    String tag = a.getTagName();
+                    List<String> items = Arrays.asList(tag.replace("[", "").replace("]", "").split("\\s*,\\s*"));
 
-                    for(int i = 0; i<items.size();i++){
-                        if(Integer.toString(tag).contains(items.get(i)) && !archiveTag.equals("[]")){
+                    for (int i = 0; i < items.size(); i++) {
+                        if (archiveTag.contains(items.get(i)) && !tag.equals("[]")){
                             list2.add(a);
                         }
                     }
+
                 }
             }
 

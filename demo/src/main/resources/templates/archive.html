@@ -53,14 +53,14 @@
     <div th:if="${persons.totalPages !=1}">
         <ul class="pagination">
             <li th:class="${persons.number == 0} ? disabled">
-                <a class="pageLink" th:href="@{/allassignments/(page=${persons.number})}">&laquo;</a>
+                <a class="pageLink" th:href="@{/archive/(page=${persons.number})}">&laquo;</a>
             </li>
             <li th:class="${persons.number == (page - 1)} ? 'active pointer-disabled'"
                 th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
-                <a class="pageLink" th:href="@{/allassignments/(page=${page})}" th:text="${page}"></a>
+                <a class="pageLink" th:href="@{/archive/(page=${page})}" th:text="${page}"></a>
             </li>
             <li th:class="${persons.number + 1 == persons.totalPages} ? disabled">
-                <a class="pageLink" th:href="@{/allassignments/(page=${persons.number + 2})}">&raquo;</a>
+                <a class="pageLink" th:href="@{/archive/(page=${persons.number + 2})}">&raquo;</a>
             </li>
         </ul>
     </div>
