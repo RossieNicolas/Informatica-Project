@@ -28,7 +28,7 @@
                                                 <a sec:authorize="!hasRole('EXTERN')" href="/allassignments">Lopende taken</a>
                                                 <a sec:authorize="hasAnyRole('COORDINATOR', 'DOCENT')" href="/allFullAssignments">Volzette taken</a>
                                                 <a href="/assignment">Taak toevoegen</a>
-                                                <a sec:authorize="!hasRole('EXTERN')" href="/myassignments">Ingeschreven taken</a>
+                                                <a sec:authorize="hasRole('STUDENT')" href="/myassignments">Ingeschreven taken</a>
                                             </div>
                                         </div>
                                     </li>
