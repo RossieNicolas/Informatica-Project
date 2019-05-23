@@ -52,6 +52,34 @@
                         <input type="button" value="✏️PROFIEL BEWERKEN" class="button" onclick="toggleForm();">&nbsp;&nbsp;&nbsp;<input
                             type="submit" value="💾 AANPASSINGEN BEWAREN" class="button" id="save"
                             style="visibility: hidden;">
+                        <h2 class="extra">Uw aangemaakte opdrachten</h2>
+                        <table id="profileTable" >
+                            <thead>
+                            <tr>
+                                <th>Nr</th>
+                                <th>Type</th>
+                                <th>Naam</th>
+                                <th>Begin</th>
+                                <th>Einde</th>
+                                <th>Aantal uren</th>
+                                <th>Gevalideerd</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="a : ${assignments}" class="tablebackground ">
+                                <td th:text="${a.getAssignmentId()}"></td>
+                                <td th:text="${a.getType()}"></td>
+                                <td th:text="${a.getTitle()}" class="cell"></td>
+                                <td th:text="${a.getStartDate()}"></td>
+                                <td th:text="${a.getEndDate()}"></td>
+                                <td style="padding-left: 3.8%" th:text="${a.getAmountHours()}"></td>
+                                <td style="padding-left: 2.5%">
+                                    <span th:if="${a.isValidated()}">✔️</span>
+                                    <span th:unless="${a.isValidated()}">❌</span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </form>
                 </div>
             </div>
