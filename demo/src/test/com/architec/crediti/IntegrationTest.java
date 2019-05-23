@@ -74,11 +74,11 @@ public class IntegrationTest {
         //act
         users.save(u); // create user
         students.save(s); // create student
-        s.setStudentennummer(input); // edit student
+        s.setStudentnumber(input); // edit student
         students.save(s);
 
         //assert
-        assertEquals(input, s.getStudentennummer());
+        assertEquals(input, s.getStudentnumber());
 
         //undo operations
         students.delete(s);

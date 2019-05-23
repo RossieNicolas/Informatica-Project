@@ -3,7 +3,7 @@ package com.architec.crediti.controllers;
 import com.architec.crediti.email.EmailServiceImpl;
 import com.architec.crediti.models.ExternalUser;
 import com.architec.crediti.repositories.ExternalUserRepository;
-import com.architec.crediti.repositories.HashPass;
+import com.architec.crediti.security.HashPass;
 import com.architec.crediti.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -25,9 +25,8 @@ public class PasswordRecoveryController {
     private final
     UserRepository userRepo;
 
-
-    @Autowired
-    private EmailServiceImpl emailImpl;
+    private final
+    EmailServiceImpl emailImpl;
 
     @Autowired
     public PasswordRecoveryController(ExternalUserRepository externalUserRepo, UserRepository userRepo, EmailServiceImpl emailImpl) {
@@ -38,7 +37,7 @@ public class PasswordRecoveryController {
     }
 
     // Display forgotPassword page
-    @RequestMapping(value = "/forgotPassword", method = RequestMethod.GET)
+    @GetMapping("/forgotPassword")
     public ModelAndView displayForgotPasswordPage() {
         return new ModelAndView("forgotPassword");
     }
@@ -82,7 +81,7 @@ public class PasswordRecoveryController {
     }
 
     // Display form to reset password
-    @RequestMapping(value = "/reset", method = RequestMethod.GET)
+    @GetMapping("/reset")
     public ModelAndView displayResetPasswordPage(ModelAndView modelAndView, @RequestParam("token") String token) {
 
         ExternalUser extUser = externalUserRepo.findByResettoken(token);

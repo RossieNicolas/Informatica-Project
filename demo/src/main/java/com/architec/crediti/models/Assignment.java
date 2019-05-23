@@ -61,6 +61,9 @@ public class Assignment {
     @Column(name = "validated")
     private boolean validated;
 
+    @Column(name = "amount_students_full")
+    private boolean full;
+
     @ManyToMany
     @JoinTable(
             name = "tag_assign",
@@ -231,5 +234,13 @@ public class Assignment {
     }
     public String getName(){
         return assignerUserId.getFirstname() + " " + assignerUserId.getLastname();
+    }
+
+    public boolean isFull() {
+        return full;
+    }
+
+    public void setFull(boolean full) {
+        this.full = full;
     }
 }

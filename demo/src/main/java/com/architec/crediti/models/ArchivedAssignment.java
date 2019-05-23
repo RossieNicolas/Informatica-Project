@@ -63,7 +63,7 @@ public class ArchivedAssignment {
                               @NotNull(message = "Max studenten mag niet leeg zijn!") int maxStudents,
                               @NotNull(message = "Startdatum mag niet leeg zijn!") @NotBlank String startDate,
                               @NotNull(message = "Einddatum mag niet leeg zijn!") @NotBlank String endDate,
-                              String assignerUser, String tag_ids) {
+                              String assignerUser, String tagIds) {
         this.title = title;
         this.type = type;
         this.task = task;
@@ -73,7 +73,7 @@ public class ArchivedAssignment {
         this.startDate = startDate;
         this.endDate = endDate;
         this.assignerUser = assignerUser;
-        this.tagIds = tag_ids;
+        this.tagIds = tagIds;
     }
 
     public void fillArchivedAssignment(Assignment a){

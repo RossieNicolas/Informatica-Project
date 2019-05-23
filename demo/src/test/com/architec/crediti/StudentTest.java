@@ -84,11 +84,11 @@ public class StudentTest {
         String input = "success";
 
         //act
-        s.setStudentennummer(input);
+        s.setStudentnumber(input);
         students.save(s);
 
         //assert
-        assertEquals(input, s.getStudentennummer());
+        assertEquals(input, s.getStudentnumber());
 
         //undo operations
         students.delete(s);
@@ -118,20 +118,20 @@ public class StudentTest {
 
     @Test
     //id= 69
-    public void findByStudentenNummerShouldReturnCorrectStudent(){
+    public void findByStudentNumberShouldReturnCorrectStudent(){
 
         //arrange
         User u = new User("testUser", "testUser","test@test.test", Role.COORDINATOR,false);
         users.save(u);
-        String studentenNummer = "000000";
-        Student s = new Student("0000000000",studentenNummer,u);
+        String studentNumber = "000000";
+        Student s = new Student("0000000000",studentNumber,u);
         students.save(s);
 
         //act
-        Student found = students.findByStudentennummer(studentenNummer);
+        Student found = students.findByStudentnumber(studentNumber);
 
         //assert
-        assertEquals(found.getStudentennummer(), s.getStudentennummer());
+        assertEquals(found.getStudentnumber(), s.getStudentnumber());
 
         //undo operations
         students.delete(s);
@@ -140,17 +140,17 @@ public class StudentTest {
 
     @Test
     //id= 70
-    public void existByStudentNummerShouldReturnExistingStudent(){
+    public void existByStudentNumberShouldReturnExistingStudent(){
 
         //arrange
         User u = new User("testUser", "testUser","test@test.test", Role.COORDINATOR,false);
         users.save(u);
-        String studentenNummer = "000000";
-        Student s = new Student("0000000000",studentenNummer,u);
+        String studentNumber = "000000";
+        Student s = new Student("0000000000",studentNumber,u);
         students.save(s);
 
         //act
-        boolean found = students.existsByStudentennummer(studentenNummer);
+        boolean found = students.existsByStudentnumber(studentNumber);
 
         //assert
         assertTrue(found);

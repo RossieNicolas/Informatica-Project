@@ -5,7 +5,7 @@ import com.architec.crediti.email.EmailTemplates;
 import com.architec.crediti.models.ExternalUser;
 import com.architec.crediti.models.User;
 import com.architec.crediti.repositories.ExternalUserRepository;
-import com.architec.crediti.repositories.HashPass;
+import com.architec.crediti.security.HashPass;
 import com.architec.crediti.repositories.UserRepository;
 import com.architec.crediti.security.Role;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.architec.crediti.repositories;
+package com.architec.crediti.utils;
 
 import java.util.Iterator;
 import java.util.List;
@@ -12,13 +12,7 @@ public class AssignmentMethods {
     }
 
     public static List<Assignment> removeFullAssignments (List<Assignment> assignments ) {
-        Iterator<Assignment> list = assignments.iterator();
-        while (list.hasNext()) {
-            Assignment item = list.next();
-            if (item.getAmountStudents() == item.getMaxStudents()) {
-                list.remove();
-            }
-        }
+        assignments.removeIf(item -> item.getAmountStudents() == item.getMaxStudents());
         return assignments;
     }
 

@@ -13,6 +13,7 @@ import com.architec.crediti.repositories.TagRepo;
 import com.architec.crediti.repositories.UserRepository;
 
 import com.architec.crediti.security.Role;
+import com.architec.crediti.utils.AssignmentMethods;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -113,9 +114,7 @@ public class AssignmentController {
         }
 
         int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
-        //Page<Assignment> fiches = AssignmentMethods.removeFullAssignmentsPage((List<Assignment>) assignmentRepo.findAll(PageRequest.of(evalPage, PAGE_SIZE)));
-        Page<Assignment> fiches = assignmentRepo.findAll(PageRequest.of(evalPage, PAGE_SIZE));
-        fiches = AssignmentMethods.removeFullAssignmentsPage(fiches);
+        Page<Assignment> fiches = assignmentRepo.findByFull(false, PageRequest.of(evalPage, PAGE_SIZE));
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
 
         view.addObject("assignments", fiches);

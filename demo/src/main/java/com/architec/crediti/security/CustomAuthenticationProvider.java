@@ -3,7 +3,6 @@ package com.architec.crediti.security;
 import com.architec.crediti.models.ExternalUser;
 import com.architec.crediti.models.User;
 import com.architec.crediti.repositories.ExternalUserRepository;
-import com.architec.crediti.repositories.HashPass;
 import com.architec.crediti.repositories.UserRepository;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -88,7 +87,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
                 ExternalUser exUser = exRepo.findByUserId(user);
 
                 // Make sure extern is not null
-                String hash = HashPass.convertToPbkdf2(password.toCharArray(), exUser.getSalt());
+                String hash = HashPass.convertToPbkdf2Salt(password.toCharArray(), exUser.getSalt());
 
                 if(Arrays.equals(hash.toCharArray(), exUser.getPassword())){
                     result = true;

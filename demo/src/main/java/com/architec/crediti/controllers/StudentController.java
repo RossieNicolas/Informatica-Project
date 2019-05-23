@@ -50,7 +50,7 @@ public class StudentController {
         User currentUser = userRepo.findByEmail(principal.getName());
         Student student = new Student(gsm, currentUser.getEmail().substring(1,7), currentUser);
 
-        boolean existsStudent = studentRepo.existsByStudentennummer(currentUser.getEmail().substring(1,7));
+        boolean existsStudent = studentRepo.existsByStudentnumber(currentUser.getEmail().substring(1,7));
 
         if (!existsStudent) {
             if (zap != null) {student.setZap(true); }
@@ -76,7 +76,7 @@ public class StudentController {
         List<Student> students = new ArrayList();
 
         try {
-            Student st = studentRepo.findByStudentennummer(name);
+            Student st = studentRepo.findByStudentnumber(name);
             model.addAttribute("students", st);
         } catch (Exception e) {
             if(!name.equals("")){

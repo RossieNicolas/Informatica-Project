@@ -1,4 +1,4 @@
-package com.architec.crediti.repositories;
+package com.architec.crediti.security;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -14,14 +14,13 @@ public class HashPass {
     private HashPass() {
     }
 
-
-
     public static byte[] generateSalt() {
         SecureRandom random = new SecureRandom();
         byte[] salt = new byte[16];
         random.nextBytes(salt);
         return salt;
     }
+
     public static byte[] hashPassword( final char[] password, final byte[] salt) {
 
         final int iterations = 10000;
@@ -36,14 +35,12 @@ public class HashPass {
         }
     }
 
-
-
     /**
      * Grabs the password of the extern and hashes it with the pbkdf2 hash,
      * then the function returns an array with the salted pbkdf2 hash(0) and the salt(1)
      */
     public static Object[] convertToPbkdf2(char[] password) {
-        Object passAndSalt[] = new Object[2];
+        Object[] passAndSalt = new Object[2];
 
         byte[] saltBytes = generateSalt();
         byte[] hashedBytes = hashPassword(password, saltBytes);
@@ -57,7 +54,7 @@ public class HashPass {
     /**
      * This method is used to check if an extern's password is equal to the one in the database
      */
-    public static String convertToPbkdf2(char[] password, byte[] salt) {
+    public static String convertToPbkdf2Salt(char[] password, byte[] salt) {
         byte[] saltBytes = salt;
         byte[] hashedBytes = hashPassword(password, saltBytes);
 
