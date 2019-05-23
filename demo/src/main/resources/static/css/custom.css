@@ -92,3 +92,9 @@ body {
 a {
     color: #e60005;
 }
+
+.custom-control-input:checked~.custom-control-label::before {
+    color: #fff;
+    border-color: #e60005;
+    background-color: #e60005;
+}
