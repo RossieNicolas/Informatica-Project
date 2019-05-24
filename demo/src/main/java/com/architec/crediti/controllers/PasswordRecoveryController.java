@@ -75,7 +75,7 @@ public class PasswordRecoveryController {
                     "Er is een email verstuurd naar: " + userEmail);
         }
 
-        modelAndView.setViewName("/basic/forgotPassword");
+        modelAndView.setViewName("basic/forgotPassword");
         return modelAndView;
 
     }

@@ -11,13 +11,13 @@ public class LoginController {
 
     @GetMapping("/login")
     public String getLogin() {
-        return "/login";
+        return "login";
     }
 
     @GetMapping("/loginError")
     public String loginError(Model model) {
         model.addAttribute("loginError", true);
-        return "/login";
+        return "login";
     }
 
     @GetMapping("/logout")
@@ -25,6 +25,6 @@ public class LoginController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         auth.setAuthenticated(false);
         SecurityContextHolder.clearContext();
-        return "/basic/home";
+        return "basic/home";
     }
 }
