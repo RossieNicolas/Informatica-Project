@@ -43,7 +43,7 @@ public class ArchiveController {
     //get archive page
     @GetMapping("/archive")
     public ModelAndView showPersonsPage(@RequestParam("page") Optional<Integer> page, Principal principal) {
-        ModelAndView modelAndView = new ModelAndView("/archive/archive");
+        ModelAndView modelAndView = new ModelAndView("archive/archive");
 
         int buttons = (int) archiveRepo.count() / PAGE_SIZE;
         if (archiveRepo.count() % PAGE_SIZE != 0) {
@@ -117,6 +117,6 @@ public class ArchiveController {
         model.addAttribute("pager", pager);
         model.addAttribute("tags", tagRepo.findAll());
 
-        return "/archive/archive";
+        return "archive/archive";
     }
 }

@@ -92,7 +92,7 @@ public class PasswordRecoveryController {
             modelAndView.addObject("errorMessage", "Oops!  Dit is een ongeldige link voor het opnieuw instellen van het wachtwoord.");
         }
 
-        modelAndView.setViewName("/basic/updatePassword");
+        modelAndView.setViewName("basic/updatePassword");
         return modelAndView;
     }
 
@@ -133,7 +133,7 @@ public class PasswordRecoveryController {
         } else {
             modelAndView.addObject("errorMessage",
                     "Oops!  Dit is een ongeldige link voor het opnieuw instellen van het wachtwoord.");
-            modelAndView.setViewName("/basic/updatePassword");
+            modelAndView.setViewName("basic/updatePassword");
         }
 
         return modelAndView;

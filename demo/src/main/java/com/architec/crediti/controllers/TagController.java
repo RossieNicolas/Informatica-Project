@@ -35,7 +35,7 @@ public class TagController {
         //pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());
         model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
-        return "/tags/tag";
+        return "tags/tag";
     }
 
     // make a new tag
@@ -48,7 +48,7 @@ public class TagController {
             tagRepo.save(tag);
         } else {
             model.addAttribute("error", "Tag naam bestaat al!");
-            return "/tags/tag";
+            return "tags/tag";
         }
         return "redirect:/listAllTags";
     }
@@ -56,7 +56,7 @@ public class TagController {
     // list all tags
     @GetMapping("/listAllTags")
     public ModelAndView listAllTags(@RequestParam("page") Optional<Integer> page, Model model, Principal principal) {
-        ModelAndView modelAndView = new ModelAndView("/tags/listAllTags");
+        ModelAndView modelAndView = new ModelAndView("tags/listAllTags");
 
         int initialPage = 0;
         int pageSize = 15;
@@ -91,7 +91,7 @@ public class TagController {
         //pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());
         model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
-        return "/tags/editTag";
+        return "tags/editTag";
     }
 
     // update specific tag
@@ -107,7 +107,7 @@ public class TagController {
         } else{
             model.addAttribute("error", "Tag naam bestaat al!");
             model.addAttribute("tags", tagForId);
-            return "/tags/editTag";
+            return "tags/editTag";
         }
         return "redirect:/listAllTags";
     }
@@ -123,7 +123,7 @@ public class TagController {
             return "redirect:/listAllTags";
 
         }catch (Exception ex){
-            return "/tags/tagStillAssigned";
+            return "tags/tagStillAssigned";
         }
 
     }
