@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8"/>
+    <meta charset="UTF-8" />
     <title>Crediti - Thuispagina</title>
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
+
 <body>
-<div class="background">
-    <header th:insert="/fragments/generalMenu.html :: header (name=${name})"></header>
-    <div class="block">
-        <section class="find-edu">
-            <div class="container ">
-                <div class="wrap-all col-xs-6 extra">
-                    <h2 class="extra">Startpagina</h2>
+    <div class="background">
+        <header th:insert="fragments/generalMenu.html :: header (name=${name})"></header>
+        <div class="block">
+            <section class="find-edu">
+                <div class="container ">
+                    <div class="wrap-all col-xs-6 extra">
+                        <h2 class="extra">Startpagina</h2>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
     </div>
-</div>
-<footer th:insert="/fragments/generalMenu.html :: footer"></footer>
+    <footer th:insert="fragments/generalMenu.html :: footer"></footer>
 </body>
+
 </html>
