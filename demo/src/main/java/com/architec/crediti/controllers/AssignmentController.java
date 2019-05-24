@@ -119,7 +119,7 @@ public class AssignmentController {
         }
 
         int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
-        Page<Assignment> fiches = assignmentRepo.findByFullOrderByAssignmentIdDesc(false, PageRequest.of(evalPage, PAGE_SIZE));
+        Page<Assignment> fiches = assignmentRepo.findByFull(false, PageRequest.of(evalPage, PAGE_SIZE));
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
 
         view.addObject("assignments", fiches);
@@ -151,7 +151,7 @@ public class AssignmentController {
 
         int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
 
-        Page<Assignment> fiches = assignmentRepo.findByFullOrderByAssignmentIdDesc(false, PageRequest.of(evalPage, PAGE_SIZE));
+        Page<Assignment> fiches = assignmentRepo.findByFull(false, PageRequest.of(evalPage, PAGE_SIZE));
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
 
         model.addAttribute("persons", fiches);
@@ -300,12 +300,18 @@ public class AssignmentController {
         }
 
         boolean roles = false;
+        boolean roles2 = false;
 
         if (as.getAssignerUserId() == user.getUserId() || user.getRole() == Role.COORDINATOR) {
             roles = true;
         }
 
+        if (as.getAssignerUserId() == user.getUserId() || user.getRole() == Role.COORDINATOR || user.getRole() == Role.DOCENT) {
+            roles2 = true;
+        }
+
         model.addAttribute("roles", roles);
+        model.addAttribute("roles2", roles2);
         //pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());
         model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
@@ -413,4 +419,70 @@ public class AssignmentController {
         return "redirect:/allassignments";
     }
 
+    //duplicate assignment
+    @GetMapping("/duplicateassignment/{assignmentId}")
+    public String duplicateAssignment(Principal principal, @PathVariable("assignmentId") int assignmentId, Model model) {
+        User currentUser = userRepo.findByEmail(principal.getName());
+
+        Assignment assignment = assignmentRepo.findById((long) assignmentId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid assignment Id:" + assignmentId));
+
+        String title = assignment.getTitle();
+        String type = assignment.getType();
+        String omschrijving = assignment.getTask();
+        String beginDat = assignment.getStartDate();
+        String eindDat = assignment.getEndDate();
+        int totaalUur = assignment.getAmountHours();
+        int maxStud = assignment.getMaxStudents();
+
+        Assignment duplicateAssignment = new Assignment(title, type, omschrijving, totaalUur, maxStud, beginDat,
+                eindDat, false, false, currentUser);
+
+        List<Tag> tags = tagRepo.findAll();
+
+        model.addAttribute("tags", tags);
+        model.addAttribute("type", type);
+        model.addAttribute("duplicate", duplicateAssignment);
+
+        boolean[] status = new boolean[tags.size()];
+        Set<Tag> selectedTags = assignment.getTags();
+
+        for (int i = 0; i < tags.size(); i++) {
+            for (Tag item : selectedTags) {
+                if (tags.get(i).getTagId() == item.getTagId()) {
+                    status[i] = true;
+                }
+            }
+        }
+        model.addAttribute("status", status);
+//        assignmentRepo.save(duplicateAssignment);
+
+
+        return "assignments/duplicateAssignment";
+    }
+
+    // add duplicate assignment
+    @PostMapping("/duplicateassignment/{assignmentId}")
+    public String createDuplicate(Principal principal, @Valid Assignment assignment,
+                                   @RequestParam(required = false, value = "tag") int[] tags) {
+        Set<Tag> set = new HashSet<>();
+        User currentUser = userRepo.findByEmail(principal.getName());
+
+        assignment.setTags(set);
+        if (tags != null) {
+            for (int item : tags) {
+                Tag tag = tagRepo.findBytagId(item);
+                set.add(tag);
+            }
+        }
+        assignment.setTags(set);
+        assignment.setAssignerUserId(currentUser);
+        assignmentRepo.save(assignment);
+
+
+        mail.sendSimpleMessage("alina.storme@student.ap.be", "Nieuwe opdracht gecreëerd",
+                EmailTemplates.createdAssignment(assignment.getAssigner(),
+                        assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments"));
+        return "assignments/successfullAssignment";
+    }
 }

@@ -6,8 +6,7 @@
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
 <body class="background" onload="tableFill()">
-<header th:insert="fragments/generalMenu.html :: header (name=${name})">
-</header>
+<header th:insert="fragments/generalMenu.html :: header (name=${name})"></header>
 <div class="container ">
     <h2 class="extra">Ongevalideerde inschrijvingen</h2>
 </div>
@@ -32,14 +31,13 @@
             <td th:text="${e.getTitle()}"></td>
             <td th:text="${e.getFullname()}"></td>
             <td th:text="${e.getEmail()}"></td>
-            <td><a th:href="@{/deleteEnroll/{id} (id=${e.getEnrolledId()})}">🗑️</a></td>
+            <td><a class="button" th:href="@{/deleteEnroll/{id} (id=${e.getEnrolledId()})}">🗑️</a></td>
         </tr>
         </tbody>
     </table>
 </div>
-<div style="height: 45%"></div>
-<footer th:insert="fragments/generalMenu.html :: footer">
-</footer>
+<div style="height: 50%"></div>
+<footer th:insert="fragments/generalMenu.html :: footer"></footer>
 <script>
     function tableFill() {
         var tbl = document.getElementById('tabel');

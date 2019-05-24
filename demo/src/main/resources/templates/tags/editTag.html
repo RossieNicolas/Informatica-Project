@@ -6,8 +6,7 @@
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
 <body>
-<header th:insert="fragments/generalMenu.html :: header (name=${name})">
-</header>
+<header th:insert="fragments/generalMenu.html :: header (name=${name})"></header>
 <div class="block background">
     <div class="container ">
         <div class="wrap-all col-xs-12 ">
@@ -33,8 +32,7 @@
         </div>
     </div>
 </div>
-<footer th:insert="fragments/generalMenu.html :: footer">
-</footer>
+<footer th:insert="fragments/generalMenu.html :: footer"></footer>
 <script>
     function toggleForm() {
         document.getElementById('tagInfo').removeAttribute('disabled');
