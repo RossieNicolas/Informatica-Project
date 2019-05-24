@@ -7,53 +7,44 @@
 </head>
 <body class="background">
 <div>
-    <header th:insert="fragments/generalMenu.html :: header (name=${name})">
-    </header>
+    <header th:insert="fragments/generalMenu.html :: header (name=${name})"></header>
     <div class="block">
         <section class="find-edu card">
             <div class="container ">
                 <div class="wrap-all col-xs-12 ">
-                    <h2>Profiel externe gebruiker</h2>
-                    <form th:each="a: ${externalUsers}" th:action="@{/externalUserProfile}" method='POST' class="standard-form">
+                    <h2 class="extra">Profiel externe gebruiker</h2>
+                    <form th:each="a: ${externalUsers}" th:action="@{/externalUserProfile}" method='POST'
+                          class="standard-form">
                         <fieldset disabled="disabled" id="externalInfo">
                             <label for='lastname'>Naam: </label>
                             <input type='text' name='lastname' id='lastname' maxlength="50" placeholder="lastname"
-                                   th:value="*{a.getLastname()}" required>
-                            <br/>
+                                   th:value="*{a.getLastname()}" required><br/>
                             <label for='firstname'>Voornaam: </label>
                             <input type='text' name='firstname' id='firstname' maxlength="50" placeholder="firstname"
-                                   th:value="*{a.getFirstname()}" required>
-                            <br/>
+                                   th:value="*{a.getFirstname()}" required><br/>
                             <label for='company'>Bedrijf: </label>
                             <input type='text' name='company' id='company' maxlength="50" placeholder="company"
-                                   th:value="*{a.getCompany()}" required>
-                            <br/>
+                                   th:value="*{a.getCompany()}" required><br/>
                             <label for='phone'>Telefoonnummer: </label>
                             <input type='tel' name='phone' id='phone' maxlength="50" placeholder="phone"
-                                   th:value="*{a.getPhone()}" pattern="([(+]*[0-9]+[()+. -]*)" required>
-                            <br/>
+                                   th:value="*{a.getPhone()}" pattern="([(+]*[0-9]+[()+. -]*)" required><br/>
                             <label for='address'>Adres: </label>
                             <input type='text' name='address' id='address' maxlength="50" placeholder="address"
-                                   th:value="*{a.getAddress()}" required>
-                            <br/>
+                                   th:value="*{a.getAddress()}" required><br/>
                             <label for='city'>Gemeente: </label>
                             <input type='text' name='city' id='city' maxlength="50" placeholder="city"
-                                   th:value="*{a.getCity()}" required>
-                            <br/>
+                                   th:value="*{a.getCity()}" required><br/>
                             <label for='postal'>Postcode: </label>
                             <input type='number' name='postal' id='postal' maxlength="50" placeholder="postal"
-                                   th:value="*{a.getPostal()}" required>
-                            <br/>
+                                   th:value="*{a.getPostal()}" required><br/>
                             <label for='password'>Wachtwoord: </label>
-                            <input type='password' name='password' id='password' maxlength="50">
-                            <br/>
-                        </fieldset>
-                        <br/>
+                            <input type='password' name='password' id='password' maxlength="50"><br/>
+                        </fieldset><br/>
                         <input type="button" value="✏️PROFIEL BEWERKEN" class="button" onclick="toggleForm();">&nbsp;&nbsp;&nbsp;<input
                             type="submit" value="💾 AANPASSINGEN BEWAREN" class="button" id="save"
                             style="visibility: hidden;">
                         <h2 class="extra">Uw aangemaakte opdrachten</h2>
-                        <table id="profileTable" >
+                        <table id="profileTable">
                             <thead>
                             <tr>
                                 <th>Nr</th>
@@ -85,10 +76,8 @@
             </div>
         </section>
     </div>
-
 </div>
-<footer th:insert="fragments/generalMenu.html :: footer">
-</footer>
+<footer th:insert="fragments/generalMenu.html :: footer"></footer>
 <script>
     function toggleForm() {
         document.getElementById('externalInfo').removeAttribute('disabled');

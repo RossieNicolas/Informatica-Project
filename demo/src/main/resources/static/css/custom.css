@@ -98,3 +98,11 @@ a {
     border-color: #e60005;
     background-color: #e60005;
 }
+
+.img-user {
+    float: left;
+}
+
+.img-link {
+    line-height: 0px;
+}

@@ -39,7 +39,7 @@ public class StudentController {
 
     @GetMapping("/createstudentprofile")
     public String getStudentProfileForm() {
-        return "/student/createProfileStudent";
+        return "student/createProfileStudent";
     }
 
     @PostMapping("/createstudentprofile")
@@ -68,7 +68,7 @@ public class StudentController {
         //pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());
         model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
-            return "/student/listStudents";
+            return "student/listStudents";
     }
 
     @PostMapping("/liststudents")
@@ -90,7 +90,7 @@ public class StudentController {
             }
         }
 
-        return "/student/listStudents";
+        return "student/listStudents";
     }
 
     @GetMapping("/studentProfile")
@@ -103,7 +103,7 @@ public class StudentController {
         //pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());
         model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
-        return "/student/studentProfile";
+        return "student/studentProfile";
     }
 
 

@@ -6,8 +6,7 @@
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
 <body class="background" onload="tableFill()">
-<header th:insert="fragments/generalMenu.html :: header (name=${name})">
-</header>
+<header th:insert="fragments/generalMenu.html :: header (name=${name})"></header>
 <div class="container ">
     <h2 class="extra">Ongevalideerde Externe</h2>
 </div>
@@ -40,8 +39,7 @@
     </table>
 </div>
 <div style="height: 45%"></div>
-<footer th:insert="fragments/generalMenu.html :: footer">
-</footer>
+<footer th:insert="fragments/generalMenu.html :: footer"></footer>
 <script>
     function tableFill() {
         var tbl = document.getElementById('tabel');
@@ -49,7 +47,7 @@
             var x = tbl.insertRow(1);
             var cell1 = x.insertCell(0);
             var cell2 = x.insertCell(1);
-            cell2.innerHTML="Er is momenteel geen externe om te valideren.";
+            cell2.innerHTML = "Er is momenteel geen externe om te valideren.";
         }
     }
 </script>

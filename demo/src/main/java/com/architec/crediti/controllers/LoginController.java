@@ -11,19 +11,19 @@ public class LoginController {
 
     @GetMapping("/login")
     public String getLogin() {
-        return "/basic/login";
+        return "basic/login";
     }
 
     @GetMapping("/loginError")
     public String loginError(Model model) {
         model.addAttribute("loginError", true);
-        return "/basic/loginError.html";
+        return "basic/loginError.html";
     }
 
     @GetMapping("/loginUnapproved")
     public String loginUnapproved(Model model) {
         model.addAttribute("unapproved", true);
-        return "/external/loginUnapproved";
+        return "external/loginUnapproved";
     }
 
     @GetMapping("/logout")
@@ -31,6 +31,6 @@ public class LoginController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         auth.setAuthenticated(false);
         SecurityContextHolder.clearContext();
-        return "/basic/home";
+        return "basic/home";
     }
 }
