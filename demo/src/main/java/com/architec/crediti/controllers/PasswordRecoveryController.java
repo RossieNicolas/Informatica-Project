@@ -39,10 +39,10 @@ public class PasswordRecoveryController {
     // Display forgotPassword page
     @GetMapping("/forgotPassword")
     public ModelAndView displayForgotPasswordPage() {
-        return new ModelAndView("/basic/forgotPassword");
+        return new ModelAndView("basic/forgotPassword");
     }
 
-    @PostMapping(value = "/forgotPassword")
+    @PostMapping("/forgotPassword")
     public ModelAndView processForgotPasswordForm( ModelAndView modelAndView, @RequestParam("email") String userEmail, HttpServletRequest request) {
 
         // Lookup user in database by e-mail

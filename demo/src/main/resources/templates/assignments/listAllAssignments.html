@@ -11,15 +11,15 @@
     <h2 class="extra">Alle opdrachten</h2>
 </div>
 <div class="container">
-    <form th:action='@{/allassignments}' method='POST'>
+    <form th:action='@{/allassignments}' method='POST' style="padding-top: 10px;">
         <label for='searchbar'>Zoekwaarde: </label>
-        <input type='search' class='form-control' name='searchbar' id='searchbar'>
-        <input type='SUBMIT' id="zoekKnop" value="Zoek" class="button"/>
+        <input type='search' class='form-control' name='searchbar' id='searchbar'>&nbsp;&nbsp;&nbsp;&nbsp;
         <tr th:each="a : ${tags}">
             <input type="checkbox" name="tag" th:tr='${a.getTagName()}' th:value='${a.getTagId()}'/>
             <label th:text="${a.getTagName()}"></label>
         </tr>
-    </form>
+        <input style="margin-right:20px;" type='SUBMIT' id="zoekKnop" value="Zoek" class="button"/>
+        </form>
 </div>
 <div id='overview'>
     <table>
