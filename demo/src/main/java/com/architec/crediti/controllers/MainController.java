@@ -38,6 +38,6 @@ public class MainController {
 
         }
         model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
-        return "/basic/main";
+        return "basic/main";
     }
 }

@@ -108,7 +108,7 @@ public class AssignmentController {
     // list all assignments
     @GetMapping("/allassignments")
     public ModelAndView getAllAssignments(Model model, @RequestParam("page") Optional<Integer> page, Principal principal) {
-        ModelAndView view = new ModelAndView("/assignments/listAllAssignments");
+        ModelAndView view = new ModelAndView("assignments/listAllAssignments");
         //pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());
         model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
@@ -235,7 +235,7 @@ public class AssignmentController {
         model.addAttribute("selectedPageSize", PAGE_SIZE);
         model.addAttribute("pager", pager);
         model.addAttribute("tags", tagRepo.findAll());
-        return "/assignments/listAllAssignments";
+        return "assignments/listAllAssignments";
 
     }
 

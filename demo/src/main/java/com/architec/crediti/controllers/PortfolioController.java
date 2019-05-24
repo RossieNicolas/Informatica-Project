@@ -63,7 +63,7 @@ public class PortfolioController {
         model.addAttribute("files", files);
         //pass username to header fragment
         model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
-        return "/portfolio/portfolio";
+        return "portfolio/portfolio";
     }
 
     @GetMapping("/uploadfile")
@@ -71,7 +71,7 @@ public class PortfolioController {
         //pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());
         model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
-        return "/portfolio/upload";
+        return "portfolio/upload";
     }
 
 
@@ -125,7 +125,7 @@ public class PortfolioController {
         //pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());
         model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
-        return "/documentation/documentation";
+        return "documentation/documentation";
     }
 
     @GetMapping("/uploaddocumentation")
@@ -133,7 +133,7 @@ public class PortfolioController {
         //pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());
         model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
-        return "/documentation/uploadDocumentation";
+        return "documentation/uploadDocumentation";
     }
 
     @PostMapping("/uploaddocumentation")
