@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8" />
@@ -7,19 +8,31 @@
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
 
-<body>
-    <div class="background">
+<body class="background">
         <header th:insert="fragments/generalMenu.html :: header (name=${name})"></header>
         <div class="block">
             <section class="find-edu">
                 <div class="container ">
-                    <div class="wrap-all col-xs-6 extra">
-                        <h2 class="extra">Startpagina</h2>
+                    <div class="wrap-all col-xs-6 extra form">
+                        <div class="start">
+                            <h2 class="extra">Startpagina</h2>
+                            <a sec:authorize="hasRole('STUDENT')" class="button" href="/studentProfile">Mijn profiel</a>
+                            <a sec:authorize="hasRole('EXTERN')" class="button" href="/externalUserProfile">Mijn profiel</a>
+                            <h4 sec:authorize="hasRole('COORDINATOR')" class="extra">Toevoegen</h4>
+                                    <a sec:authorize="hasAnyRole()Role('COORDINATOR','EXTERN')" class="button" href="/assignment">Opdracht toevoegen</a><br><br>
+                                    <a sec:authorize="hasRole('COORDINATOR')" class="button" href="/tag">Tag toevoegen</a>
+                                <h4 sec:authorize="!hasRole('EXTERN')" class="extra">Bekijken</h4>
+                                    <a sec:authorize="!hasRole('EXTERN')" class="button" href="/allassignments">Alle opdrachten</a><br><br>
+                                    <a sec:authorize="!hasRole('EXTERN')" class="button" href="/listAllTags">Alle tags</a><br><br>
+                                    <a sec:authorize="!hasRole('EXTERN')" class="button" href="/myassignments">Ingeschreven opdrachten</a>
+                                <h4 sec:authorize="hasRole('COORDINATOR')" class="extra">Goed te keuren</h4>
+                                    <a sec:authorize="hasRole('COORDINATOR')" class="button" href="/listUnvalidatedExternal">Externe gebruikers</a><br><br>
+                                    <a sec:authorize="hasRole('COORDINATOR')" class="button" href="/unvalidatedassignments">Opdrachten</a>
+                        </div>
                     </div>
                 </div>
             </section>
         </div>
-    </div>
     <footer th:insert="fragments/generalMenu.html :: footer"></footer>
 </body>
 
