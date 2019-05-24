@@ -104,7 +104,7 @@
                        th:if="${a.isValidated()}" th:href="@{/archiveassignment/{id} (id=${a.assignmentId})}"
                        class="button">🗄️ ARCHIVEREN</a>
 
-                    <a sec:authorize="hasAnyRole('COORDINATOR', 'LECTOR')"
+                    <a sec:authorize="hasAnyRole('COORDINATOR', 'DOCENT', 'STUDENT')" th:if="${roles2}"
                        th:href="@{/duplicateassignment/{id} (id=${a.assignmentId})}"
                        class="button">🗄️ KOPIE MAKEN</a>
                 </form>

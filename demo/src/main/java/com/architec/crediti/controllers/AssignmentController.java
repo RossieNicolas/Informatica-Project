@@ -300,12 +300,18 @@ public class AssignmentController {
         }
 
         boolean roles = false;
+        boolean roles2 = false;
 
         if (as.getAssignerUserId() == user.getUserId() || user.getRole() == Role.COORDINATOR) {
             roles = true;
         }
 
+        if (as.getAssignerUserId() == user.getUserId() || user.getRole() == Role.COORDINATOR || user.getRole() == Role.DOCENT) {
+            roles2 = true;
+        }
+
         model.addAttribute("roles", roles);
+        model.addAttribute("roles2", roles2);
         //pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());
         model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
