@@ -63,6 +63,14 @@ public class FileStorageService {
                 stream.write(file.getBytes());
                 stream.close();
             }
+            else {
+                if(dir.mkdir()){
+                    File serverFile = new File(dir, fileName);
+                    BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+                    stream.write(file.getBytes());
+                    stream.close();
+                }
+            }
 
             return fileName;
         } catch (IOException ex) {

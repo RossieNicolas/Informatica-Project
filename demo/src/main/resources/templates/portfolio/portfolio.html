@@ -35,7 +35,7 @@
                             <td th:text="${file.getFileId()}"></td>
                             <td th:text="${file.getTitle()}"></td>
                             <td style="float: right">
-                                <a th:href="${file.getDownloadLink()}" class="button">DOWNLOADEN</a> &nbsp;&nbsp;&nbsp;
+                                <a th:href="${file.getDownloadLink()}" class="button">DOWNLOAD</a> &nbsp;&nbsp;&nbsp;
                                 <a th:href="@{/deletefile/{id} (id=${file.getFileId()})}" class="button">🗑️</a>
                             </td>
                         </tr>
