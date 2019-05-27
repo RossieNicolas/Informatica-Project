@@ -1,8 +1,10 @@
 package com.architec.crediti.controllers;
 
+import com.architec.crediti.models.Assignment;
 import com.architec.crediti.models.Pager;
 import com.architec.crediti.models.Tag;
 import com.architec.crediti.models.User;
+import com.architec.crediti.repositories.AssignmentRepository;
 import com.architec.crediti.repositories.TagRepo;
 import com.architec.crediti.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,18 +17,22 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Controller
 public class TagController {
     private final
     TagRepo tagRepo;
     private final UserRepository userRepo;
+    private final AssignmentRepository assignRepo;
 
     @Autowired
-    public TagController(TagRepo tagRepo, UserRepository userRepo) {
+    public TagController(TagRepo tagRepo, UserRepository userRepo, AssignmentRepository assignRepo) {
         this.tagRepo = tagRepo;
         this.userRepo = userRepo;
+        this.assignRepo = assignRepo;
     }
 
     // get create tag page
@@ -34,14 +40,14 @@ public class TagController {
     public String tag(Model model, Principal principal) {
         //pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());
-        model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
+        model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
         return "tags/tag";
     }
 
     // make a new tag
     @PostMapping("/tag")
     public String createTag(Model model, @RequestParam("tagName") String tagName,
-            @RequestParam("tagDescription") String tagDescription) {
+                            @RequestParam("tagDescription") String tagDescription) {
         Tag tag = new Tag(tagName, tagDescription);
         boolean existsName = tagRepo.existsByTagName(tagName);
         if (!existsName) {
@@ -76,7 +82,7 @@ public class TagController {
         modelAndView.addObject("pager", pager);
         //pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());
-        model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
+        model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
         return modelAndView;
     }
 
@@ -90,7 +96,7 @@ public class TagController {
 
         //pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());
-        model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
+        model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
         return "tags/editTag";
     }
 
@@ -100,11 +106,11 @@ public class TagController {
         Tag tagForId = tagRepo.findBytagId(id);
         boolean existsName = tagRepo.existsByTagName(tagName);
 
-        if(tagForId!= null && (!existsName || tagForId.getTagName().equals(tag.getTagName())))  {
+        if (tagForId != null && (!existsName || tagForId.getTagName().equals(tag.getTagName()))) {
             tagForId.setTagName(tag.getTagName());
             tagForId.setTagDescription(tag.getTagDescription());
             tagRepo.save(tagForId);
-        } else{
+        } else {
             model.addAttribute("error", "Tag naam bestaat al!");
             model.addAttribute("tags", tagForId);
             return "tags/editTag";
@@ -115,16 +121,16 @@ public class TagController {
     // delete specific tag
     @GetMapping("/deletetag/{id}")
     public String deleteTag(@PathVariable("id") int id, Model model) {
-        try{
-            Tag tag = tagRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid tag Id:" + id));
-            tagRepo.delete(tag);
-
-            model.addAttribute("tags", tagRepo.findAll());
-            return "redirect:/listAllTags";
-
-        }catch (Exception ex){
-            return "tags/tagStillAssigned";
+        Tag tag = tagRepo.findBytagId(id);
+        Set<Assignment> assignmentList = tag.getAssignedTags();
+        for (Assignment a : assignmentList) {
+            if (a != null) {
+                return "tags/tagStillAssigned";
+            }
         }
+        tagRepo.delete(tag);
+        model.addAttribute("tags", tagRepo.findAll());
+        return "redirect:/listAllTags";
 
     }
 
