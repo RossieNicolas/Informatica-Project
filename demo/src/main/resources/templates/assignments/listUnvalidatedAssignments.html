@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/custom.css}">
 
-    <title>Crediti - Taken niet gevalideerd</title>
+    <title>Crediti - Opdrachten niet gevalideerd</title>
 
 </head>
 
@@ -20,7 +20,7 @@
 
     <main role="main" class="container">
         <div class="mt-5 jumbotron">
-            <h1 class="pb-4">Alle ongevalideerde taken</h1>
+            <h1 class="pb-4">Alle ongevalideerde opdrachten</h1>
             <div class="table-responsive">
                 <table id="table" class="table table-hover">
                     <thead>
@@ -29,7 +29,7 @@
                             <th class="col-1" scope="col">Nr</th>
                             <th class="col-1" scope="col">Titel</th>
                             <th class="col-1" scope="col">Type</th>
-                            <th class="col-4" scope="col">Taak</th>
+                            <th class="col-4" scope="col">Opdracht</th>
                             <th class="col-2" scope="col">Begin</th>
                             <th class="col-2" scope="col">Einde</th>
                         </tr>
@@ -63,7 +63,7 @@
             var tbl = document.getElementById('table');
             if (tbl.rows.length == 1) {
                 var para = document.createElement("p");
-                var node = document.createTextNode("Er zijn momenteel geen taken om te valideren.");
+                var node = document.createTextNode("Er zijn momenteel geen opdrachten om te valideren.");
                 para.appendChild(node);
                 var element = document.getElementById("empty");
                 element.style.visibility = "visible";

@@ -21,7 +21,7 @@ public class EmailTemplates {
 
     public static String validatedAssignment(String name) {
         return  "Beste,\n\n"+
-                "De opdracht ("+ name +") die u via ons platform ingaf werd gevalideerd en is nu zichtbaar voor studenten. " +
+                "De opdracht, ("+ name +"), die u via ons platform ingaf werd gevalideerd en is nu zichtbaar voor studenten. " +
                 "Van het moment dat een student geïnteresseerd is, neemt hij met u contact op voor het invullen en ondertekenen " +
                 "van de contracten. Van zodra dat rond is (handtekening van uzelf, de verantwoordelijke van de hogeschool en " +
                 "de student) kan de student van start gaan.\n\n"+
@@ -50,7 +50,7 @@ public class EmailTemplates {
 
     public static String approvedEnrolledAssignmentStudent(String name) {
         return "Beste,\n\n"+
-                "Je ingeschrijving voor volgende opdracht, "+ name +" werd goedgekeurd. Om te starten breng je de contracten in orde. " +
+                "Je ingeschrijving voor volgende opdracht, "+ name +", werd goedgekeurd. Om te starten breng je de contracten in orde. " +
                 "Pas na ondertekening door de opdrachtgever en de hogeschool mag en kan je starten.\n\n" +
                 "Na het beëindigen van de opdracht, ondertekent de opdrachtgever het bewijsdocument, " +
                 "vul je de zelfevaluatie in en verzamel je de nodige bewijsstukken voor je portfolio.\n\n" +

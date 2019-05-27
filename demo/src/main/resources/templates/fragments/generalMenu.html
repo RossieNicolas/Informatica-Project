@@ -29,9 +29,9 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="assignments" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Opdrachten</a>
                         <div class="dropdown-menu" aria-labelledby="assignments">
-                            <a class="dropdown-item" sec:authorize="!hasRole('EXTERNE')" href="/allassignments">Lopende taken</a>
-                            <a class="dropdown-item" href="/assignment">Taak toevoegen</a>
-                            <a class="dropdown-item" sec:authorize="hasRole('STUDENT')" href="/myassignments">Ingeschreven taken</a>
+                            <a class="dropdown-item" sec:authorize="!hasRole('EXTERNE')" href="/allassignments">Lopende Opdrachten</a>
+                            <a class="dropdown-item" href="/assignment">Opdracht Toevoegen</a>
+                            <a class="dropdown-item" sec:authorize="hasRole('STUDENT')" href="/myassignments">Ingeschreven Opdrachten</a>
                         </div>
                     </li>
 
@@ -44,13 +44,13 @@
                     <li sec:authorize="hasAnyRole('COORDINATOR','DOCENT')" class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="extras" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Extra's</a>
                         <div class="dropdown-menu" aria-labelledby="extras">
-                            <a class="dropdown-item" sec:authorize="hasRole('COORDINATOR')" href="/tag">Tag toevoegen</a>
-                            <a class="dropdown-item" sec:authorize="hasRole('COORDINATOR')" href="/listAllTags">Lijst van tags</a>
-                            <a class="dropdown-item" sec:authorize="hasRole('COORDINATOR')" href="/unvalidatedassignments">Ongevalideerde Taken</a>
+                            <a class="dropdown-item" sec:authorize="hasRole('COORDINATOR')" href="/tag">Tag Toevoegen</a>
+                            <a class="dropdown-item" sec:authorize="hasRole('COORDINATOR')" href="/listAllTags">Lijst van Tags</a>
+                            <a class="dropdown-item" sec:authorize="hasRole('COORDINATOR')" href="/unvalidatedassignments">Ongevalideerde Opdrachten</a>
                             <a class="dropdown-item" sec:authorize="hasRole('COORDINATOR')" href="/listUnvalidatedExternal">Ongevalideerde Externe</a>
                             <a class="dropdown-item" sec:authorize="hasAnyRole('COORDINATOR','DOCENT')" href="/liststudents">Alle Studenten</a>
                             <a class="dropdown-item" sec:authorize="hasRole('COORDINATOR')" href="/archive">Archief</a>
-                            <a class="dropdown-item" sec:authorize="hasAnyRole('COORDINATOR','DOCENT')" href="/unapprovedEnrollments">Ongevalideerde inschrijvingen</a>
+                            <a class="dropdown-item" sec:authorize="hasAnyRole('COORDINATOR','DOCENT')" href="/unapprovedEnrollments">Ongevalideerde Inschrijvingen</a>
                         </div>
                     </li>
 
@@ -60,7 +60,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li class="nav-item dropdown">
                         <img class="img-user pr-1 mt-1" th:src="@{/images/user.svg}">
-                        <a class="nav-link dropdown-toggle img-link" href="#" id="profile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="${name}"></a>
+                        <a class="mr-3 nav-link dropdown-toggle img-link" href="#" id="profile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="${name}"></a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profile">
                             <a class="dropdown-item" href="/main">Mijn startpagina</a>
                             <a class="dropdown-item" sec:authorize="hasRole('EXTERNE')" href="/externalUserProfile">Mijn profiel</a>
