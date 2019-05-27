@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Crediti - Alle tags</title>
+    <link rel="stylesheet" th:href="@{/css/APcss3.css}">
+</head>
+<body class="background">
+<header th:insert="fragments/generalMenu.html :: header (name=${name})"></header>
+<div class="container ">
+    <h2 class="extra">Tags bekijken</h2>
+</div>
+<div id='overview'>
+    <table>
+        <thead>
+        <tr>
+            <th style="padding-left: 2.5%">Info</th>
+            <th>Name</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="a : ${listAllTags}" class="tablebackground">
+            <td><a th:href="${'/listAllTags/' + a.tagId}" class="button">📃️</a></td>
+            <td id="tagName" th:text="${a.getTagName()}"></td>
+            <td id="tagDescription" th:text="${a.getTagDescription()}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="container">
+    <div th:if="${tags.totalPages !=1}">
+        <ul class="pagination">
+            <li th:class="${tags.number == 0} ? disabled">
+                <a class="pageLink" th:href="@{/listAllTags/(page=${tags.number})}">&laquo;</a>
+            </li>
+            <li th:class="${tags.number == (page - 1)} ? 'active pointer-disabled'"
+                th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
+                <a class="pageLink" th:href="@{/listAllTags/(page=${page})}" th:text="${page}"></a>
+            </li>
+            <li th:class="${tags.number + 1 == tags.totalPages} ? disabled">
+                <a class="pageLink" th:href="@{/listAllTags/(page=${tags.number + 2})}">&raquo;</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div style="height: 45%"></div>
+<footer th:insert="fragments/generalMenu.html :: footer"></footer>
+</body>
+</html>
