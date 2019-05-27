@@ -50,7 +50,7 @@ public class ArchivedAssignment {
     @Column(name = "assigner_user")
     private String assignerUser;
 
-    @Column(name="tag_ids")
+    @Column(name = "tag_ids")
     private String tagIds;
 
     public String getTagName() {
@@ -61,10 +61,21 @@ public class ArchivedAssignment {
         this.tagName = tagName;
     }
 
-    @Column(name="tag_name")
+    @Column(name = "tag_name")
     private String tagName;
 
     public ArchivedAssignment() {
+    }
+
+    public ArchivedAssignment(@NotNull(message = "Titel mag niet leeg zijn!") @NotBlank String title, @NotNull(message = "Type mag niet leeg zijn!") @NotBlank String type, @NotNull(message = "Beschrijving mag niet leeg zijn!") @NotBlank String task, @NotNull(message = "Totaal uur mag niet leeg zijn!") int amountHours, @NotNull(message = "Max studenten mag niet leeg zijn!") int maxStudents, @NotNull(message = "Startdatum mag niet leeg zijn!") @NotBlank String startDate, @NotNull(message = "Einddatum mag niet leeg zijn!") @NotBlank String endDate, String assignerUser) {
+        this.title = title;
+        this.type = type;
+        this.task = task;
+        this.amountHours = amountHours;
+        this.maxStudents = maxStudents;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.assignerUser = assignerUser;
     }
 
     public ArchivedAssignment(@NotNull(message = "Titel mag niet leeg zijn!") @NotBlank String title,
@@ -87,7 +98,7 @@ public class ArchivedAssignment {
         this.tagIds = tagIds;
     }
 
-    public void fillArchivedAssignment(Assignment a){
+    public void fillArchivedAssignment(Assignment a) {
         this.assignmentId = a.getAssignmentId();
         this.title = a.getTitle();
         this.type = a.getType();

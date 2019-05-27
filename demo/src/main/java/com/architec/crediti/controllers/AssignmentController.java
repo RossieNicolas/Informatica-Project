@@ -1,5 +1,6 @@
 package com.architec.crediti.controllers;
 
+import ch.qos.logback.core.rolling.helper.TimeBasedArchiveRemover;
 import com.architec.crediti.email.EmailServiceImpl;
 import com.architec.crediti.email.EmailTemplates;
 import com.architec.crediti.models.*;
@@ -371,12 +372,12 @@ public class AssignmentController {
 
     //archive assignment
     @GetMapping("/archiveassignment/{assignmentId}")
-    public String archiveAssignment(Principal principal, @PathVariable("assignmentId") int assignmentId, Model model, @RequestParam(required = false, value = "tag") int[] tags) {
+    public String archiveAssignment(Principal principal, @PathVariable("assignmentId") long assignmentId, Model model, @RequestParam(required = false, value = "tag") int[] tags) {
         User currentUser = userRepo.findByEmail(principal.getName());
         ArrayList<Integer> list = new ArrayList<>();
         ArrayList<String> listNames = new ArrayList<>();
 
-        Assignment assignment = assignmentRepo.findById((long) assignmentId)
+        Assignment assignment = assignmentRepo.findById(assignmentId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid assignment Id:" + assignmentId));
 
         ArchivedAssignment archivedAssignment = new ArchivedAssignment();
@@ -421,50 +422,85 @@ public class AssignmentController {
 
     //duplicate assignment
     @GetMapping("/duplicateassignment/{assignmentId}")
-    public String duplicateAssignment(Principal principal, @PathVariable("assignmentId") int assignmentId, Model model) {
+    public String duplicateAssignment(Principal principal, @PathVariable("assignmentId") long assignmentId, Model model) {
         User currentUser = userRepo.findByEmail(principal.getName());
 
-        Assignment assignment = assignmentRepo.findById((long) assignmentId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid assignment Id:" + assignmentId));
+        Assignment assignment = assignmentRepo.findByAssignmentId(assignmentId);
+        if (assignment == null) {
+            ArchivedAssignment archivedAss = archiveRepo.findByAssignmentId(assignmentId);
+            String title = archivedAss.getTitle();
+            String type = archivedAss.getType();
+            String omschrijving = archivedAss.getTask();
+            String beginDat = archivedAss.getStartDate();
+            String eindDat = archivedAss.getEndDate();
+            int totaalUur = archivedAss.getAmountHours();
+            int maxStud = archivedAss.getMaxStudents();
 
-        String title = assignment.getTitle();
-        String type = assignment.getType();
-        String omschrijving = assignment.getTask();
-        String beginDat = assignment.getStartDate();
-        String eindDat = assignment.getEndDate();
-        int totaalUur = assignment.getAmountHours();
-        int maxStud = assignment.getMaxStudents();
+            ArchivedAssignment duplicateAssignment = new ArchivedAssignment(title, type, omschrijving, totaalUur, maxStud, beginDat,
+                    eindDat, currentUser.toString());
 
-        Assignment duplicateAssignment = new Assignment(title, type, omschrijving, totaalUur, maxStud, beginDat,
-                eindDat, false, false, currentUser);
+            List<Tag> tags = tagRepo.findAll();
 
-        List<Tag> tags = tagRepo.findAll();
+            model.addAttribute("tags", tags);
+            model.addAttribute("type", type);
+            model.addAttribute("duplicate", duplicateAssignment);
 
-        model.addAttribute("tags", tags);
-        model.addAttribute("type", type);
-        model.addAttribute("duplicate", duplicateAssignment);
+            boolean[] status = new boolean[tags.size()];
+            String selectedTags = archivedAss.getTagIds();
+            List<String> items = Arrays.asList(selectedTags.replace("[", "").replace("]", "").split("\\s*,\\s*"));
 
-        boolean[] status = new boolean[tags.size()];
-        Set<Tag> selectedTags = assignment.getTags();
-
-        for (int i = 0; i < tags.size(); i++) {
-            for (Tag item : selectedTags) {
-                if (tags.get(i).getTagId() == item.getTagId()) {
-                    status[i] = true;
+            if (!items.get(0).equals("")) {
+                for (int i = 0; i < tags.size(); i++) {
+                    for (String item : items) {
+                        if (tags.get(i).getTagId() == Integer.parseInt(item)) {
+                            status[i] = true;
+                        }
+                    }
                 }
             }
+
+            model.addAttribute("status", status);
+
+            return "assignments/duplicateAssignment";
+
+        } else {
+            String title = assignment.getTitle();
+            String type = assignment.getType();
+            String omschrijving = assignment.getTask();
+            String beginDat = assignment.getStartDate();
+            String eindDat = assignment.getEndDate();
+            int totaalUur = assignment.getAmountHours();
+            int maxStud = assignment.getMaxStudents();
+
+            Assignment duplicateAssignment = new Assignment(title, type, omschrijving, totaalUur, maxStud, beginDat,
+                    eindDat, false, false, currentUser);
+
+            List<Tag> tags = tagRepo.findAll();
+
+            model.addAttribute("tags", tags);
+            model.addAttribute("type", type);
+            model.addAttribute("duplicate", duplicateAssignment);
+
+            boolean[] status = new boolean[tags.size()];
+            Set<Tag> selectedTags = assignment.getTags();
+
+            for (int i = 0; i < tags.size(); i++) {
+                for (Tag item : selectedTags) {
+                    if (tags.get(i).getTagId() == item.getTagId()) {
+                        status[i] = true;
+                    }
+                }
+            }
+            model.addAttribute("status", status);
+
+            return "assignments/duplicateAssignment";
         }
-        model.addAttribute("status", status);
-//        assignmentRepo.save(duplicateAssignment);
-
-
-        return "assignments/duplicateAssignment";
     }
 
     // add duplicate assignment
     @PostMapping("/duplicateassignment/{assignmentId}")
     public String createDuplicate(Principal principal, @Valid Assignment assignment,
-                                   @RequestParam(required = false, value = "tag") int[] tags) {
+                                  @RequestParam(required = false, value = "tag") int[] tags) {
         Set<Tag> set = new HashSet<>();
         User currentUser = userRepo.findByEmail(principal.getName());
 

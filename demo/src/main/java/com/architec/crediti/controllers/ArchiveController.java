@@ -1,9 +1,8 @@
 package com.architec.crediti.controllers;
 
-import com.architec.crediti.models.ArchivedAssignment;
-import com.architec.crediti.models.Pager;
-import com.architec.crediti.models.User;
+import com.architec.crediti.models.*;
 import com.architec.crediti.repositories.ArchiveRepository;
+import com.architec.crediti.repositories.AssignmentRepository;
 import com.architec.crediti.repositories.TagRepo;
 import com.architec.crediti.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,15 +11,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -32,10 +29,12 @@ public class ArchiveController {
     private final
     TagRepo tagRepo;
     private final UserRepository userRepo;
+    private final AssignmentRepository assignmentRepo;
 
     @Autowired
-    public ArchiveController(ArchiveRepository archiveRepo, TagRepo tagRepo, UserRepository userRepo) {
+    public ArchiveController(ArchiveRepository archiveRepo, AssignmentRepository assignmentRepo, TagRepo tagRepo, UserRepository userRepo) {
         this.archiveRepo = archiveRepo;
+        this.assignmentRepo = assignmentRepo;
         this.tagRepo = tagRepo;
         this.userRepo = userRepo;
     }
@@ -88,7 +87,7 @@ public class ArchiveController {
                     List<String> items = Arrays.asList(tag.replace("[", "").replace("]", "").split("\\s*,\\s*"));
 
                     for (int i = 0; i < items.size(); i++) {
-                        if (archiveTag.contains(items.get(i)) && !tag.equals("[]")){
+                        if (archiveTag.contains(items.get(i)) && !tag.equals("[]")) {
                             list2.add(a);
                         }
                     }
@@ -119,4 +118,5 @@ public class ArchiveController {
 
         return "/archive/archive";
     }
+
 }
