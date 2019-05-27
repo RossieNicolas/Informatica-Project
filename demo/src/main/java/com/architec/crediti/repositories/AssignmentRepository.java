@@ -22,6 +22,7 @@ public interface AssignmentRepository extends PagingAndSortingRepository<Assignm
     Page<Assignment> findByTitleContainingAndFullOrderByAssignmentIdDesc(String title, boolean full,Pageable pageable);
     Page<Assignment> findByFullOrderByAssignmentIdDesc(boolean full, Pageable pageable);
     List<Assignment> findByTitleContainingAndFullOrderByAssignmentIdDesc(String title, boolean full);
+    List<Assignment> findByTitleContainingAndArchived(String name, boolean archived);
 
     @Query(value ="select * from assignments a where a.assignment_id in :tagId",nativeQuery=true)
     Page<Assignment> findByTagsOrderByAssignmentIdDesc(@Param("tagId") List<Long> tagId, Pageable pageable );
