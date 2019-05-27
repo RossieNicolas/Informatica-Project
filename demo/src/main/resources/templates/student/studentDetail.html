@@ -2,56 +2,69 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <title>Crediti - Student detail</title>
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
 
-<body class="background">
-    <header th:insert="fragments/generalMenu_old.html :: header (name=${name})"></header>
-    <div class="block">
-        <section class="find-edu">
-            <div class="container ">
-                <div class="wrap-all col-xs-12 ">
-                    <h2 class="extra">Detail student</h2>
-                    <form th:each="a: ${student}" class="standard-form" method="post" th:action="@{/liststudents/{id}(id=${a.studentNumber})}">
-                        <fieldset disabled="disabled" id="assignmentInfo">
-                            <label for="nummer">Studenten nummer:</label>
-                            <input name="nummer" id="nummer" type="text" th:value="*{a.getStudentNumber()}" required="required"><br>
-                            <label for="Naam">Naam:</label>
-                            <input name="Naam" id="Naam" type="text" th:value="*{a.getUserId()}" required="required"><br>
-                            <label for="Email">Email:</label>
-                            <input name="Email" id="Email" th:value="*{a.findEmail()}" type="text" required="required"><br>
-                            <label for="Gsm">Gsm:</label><br>
-                            <input name="Gsm" id="Gsm" type="text" th:value="*{a.getGsm()}" required="required"><br>
-                            <label for="amoutnHours">Afgeronde uren:</label><br>
-                            <input name="amoutnHours" id="amoutnHours" type="text" th:value="*{a.getAmoutHours()}" required="required"><br>
-                            <label>Soort:</label><br>
-                            <input th:if="${a.isMobility()}" type="text" value="Mobility">
-                            <input th:if="${!a.isMobility()}" type="text" value="Zap">
-                        </fieldset>
-                    </form>
-                    <table id="tablePortfolio">
-                        <thead>
-                            <tr>
-                                <th>Naam van een bestand</th>
-                                <th style="width: 18%"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <div id="profilePortfolio">
-                                <tr th:each="file : ${files}" class="tablebackground">
-                                    <td th:text="${file.getTitle()}"></td>
-                                    <td><a th:href="${file.getDownloadLink()}" class="button">Download</a></td>
-                                </tr>
-                            </div>
-                        </tbody>
-                    </table>
-                </div>
+<body class="background" onload="tableFill()">
+<header th:insert="fragments/generalMenu_old.html :: header (name=${name})"></header>
+<div class="block">
+    <section class="find-edu">
+        <div class="container ">
+            <div class="wrap-all col-xs-12 ">
+                <h2 class="extra">Detail student</h2>
+                <form th:each="a: ${student}" class="standard-form" method="post"
+                      th:action="@{/liststudents/{id}(id=${a.studentNumber})}">
+                    <fieldset disabled="disabled" id="assignmentInfo">
+                        <label for="nummer">Studenten nummer:</label>
+                        <input name="nummer" id="nummer" type="text" th:value="*{a.getStudentNumber()}"
+                               required="required"><br>
+                        <label for="Naam">Naam:</label>
+                        <input name="Naam" id="Naam" type="text" th:value="*{a.getUserId()}" required="required"><br>
+                        <label for="Email">Email:</label>
+                        <input name="Email" id="Email" th:value="*{a.findEmail()}" type="text" required="required">
+                        <a th:href="'mailto:' + ${a.findEmail()}" style="font-size: 40px">📧</a><br>
+                        <label for="Gsm">Gsm:</label><br>
+                        <input name="Gsm" id="Gsm" type="text" th:value="*{a.getGsm()}" required="required"><br>
+                        <label for="amoutnHours">Afgeronde uren:</label><br>
+                        <input name="amoutnHours" id="amoutnHours" type="text" th:value="*{a.getAmoutHours()}"
+                               required="required"><br>
+                        <label>Soort:</label><br>
+                        <input th:if="${a.isMobility()}" type="text" value="Mobility">
+                        <input th:if="${!a.isMobility()}" type="text" value="Zap">
+                    </fieldset>
+                </form>
+                <table id="tablePortfolio">
+                    <thead>
+                    <tr>
+                        <th>Naam van een bestand</th>
+                        <th style="width: 18%"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <div id="profilePortfolio">
+                        <tr th:each="file : ${files}" class="tablebackground">
+                            <td th:text="${file.getTitle()}"></td>
+                            <td><a th:href="${file.getDownloadLink()}" class="button">Download</a></td>
+                        </tr>
+                    </div>
+                    </tbody>
+                </table>
             </div>
-        </section>
-    </div>
-    <footer th:insert="fragments/generalMenu.html :: footer"></footer>
+        </div>
+    </section>
+</div>
+<footer th:insert="fragments/generalMenu.html :: footer"></footer>
+<script>
+    function tableFill() {
+        var tbl = document.getElementById('tablePortfolio');
+        if (tbl.rows.length == 1) {
+            var x = tbl.insertRow(1);
+            var cell = x.insertCell(0);
+            cell.innerHTML = "Er zijn momenteel geen bestanden geüpload.";
+        }
+    }
+</script>
 </body>
-
 </html>
