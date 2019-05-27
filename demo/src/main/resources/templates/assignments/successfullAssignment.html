@@ -1,22 +1,24 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
-    <meta charset="UTF-8"/>
+    <meta charset="UTF-8" />
     <title>Crediti - Taak toegevoegd</title>
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
+
 <body class="background">
-<header th:insert="fragments/generalMenu.html :: header (name=${name})"></header>
-<div class="block">
-    <div class="container extra">
-        <h2>Opdracht is aangemaakt!</h2>
-        <a class="button" href="/assignment">Nieuwe taak</a>
-        <a sec:authorize="!hasRole('EXTERN')" class="button" href="/allassignments">Alle taken</a>
-        <a sec:authorize="!hasRole('EXTERN')" class="button" href="/myassignments">Ingeschreven taken</a>
+    <header th:insert="fragments/generalMenu_old.html :: header (name=${name})"></header>
+    <div class="block">
+        <div class="container extra">
+            <h2>Opdracht is aangemaakt!</h2>
+            <a class="button" href="/assignment">Nieuwe taak</a>
+            <a sec:authorize="!hasRole('EXTERN')" class="button" href="/allassignments">Alle taken</a>
+            <a sec:authorize="!hasRole('EXTERN')" class="button" href="/myassignments">Ingeschreven taken</a>
+        </div>
     </div>
-</div>
-<div style="height: 65%"></div>
-<footer th:insert="fragments/generalMenu.html :: footer"></footer>
+    <div style="height: 65%"></div>
+    <footer th:insert="fragments/generalMenu.html :: footer"></footer>
 </body>
+
 </html>

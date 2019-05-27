@@ -1,36 +1,56 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8"/>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+
     <title>Crediti - Tag aanmaken</title>
-    <link rel="stylesheet" th:href="@{/css/APcss3.css}">
+
 </head>
-<body>
-<div class="background">
-    <header th:insert="fragments/generalMenu.html :: header (name=${name})"></header>
-    <div class="block">
-        <section class="find-edu">
-            <div class="container ">
-                <div class="wrap-all col-xs-12 ">
-                    <h2 class="extra">Tag toevoegen</h2>
-                    <p th:if="${error}" th:text="${error}">No error</p>
-                    <form class="standard-form" th:action='@{/tag}' method='POST'>
-                        <label for='tagName'>Tag: </label>
-                        <input type='text' name='tagName' id='tagName' maxlength="50" placeholder="tagnaam" required><br/>
-                        <label for='tagDescription'>Beschrijving: </label>
-                        <input type='text' name='tagDescription' id='tagDescription' maxlength="250"
-                               placeholder="korte beschrijving" required><br/>
-                        <input type='submit' value='Voeg toe' class="button">
-                    </form>
+
+<body class="bg">
+
+    <header th:insert="fragments/generalMenu.html :: header">
+    </header>
+
+    <main role="main" class="container">
+        <div class="text-center mt-5 mb-5 jumbotron">
+            <h1>Tag toevoegen</h1>
+
+            <form class="text-center form-signin" th:action="@{/tag}" method="POST">
+                <div class="form-group">
+
+                    <div>
+                        <label for="tagName">Tag:</label>
+                        <input type="text" class="form-control" name="tagName" id="tagName" maxlength="50" required>
+                    </div>
+
+                    <div>
+                        <label class="mt-2" for="tagDescription">Beschrijving:</label>
+                        <input type="text" class="form-control" name="tagDescription" id="tagDescription" maxlength="250" required>
+                    </div>
+
                 </div>
-            </div>
-            <div class="alert" id="panel">
-                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-                Tag toegevoegd.
-            </div>
-        </section>
-    </div>
-</div>
-<footer th:insert="fragments/generalMenu.html :: footer"></footer>
+                <button type="submit" class="btn btn-primary btn-lg">Voeg toe</button>
+
+            </form>
+        </div>
+        </div>
+
+    </main>
+    <!-- /.container -->
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
+
 </html>

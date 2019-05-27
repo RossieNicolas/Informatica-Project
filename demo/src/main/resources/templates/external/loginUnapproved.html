@@ -22,8 +22,8 @@
 
     <main role="main" class="container">
         <div class="mt-5 jumbotron">
-            <div th:if="${loginError}" class="alert alert-danger" role="alert">
-                Gebruikersnaam of wachtwoord is onjuist.
+            <div th:if="${unapproved}" class="alert alert-danger" role="alert">
+                Uw account werd nog niet gecontroleerd door een coördinator. U ontvangt een e-mail zodra wij uw account valideren.
             </div>
             <form class="form-signin" th:action="@{/login}" action="/login" method="post">
                 <h1 class="h3 mt-8 mb-3 font-weight-normal">Log in</h1>

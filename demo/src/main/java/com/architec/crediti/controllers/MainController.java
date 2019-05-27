@@ -34,7 +34,7 @@ public class MainController {
         }
 
         if (exRepo.findByUserId(currentUser) != null && !exRepo.findByUserId(currentUser).isApproved()) {
-            return "redirect:/notapproved";
+            return "redirect:/loginUnapproved";
 
         }
         model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");

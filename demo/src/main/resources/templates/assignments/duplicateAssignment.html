@@ -1,122 +1,123 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8"/>
+    <meta charset="UTF-8" />
     <title>Crediti - Opdracht aanmaken</title>
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
+
 <body class="background">
-<header th:insert="fragments/generalMenu.html :: header  (name=${name})">
-</header>
-<div class="block">
-    <section class="find-edu card">
-        <div class="container">
-            <div class="wrap-all col-xs-12 ">
-                <h2>Invoerformulier voor opdrachtgevers</h2>
-                <form th:each="a: ${duplicate}" method='POST' class="standard-form"
-                      th:action="@{/duplicateassignment/{id}(id=${a.assignmentId})}">
+    <header th:insert="fragments/generalMenu_old.html :: header (name=${name})"></header>
+    </header>
+    <div class="block">
+        <section class="find-edu card">
+            <div class="container">
+                <div class="wrap-all col-xs-12 ">
+                    <h2>Invoerformulier voor opdrachtgevers</h2>
+                    <form th:each="a: ${duplicate}" method='POST' class="standard-form" th:action="@{/duplicateassignment/{id}(id=${a.assignmentId})}">
 
-                    <label for="title">Titel:</label>
-                    <input name="title" id="title" type="text" th:value="*{a.getTitle()}" required="required"><br>
+                        <label for="title">Titel:</label>
+                        <input name="title" id="title" type="text" th:value="*{a.getTitle()}" required="required"><br>
 
-                    <label for="type">Type:</label>
-                    <select name="type" id="type" required>
+                        <label for="type">Type:</label>
+                        <select name="type" id="type" required>
                         <option value="" disabled selected>Kies een type</option>
                         <option th:text="ZAP"></option>
                         <option th:text="Mobility"></option>
                     </select>
 
-                    <label for="task">Omschrijving opdracht:</label>
-                    <textarea name="task" id="task" th:text="*{a.getTask()}" required="required"></textarea><br>
+                        <label for="task">Omschrijving opdracht:</label>
+                        <textarea name="task" id="task" th:text="*{a.getTask()}" required="required"></textarea><br>
 
-                    <label for="startDate">Begindatum:</label><br>
-                    <input name="startDate" id="startDate" type="date" onblur="SDate()" th:value="*{a.getStartDate()}" required="required"><br>
+                        <label for="startDate">Begindatum:</label><br>
+                        <input name="startDate" id="startDate" type="date" onblur="SDate()" th:value="*{a.getStartDate()}" required="required"><br>
 
-                    <label for="endDate">Einddatum:</label><br>
-                    <input name="endDate" id="endDate" type="date" onblur="TDate()" th:value="*{a.getEndDate()}" required="required"><br><br>
+                        <label for="endDate">Einddatum:</label><br>
+                        <input name="endDate" id="endDate" type="date" onblur="TDate()" th:value="*{a.getEndDate()}" required="required"><br><br>
 
-                    <label for="amountHours">Totaal uur:</label>
-                    <input name="amountHours" id="amountHours" type="number" onblur="amoutH()" th:value="*{a.getAmountHours()}" required="required"
-                           min="1" max="78"><br>
+                        <label for="amountHours">Totaal uur:</label>
+                        <input name="amountHours" id="amountHours" type="number" onblur="amoutH()" th:value="*{a.getAmountHours()}" required="required" min="1" max="78"><br>
 
-                    <label for="maxStudents">Max Studenten:</label>
-                    <input name="maxStudents" id="maxStudents" type="number" th:value="*{a.getMaxStudents()}" required="required" min="1"><br>
-                    <label>Tags:</label>
-                    <ul>
-                        <th:block th:each='tag,iter: ${tags}'>
-                            <label for="tag" th:value="${tag.getTagId()}">
+                        <label for="maxStudents">Max Studenten:</label>
+                        <input name="maxStudents" id="maxStudents" type="number" th:value="*{a.getMaxStudents()}" required="required" min="1"><br>
+                        <label>Tags:</label>
+                        <ul>
+                            <th:block th:each='tag,iter: ${tags}'>
+                                <label for="tag" th:value="${tag.getTagId()}">
                                 <input th:checked="${status[iter.index]}" type="checkbox" id="tag"
                                        name="tag" th:text='${tag.getTagName()}'
                                        th:value='${tag.getTagId()}'/>
                             </label>
 
-                        </th:block>
-                    </ul>
-                    <input class="button" type="SUBMIT" value="Kopie aanmaken">
+                            </th:block>
+                        </ul>
+                        <input class="button" type="SUBMIT" value="Kopie aanmaken">
 
-                </form>
+                    </form>
+                </div>
             </div>
-        </div>
-    </section>
-</div>
-<footer th:insert="fragments/generalMenu.html :: footer">
-</footer>
-<script th:inline="javascript">
-    var type = /*[[${type}]]*/ 'kies een type';
-    SelectElement("type", type);
+        </section>
+    </div>
+    <footer th:insert="fragments/generalMenu.html :: footer">
+    </footer>
+    <script th:inline="javascript">
+        var type = /*[[${type}]]*/ 'kies een type';
+        SelectElement("type", type);
 
-    function SelectElement(id, type) {
-        var element = document.getElementById(id);
-        element.value = type;
-    }
-
-    function amoutH() {
-        var amountHours = document.getElementById("amountHours").value;
-        var test = parseInt(amountHours);
-        if (test % 3 != 0 && test <= 78) {
-            alert("Totaal uur moet drievoud zijn en kleiner of gelijk aan 78.");
-            document.getElementById('amountHours').value = "";
-            return false;
+        function SelectElement(id, type) {
+            var element = document.getElementById(id);
+            element.value = type;
         }
-        return true
 
-
-    }
-
-    function TDate() {
-        var startDate = document.getElementById("startDate").value;
-        var endDate = document.getElementById("endDate").value;
-
-        if (startDate != null && endDate != null) {
-            if (startDate > endDate) {
-                alert("De startdatum moet kleiner zijn dan de einddatum van uw opdracht!");
-                document.getElementById('endDate').value = "";
-                return false;
-            } else if (endDate < startDate) {
-                alert("De startdatum moet kleiner zijn dan de einddatum!");
-                document.getElementById('endDate').value = "";
+        function amoutH() {
+            var amountHours = document.getElementById("amountHours").value;
+            var test = parseInt(amountHours);
+            if (test % 3 != 0 && test <= 78) {
+                alert("Totaal uur moet drievoud zijn en kleiner of gelijk aan 78.");
+                document.getElementById('amountHours').value = "";
                 return false;
             }
-
-            return true;
-        }
-    }
-
-    function SDate() {
-        var startDate = document.getElementById("startDate").value;
-        var endDate = document.getElementById("endDate").value;
-        var currentDate = new Date().toISOString().split('T')[0];
-
-        if (startDate != null) {
-            if (startDate < currentDate) {
-                alert("De startdatum moet groter of gelijk zijn aan de datum van vandaag!");
-                document.getElementById('startDate').value = "";
-                return false;
-            }
-
             return true
+
+
         }
-    }
-</script>
+
+        function TDate() {
+            var startDate = document.getElementById("startDate").value;
+            var endDate = document.getElementById("endDate").value;
+
+            if (startDate != null && endDate != null) {
+                if (startDate > endDate) {
+                    alert("De startdatum moet kleiner zijn dan de einddatum van uw opdracht!");
+                    document.getElementById('endDate').value = "";
+                    return false;
+                } else if (endDate < startDate) {
+                    alert("De startdatum moet kleiner zijn dan de einddatum!");
+                    document.getElementById('endDate').value = "";
+                    return false;
+                }
+
+                return true;
+            }
+        }
+
+        function SDate() {
+            var startDate = document.getElementById("startDate").value;
+            var endDate = document.getElementById("endDate").value;
+            var currentDate = new Date().toISOString().split('T')[0];
+
+            if (startDate != null) {
+                if (startDate < currentDate) {
+                    alert("De startdatum moet groter of gelijk zijn aan de datum van vandaag!");
+                    document.getElementById('startDate').value = "";
+                    return false;
+                }
+
+                return true
+            }
+        }
+    </script>
 </body>
+
 </html>
