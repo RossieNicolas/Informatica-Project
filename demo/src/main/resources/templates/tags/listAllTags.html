@@ -16,8 +16,7 @@
 
 <body class="bg">
 
-    <header th:insert="fragments/general.html :: header">
-    </header>
+    <header th:insert="fragments/generalMenu.html :: header"> </header>
 
     <main role="main" class="container">
         <div class="mt-5 jumbotron">
@@ -33,7 +32,7 @@
                 </thead>
                 <tbody>
                     <tr th:each="a : ${listAllTags}">
-                        <td scope="row"><a th:href="${'/listAllTags/' + a.tagId}" class="btn btn-outline-secondary" role="button">📃️ Bewerk</a></td>
+                        <td scope="row"><a th:href="${'/listAllTags/' + a.tagId}" class="btn btn-outline-secondary" role="button">✏️ Bewerk</a></td>
                         <td id="tagName" th:text="${a.getTagName()}"></td>
                         <td id="tagDescription" th:text="${a.getTagDescription()}"></td>
                     </tr>
