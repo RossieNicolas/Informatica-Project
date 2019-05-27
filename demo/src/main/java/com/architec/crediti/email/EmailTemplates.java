@@ -7,21 +7,21 @@ public class EmailTemplates {
     //voor coördinator
     public static String createdAssignment(String assigner, String title, String email, String url) {
         return "Beste,\n"+
-                "Nieuwe ZAP-opdracht van lector/externe/student(e) "+ assigner +".\n" +
+                "Nieuwe opdracht van lector/externe/student(e) "+ assigner +".\n" +
                 email + " naam opdracht: "+ title +
                 "\nTe vinden op: "+ url;
     }
 
     public static String archivedAssignment(String assigner, String title, String email, String url) {
         return"Beste,\n"+
-                "Volgende ZAP-opdracht van student(e) "+ assigner +" werd gearchiveerd.\n" +
+                "Volgende pdracht van student(e) "+ assigner +" werd gearchiveerd.\n" +
                 email + " naam opdracht: "+ title +
                 "\nTe vinden op: "+ url;
     }
 
     public static String validatedAssignment(String name) {
         return  "Beste,\n\n"+
-                "De opdracht ("+ name +") die u via ons ZAP-platform ingaf werd gevalideerd en is nu zichtbaar voor studenten. " +
+                "De opdracht ("+ name +") die u via ons platform ingaf werd gevalideerd en is nu zichtbaar voor studenten. " +
                 "Van het moment dat een student geïnteresseerd is, neemt hij met u contact op voor het invullen en ondertekenen " +
                 "van de contracten. Van zodra dat rond is (handtekening van uzelf, de verantwoordelijke van de hogeschool en " +
                 "de student) kan de student van start gaan.\n\n"+
@@ -34,7 +34,7 @@ public class EmailTemplates {
 
     public static String enrolledAssignment( String title, String assigner, String email) {
         return "Beste,\n\n"+
-                "Nieuwe inschrijving van volgende ZAP-opdracht: "+ title +".\n" +
+                "Nieuwe inschrijving van volgende opdracht: "+ title +".\n" +
                 "Naam student(e): "+ assigner + "\n" +
                 "E-mailadres: " + email;
     }
@@ -42,7 +42,7 @@ public class EmailTemplates {
     // voor student
     public static String waitValidationEnrolledAssignmentStudent(String name) {
         return"Beste,\n\n"+
-                "Je hebt je ingeschreven voor volgende ZAP- opdracht: "+ name +". " +
+                "Je hebt je ingeschreven voor volgende opdracht: "+ name +"." +
                 "\nOm te starten moet je wachten op een bevestiging van de opdrachtgever. " +
                 "\n\n" +
                 "AP-hogeschool";
@@ -50,7 +50,7 @@ public class EmailTemplates {
 
     public static String approvedEnrolledAssignmentStudent(String name) {
         return "Beste,\n\n"+
-                "Je ingeschrijving voor volgende ZAP- opdracht, "+ name +" werd goedgekeurd. Om te starten breng je de contracten in orde. " +
+                "Je ingeschrijving voor volgende opdracht, "+ name +" werd goedgekeurd. Om te starten breng je de contracten in orde. " +
                 "Pas na ondertekening door de opdrachtgever en de hogeschool mag en kan je starten.\n\n" +
                 "Na het beëindigen van de opdracht, ondertekent de opdrachtgever het bewijsdocument, " +
                 "vul je de zelfevaluatie in en verzamel je de nodige bewijsstukken voor je portfolio.\n\n" +
@@ -61,7 +61,7 @@ public class EmailTemplates {
 
     public static String declinedEnrolledAssignmentStudent(String name) {
         return "Beste,\n\n"+
-                "Je inschrijving voor ZAP- opdracht, "+ name +", werd geweigerd. " +
+                "Je inschrijving voor opdracht, "+ name +", werd geweigerd." +
                 "\n\n" +
                 "DAP-hogeschool";
     }
