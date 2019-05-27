@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/custom.css}">
 
     <title>Crediti - Ongevalideerde Externe</title>
@@ -16,109 +17,125 @@
 
 <body class="bg" onload="tableFill()">
 
-    <header th:insert="fragments/generalMenu.html :: header"> </header>
+<header th:insert="fragments/generalMenu.html :: header"></header>
 
-    <main role="main" class="container">
-        <div class="mt-5 jumbotron">
-            <h1 class="pb-4">Ongevalideerde Externe</h1>
-            <div class="table-responsive">
-                <table id="table" class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th scope="col">Voor-en achternaam</th>
-                            <th scope="col">Bedrijf</th>
-                            <th scope="col">E-mail</th>
-                            <th scope="col">Telefoon</th>
-                            <th scope="col">Adres</th>
-                            <th scope="col"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="e : ${extern}">
-                            <td th:text="${e.getFirstname() + ' ' + e.getLastname()}"></td>
-                            <td th:text="${e.getCompany()}"></td>
-                            <td th:text="${e.getUserId().getEmail()}"></td>
-                            <td th:text="${e.getPhone()}"></td>
-                            <td th:text="${e.getAddress()} + ', ' + ${e.getPostal()} + ' ' + ${e.getCity()}"></td>
-                            <td>
-                                <button class="btn btn-outline-success" role="button" data-toggle="modal" data-target="#validateModal">✔️</button>
-                                <button class="btn btn-outline-danger" role="button" data-toggle="modal" data-target="#deleteModal">🗑️</button>
+<main role="main" class="container">
+    <div class="mt-5 jumbotron">
+        <h1 class="pb-4">Ongevalideerde Externe</h1>
+        <div class="table-responsive">
+            <table id="table" class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Voor-en achternaam</th>
+                    <th scope="col">Bedrijf</th>
+                    <th scope="col">E-mail</th>
+                    <th scope="col">Telefoon</th>
+                    <th scope="col">Adres</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="e : ${extern}">
+                    <td th:text="${e.getFirstname() + ' ' + e.getLastname()}"></td>
+                    <td th:text="${e.getCompany()}"></td>
+                    <td th:text="${e.getUserId().getEmail()}"></td>
+                    <td th:text="${e.getPhone()}"></td>
+                    <td th:text="${e.getAddress()} + ', ' + ${e.getPostal()} + ' ' + ${e.getCity()}"></td>
+                    <td>
+                        <button class="btn btn-outline-success" role="button" data-toggle="modal"
+                                data-target="#validateModal">✔️
+                        </button>
+                        <button class="btn btn-outline-danger" role="button" data-toggle="modal"
+                                data-target="#deleteModal">🗑️
+                        </button>
 
-                                <!-- Modal VALIDEEER -->
-                                <div class="modal fade" id="validateModal" tabindex="-1" role="dialog" aria-labelledby="validateModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="validateModalLabel">Valideren</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                Bent u zeker dat u deze externe gebruiker wilt valideren?
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
-                                                <a th:href="@{/validateexternal/{id} (id=${e.getUserId().getUserId()})}"><button type="button" class="btn btn-success">Valideer</button></a>
-                                            </div>
-                                        </div>
+                        <!-- Modal VALIDEEER -->
+                        <div class="modal fade" id="validateModal" tabindex="-1" role="dialog"
+                             aria-labelledby="validateModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="validateModalLabel">Valideren</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Bent u zeker dat u deze externe gebruiker wilt valideren?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten
+                                        </button>
+                                        <a th:href="@{/validateexternal/{id} (id=${e.getUserId().getUserId()})}">
+                                            <button type="button" class="btn btn-success">Valideer</button>
+                                        </a>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
 
-                                <!-- Modal DELETE -->
-                                <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="deleteModalLabel">Verwijderen</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                Bent u zeker dat u deze externe gebruiker wilt valideren?
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
-                                                <a th:href="@{/deleteexternal/{id} (id=${e.getUserId().getUserId()})}"><button type="button" class="btn btn-danger">Verwijder</button></a>
-                                            </div>
-                                        </div>
+                        <!-- Modal DELETE -->
+                        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
+                             aria-labelledby="deleteModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteModalLabel">Verwijderen</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Bent u zeker dat u deze externe gebruiker wilt valideren?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten
+                                        </button>
+                                        <a th:href="@{/deleteexternal/{id} (id=${e.getUserId().getUserId()})}">
+                                            <button type="button" class="btn btn-danger">Verwijder</button>
+                                        </a>
                                     </div>
                                 </div>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="alert alert-primary" role="alert" id="empty"></div>
+                            </div>
+                        </div>
+                </tr>
+                </tbody>
+            </table>
         </div>
-
-    </main>
-    <!-- /.container -->
-
-
-
-
-    <div th:insert="fragments/general.html :: footer">
+        <div class="alert alert-primary" role="alert" id="empty"></div>
     </div>
 
-    <!-- Optional JavaScript -->
-    <script>
-        function tableFill() {
-            var tbl = document.getElementById('table');
-            if (tbl.rows.length == 1) {
-                var para = document.createElement("p");
-                var node = document.createTextNode("Er zijn momenteel geen taken om te valideren.");
-                para.appendChild(node);
-                var element = document.getElementById("empty");
-                element.style.visibility = "visible";
-                element.appendChild(para);
-            }
+</main>
+<!-- /.container -->
+
+
+<div th:insert="fragments/general.html :: footer">
+</div>
+
+<!-- Optional JavaScript -->
+<script>
+    function tableFill() {
+        var tbl = document.getElementById('table');
+        if (tbl.rows.length == 1) {
+            var para = document.createElement("p");
+            var node = document.createTextNode("Er zijn momenteel geen externe gebruikers om te valideren.");
+            para.appendChild(node);
+            var element = document.getElementById("empty");
+            element.style.visibility = "visible";
+            element.appendChild(para);
         }
-    </script>
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    }
+</script>
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>
