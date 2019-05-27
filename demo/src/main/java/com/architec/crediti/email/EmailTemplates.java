@@ -87,10 +87,9 @@ public class EmailTemplates {
                 "Adres: " + address + "\n" +
                 "Telefoon: " + phone + "\n" +
                 "E-mail: " + email + "\n\n" +
-                        //TODO: vervang localhost door vps092.be na testing
-                "VALIDEER deze externe: http://localhost:8080/validateexternal/" + userId + "\n" +
-                "WEIGER deze externe: http://localhost:8080/deleteexternal/" + userId + "\n\n" +
-                "Lijst van alle ongevalideerde externe: http://localhost:8080/listUnvalidatedExternal";
+                "VALIDEER deze externe: http://vps092.be/validateexternal/" + userId + "\n" +
+                "WEIGER deze externe: http://vps092.be/deleteexternal/" + userId + "\n\n" +
+                "Lijst van alle ongevalideerde externe: http://vps092.be/listUnvalidatedExternal";
     }
 
     public static String newExternal() {

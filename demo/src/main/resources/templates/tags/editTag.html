@@ -38,8 +38,8 @@
                     </fieldset>
 
                     <a onclick="toggleForm();" class="mt-3 btn btn-outline-secondary" role="button">✏️ Bewerk</a>
-                    <a th:href="@{/deletetag/{id}(id=${t.tagId})}" class="mt-3 btn btn-outline-danger" role="button">🗑️ Verwijderen</a>
                     <button type="submit" class="mt-2 btn btn-outline-success" id="save" style="visibility: hidden;">💾 Bewaren</button>
+                    <a th:href="@{/deletetag/{id}(id=${t.tagId})}" class="mt-3 btn btn-outline-danger" role="button">🗑️ Verwijderen</a>
 
                 </div>
             </form>
