@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8"/>
+    <meta charset="UTF-8" />
     <title>Crediti - Melding</title>
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
+
 <body class="background">
-<header th:insert="fragments/generalMenu.html :: header (name=${name})"></header>
-<div class="block">
-    <div class="container extra">
-        <h2>U bent al ingeschreven voor deze opdracht!</h2>
+    <header th:insert="fragments/generalMenu_old.html :: header (name=${name})"></header>
+    <div class="block">
+        <div class="container extra">
+            <h2>U bent al ingeschreven voor deze opdracht!</h2>
+        </div>
     </div>
-</div>
-<div style="height: 65%"></div>
-<footer th:insert="fragments/generalMenu.html :: footer"></footer>
+    <div style="height: 65%"></div>
+    <footer th:insert="fragments/generalMenu.html :: footer"></footer>
 </body>
+
 </html>

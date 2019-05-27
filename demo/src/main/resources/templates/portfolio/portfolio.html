@@ -1,59 +1,61 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8"/>
+    <meta charset="UTF-8" />
     <title>Crediti - Portfolio</title>
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
+
 <body onload="tableFill()">
-<div class="background">
-    <header th:insert="fragments/generalMenu.html :: header (name=${name})"></header>
-    <div class="block">
-        <section class="find-edu">
-            <div class="container ">
-                <div class="wrap-all col-xs-6">
-                    <h2 class="extra">Mijn portfolio</h2>
+    <div class="background">
+        <header th:insert="fragments/generalMenu_old.html :: header (name=${name})"></header>
+        <div class="block">
+            <section class="find-edu">
+                <div class="container ">
+                    <div class="wrap-all col-xs-6">
+                        <h2 class="extra">Mijn portfolio</h2>
+                    </div>
+                    <div>
+                        <a href="/uploadfile" class="button">Bestanden toevoegen</a>
+                    </div>
                 </div>
-                <div>
-                    <a href="/uploadfile" class="button">Bestanden toevoegen</a>
-                </div>
+            </section>
+            <div class="container">
+                <table class="smalltable" id="tabel">
+                    <thead>
+                        <tr>
+                            <th style="padding-left: 1%; width: 5%">Nr</th>
+                            <th>Title</th>
+                            <th width="26%"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="file : ${files}" class="tablebackground">
+                            <td th:text="${file.getFileId()}"></td>
+                            <td th:text="${file.getTitle()}"></td>
+                            <td style="float: right">
+                                <a th:href="${file.getDownloadLink()}" class="button">📥</a> &nbsp;&nbsp;&nbsp;
+                                <a th:href="@{/deletefile/{id} (id=${file.getFileId()})}" class="button">🗑️</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-        </section>
-        <div class="container">
-            <table class="smalltable" id="tabel">
-                <thead>
-                <tr>
-                    <th style="padding-left: 1%; width: 5%">Nr</th>
-                    <th>Title</th>
-                    <th width="26%"></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="file : ${files}" class="tablebackground">
-                    <td th:text="${file.getFileId()}"></td>
-                    <td th:text="${file.getTitle()}"></td>
-                    <td style="float: right">
-                        <a th:href="${file.getDownloadLink()}" class="button">📥</a>
-                        &nbsp;&nbsp;&nbsp;
-                        <a th:href="@{/deletefile/{id} (id=${file.getFileId()})}" class="button">🗑️</a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
         </div>
     </div>
-</div>
-<footer th:insert="fragments/generalMenu.html :: footer"></footer>
-<script>
-    function tableFill() {
-        var tbl = document.getElementById('tabel');
-        if (tbl.rows.length == 1) {
-            var x = tbl.insertRow(1);
-            var cell1 = x.insertCell(0)
-            var cell2 = x.insertCell(1)
-            cell2.innerHTML = "Momenteel is je portfolio nog leeg.";
+    <footer th:insert="fragments/generalMenu.html :: footer"></footer>
+    <script>
+        function tableFill() {
+            var tbl = document.getElementById('tabel');
+            if (tbl.rows.length == 1) {
+                var x = tbl.insertRow(1);
+                var cell1 = x.insertCell(0)
+                var cell2 = x.insertCell(1)
+                cell2.innerHTML = "Momenteel is je portfolio nog leeg.";
+            }
         }
-    }
-</script>
+    </script>
 </body>
+
 </html>
