@@ -117,3 +117,25 @@ a {
 .dropdown-item:active {
     background-color: #e60005;
 }
+
+#empty {
+    text-align: center;
+    visibility: hidden;
+}
+
+
+/* vertical align tekst in tables */
+
+.table>tbody>tr>td {
+    vertical-align: middle;
+}
+
+.table {
+    table-layout: fixed;
+}
+
+#task {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

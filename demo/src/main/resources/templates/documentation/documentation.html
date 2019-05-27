@@ -50,9 +50,8 @@
             var tbl = document.getElementById('tabel');
             if (tbl.rows.length == 1) {
                 var x = tbl.insertRow(1);
-                var cell1 = x.insertCell(0);
-                var cell2 = x.insertCell(1);
-                cell2.innerHTML = "Er is momenteel geen taak om te valideren.";
+                var cell = x.insertCell(0);
+                cell.innerHTML = "Er is momenteel geen documentatie beschikbaar.";
             }
         }
     </script>

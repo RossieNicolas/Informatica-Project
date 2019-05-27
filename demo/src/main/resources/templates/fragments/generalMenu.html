@@ -17,7 +17,7 @@
 <body class="background">
     <header>
         <nav class="navbar navbar-expand-md navbar-light bg-nav static-top">
-            <img th:src="@{/images/logo-ap.svg}">
+            <a href="main"><img th:src="@{/images/logo-ap.svg}"></a>
             <!--todo link to /main-->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -60,7 +60,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li class="nav-item dropdown">
                         <img class="img-user pr-1 mt-1" th:src="@{/images/user.svg}">
-                        <a class="nav-link dropdown-toggle img-link" href="#" id="profile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="${name}"></a>
+                        <a class="mr-3 nav-link dropdown-toggle img-link" href="#" id="profile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="${name}"></a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profile">
                             <a class="dropdown-item" href="/main">Mijn startpagina</a>
                             <a class="dropdown-item" sec:authorize="hasRole('EXTERNE')" href="/externalUserProfile">Mijn profiel</a>
