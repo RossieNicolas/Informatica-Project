@@ -68,7 +68,7 @@ public class PasswordRecoveryController {
                     + "/reset?token=" + user.getResetToken());
 
             emailImpl.sendSimpleMessage(user.getEmail() , "recovery" , "Om je wachtwoord te resetten, click op onderstaande link:\n" + appUrl
-                    + ":8080/reset?token=" + user.getResetToken());
+                    + "/reset?token=" + user.getResetToken());
 
             // Add success message to view
             modelAndView.addObject("successMessage", "U hebt met succes een wachtwoordherstel aangevraagd. " +
