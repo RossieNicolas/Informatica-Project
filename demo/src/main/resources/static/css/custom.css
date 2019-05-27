@@ -3,6 +3,9 @@
     height: 100%;
 }
 
+
+/* transparant jumbotron */
+
 .jumbotron {
     background: rgba(255, 255, 255, 0.8);
 }
@@ -105,4 +108,12 @@ a {
 
 .img-link {
     line-height: 0px;
+}
+
+
+/* Color when clicking on dropdown */
+
+.dropdown-item.active,
+.dropdown-item:active {
+    background-color: #e60005;
 }
