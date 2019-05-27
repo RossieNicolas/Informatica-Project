@@ -32,6 +32,7 @@
             <th>Begin</th>
             <th>Einde</th>
             <th>Aantal uren</th>
+            <th>Kopie maken?</th>
         </tr>
         </thead>
         <tbody>
@@ -43,6 +44,7 @@
             <td th:text="${a.getStartDate()}"></td>
             <td th:text="${a.getEndDate()}"></td>
             <td style="padding-left: 3.8%" th:text="${a.getAmountHours()}"></td>
+            <td><a th:href="${'/duplicateassignment/' + a.getAssignmentId()}" class="button">📃</a>
         </tr>
         </tbody>
     </table>
