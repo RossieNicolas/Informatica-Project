@@ -87,8 +87,8 @@ public class EmailTemplates {
                 "Adres: " + address + "\n" +
                 "Telefoon: " + phone + "\n" +
                 "E-mail: " + email + "\n\n" +
-                "VALIDEER deze externe: http://vps092.be/validateexternal/" + userId + "\n" +
-                "WEIGER deze externe: http://vps092.be/deleteexternal/" + userId + "\n\n" +
+                "VALIDEER deze externe: http://vps092.ap.be/validateexternal/" + userId + "\n" +
+                "WEIGER deze externe: http://vps092.ap.be/deleteexternal/" + userId + "\n\n" +
                 "Lijst van alle ongevalideerde externe: http://vps092.be/listUnvalidatedExternal";
     }
 
