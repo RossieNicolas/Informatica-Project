@@ -48,7 +48,7 @@
                         <tbody>
                         <tr th:each="a : ${students}">
                             <td><a th:href="${'/liststudents/' + a.getStudentNumber()}"
-                                   class="btn btn-outline-secondary" role="button">📃</a></td>
+                                   class="btn btn-outline-danger" role="button">📃</a></td>
                             <td th:text="${a.getStudentNumber()}"></td>
                             <td th:text="${a.getUserId()}"></td>
                             <td th:text="${a.findEmail()}"></td>
