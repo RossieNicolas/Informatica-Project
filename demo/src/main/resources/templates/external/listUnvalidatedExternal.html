@@ -15,7 +15,8 @@
 </head>
 
 <body class="bg" onload="tableFill()">
-
+<div id="page-container">
+    <div id="content-wrap">
     <header th:insert="fragments/generalMenu.html :: header"> </header>
 
     <main role="main" class="container">
@@ -96,18 +97,18 @@
     <!-- /.container -->
 
 
-
+</div>
 
     <div th:insert="fragments/general.html :: footer">
     </div>
-
+</div>
     <!-- Optional JavaScript -->
     <script>
         function tableFill() {
             var tbl = document.getElementById('table');
             if (tbl.rows.length == 1) {
                 var para = document.createElement("p");
-                var node = document.createTextNode("Er zijn momenteel geen taken om te valideren.");
+                var node = document.createTextNode("Er zijn momenteel geen externe gebruikers om te valideren.");
                 para.appendChild(node);
                 var element = document.getElementById("empty");
                 element.style.visibility = "visible";

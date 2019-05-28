@@ -15,7 +15,8 @@
 </head>
 
 <body class="bg" onload="tableFill()">
-
+<div id="page-container">
+    <div id="content-wrap">
     <header th:insert="fragments/generalMenu.html :: header"> </header>
 
     <main role="main" class="container">
@@ -53,10 +54,10 @@
     </main>
     <!-- /.container -->
 
-
-    <footer th:insert="fragments/general.html :: footer">
-    </footer>
-
+    </div>
+    <div th:insert="fragments/general.html :: footer">
+    </div>
+</div>
     <!-- Optional JavaScript -->
     <script>
         function tableFill() {
