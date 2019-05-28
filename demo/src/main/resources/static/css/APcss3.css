@@ -11,10 +11,6 @@ body, figure {
 	height: 100%;
 }
 
-select:disabled {
-	background-color: rgb(235, 235, 228);
-}
-
 #profilePortfolio{
 	margin-top: 40px;
 	margin-left: 0;
@@ -339,6 +335,8 @@ input[type="file"] {
 	padding: 2% 2%;
 }
 
+textarea:disabled,
+select:disabled,
 input:disabled {
     background-color: #cecccc;
 }
