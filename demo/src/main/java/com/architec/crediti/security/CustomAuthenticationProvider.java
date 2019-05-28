@@ -37,7 +37,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     //Ldap attributes
     private static final String GIVEN_NAME = "givenName"; //firstname
     private static final String SN = "sn"; //lastname
-    private static final String EXTENSION_ATTRIBUTE_1 = "extensionAttribute1"; //Contains 'Student' or 'Docent'
     private static final String LDAP_SEARCH = "OU=Users,OU=DWAP,DC=alpaca,DC=int"; //Search string for LDAP
 
     @Value("${spring.ldap.urls}")
@@ -115,7 +114,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
             InitialDirContext context = new InitialDirContext(env);
             SearchControls ctrls = new SearchControls();
-            ctrls.setReturningAttributes(new String[]{GIVEN_NAME, SN, EXTENSION_ATTRIBUTE_1});
+            ctrls.setReturningAttributes(new String[]{GIVEN_NAME, SN});
             ctrls.setSearchScope(SearchControls.SUBTREE_SCOPE);
 
             NamingEnumeration<SearchResult> answers = context.search(LDAP_SEARCH,
@@ -124,16 +123,14 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
             String rawFirstname = res.getAttributes().get(GIVEN_NAME).toString();
             String rawLastname = res.getAttributes().get(SN).toString();
-            String rawRole = res.getAttributes().get(EXTENSION_ATTRIBUTE_1).toString();
 
             String firstname = (rawFirstname.substring(rawFirstname.lastIndexOf(' ') + 1));
             String lastname = (rawLastname.substring(rawLastname.lastIndexOf(' ') + 1));
-            String role = (rawRole.substring(rawRole.lastIndexOf(' ') + 1));
 
             boolean emailExsist = userRepo.existsByEmail(username);
 
             if (!emailExsist) {
-                User user = new User(firstname, lastname, username, findRole(role), true);
+                User user = new User(firstname, lastname, username, findRole(username.substring(0,1)), true);
                 userRepo.save(user);
             }
 
@@ -155,13 +152,13 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         return result;
     }
 
-    private Role findRole(String roleFormLdap) {
+    private Role findRole(String emailSubstring) {
         Role role;
-        switch (roleFormLdap.toLowerCase()) {
-            case "student":
+        switch (emailSubstring) {
+            case "s":
                 role = Role.STUDENT;
                 break;
-            case "docent":
+            case "p":
                 role = Role.DOCENT;
                 break;
             default:
