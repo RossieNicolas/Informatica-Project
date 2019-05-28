@@ -78,8 +78,9 @@ public class FileStorageService {
         }
     }
 
-    public File makeDir(String userId) {
-        File dir = new File(fileStorageLocation + "\\" + userId);
+    private File makeDir(String userId) {
+        File dir = new File(fileStorageLocation + File.separator + userId);
+
         if (!dir.exists()) {
             new File(dir.getPath()).mkdirs();
         }
