@@ -21,6 +21,17 @@
         <header th:insert="fragments/generalMenu.html :: header"></header>
 
         <main role="main" class="container">
+            <div class='col-md-6 mt-2 mx-auto'>
+                <div class='search-box'>
+                    <form class='search-form' th:action='@{/liststudents}' method='POST'>
+                        <div>
+                            <input class='form-control' name='searchbar' id='searchbar'
+                                   placeholder='Zoeken...' type='text'>
+                            <button class="btn search-btn" type="SUBMIT">🔍</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
             <div class="mt-5 jumbotron">
                 <h1 class="pb-4">Alle studenten</h1>
                 <div class="table-responsive">
@@ -61,7 +72,7 @@
         var tbl = document.getElementById('table');
         if (tbl.rows.length == 1) {
             var para = document.createElement("p");
-            var node = document.createTextNode("Er zijn momenteel geen inschrijvingen om te valideren.");
+            var node = document.createTextNode("Er zijn momenteel geen studenten om te tonen.");
             para.appendChild(node);
             var element = document.getElementById("empty");
             element.style.visibility = "visible";
