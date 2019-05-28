@@ -40,7 +40,6 @@ public class AssignmentController {
     private String name = "";
     private int[] tags;
     List<Long> list =null;
-    private Page<Assignment> fiches = null;
 
 
     private final
@@ -132,7 +131,6 @@ public class AssignmentController {
         model.addAttribute("assignments",fiches);
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
 
-        model.addAttribute("selectedPageSize", PAGE_SIZE);
         view.addObject("persons", fiches);
         view.addObject("pager", pager);
         view.addObject("tags", tagRepo.findAll());
@@ -196,10 +194,11 @@ public class AssignmentController {
     @PostMapping("/allassignments")
     public String getAssignment(@RequestParam("searchbar") String name,
                                 Model model, @RequestParam("page") Optional<Integer> page,
-                                @RequestParam(required = false, value = "tag") int[] tags) {
+                                @RequestParam(required = false, value = "tag") int[] tags, Principal principal) {
 
         this.tags = tags;
         this.name = name;
+        Page<Assignment> fiches = null;
         int buttons = (int) assignmentRepo.count() / PAGE_SIZE;
 
         if (assignmentRepo.count() % PAGE_SIZE != 0) {
@@ -224,7 +223,7 @@ public class AssignmentController {
                 model.addAttribute("assignments", fiches);
             }
         } else {
-            List<Assignment> list3 = (List<Assignment>) assignmentRepo.findByTitleContainingAndFullOrderByAssignmentIdDesc(name, false);
+            List<Assignment> list3 = assignmentRepo.findByTitleContainingAndFullOrderByAssignmentIdDesc(name, false);
             list = new ArrayList<>();
             for (int item : tags) {
                 for (Assignment a : list3) {
@@ -240,9 +239,13 @@ public class AssignmentController {
 
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
         model.addAttribute("persons", fiches);
-        model.addAttribute("selectedPageSize", PAGE_SIZE);
         model.addAttribute("pager", pager);
         model.addAttribute("tags", tagRepo.findAll());
+
+        //pass username to header fragment
+        User currentUser = userRepo.findByEmail(principal.getName());
+        model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
+
         return "assignments/listAllAssignments";
 
     }
