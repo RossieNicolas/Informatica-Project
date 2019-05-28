@@ -106,6 +106,30 @@ public class StudentController {
         return "student/studentProfile";
     }
 
+    @PostMapping("/studentProfile")
+    public  String updateStudentProfile(Principal principal, @RequestParam("Gsm") String gsm, @RequestParam("type") String type){
+        Student currentStudent = studentRepo.findByUserId(userRepo.findByEmail(principal.getName()));
+        if (type.equalsIgnoreCase("zap en mobility")){
+            currentStudent.setZap(true);
+            currentStudent.setMobility(true);
+        }
+        else if (type.equalsIgnoreCase("zap")){
+            currentStudent.setZap(true);
+            currentStudent.setMobility(false);
+        }
+        else if (type.equalsIgnoreCase("mobility")){
+            currentStudent.setZap(false);
+            currentStudent.setMobility(true);
+        }
+        else {
+            currentStudent.setZap(currentStudent.isZap());
+            currentStudent.setMobility(currentStudent.isMobility());
+        }
+        currentStudent.setGsm(gsm);
+        studentRepo.save(currentStudent);
+        return "redirect:studentProfile";
+    }
+
 
 
 }

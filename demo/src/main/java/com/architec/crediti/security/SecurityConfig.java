@@ -60,7 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureUrl("/loginError")
                 .defaultSuccessUrl("/main", true)
                 .permitAll()
-                .and()
+                .and().csrf().disable()
                 .logout()
                 .logoutSuccessUrl("/")
                 .invalidateHttpSession(true)

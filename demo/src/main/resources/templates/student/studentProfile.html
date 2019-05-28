@@ -2,69 +2,87 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <title>Crediti - Student profiel </title>
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
 
 <body class="background">
-    <header th:insert="fragments/generalMenu_old.html :: header (name=${name})"></header>
-    <div class="block">
-        <section class="find-edu">
-            <div class="container ">
-                <div class="col-xs-12 extra">
-                    <h2 class="extra">Detail student</h2>
-                    <form th:each="a: ${student}" class="standard-form" method="post">
-                        <br><br>
-                        <fieldset disabled="disabled" id="assignmentInfo">
-                            <label for="nummer">Studenten nummer:</label>
-                            <input name="nummer" id="nummer" type="text" th:value="*{a.getStudentNumber()}" required="required"><br>
-                            <label for="Naam">Naam:</label>
-                            <input name="Naam" id="Naam" type="text" th:value="*{a.getUserId()}" required="required"><br>
-                            <label for="Email">Email:</label>
-                            <input name="Email" id="Email" th:value="*{a.findEmail()}" type="text" required="required"><br>
-                            <label for="Gsm">Gsm:</label><br>
-                            <input name="Gsm" id="Gsm" type="text" th:value="*{a.getGsm()}" required="required"><br>
-                            <label>Soort:</label><br>
-                            <input th:if="${a.isMobility()}" type="text" value="Mobility">
-                            <input th:if="${!a.isMobility()}" type="text" value="Zap">
-                            <label for="amoutHours">Aantal uur:</label><br>
-                            <input name="amoutHours" id="amoutHours" type="text" th:value="*{a.getAmoutHours()}" required="required"><br>
-                        </fieldset>
-                        <h2 class="extra">Uw aangemaakte opdrachten</h2>
-                        <table id="profileTable">
-                            <thead>
-                                <tr>
-                                    <th>Nr</th>
-                                    <th>Type</th>
-                                    <th>Naam</th>
-                                    <th>Begin</th>
-                                    <th>Einde</th>
-                                    <th>Aantal uren</th>
-                                    <th>Gevalideerd</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr th:each="a : ${assignments}" class="tablebackground ">
-                                    <td th:text="${a.getAssignmentId()}"></td>
-                                    <td th:text="${a.getType()}"></td>
-                                    <td th:text="${a.getTitle()}" class="cell"></td>
-                                    <td th:text="${a.getStartDate()}"></td>
-                                    <td th:text="${a.getEndDate()}"></td>
-                                    <td style="padding-left: 3.8%" th:text="${a.getAmountHours()}"></td>
-                                    <td style="padding-left: 2.5%">
-                                        <span th:if="${a.isValidated()}">✔️</span>
-                                        <span th:unless="${a.isValidated()}">❌</span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </form>
-                </div>
+<header th:insert="fragments/generalMenu_old.html :: header (name=${name})"></header>
+<div class="block">
+    <section class="find-edu">
+        <div class="container ">
+            <div class="col-xs-12 extra">
+                <h2 class="extra">Detail student</h2>
+                <form th:each="a: ${student}" class="standard-form" method="post">
+                    <br><br>
+                    <label for="nummer">Studenten nummer:</label>
+                    <input name="nummer" id="nummer" type="text" th:value="*{a.getStudentNumber()}"
+                           required="required" disabled><br>
+                    <label for="Naam">Naam:</label>
+                    <input name="Naam" id="Naam" type="text" th:value="*{a.getUserId()}" required="required"
+                           disabled><br>
+                    <label for="Email">Email:</label>
+                    <input name="Email" id="Email" th:value="*{a.findEmail()}" type="text" required="required" disabled><br>
+                    <input type="button" value="✏️ BEWERKEN" class="button" onclick="toggleForm();"> <input
+                        type="submit" value="💾 BEWAREN" class="button" id="save">
+                    <fieldset disabled="disabled" id="studentEdit">
+                        <label for="Gsm">Gsm:</label><br>
+                        <input name="Gsm" id="Gsm" type="text" th:value="*{a.getGsm()}" required="required"><br>
+                        <label for="type">Type:</label>
+                        <select name="type" id="type" required>
+                            <option th:if="${a.isZap() && a.isMobility()}" selected>Zap en Mobility</option>
+                            <option th:if="${a.isZap() && !a.isMobility()}" selected>Zap</option>
+                            <option th:if="${!a.isZap() && a.isMobility()}" selected>Mobility</option>
+                            <option th:if="${!(a.isZap() && a.isMobility())}">Zap en Mobility</option>
+                            <option th:if="${!(a.isZap() && !a.isMobility())}">Zap</option>
+                            <option th:if="${!(!a.isZap() && a.isMobility())}">Mobility</option>
+                        </select>
+                    </fieldset>
+                    <label for="amoutHours">Aantal uur:</label><br>
+                    <input name="amoutHours" id="amoutHours" type="text" th:value="*{a.getAmoutHours()}"
+                           required="required" disabled><br>
+                </form>
+                <h2 class="extra">Uw aangemaakte opdrachten</h2>
+                <table id="profileTable">
+                    <thead>
+                    <tr>
+                        <th>Nr</th>
+                        <th>Type</th>
+                        <th>Naam</th>
+                        <th>Begin</th>
+                        <th>Einde</th>
+                        <th>Aantal uren</th>
+                        <th>Gevalideerd</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="a : ${assignments}" class="tablebackground ">
+                        <td th:text="${a.getAssignmentId()}"></td>
+                        <td th:text="${a.getType()}"></td>
+                        <td th:text="${a.getTitle()}" class="cell"></td>
+                        <td th:text="${a.getStartDate()}"></td>
+                        <td th:text="${a.getEndDate()}"></td>
+                        <td style="padding-left: 3.8%" th:text="${a.getAmountHours()}"></td>
+                        <td style="padding-left: 2.5%">
+                            <span th:if="${a.isValidated()}">✔️</span>
+                            <span th:unless="${a.isValidated()}">❌</span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
-        </section>
-    </div>
-    <footer th:insert="fragments/generalMenu.html :: footer"></footer>
+        </div>
+    </section>
+</div>
+<footer th:insert="fragments/generalMenu.html :: footer"></footer>
 </body>
+<script>
+    function toggleForm() {
+        document.getElementById('studentEdit').removeAttribute('disabled');
+        document.getElementById("save").style.display = "inline-block";
+    }
+</script>
+
 
 </html>
