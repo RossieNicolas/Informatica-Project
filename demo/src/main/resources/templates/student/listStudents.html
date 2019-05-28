@@ -2,47 +2,83 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8" />
-    <title>Crediti - Alle opdrachten</title>
-    <link rel="stylesheet" th:href="@{/css/APcss3.css}">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+
+    <title>Alle studenten</title>
 </head>
 
-<body class="background">
-    <header th:insert="fragments/generalMenu_old.html :: header (name=${name})"></header>
-    <div class="container ">
-        <h2 class="extra">Alle studenten</h2>
+<body class="bg" onload="tableFill()">
+<div id="page-container">
+    <div id="content-wrap">
+
+        <header th:insert="fragments/generalMenu.html :: header"></header>
+
+        <main role="main" class="container">
+            <div class="mt-5 jumbotron">
+                <h1 class="pb-4">Alle studenten</h1>
+                <div class="table-responsive">
+                    <table id="table" class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Studenten nummer</th>
+                            <th scope="col">Naam</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Gsm</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="a : ${students}">
+                            <td><a th:href="${'/liststudents/' + a.getStudentNumber()}"
+                                   class="btn btn-outline-secondary" role="button">📃</a></td>
+                            <td th:text="${a.getStudentNumber()}"></td>
+                            <td th:text="${a.getUserId()}"></td>
+                            <td th:text="${a.findEmail()}"></td>
+                            <td th:text="${a.getGsm()}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="alert alert-primary" role="alert" id="empty"></div>
+            </div>
+
+        </main>
+        <!-- /.container -->
     </div>
-    <div class="container">
-        <form th:action='@{/liststudents}' method='POST'>
-            <label for='searchbar'>Zoekwaarde: </label>
-            <input type='search' class='form-control' name='searchbar' id='searchbar'>
-            <input type='SUBMIT' id="zoekKnop" value="Zoek" class="button" />
-        </form>
+    <div th:insert="fragments/general.html :: footer">
     </div>
-    <div id='overview'>
-        <table>
-            <thead>
-                <tr>
-                    <th>Info</th>
-                    <th>Studenten nummer</th>
-                    <th>Naam</th>
-                    <th>Email</th>
-                    <th>Gsm</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="a : ${students}" class="tablebackground">
-                    <td><a th:href="${'/liststudents/' + a.getStudentNumber()}" class="button">📃</a>
-                        <td th:text="${a.getStudentNumber()}"></td>
-                        <td th:text="${a.getUserId()}"></td>
-                        <td th:text="${a.findEmail()}"></td>
-                        <td th:text="${a.getGsm()}"></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div style="height: 20%"></div>
-    <footer th:insert="fragments/generalMenu.html :: footer"></footer>
+</div>
+<!-- Optional JavaScript -->
+<script>
+    function tableFill() {
+        var tbl = document.getElementById('table');
+        if (tbl.rows.length == 1) {
+            var para = document.createElement("p");
+            var node = document.createTextNode("Er zijn momenteel geen inschrijvingen om te valideren.");
+            para.appendChild(node);
+            var element = document.getElementById("empty");
+            element.style.visibility = "visible";
+            element.appendChild(para);
+        }
+    }
+</script>
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>
