@@ -153,7 +153,7 @@ public class SeleniumAssignmentTest {
         driver.findElement(By.id("amountHours")).click();
         assertThat(driver.switchTo().alert().getText(), is("De startdatum moet kleiner zijn dan de einddatum van uw opdracht!"));
     }
-    // id=
+    // id= 9
     @Test
     public void AllAssignmentsNoChanges() {
         driver.get("http://localhost:8080/");
