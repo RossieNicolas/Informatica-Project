@@ -126,11 +126,22 @@ public class AssignmentController {
         }
 
         int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
-        if (this.list != null) {
-            fiches = assignmentRepo.findByTagsOrderByAssignmentIdDesc(this.list, PageRequest.of(evalPage, PAGE_SIZE));
+        if (studentRepo.existsByUserId(currentUser)) {
+            Student student = studentRepo.findByUserId(currentUser);
+            if (student.isMobility() && !student.isZap()) {
+                fiches = assignmentRepo.findByTitleContainingAndFullAndTypeEqualsOrderByAssignmentIdDesc(name, false, PageRequest.of(evalPage, PAGE_SIZE), "Mobility");
+
+            } else if (student.isZap() && !student.isMobility()) {
+                fiches = assignmentRepo.findByTitleContainingAndFullAndTypeEqualsOrderByAssignmentIdDesc(name, false, PageRequest.of(evalPage, PAGE_SIZE), "ZAP");
+            } else {
+                fiches = assignmentRepo.findByTitleContainingAndFullOrderByAssignmentIdDesc(name, false, PageRequest.of(evalPage, PAGE_SIZE));
+
+            }
         } else {
             fiches = assignmentRepo.findByTitleContainingAndFullOrderByAssignmentIdDesc(name, false, PageRequest.of(evalPage, PAGE_SIZE));
+
         }
+
         model.addAttribute("assignments", fiches);
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
 
@@ -295,6 +306,7 @@ public class AssignmentController {
 
         if (as.getAmountStudents() == as.getMaxStudents()) {
             volzet = true;
+
         }
 
         model.addAttribute("volzet", volzet);
