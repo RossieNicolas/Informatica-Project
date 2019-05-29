@@ -39,7 +39,7 @@ public class AssignmentController {
     private Log log = LogFactory.getLog(this.getClass());
     private String name = "";
     private int[] tags;
-    List<Long> list =null;
+    List<Long> list = null;
 
 
     private final
@@ -59,7 +59,7 @@ public class AssignmentController {
 
     private final
     EmailServiceImpl mail;
-    
+
     private final
     ExternalUserRepository externalRepo;
 
@@ -126,13 +126,12 @@ public class AssignmentController {
         }
 
         int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
-        if(this.list != null){
+        if (this.list != null) {
             fiches = assignmentRepo.findByTagsOrderByAssignmentIdDesc(this.list, PageRequest.of(evalPage, PAGE_SIZE));
+        } else {
+            fiches = assignmentRepo.findByTitleContainingAndFullOrderByAssignmentIdDesc(name, false, PageRequest.of(evalPage, PAGE_SIZE));
         }
-        else{
-            fiches =assignmentRepo.findByTitleContainingAndFullOrderByAssignmentIdDesc(name, false,PageRequest.of(evalPage, PAGE_SIZE));
-        }
-        model.addAttribute("assignments",fiches);
+        model.addAttribute("assignments", fiches);
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
 
         view.addObject("persons", fiches);
@@ -274,22 +273,23 @@ public class AssignmentController {
         User user = userRepo.findByEmail(principal.getName());
         long assignerId = as.getAssignerUserId();
         User assigner = userRepo.findByUserId(assignerId);
-        if (externalRepo.existsByUserId(assigner)){
+        if (externalRepo.existsByUserId(assigner)) {
             ExternalUser external = externalRepo.findByUserId(assigner);
             String company = external.getCompany();
             model.addAttribute("company", company);
-        }
-        else {
+        } else {
             model.addAttribute("company", "t");
         }
-        Student student = studentRepo.findByUserId(user);
+
         boolean ingeschreven = false;
         boolean volzet = false;
 
-
-        for (Assignment item : student.getAssignments()) {
-            if (item.getAssignmentId() == assignmentId) {
-                ingeschreven = true;
+        if (studentRepo.existsByUserId(user)) {
+            Student student = studentRepo.findByUserId(user);
+            for (Assignment item : student.getAssignments()) {
+                if (item.getAssignmentId() == assignmentId) {
+                    ingeschreven = true;
+                }
             }
         }
 
