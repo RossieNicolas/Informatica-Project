@@ -59,16 +59,20 @@ public class AssignmentController {
 
     private final
     EmailServiceImpl mail;
+    
+    private final
+    ExternalUserRepository externalRepo;
 
     @Autowired
     public AssignmentController(TagRepo tagRepo, AssignmentRepository assignmentRepo, StudentRepository studentRepo,
-                                UserRepository userRepo, ArchiveRepository archiveRepo, EmailServiceImpl mail) {
+                                UserRepository userRepo, ArchiveRepository archiveRepo, EmailServiceImpl mail, ExternalUserRepository externalRepo) {
         this.tagRepo = tagRepo;
         this.assignmentRepo = assignmentRepo;
         this.studentRepo = studentRepo;
         this.userRepo = userRepo;
         this.archiveRepo = archiveRepo;
         this.mail = mail;
+        this.externalRepo = externalRepo;
     }
 
     // get assignment form
@@ -266,9 +270,19 @@ public class AssignmentController {
     @GetMapping("/allassignments/{assignmentId}")
     public String getAssignmentsToUpdate(@PathVariable("assignmentId") int assignmentId, Model model, Principal principal) {
         List<Tag> updatetag = tagRepo.findAll();
-        User user = userRepo.findByEmail(principal.getName());
-        Student student = studentRepo.findByUserId(user);
         Assignment as = assignmentRepo.findByAssignmentId(assignmentId);
+        User user = userRepo.findByEmail(principal.getName());
+        long assignerId = as.getAssignerUserId();
+        User assigner = userRepo.findByUserId(assignerId);
+        if (externalRepo.existsByUserId(assigner)){
+            ExternalUser external = externalRepo.findByUserId(assigner);
+            String company = external.getCompany();
+            model.addAttribute("company", company);
+        }
+        else {
+            model.addAttribute("company", "t");
+        }
+        Student student = studentRepo.findByUserId(user);
         boolean ingeschreven = false;
         boolean volzet = false;
 
