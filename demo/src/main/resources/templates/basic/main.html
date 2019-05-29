@@ -22,25 +22,27 @@
 
     <main role="main" class="container">
         <div class="mt-5 jumbotron">
-            <h1>Startpagina</h1>
-
-            <a sec:authorize="hasRole('STUDENT')" class="button" href="/studentProfile">Mijn profiel</a>
-            <a sec:authorize="hasRole('EXTERN')" class="button" href="/externalUserProfile">Mijn profiel</a>
-            <h4 sec:authorize="hasRole('COORDINATOR')" class="extra">Toevoegen</h4>
-                <a sec:authorize="hasAnyRole('COORDINATOR','EXTERN')" class="button" href="/assignment">Opdracht toevoegen</a>
-                <a sec:authorize="hasRole('COORDINATOR')" class="button" href="/tag">Tag toevoegen</a>
+            <h1 style="float: left">Startpagina <h3><p align="right"><a>Welkom </a><a th:text="${name}"></a></p></h3></h1>
+            <br><br>
+            <a sec:authorize="hasRole('STUDENT')" class="mt-3 btn btn-outline-danger"  href="/studentProfile">Mijn profiel</a>
+            <a sec:authorize="hasRole('EXTERN')" class="mt-3 btn btn-outline-danger" href="/externalUserProfile">Mijn profiel</a>
+            <h4 class="extra">Toevoegen</h4>
+                <a class="mt-3 btn btn-outline-danger"  href="/assignment">Opdracht toevoegen</a>
+                <a sec:authorize="hasRole('COORDINATOR')" class="mt-3 btn btn-outline-danger"  href="/tag">Tag toevoegen</a>
             <h4 sec:authorize="!hasRole('EXTERN')" class="extra">Bekijken</h4>
-                <a sec:authorize="!hasRole('EXTERN')" class="button" href="/allassignments">Alle opdrachten</a>
-                <a sec:authorize="hasRole('COORDINATOR')" class="button" href="/listAllTags">Alle tags</a>
-                <a sec:authorize="!hasAnyRole('EXTERN','DOCENT')" class="button" href="/myassignments">Ingeschreven opdrachten</a>
+                <a sec:authorize="!hasRole('EXTERN')" class="mt-3 btn btn-outline-danger" href="/allassignments">Alle opdrachten</a>
+                <a sec:authorize="hasRole('COORDINATOR')" class="mt-3 btn btn-outline-danger"  href="/listAllTags">Alle tags</a>
+                <a sec:authorize="hasAnyRole('COORDINATOR','DOCENT')" class="mt-3 btn btn-outline-danger"  href="/liststudents">Alle studenten</a>
+                <a sec:authorize="!hasAnyRole('EXTERN','DOCENT')" class="mt-3 btn btn-outline-danger"  href="/myassignments">Ingeschreven opdrachten</a>
+                <a sec:authorize="hasRole('STUDENT')" class="mt-3 btn btn-outline-danger"  href="/portfolio">Portfolio</a>
+                <a sec:authorize="hasAnyRole('STUDENT','DOCENT')" class="mt-3 btn btn-outline-danger"  href="/documentation">Documentatie</a>
+
             <h4 sec:authorize="hasAnyRole('COORDINATOR','DOCENT')" class="extra">Goed te keuren</h4>
-                <a sec:authorize="hasRole('COORDINATOR')" class="button" href="/listUnvalidatedExternal">Externe gebruikers</a>
-                <a sec:authorize="hasRole('COORDINATOR')" class="button" href="/unvalidatedassignments">Opdrachten</a>
-                <a sec:authorize="hasAnyRole('COORDINATOR','DOCENT')" class="button" href="/unapprovedEnrollments">Inschrijvingen</a>
+                <a sec:authorize="hasRole('COORDINATOR')" class="mt-3 btn btn-outline-danger"  href="/listUnvalidatedExternal">Externe gebruikers</a>
+                <a sec:authorize="hasRole('COORDINATOR')" class="mt-3 btn btn-outline-danger"  href="/unvalidatedassignments">Opdrachten</a>
+                <a sec:authorize="hasAnyRole('COORDINATOR','DOCENT')" class="mt-3 btn btn-outline-danger"  href="/unapprovedEnrollments">Inschrijvingen</a>
 
         </div>
-
-
 
     </main>
     <!-- /.container -->
