@@ -18,7 +18,17 @@
                 <div class="multiple-upload">
                     <h3 class="upload-title">Upload bestanden</h3>
                     <form id="multipleUploadForm" name="multipleUploadForm" th:action="@{/uploadfile}" method="POST" enctype="multipart/form-data">
-                        <input id="multipleFileUploadInput" type="file" name="files" class="file-input" multiple required/>
+                        <input id="multipleFileUploadInput" type="file" name="files" class="file-input" multiple required/><br>
+                        <p>Type documentatie: </p><br>
+                        <input type="radio" name="type" value="Contract">Contract<br>
+                        <input type="radio" name="type" value="Bewijsdocumenten">Bewijsdocumenten<br>
+                        <input type="radio" name="type" value="Portfolio">Portfolio<br>
+                        <p>Voor opdracht: </p>
+                        <select>
+                            <!--TODO via de database generiek de juiste waarden laten binnenkomen-->
+                            <option>32</option>
+                            <option>36</option>
+                        </select>
                         <button type="submit">Submit</button>
                     </form>
                 </div>
