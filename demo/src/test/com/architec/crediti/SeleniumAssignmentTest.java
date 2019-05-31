@@ -38,8 +38,8 @@ public class SeleniumAssignmentTest {
     }
     // id= 1
     @Test
-    public void LoadAllAssignments() {
-        driver.get("http://localhost:8080/");
+    public void loadAllAssignments() {
+        driver.get("http://vps092.ap.be/");
         driver.manage().window().setSize(new Dimension(1550, 838));
         driver.findElement(By.linkText("Login")).click();
         driver.findElement(By.id("username")).sendKeys("nicolas.rossie@gmail.com");
@@ -50,8 +50,8 @@ public class SeleniumAssignmentTest {
     }
     // id= 3
     @Test
-    public void DeleteAssignmentInList() {
-        driver.get("http://localhost:8080/");
+    public void deleteAssignmentInList() {
+        driver.get("http://vps092.ap.be/");
         driver.manage().window().setSize(new Dimension(1550, 838));
         driver.findElement(By.linkText("Login")).click();
         driver.findElement(By.id("username")).sendKeys("nicolas.rossie@gmail.com");
@@ -60,7 +60,7 @@ public class SeleniumAssignmentTest {
         driver.findElement(By.id("assignments")).click();
         driver.findElement(By.linkText("Opdracht Toevoegen")).click();
         driver.findElement(By.id("title")).click();
-        driver.findElement(By.id("title")).sendKeys("test");
+        driver.findElement(By.id("title")).sendKeys("SELENIUMtest");
         driver.findElement(By.id("type")).click();
         {
             WebElement dropdown = driver.findElement(By.id("type"));
@@ -68,7 +68,7 @@ public class SeleniumAssignmentTest {
         }
         driver.findElement(By.cssSelector("option:nth-child(2)")).click();
         driver.findElement(By.id("task")).click();
-        driver.findElement(By.id("task")).sendKeys("test");
+        driver.findElement(By.id("task")).sendKeys("SELENIUMtest");
         driver.findElement(By.id("startDate")).click();
         driver.findElement(By.id("startDate")).sendKeys("2019-06-28");
         driver.findElement(By.id("endDate")).click();
@@ -86,7 +86,7 @@ public class SeleniumAssignmentTest {
     // id= 4
     @Test
     public void AddAssignmentEmpty() {
-        driver.get("http://localhost:8080/");
+        driver.get("http://vps092.ap.be/");
         driver.manage().window().setSize(new Dimension(1550, 838));
         driver.findElement(By.linkText("Login")).click();
         driver.findElement(By.id("username")).sendKeys("nicolas.rossie@gmail.com");
@@ -98,8 +98,8 @@ public class SeleniumAssignmentTest {
     }
     // id= 5
     @Test
-    public void AddAssignmentHalfEmpty() {
-        driver.get("http://localhost:8080/");
+    public void addAssignmentHalfEmpty() {
+        driver.get("http://vps092.ap.be/");
         driver.manage().window().setSize(new Dimension(1550, 838));
         driver.findElement(By.linkText("Login")).click();
         driver.findElement(By.id("username")).sendKeys("nicolas.rossie@gmail.com");
@@ -108,7 +108,7 @@ public class SeleniumAssignmentTest {
         driver.findElement(By.id("assignments")).click();
         driver.findElement(By.linkText("Opdracht Toevoegen")).click();
         driver.findElement(By.id("title")).click();
-        driver.findElement(By.id("title")).sendKeys("test");
+        driver.findElement(By.id("title")).sendKeys("SELENIUMtest");
         driver.findElement(By.id("type")).click();
         {
             WebElement dropdown = driver.findElement(By.id("type"));
@@ -122,12 +122,12 @@ public class SeleniumAssignmentTest {
         driver.findElement(By.id("amountHours")).click();
         driver.findElement(By.id("amountHours")).sendKeys("12");
         driver.findElement(By.cssSelector(".button")).click();
-        driver.findElement(By.id("task")).sendKeys("test");
+        driver.findElement(By.id("task")).sendKeys("SELENIUMtest");
         driver.findElement(By.cssSelector(".button")).click();
     }
     // id= 7
     @Test
-    public void AddAssignmentEndDateSmaller() {
+    public void addAssignmentEndDateSmaller() {
         driver.get("http://localhost:8080/");
         driver.manage().window().setSize(new Dimension(1550, 838));
         driver.findElement(By.linkText("Login")).click();
@@ -153,10 +153,10 @@ public class SeleniumAssignmentTest {
         driver.findElement(By.id("amountHours")).click();
         assertThat(driver.switchTo().alert().getText(), is("De startdatum moet kleiner zijn dan de einddatum van uw opdracht!"));
     }
-    // id=
+    // id= 9
     @Test
-    public void AllAssignmentsNoChanges() {
-        driver.get("http://localhost:8080/");
+    public void allAssignmentsNoChanges() {
+        driver.get("http://vps092.ap.be/");
         driver.manage().window().setSize(new Dimension(1550, 838));
         driver.findElement(By.linkText("Login")).click();
         driver.findElement(By.id("username")).sendKeys("nicolas.rossie@gmail.com");
@@ -165,7 +165,7 @@ public class SeleniumAssignmentTest {
         driver.findElement(By.id("assignments")).click();
         driver.findElement(By.linkText("Opdracht Toevoegen")).click();
         driver.findElement(By.id("title")).click();
-        driver.findElement(By.id("title")).sendKeys("test");
+        driver.findElement(By.id("title")).sendKeys("SELENIUMtest");
         driver.findElement(By.id("type")).click();
         {
             WebElement dropdown = driver.findElement(By.id("type"));
@@ -173,7 +173,7 @@ public class SeleniumAssignmentTest {
         }
         driver.findElement(By.cssSelector("option:nth-child(3)")).click();
         driver.findElement(By.id("task")).click();
-        driver.findElement(By.id("task")).sendKeys("test");
+        driver.findElement(By.id("task")).sendKeys("SELENIUMtest");
         driver.findElement(By.id("startDate")).click();
         driver.findElement(By.id("startDate")).sendKeys("2019-06-28");
         driver.findElement(By.id("endDate")).click();
