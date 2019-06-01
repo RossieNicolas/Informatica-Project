@@ -26,20 +26,37 @@
             <div class="mt-5 jumbotron">
                 <h1 th:text="${'Welkom ' + name}"></h1>
 
-                <button th:if="${externals} > 0" type="button" class="btn btn-outline-danger">
-                    Ongevalideerde externe <span class="badge badge-warning" th:text="${externals}"></span>
-                </button>
+                <!--GOED TE KEUREN-->
+                <h4 sec:authorize="hasRole('COORDINATOR')" class="extra">Goed te keuren <span class="badge badge-warning" th:text="${externals + assignments + enrolled}"></span></h4>
+                <h4 sec:authorize="hasRole('DOCENT')" class="extra">Goed te keuren</h4>
 
+                <a sec:authorize="hasRole('COORDINATOR')" href="/listUnvalidatedExternal" th:if="${externals} > 0" type="button" class="btn btn-outline-danger">
+                    Externe <span class="badge badge-warning" th:text="${externals}"></span>
+                </a>
+
+                <a sec:authorize="hasRole('COORDINATOR')" href="/unvalidatedassignments" th:if="${assignments} > 0" type="button" class="btn btn-outline-danger">
+                    Opdrachten <span class="badge badge-warning" th:text="${assignments}"></span>
+                </a>
+
+                <a sec:authorize="hasAnyRole('COORDINATOR','DOCENT')" href="/unapprovedEnrollments" th:if="${enrolled} > 0" type="button" class="btn btn-outline-danger">
+                    Inschrijvingen <span class="badge badge-warning" th:text="${enrolled}"></span>
+                </a>
+
+                <!--PROFIEL STUDENT / EXTERN-->
                 <a sec:authorize="hasRole('STUDENT')" class="mt-3 btn btn-outline-danger" href="/studentProfile">Mijn
                     profiel</a>
                 <a sec:authorize="hasRole('EXTERN')" class="mt-3 btn btn-outline-danger" href="/externalUserProfile">Mijn
                     profiel</a>
                 <a sec:authorize="hasRole('STUDENT')" class="mt-3 btn btn-outline-danger" href="/portfolio">Mijn
                     portfolio</a><br><br>
+
+                <!--TOEVOEGEN-->
                 <h4 class="extra">Toevoegen</h4>
                 <a class="mt-3 btn btn-outline-danger" href="/assignment">Opdracht toevoegen</a>
                 <a sec:authorize="hasRole('COORDINATOR')" class="mt-3 btn btn-outline-danger" href="/tag">Tag
                     toevoegen</a><br><br>
+
+                <!--BEKIJKEN-->
                 <h4 sec:authorize="!hasRole('EXTERN')" class="extra">Bekijken</h4>
                 <a sec:authorize="!hasRole('EXTERN')" class="mt-3 btn btn-outline-danger" href="/allassignments">Alle
                     opdrachten</a>
@@ -51,14 +68,6 @@
                    href="/myassignments">Ingeschreven opdrachten</a>
                 <a sec:authorize="hasAnyRole('STUDENT','DOCENT')" class="mt-3 btn btn-outline-danger"
                    href="/documentation">Documentatie</a><br><br>
-
-                <h4 sec:authorize="hasAnyRole('COORDINATOR','DOCENT')" class="extra">Goed te keuren</h4>
-                <a sec:authorize="hasRole('COORDINATOR')" class="mt-3 btn btn-outline-danger"
-                   href="/listUnvalidatedExternal">Externe gebruikers</a>
-                <a sec:authorize="hasRole('COORDINATOR')" class="mt-3 btn btn-outline-danger"
-                   href="/unvalidatedassignments">Opdrachten</a>
-                <a sec:authorize="hasAnyRole('COORDINATOR','DOCENT')" class="mt-3 btn btn-outline-danger"
-                   href="/unapprovedEnrollments">Inschrijvingen</a>
 
             </div>
 

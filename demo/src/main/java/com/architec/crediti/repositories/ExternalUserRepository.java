@@ -14,5 +14,5 @@ public interface ExternalUserRepository extends JpaRepository<ExternalUser, Long
     ExternalUser findByUserId(User user);
     ExternalUser findByResettoken(String resetToken);
     boolean existsByUserId(User user);
-    int countAllByApproved(boolean approved);
+    int countByApproved(boolean approved);
 }
