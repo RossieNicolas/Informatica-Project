@@ -1,5 +1,6 @@
 package com.architec.crediti.controllers;
 
+import com.architec.crediti.models.ExternalUser;
 import com.architec.crediti.models.User;
 import com.architec.crediti.repositories.ExternalUserRepository;
 import com.architec.crediti.repositories.UserRepository;
@@ -9,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class MainController {
@@ -37,7 +39,9 @@ public class MainController {
             return "redirect:/loginUnapproved";
 
         }
+        int unapprovedExternals = exRepo.countAllByApproved(true);
         model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
+        model.addAttribute("externals", unapprovedExternals);
         return "basic/main";
     }
 }
