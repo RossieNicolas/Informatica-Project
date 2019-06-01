@@ -27,8 +27,8 @@
                 <h1 th:text="${'Welkom ' + name}"></h1>
 
                 <!--GOED TE KEUREN-->
-                <h4 sec:authorize="hasRole('COORDINATOR')" class="extra">Goed te keuren <span class="badge badge-warning" th:text="${externals + assignments + enrolled}"></span></h4>
-                <h4 sec:authorize="hasRole('DOCENT')" class="extra">Goed te keuren</h4>
+                <h4 th:if="${externals} > 0 or ${assignments} > 0 ${enrolled} > 0" sec:authorize="hasRole('COORDINATOR')" class="extra">Goed te keuren <span class="badge badge-warning" th:text="${externals + assignments + enrolled}"></span></h4>
+                <h4 th:if="${enrolled} > 0" sec:authorize="hasRole('DOCENT')" class="extra">Goed te keuren</h4>
 
                 <a sec:authorize="hasRole('COORDINATOR')" href="/listUnvalidatedExternal" th:if="${externals} > 0" type="button" class="btn btn-outline-danger">
                     Externe <span class="badge badge-warning" th:text="${externals}"></span>
