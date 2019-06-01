@@ -23,6 +23,8 @@
                             <a id="opdrachtgever" type="text" th:text="*{a.getName()}" style="width: 40%; background-color: rgb(235, 235, 228);"></a><br>
                             <label for="opdrachtgeveremail">Opdrachtgever email :</label>
                             <a id="opdrachtgeveremail" type="text" th:text="*{a.getEmail()}" th:href="'mailto:' + ${a.getEmail()}" style="width: 40%; background-color: rgb(235, 235, 228);"></a><br>
+                            <label for="company" th:if="${!company.equalsIgnoreCase('t')}">Bedrijf: </label>
+                            <a th:if="${!company.equalsIgnoreCase('t')}" id="company" type="text" th:text="*{company}"></a><br>
                             <label for="title">Titel:</label>
                             <input name="title" id="title" type="text" th:value="*{a.getTitle()}" required="required"><br>
                             <label for="type">Type:</label>

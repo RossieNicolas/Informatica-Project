@@ -2,55 +2,144 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8" />
-    <title>Crediti - Ongevalideerde participaties</title>
-    <link rel="stylesheet" th:href="@{/css/APcss3.css}">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+
+    <title>Crediti - Ongevalideerde Inschrijvingen</title>
 </head>
 
-<body class="background" onload="tableFill()">
-    <header th:insert="fragments/generalMenu_old.html :: header (name=${name})"></header>
-    <div class="container ">
-        <h2 class="extra">Ongevalideerde inschrijvingen</h2>
+<body class="bg" onload="tableFill()">
+<div id="page-container">
+    <div id="content-wrap">
+
+        <header th:insert="fragments/generalMenu.html :: header"></header>
+
+        <main role="main" class="container">
+            <div class="mt-5 jumbotron">
+                <h1 class="pb-4">Ongevalideerde inschrijvingen</h1>
+                <div class="table-responsive">
+                    <table id="table" class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">Assignment ID</th>
+                            <th scope="col">Titel</th>
+                            <th scope="col">Voor-en achternaam</th>
+                            <th scope="col">E-mail aanvrager</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="e : ${unapproved}">
+                            <td th:text="${e.getAssignment()}"></td>
+                            <td th:text="${e.getTitle()}"></td>
+                            <td th:text="${e.getFullname()}"></td>
+                            <td th:text="${e.getEmail()}"></td>
+                            <td>
+                                <button class="btn btn-outline-success" role="button" data-toggle="modal"
+                                        data-target="#validateModal">✔️
+                                </button>
+                                <button class="btn btn-outline-danger" role="button" data-toggle="modal"
+                                        data-target="#deleteModal">🗑️
+                                </button>
+
+                                <!-- Modal VALIDEEER -->
+                                <div class="modal fade" id="validateModal" tabindex="-1" role="dialog"
+                                     aria-labelledby="validateModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="validateModalLabel">Valideren</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Bent u zeker dat u deze externe gebruiker wilt valideren?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                    Sluiten
+                                                </button>
+                                                <a th:href="@{/approveEnroll/{id} (id=${e.getEnrolledId()})}">
+                                                    <button type="button" class="btn btn-success">Valideer</button>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Modal DELETE -->
+                                <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
+                                     aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="deleteModalLabel">Verwijderen</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Bent u zeker dat u deze externe gebruiker wilt valideren?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                    Sluiten
+                                                </button>
+                                                <a th:href="@{/deleteEnroll/{id} (id=${e.getEnrolledId()})}">
+                                                    <button type="button" class="btn btn-danger">Verwijder</button>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="alert alert-primary" role="alert" id="empty"></div>
+            </div>
+
+        </main>
+        <!-- /.container -->
+
+
     </div>
-    <div id='overview'>
-        <table id="tabel">
-            <thead>
-                <tr class="ext_table">
-                    <th></th>
-                    <th>Assignment ID</th>
-                    <th>Titel</th>
-                    <th>Voor-en achternaam</th>
-                    <th>E-mail aanvrager</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="e : ${unapproved}" class="tablebackground ext_table">
-                    <td>
-                        <a th:href="@{/approveEnroll/{id} (id=${e.getEnrolledId()})}" class="button">✔️</a>
-                    </td>
-                    <td th:text="${e.getAssignment()}"></td>
-                    <td th:text="${e.getTitle()}"></td>
-                    <td th:text="${e.getFullname()}"></td>
-                    <td th:text="${e.getEmail()}"></td>
-                    <td><a class="button" th:href="@{/deleteEnroll/{id} (id=${e.getEnrolledId()})}">🗑️</a></td>
-                </tr>
-            </tbody>
-        </table>
+    <div th:insert="fragments/general.html :: footer">
     </div>
-    <div style="height: 50%"></div>
-    <footer th:insert="fragments/generalMenu.html :: footer"></footer>
-    <script>
-        function tableFill() {
-            var tbl = document.getElementById('tabel');
-            if (tbl.rows.length == 1) {
-                var x = tbl.insertRow(1);
-                var cell1 = x.insertCell(0);
-                var cell2 = x.insertCell(1);
-                cell2.innerHTML = "Er is momenteel geen inschrijving om te valideren.";
-            }
+</div>
+<!-- Optional JavaScript -->
+<script>
+    function tableFill() {
+        var tbl = document.getElementById('table');
+        if (tbl.rows.length == 1) {
+            var para = document.createElement("p");
+            var node = document.createTextNode("Er zijn momenteel geen inschrijvingen om te valideren.");
+            para.appendChild(node);
+            var element = document.getElementById("empty");
+            element.style.visibility = "visible";
+            element.appendChild(para);
         }
-    </script>
+    }
+</script>
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

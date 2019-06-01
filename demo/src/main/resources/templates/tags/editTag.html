@@ -15,7 +15,8 @@
 </head>
 
 <body class="bg">
-
+<div id="page-container">
+    <div id="content-wrap">
     <header th:insert="fragments/generalMenu.html :: header">
     </header>
 
@@ -44,14 +45,14 @@
                 </div>
             </form>
         </div>
-        </div>
 
     </main>
+    </div>
     <!-- /.container -->
 
     <footer th:insert="fragments/general.html :: footer">
     </footer>
-
+</div>
     <!-- Optional JavaScript -->
     <script>
         function toggleForm() {

@@ -16,6 +16,7 @@
                     <div class="wrap-all col-xs-12 ">
                         <h2 class="extra">Profiel externe gebruiker</h2>
                         <form th:each="a: ${externalUsers}" th:action="@{/externalUserProfile}" method='POST' class="standard-form">
+                            <input type="button" value="✏️PROFIEL BEWERKEN" class="button" onclick="toggleForm();" name = "edit">
                             <fieldset disabled="disabled" id="externalInfo">
                                 <label for='lastname'>Naam: </label>
                                 <input type='text' name='lastname' id='lastname' maxlength="50" placeholder="lastname" th:value="*{a.getLastname()}" required><br/>
@@ -33,8 +34,8 @@
                                 <input type='number' name='postal' id='postal' maxlength="50" placeholder="postal" th:value="*{a.getPostal()}" required><br/>
                                 <label for='password'>Wachtwoord: </label>
                                 <input type='password' name='password' id='password' maxlength="50"><br/>
-                            </fieldset><br/>
-                            <input type="button" value="✏️PROFIEL BEWERKEN" class="button" onclick="toggleForm();">&nbsp;&nbsp;&nbsp;<input type="submit" value="💾 AANPASSINGEN BEWAREN" class="button" id="save" style="visibility: hidden;">
+                            </fieldset>
+                            <input class="button" type="submit" value="💾 AANPASSINGEN BEWAREN" name="save">
                             <h2 class="extra">Uw aangemaakte opdrachten</h2>
                             <table id="profileTable">
                                 <thead>
@@ -73,7 +74,6 @@
     <script>
         function toggleForm() {
             document.getElementById('externalInfo').removeAttribute('disabled');
-            document.getElementById("save").style.visibility = "visible";;
         }
     </script>
 </body>

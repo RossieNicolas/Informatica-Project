@@ -15,19 +15,29 @@
     text-align: center;
 }
 
-.footer {
-    background-color: #e60005;
-    width: 100%;
-    position: fixed;
-    bottom: 0;
+#page-container {
+    position: relative;
+    min-height: 100vh;
 }
 
-.footer>.container {
+#content-wrap {
+    padding-bottom: 5rem; /* Footer height */
+}
+
+#footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 3.5rem; /* Footer height */
+    background-color: #e60005;
+}
+
+.footer > .container {
     padding-right: 15px;
     padding-left: 15px;
 }
 
-.footer>.container>span {
+.footer > .container > span {
     color: white;
 }
 
@@ -37,12 +47,6 @@ code {
 
 .bg-nav {
     background-color: rgba(237, 239, 245, 0.8);
-}
-
-html,
-body {
-    height: 100%;
-    position: relative;
 }
 
 .form-signin {
@@ -96,7 +100,7 @@ a {
     color: #e60005;
 }
 
-.custom-control-input:checked~.custom-control-label::before {
+.custom-control-input:checked ~ .custom-control-label::before {
     color: #fff;
     border-color: #e60005;
     background-color: #e60005;
@@ -126,7 +130,7 @@ a {
 
 /* vertical align tekst in tables */
 
-.table>tbody>tr>td {
+.table > tbody > tr > td {
     vertical-align: middle;
 }
 
@@ -138,4 +142,47 @@ a {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+/* Searchbar css*/
+.search-box {
+    display: inline-block;
+    width: 100%;
+    border-radius: 3px;
+    padding: 4px 55px 4px 15px;
+    position: relative;
+    background: #fff;
+    border: 1px solid #ddd;
+    -webkit-transition: all 200ms ease-in-out;
+    -moz-transition: all 200ms ease-in-out;
+    transition: all 200ms ease-in-out;
+}
+.search-box.hovered, .search-box:hover, .search-box:active {
+    border: 1px solid #aaa;
+}
+.search-box input[type=text] {
+    border: none;
+    box-shadow: none;
+    display: inline-block;
+    padding: 0;
+    background: transparent;
+}
+.search-box input[type=text]:hover, .search-box input[type=text]:focus, .search-box input[type=text]:active {
+    box-shadow: none;
+}
+.search-box .search-btn {
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    color: #aaa;
+    border-radius: 3px;
+    font-size: 21px;
+    padding: 5px 10px 1px;
+    -webkit-transition: all 200ms ease-in-out;
+    -moz-transition: all 200ms ease-in-out;
+    transition: all 200ms ease-in-out;
+}
+.search-box .search-btn:hover {
+    color: #fff;
+    background-color: #e60005;
 }
