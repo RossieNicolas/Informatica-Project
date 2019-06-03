@@ -101,6 +101,12 @@
                     <input th:if="${!assignments.isValidated()}" type="submit" value="💾 Bewaren" class="mt-3 btn btn-outline-success" id="save">
                     <input sec:authorize="hasRole('COORDINATOR')" th:if="${assignments.isValidated()}" type="submit" value="💾 Bewaren" class="mt-3 btn btn-outline-success" id="coorSave">
 
+                    <a sec:authorize="hasRole('STUDENT')"
+                       th:if="${assignments.isValidated()} and ${!ingeschreven} and ${!volzet}"
+                       th:href="@{/studentenroll/{id} (id=${assignments.assignmentId})}"
+                       class="mt-3 btn btn-outline-success" role="button">
+                        ➕ Inschrijven</a>
+
                     <a sec:authorize="hasRole('COORDINATOR')"
                        th:if="${assignments.isValidated()}"
                        th:href="@{/archiveassignment/{id} (id=${assignments.getAssignmentId()})}"
