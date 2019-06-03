@@ -37,6 +37,24 @@
                 </form>
                 <form>
                     <h2>Portfolio</h2>
+                    <h4>Status</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Fiche nr</th>
+                                <th>Fiche naam</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="f : ${status}">
+                                <td th:text="${f.getAssignmentId()}"></td>
+                                <td th:text="${f.getTitle()}"></td>
+                                <td><button th:text="${f.getStatus()}"></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h4>Documenten</h4>
                     <table id="tablePortfolio">
                         <thead>
                         <tr>

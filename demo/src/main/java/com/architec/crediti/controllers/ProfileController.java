@@ -41,6 +41,7 @@ public class ProfileController {
 
         model.addAttribute("student", st);
         model.addAttribute("files", files);
+        model.addAttribute("status", fileRepo.findByDocType("Contract"));
         //pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());
         model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
