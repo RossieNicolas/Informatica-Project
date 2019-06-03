@@ -33,7 +33,7 @@
                                 <label for='postal'>Postcode: </label>
                                 <input type='number' name='postal' id='postal' maxlength="50" placeholder="postal" th:value="*{a.getPostal()}" required><br/>
                                 <label for='password'>Wachtwoord: </label>
-                                <input type='password' name='password' id='password' maxlength="50" ><br/>
+                                <input type='password' name='password' id='password' maxlength="50" th:value="*{a.getPassword()}"><br/>
                             </fieldset>
                             <input class="button" type="submit" value="💾 AANPASSINGEN BEWAREN" name="save">
                             <h2 class="extra">Uw aangemaakte opdrachten</h2>
