@@ -38,7 +38,7 @@ public class File {
         this.user = user;
         this.docType = typeDoc;
         this.assignmentId = assignmentId;
-        this.status = "Start";
+        this.status = Progress.START.getInfo();
     }
 
     public int getFileId() {
