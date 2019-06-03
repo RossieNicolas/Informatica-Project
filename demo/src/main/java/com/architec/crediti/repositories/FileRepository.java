@@ -13,5 +13,7 @@ public interface FileRepository extends JpaRepository<File, Long> {
 
     List<File> findByUser(User user);
 
+    List<File> findByUserOrderByAssignmentId(User user);
+
     Optional<File> findByFileId(int id);
 }

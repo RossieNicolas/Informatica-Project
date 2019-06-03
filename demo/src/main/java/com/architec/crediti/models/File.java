@@ -72,4 +72,12 @@ public class File {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public long getAssignmentId() {
+        return assignmentId;
+    }
+
+    public String getDocType() {
+        return docType;
+    }
 }

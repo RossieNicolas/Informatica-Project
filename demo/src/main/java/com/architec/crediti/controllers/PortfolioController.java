@@ -27,6 +27,7 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 /*
 Some functions from
@@ -63,8 +64,11 @@ public class PortfolioController {
     @GetMapping("/portfolio")
     public String getPortfolio(Model model, Principal principal) {
         User currentUser = userRepo.findByEmail(principal.getName());
-        List<File> files = fileRepo.findByUser(currentUser);
+        List<File> files = fileRepo.findByUserOrderByAssignmentId(currentUser);
+
         model.addAttribute("files", files);
+
+
         //pass username to header fragment
         model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
         return "portfolio/portfolio";
