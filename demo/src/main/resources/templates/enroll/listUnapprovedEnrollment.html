@@ -42,10 +42,10 @@
                             <td th:text="${e.getEmail()}"></td>
                             <td>
                                 <button class="btn btn-outline-success" role="button" data-toggle="modal"
-                                        data-target="#validateModal">✔️
+                                        data-target="#validateModal" th:attr="data-id=${e.getEnrolledId()}">✔️
                                 </button>
                                 <button class="btn btn-outline-danger" role="button" data-toggle="modal"
-                                        data-target="#deleteModal">🗑️
+                                        data-target="#deleteModal" th:attr="data-id=${e.getEnrolledId()}">🗑️
                                 </button>
 
                                 <!-- Modal VALIDEEER -->
@@ -61,14 +61,14 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                Bent u zeker dat u deze externe gebruiker wilt valideren?
+                                                Bent u zeker dat u deze inschrijving wilt valideren?
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
                                                     Sluiten
                                                 </button>
-                                                <a th:href="@{/approveEnroll/{id} (id=${e.getEnrolledId()})}">
-                                                    <button type="button" class="btn btn-success">Valideer</button>
+                                                    <a class="validate-link" href="">
+                                                    <button type="button" class="btn btn-success btn-validate">Valideer</button>
                                                 </a>
                                             </div>
                                         </div>
@@ -88,14 +88,14 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                Bent u zeker dat u deze externe gebruiker wilt valideren?
+                                                Bent u zeker dat u deze inschrijving wilt verwijderen?
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
                                                     Sluiten
                                                 </button>
-                                                <a th:href="@{/deleteEnroll/{id} (id=${e.getEnrolledId()})}">
-                                                    <button type="button" class="btn btn-danger">Verwijder</button>
+                                                <a class="delete-link" href="">
+                                                <button type="button" class="btn btn-danger">Verwijder</button>
                                                 </a>
                                             </div>
                                         </div>
@@ -117,7 +117,32 @@
     </div>
 </div>
 <!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
 <script>
+    $('#validateModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var recipient = button.data('id');
+        var modal = $(this);
+        modal.find(".validate-link").attr("href", "/approveEnroll/" + recipient);
+    });
+
+    $('#deleteModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var recipient = button.data('id');
+        var modal = $(this);
+        modal.find(".delete-link").attr("href", "/deleteEnroll/" + recipient);
+    });
+
     function tableFill() {
         var tbl = document.getElementById('table');
         if (tbl.rows.length == 1) {
@@ -130,16 +155,6 @@
         }
     }
 </script>
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
 </body>
 
 </html>

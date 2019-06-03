@@ -39,7 +39,7 @@ public class AssignmentController {
     private Log log = LogFactory.getLog(this.getClass());
     private String name = "";
     private int[] tags;
-    List<Long> list =null;
+    List<Long> list = null;
 
 
     private final
@@ -60,15 +60,19 @@ public class AssignmentController {
     private final
     EmailServiceImpl mail;
 
+    private final
+    ExternalUserRepository externalRepo;
+
     @Autowired
     public AssignmentController(TagRepo tagRepo, AssignmentRepository assignmentRepo, StudentRepository studentRepo,
-                                UserRepository userRepo, ArchiveRepository archiveRepo, EmailServiceImpl mail) {
+                                UserRepository userRepo, ArchiveRepository archiveRepo, EmailServiceImpl mail, ExternalUserRepository externalRepo) {
         this.tagRepo = tagRepo;
         this.assignmentRepo = assignmentRepo;
         this.studentRepo = studentRepo;
         this.userRepo = userRepo;
         this.archiveRepo = archiveRepo;
         this.mail = mail;
+        this.externalRepo = externalRepo;
     }
 
     // get assignment form
@@ -122,13 +126,23 @@ public class AssignmentController {
         }
 
         int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
-        if(this.list != null){
-            fiches = assignmentRepo.findByTagsOrderByAssignmentIdDesc(this.list, PageRequest.of(evalPage, PAGE_SIZE));
+        if (studentRepo.existsByUserId(currentUser)) {
+            Student student = studentRepo.findByUserId(currentUser);
+            if (student.isMobility() && !student.isZap()) {
+                fiches = assignmentRepo.findByTitleContainingAndFullAndTypeEqualsOrderByAssignmentIdDesc(name, false, PageRequest.of(evalPage, PAGE_SIZE), "Mobility");
+
+            } else if (student.isZap() && !student.isMobility()) {
+                fiches = assignmentRepo.findByTitleContainingAndFullAndTypeEqualsOrderByAssignmentIdDesc(name, false, PageRequest.of(evalPage, PAGE_SIZE), "ZAP");
+            } else {
+                fiches = assignmentRepo.findByTitleContainingAndFullOrderByAssignmentIdDesc(name, false, PageRequest.of(evalPage, PAGE_SIZE));
+
+            }
+        } else {
+            fiches = assignmentRepo.findByTitleContainingAndFullOrderByAssignmentIdDesc(name, false, PageRequest.of(evalPage, PAGE_SIZE));
+
         }
-        else{
-            fiches =assignmentRepo.findByTitleContainingAndFullOrderByAssignmentIdDesc(name, false,PageRequest.of(evalPage, PAGE_SIZE));
-        }
-        model.addAttribute("assignments",fiches);
+
+        model.addAttribute("assignments", fiches);
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
 
         view.addObject("persons", fiches);
@@ -266,21 +280,33 @@ public class AssignmentController {
     @GetMapping("/allassignments/{assignmentId}")
     public String getAssignmentsToUpdate(@PathVariable("assignmentId") int assignmentId, Model model, Principal principal) {
         List<Tag> updatetag = tagRepo.findAll();
-        User user = userRepo.findByEmail(principal.getName());
-        Student student = studentRepo.findByUserId(user);
         Assignment as = assignmentRepo.findByAssignmentId(assignmentId);
+        User user = userRepo.findByEmail(principal.getName());
+        long assignerId = as.getAssignerUserId();
+        User assigner = userRepo.findByUserId(assignerId);
+        if (externalRepo.existsByUserId(assigner)) {
+            ExternalUser external = externalRepo.findByUserId(assigner);
+            String company = external.getCompany();
+            model.addAttribute("company", company);
+        } else {
+            model.addAttribute("company", "t");
+        }
+
         boolean ingeschreven = false;
         boolean volzet = false;
 
-
-        for (Assignment item : student.getAssignments()) {
-            if (item.getAssignmentId() == assignmentId) {
-                ingeschreven = true;
+        if (studentRepo.existsByUserId(user)) {
+            Student student = studentRepo.findByUserId(user);
+            for (Assignment item : student.getAssignments()) {
+                if (item.getAssignmentId() == assignmentId) {
+                    ingeschreven = true;
+                }
             }
         }
 
         if (as.getAmountStudents() == as.getMaxStudents()) {
             volzet = true;
+
         }
 
         model.addAttribute("volzet", volzet);

@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface EnrolledRepository extends JpaRepository<Enrolled, Long>{
     Enrolled findByEnrolledId(long id);
+    int countAllByEnrolledIdNotNull();
 }
