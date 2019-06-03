@@ -22,7 +22,8 @@
                 </div>
             </section>
             <div class="container">
-                <progress value="0" max="100"></progress>
+                <progress value="0" max="100" id="progressBar"></progress>
+                <button onclick="increment()">Ingediend</button>
                 <table class="smalltable" id="tabel">
                     <thead>
                         <tr>
@@ -57,6 +58,11 @@
                 var cell2 = x.insertCell(1)
                 cell2.innerHTML = "Momenteel is je portfolio nog leeg.";
             }
+        }
+        var count = 0;
+        function increment() {
+            count = count + 25;
+            document.getElementById("progressBar").value = count;
         }
     </script>
 </body>
