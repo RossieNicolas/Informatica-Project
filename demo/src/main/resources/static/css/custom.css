@@ -191,3 +191,11 @@ a {
     background-color: #e60005;
     border-color: #e60005;
 }
+
+.page-link {
+    color: #e60005;
+}
+
+.page-link:hover {
+    color: #920005;
+}
