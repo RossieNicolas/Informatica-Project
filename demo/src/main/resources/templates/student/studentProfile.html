@@ -47,6 +47,7 @@
                 <table id="profileTable">
                     <thead>
                     <tr>
+                        <th>Info</th>
                         <th>Nr</th>
                         <th>Type</th>
                         <th>Naam</th>
@@ -58,6 +59,7 @@
                     </thead>
                     <tbody>
                     <tr th:each="a : ${assignments}" class="tablebackground ">
+                        <td><a th:href="${'/allassignments/' + a.getAssignmentId()}">📃 Info</a></td>
                         <td th:text="${a.getAssignmentId()}"></td>
                         <td th:text="${a.getType()}"></td>
                         <td th:text="${a.getTitle()}" class="cell"></td>

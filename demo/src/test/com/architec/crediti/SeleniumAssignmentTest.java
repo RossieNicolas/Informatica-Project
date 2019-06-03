@@ -188,6 +188,55 @@ public class SeleniumAssignmentTest {
         driver.findElement(By.cssSelector(".button:nth-child(1)")).click();
         driver.findElement(By.id("save")).click();
     }
+    //id= 11
+    @Test
+    public void myAssignmentEditNoChanges() {
+        driver.get("http://vps092.ap.be/");
+        driver.manage().window().setSize(new Dimension(900, 703));
+        driver.findElement(By.linkText("Login")).click();
+        driver.findElement(By.id("username")).sendKeys("nicolasstudent@gmail.com");
+        driver.findElement(By.id("password")).sendKeys("testwachtwoord");
+        driver.findElement(By.cssSelector(".btn")).click();
+        driver.findElement(By.cssSelector(".mt-3:nth-child(2)")).click();
+        driver.findElement(By.linkText("📃 Info")).click();
+        driver.findElement(By.cssSelector(".button:nth-child(1)")).click();
+        driver.findElement(By.id("save")).click();
+    }
+
+    //id= 12
+    @Test
+    public void myAssignmentEditFewChanges() {
+        driver.get("http://vps092.ap.be/");
+        driver.manage().window().setSize(new Dimension(900, 703));
+        driver.findElement(By.linkText("Login")).click();
+        driver.findElement(By.id("username")).sendKeys("nicolasstudent@gmail.com");
+        driver.findElement(By.id("password")).sendKeys("testwachtwoord");
+        driver.findElement(By.cssSelector(".btn")).click();
+        driver.findElement(By.cssSelector(".mt-3:nth-child(2)")).click();
+        driver.findElement(By.linkText("📃 Info")).click();
+        driver.findElement(By.cssSelector(".button:nth-child(1)")).click();
+        driver.findElement(By.id("title")).click();
+        driver.findElement(By.id("title")).sendKeys("SELENIUMtestEDIT");
+        driver.findElement(By.id("save")).click();
+    }
+
+    //id= 13
+    @Test
+    public void myAssignmentEditEmptyFields() {
+        driver.get("http://vps092.ap.be/");
+        driver.manage().window().setSize(new Dimension(900, 703));
+        driver.findElement(By.linkText("Login")).click();
+        driver.findElement(By.id("username")).sendKeys("nicolasstudent@gmail.com");
+        driver.findElement(By.id("password")).sendKeys("testwachtwoord");
+        driver.findElement(By.cssSelector(".btn")).click();
+        driver.findElement(By.cssSelector(".mt-3:nth-child(2)")).click();
+        driver.findElement(By.linkText("📃 Info")).click();
+        driver.findElement(By.cssSelector(".button:nth-child(1)")).click();
+        driver.findElement(By.id("title")).click();
+        driver.findElement(By.id("title")).sendKeys("");
+        driver.findElement(By.id("save")).click();
+    }
+
     //id=39
     @Test
     public void assignmentEnrollStudentNotValidated() {
