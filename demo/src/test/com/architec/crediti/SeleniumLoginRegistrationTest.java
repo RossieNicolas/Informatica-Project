@@ -83,4 +83,53 @@ public class SeleniumLoginRegistrationTest {
         driver.findElement(By.id("password")).sendKeys("testwachtwoord");
         driver.findElement(By.cssSelector(".btn")).click();
     }
+    //id= 31
+    @Test
+    public void createStudentOtherLogin() {
+        driver.get("http://vps092.ap.be/");
+        driver.manage().window().setSize(new Dimension(900, 701));
+        driver.findElement(By.linkText("Login")).click();
+        driver.findElement(By.id("username")).sendKeys("nicolasstudent@gmail.com");
+        driver.findElement(By.id("password")).sendKeys("testwachtwoord");
+        driver.findElement(By.cssSelector(".btn")).click();
+    }
+
+    //id= 32
+    //TODO breaks tests new hash password
+    /*@Test
+    public void updateExternalUserProfileNoEdits() {
+        driver.get("http://vps092.ap.be/");
+        driver.manage().window().setSize(new Dimension(900, 701));
+        driver.findElement(By.linkText("Login")).click();
+        driver.findElement(By.id("username")).sendKeys("nicolasextern@gmail.com");
+        driver.findElement(By.id("password")).sendKeys("testwachtwoord");
+        driver.findElement(By.cssSelector(".btn")).click();
+        driver.findElement(By.id("profile")).click();
+        driver.findElement(By.linkText("Mijn profiel")).click();
+        driver.findElement(By.name("edit")).click();
+        driver.findElement(By.name("save")).click();
+    }*/
+
+    //id= 40
+    @Test
+    public void passwordRecoveryLoad() {
+        driver.get("http://vps092.ap.be/");
+        driver.manage().window().setSize(new Dimension(900, 701));
+        driver.findElement(By.linkText("Login")).click();
+        driver.findElement(By.cssSelector(".mt-5")).click();
+        driver.findElement(By.cssSelector("a:nth-child(6) > b")).click();
+    }
+
+    //id= 41
+    @Test
+    public void passwordRecoveryRedirect() {
+        driver.get("http://vps092.ap.be/");
+        driver.manage().window().setSize(new Dimension(900, 701));
+        driver.findElement(By.linkText("Login")).click();
+        driver.findElement(By.cssSelector(".mt-5")).click();
+        driver.findElement(By.cssSelector("a:nth-child(6) > b")).click();
+        driver.findElement(By.id("email")).click();
+        driver.findElement(By.id("email")).sendKeys("emailnotindatabase@test.test");
+        driver.findElement(By.cssSelector(".btn")).click();
+    }
 }
