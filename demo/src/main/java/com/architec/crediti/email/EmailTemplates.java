@@ -102,5 +102,12 @@ public class EmailTemplates {
                 "De deadline van opdracht : " + opdrachtTitel + " is morgen.\n\n" +
                 "AP-hogeschool";
     }
+    public static String userAlreadyExists() {
+        return "Beste,\n\n"+
+                "Een externe opdrachtgever probeerde zich zojuist te registreren op het platform met dit emailadres." +
+                "Als u dit niet bent, of u herinnert uw wachtwoord niet meer, dan kan u een wachtwoordherstel aanvragen" +
+                "via volgende link: http://vps092.ap.be/forgotPassword\n\n" +
+                "AP-hogeschool";
+    }
 
 }

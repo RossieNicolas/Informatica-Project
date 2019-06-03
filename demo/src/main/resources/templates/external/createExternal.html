@@ -22,6 +22,9 @@
 
     <main role="main" class="container">
         <div class="mt-5 mb-5 jumbotron">
+            <div th:if="${error}" class="alert alert-danger" role="alert">
+                Dit emailadres bestaat al!
+            </div>
             <h1>Profiel registreren</h1>
             <form th:action="@{/createexternal}" method="POST">
                 <div class="form-group">
