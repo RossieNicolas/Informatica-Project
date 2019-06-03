@@ -95,6 +95,7 @@ public class PortfolioController {
         User currentUser = userRepo.findByEmail(principal.getName());
 
         for (MultipartFile item: files) {
+
             portfolioUtil.uploadFile(item, currentUser.getUserId(), type, (long)assignment);
         }
 
