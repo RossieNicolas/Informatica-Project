@@ -23,7 +23,7 @@ public class File {
     private long assignmentId;
 
     @Column(name = "status")
-    private Progress status;
+    private String status;
 
     @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
@@ -38,7 +38,7 @@ public class File {
         this.user = user;
         this.docType = typeDoc;
         this.assignmentId = assignmentId;
-        this.status = Progress.START;
+        this.status = Progress.START.getInfo();
     }
 
     public int getFileId() {
@@ -82,6 +82,6 @@ public class File {
     }
 
     public String getStatus() {
-        return status.toString();
+        return status;
     }
 }
