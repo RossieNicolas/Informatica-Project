@@ -6,23 +6,24 @@
     <title>Crediti - Alle opdrachten</title>
     <link rel="stylesheet" th:href="@{/css/APcss3.css}">
 </head>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <body class="background">
     <header th:insert="fragments/generalMenu_old.html :: header (name=${name})"></header>
     <div class="container ">
         <h2 class="extra">Alle opdrachten</h2>
     </div>
-    <div class="container">
-        <form th:action='@{/allassignments}' method='POST' style="padding-top: 10px;">
-            <label for='searchbar'>Zoekwaarde: </label>
-            <input type='search' class='form-control' name='searchbar' id='searchbar'>&nbsp;&nbsp;&nbsp;&nbsp;
-            <tr th:each="a : ${tags}">
-                <input type="checkbox" name="tag" th:tr='${a.getTagName()}' th:value='${a.getTagId()}' />
-                <label th:text="${a.getTagName()}"></label>
-            </tr>
-            <input style="margin-right:20px;" type='SUBMIT' id="zoekKnop" value="Zoek" class="button" />
+        <div class="container">
+    <form th:action="@{'/allassignmentss/'${searchbar}'/'${tag}'}" method="GET" id="searchAs" style="padding-top: 10px;">
+        <label for='searchbar'>Zoekwaarde: </label>
+        <input type='text' class='form-control' name='searchbar' id='searchbar'>&nbsp;&nbsp;&nbsp;&nbsp;
+        <tr th:each="a,iter : ${tags}" >
+            <input th:checked="${status[iter.index]}" type="checkbox" name="tag" id ='tag' th:tr='${a.getTagName()}' th:value='${a.getTagId()}'/>
+            <label th:text="${a.getTagName()}"></label>
+        </tr>
+        <input style="margin-right:20px;" type='SUBMIT' id="zoekKnop" value="Zoek" class="button" onclick = "search()"/>
         </form>
-    </div>
+
+</div>
     <div id='overview'>
         <table>
             <thead>
@@ -40,7 +41,7 @@
             </thead>
             <tbody>
                 <tr th:each="a : ${assignments}" class="tablebackground" th:if="${!a.isArchived()}">
-                    <td><a th:href="${'/allassignments/' + a.getAssignmentId()}" class="button">📃</a>
+                    <td><a th:href="${'/allassignments/detail/' + a.getAssignmentId()}" class="button">📃</a>
                         <td th:text="${a.getAssignmentId()}"></td>
                         <td th:text="${a.getAssigner()}"></td>
                         <td th:text="${a.getType()}"></td>
@@ -60,17 +61,52 @@
         <div th:if="${persons.totalPages !=1}">
             <ul class="pagination">
                 <li th:class="${persons.number == 0} ? disabled">
-                    <a class="pageLink" th:href="@{/allassignments/(page=${persons.number})}">&laquo;</a>
+                    <a class="pageLink" th:href="@{__${#httpServletRequest.requestURL}__(page=${persons.number})}">&laquo;</a>
                 </li>
-                <li th:class="${persons.number == (page - 1)} ? 'active pointer-disabled'" th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
-                    <a class="pageLink" th:href="@{/allassignments/(page=${page})}" th:text="${page}"></a>
+                <li th:class="${persons.number == (page - 1)} ? 'active pointer-disabled'"
+                    th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
+                    <a class="pageLink" th:href="@{__${#httpServletRequest.requestURL}__(page=${page})}" th:text="${page}"></a>
                 </li>
                 <li th:class="${persons.number + 1 == persons.totalPages} ? disabled">
-                    <a class="pageLink" th:href="@{/allassignments/(page=${persons.number + 2})}">&raquo;</a>
+                    <a class="pageLink" th:href="@{__${#httpServletRequest.requestURL}__(page=${persons.number + 2})}">&raquo;</a>
                 </li>
             </ul>
         </div>
-    </div>
+</div>
+<script>
+
+function search(){
+    var id = document.getElementById('searchbar').value;
+
+    var coffee = document.forms[0];
+    var item = new Array(coffee.length);
+    document.getElementById('searchAs').action  = '/allassignments/'+id ;
+    var txt ="";
+    var i;
+    for (i = 0; i < coffee.length; i++) {
+        if (coffee[i].checked) { 
+        item.push(coffee[i].value);
+        }
+    }
+    item.forEach(function(element) {
+        txt = txt + "&" + element;
+    });
+    document.getElementById('searchbar').value = "";
+    if(id != "" && txt != ""){
+    document.getElementById('searchAs').action  = '/allassignments/'+id + "/" + txt;
+    } 
+    else if(id == ""){
+        document.getElementById('searchAs').action  = '/allassignments/tag/' + txt;
+    }
+    else if (txt = ""){
+        document.getElementById('searchAs').action  = '/allassignments/'+id;
+    }
+      
+
+    
+}
+
+</script>
     <footer th:insert="fragments/generalMenu.html :: footer"></footer>
 </body>
 
