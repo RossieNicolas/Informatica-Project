@@ -203,3 +203,8 @@ a {
 #save, #coorSave{
     display: none;
 }
+
+::selection {
+    background-color: #e60005;
+    color: #fff
+}
