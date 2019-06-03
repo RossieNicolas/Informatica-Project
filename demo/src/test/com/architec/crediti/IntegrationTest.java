@@ -35,6 +35,7 @@ public class IntegrationTest {
     @Autowired
     TagRepo tags;
 
+    //id= 1
     @Test
     public void createEditValidateArchiveAssignment(){
 
@@ -63,6 +64,7 @@ public class IntegrationTest {
         users.delete(u);
     }
 
+    //id= 2
     @Test
     public void createUserMakeStudentEditStudent(){
 
@@ -85,6 +87,7 @@ public class IntegrationTest {
         users.delete(u);
     }
 
+    //id= 3
     @Test
     public void createEditFindExternalUser(){
 
@@ -107,6 +110,7 @@ public class IntegrationTest {
         externalUsers.delete(e);
     }
 
+    //id= 4
     @Test
     public void findUserFourDifferentWays(){
 
@@ -164,6 +168,7 @@ public class IntegrationTest {
         users.delete(u);
     }
 
+    //id= 5
     @Test
     public void createEditFindTag(){
 
@@ -184,6 +189,7 @@ public class IntegrationTest {
         tags.delete(t);
     }
 
+    //id= 6
     @Test
     public void deleteUserExternalUserStudentTagAssignmentArchivedAssignment(){
 

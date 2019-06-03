@@ -71,9 +71,34 @@ public class StudentTest {
         students.delete(s);
         users.delete(u);
     }
-
     @Test
     //id= 66
+    public void editStudentNoChangesShouldNotChangeInDB(){
+
+        //arrange
+        User u = new User("testUser", "testUser","test@test.test", Role.COORDINATOR,false);
+        users.save(u);
+        String original = "000000";
+        Student s = new Student("0000000000",original,u);
+        students.save(s);
+        String input = "success";
+
+        //act
+        s.setStudentNumber(input);
+        students.save(s);
+        s.setStudentNumber(original);
+        students.save(s);
+
+        //assert
+        assertEquals(original, s.getStudentNumber());
+
+        //undo operations
+        students.delete(s);
+        users.delete(u);
+    }
+
+    @Test
+    //id= 67
     public void editStudentShouldChangeInDB(){
 
         //arrange
