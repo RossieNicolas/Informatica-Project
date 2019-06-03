@@ -63,7 +63,7 @@
 
                     <div class="col-md-5 pt-3">
                         <label for="email">E-mail:</label>
-                        <input type="email" class="form-control" name="email" id="email" maxlength="50" pattern="^[_A-Za-z0-9-]+(\.[_A-Za-z0-9-]+)*(\+[A-Za-z0-9-]+)?@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*$" required>
+                        <input type="email" class="form-control" name="email" id="email" maxlength="50" onkeyup="this.value = this.value.toLowerCase();" pattern="^[_A-Za-z0-9-]+(\.[_A-Za-z0-9-]+)*(\+[A-Za-z0-9-]+)?@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*$" required>
                     </div>
 
                     <div class="col-md-5 pt-3">
