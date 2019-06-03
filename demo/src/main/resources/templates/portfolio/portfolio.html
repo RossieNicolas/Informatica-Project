@@ -30,6 +30,7 @@
                             <th style="padding-left: 1%; width: 5%">Fiche nr</th>
                             <th>Title</th>
                             <th>Type of document</th>
+                            <th>Status</th>
                             <th width="26%"></th>
                         </tr>
                     </thead>
@@ -38,6 +39,7 @@
                             <td th:text="${file.getAssignmentId()}"></td>
                             <td th:text="${file.getTitle()}"></td>
                             <td th:text="${file.getDocType()}"></td>
+                            <td th:text="${file.getStatus()}"></td>
                             <td style="float: right">
                                 <a th:href="${file.getDownloadLink()}" class="button">DOWNLOAD</a> &nbsp;&nbsp;&nbsp;
                                 <a th:href="@{/deletefile/{id} (id=${file.getFileId()})}" class="button">🗑️</a>
