@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Crediti - Opdracht details</title>
+    <link rel="stylesheet" th:href="@{/css/APcss3.css}">
+</head>
+
+<body class="background">
+    <header th:insert="fragments/generalMenu_old.html :: header (name=${name})"></header>
+    <div class="block">
+        <section class="find-edu">
+            <div class="container ">
+                <div class="wrap-all col-xs-12 ">
+                    <h2 class="extra">Detail opdracht</h2>
+                    <form id="form" th:each="a: ${assignments}" class="standard-form" method="post" th:action="@{/allassignments/{id}(id=${a.assignmentId})}">
+                        <input th:if="${!a.isValidated() and roles}" type="button" value="✏️ BEWERKEN" class="button" onclick="toggleForm();">
+                        <input sec:authorize="hasRole('COORDINATOR')" th:if="${a.isValidated()}" type="button" value="✏️ BEWERKEN" class="button" onclick="toggleForm();">
+                        <br><br>
+                        <fieldset disabled="disabled" id="assignmentInfo">
+                            <label for="opdrachtgever">Opdrachtgever naam:</label>
+                            <a id="opdrachtgever" type="text" th:text="*{a.getName()}" style="width: 40%; background-color: rgb(235, 235, 228);"></a><br>
+                            <label for="opdrachtgeveremail">Opdrachtgever email :</label>
+                            <a id="opdrachtgeveremail" type="text" th:text="*{a.getEmail()}" th:href="'mailto:' + ${a.getEmail()}" style="width: 40%; background-color: rgb(235, 235, 228);"></a><br>
+                            <label for="company" th:if="${!company.equalsIgnoreCase('t')}">Bedrijf: </label>
+                            <a th:if="${!company.equalsIgnoreCase('t')}" id="company" type="text" th:text="*{company}"></a><br>
+                            <label for="title">Titel:</label>
+                            <input name="title" id="title" type="text" th:value="*{a.getTitle()}" required="required"><br>
+                            <label for="type">Type:</label>
+                            <select name="type" id="type" required>
+                            <option value="" disabled>Kies een type</option>
+                            <option value="Mobility">Mobility</option>
+                            <option value="ZAP">ZAP</option>
+                        </select>
+                            <label for="task">Omschrijving opdracht:</label>
+                            <textarea name="task" id="task" th:text="*{a.getTask()}" required maxlength="255"></textarea><br>
+                            <label for="startDate">Begindatum:</label><br>
+                            <input name="startDate" id="startDate" type="date" onblur="SDate()" th:value="*{a.getStartDate()}" required="required"><br>
+                            <label for="endDate">Einddatum:</label><br>
+                            <input name="endDate" id="endDate" type="date" onblur="TDate()" th:value="*{a.getEndDate()}" required="required"><br><br>
+                            <label for="amountHours">Totaal uur:</label>
+                            <input name="amountHours" id="amountHours" type="number" th:value="*{a.getAmountHours()}" min="1" max="78" onblur="amoutH()" required="required"><br>
+                            <label for="maxStudents">Max Studenten:</label>
+                            <input name="maxStudents" id="maxStudents" type="number" th:value="*{a.getMaxStudents()}" min="1" required="required"><br>
+                            <label>Tags:</label>
+                            <ul>
+                                <th:block th:each='tag,iter: ${updatetag}'>
+                                    <label for="tag" th:value="${tag.getTagId()}">
+                                    <input th:checked="${status[iter.index]}" type="checkbox" id="tag"
+                                           name="tag" th:text='${tag.getTagName()}'
+                                           th:value='${tag.getTagId()}'/>
+                                </label>
+                                </th:block>
+                            </ul>
+                            <br/>
+                        </fieldset>
+                        <br/>
+                        <input th:if="${!a.isValidated()}" type="submit" value="💾 BEWAREN" class="button" id="save">
+                        <input sec:authorize="hasRole('COORDINATOR')" th:if="${a.isValidated()}" type="submit" value="💾 BEWAREN" class="button" id="coorSave">
+                        <a sec:authorize="hasRole('STUDENT')" th:if="${a.isValidated()} and ${!ingeschreven} and ${!volzet}" th:href="@{/studentenroll/{id} (id=${a.assignmentId})}" class="button">➕ Inschrijven</a>
+                        <a th:if="${!a.isValidated() and roles}" th:href="@{/deleteassignment/{id} (id=${a.assignmentId})}" class="button">🗑️ VERWIJDEREN</a>
+                        <a sec:authorize="hasRole('COORDINATOR')" th:if="${a.isValidated()}" th:href="@{/deleteassignment/{id} (id=${a.assignmentId})}" class="button">🗑️ VERWIJDEREN</a>
+                        <a sec:authorize="hasRole('COORDINATOR')" th:if="${!a.isValidated()}" th:href="@{/validateassignment/{id} (id=${a.assignmentId})}" class="button">✔️VALIDEREN</a>
+                        <a sec:authorize="hasRole('COORDINATOR')" th:if="${a.isValidated()}" th:href="@{/archiveassignment/{id} (id=${a.assignmentId})}" class="button">🗄️ ARCHIVEREN</a>
+
+                        <a sec:authorize="hasAnyRole('COORDINATOR', 'DOCENT', 'STUDENT')" th:if="${roles2}" th:href="@{/duplicateassignment/{id} (id=${a.assignmentId})}" class="button">🗄️ KOPIE MAKEN</a>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+    <footer th:insert="fragments/generalMenu.html :: footer"></footer>
+    <script th:inline="javascript">
+        var type = /*[[${type}]]*/ 'kies een type';
+        SelectElement("type", type);
+
+        function SelectElement(id, type) {
+            var element = document.getElementById(id);
+            element.value = type;
+        }
+
+        function amoutH() {
+            var amountHours = document.getElementById("amountHours").value;
+            var test = parseInt(amountHours);
+            if (test % 6 != 0 && test <= 78) {
+                alert("Totaal uur moet een zesvoud zijn en kleiner of gelijk aan 78.");
+                document.getElementById('amountHours').value = "";
+                return false;
+            }
+            return true
+        }
+
+        function toggleForm() {
+            document.getElementById('assignmentInfo').removeAttribute('disabled');
+            if (document.getElementById("save") != null) {
+                document.getElementById("save").style.display = "inline-block";
+            } else document.getElementById("coorSave").style.display = "inline-block";
+        }
+        const numInputs = document.querySelectorAll('input[type=number]');
+        numInputs.forEach(function(input) {
+            input.addEventListener('change', function(e) {
+                if (e.target.value == '') {
+                    e.target.value = 0
+                }
+            })
+        })
+
+        function TDate() {
+            var startDate = document.getElementById("startDate").value;
+            var endDate = document.getElementById("endDate").value;
+            if (startDate != null && endDate != null) {
+                if (startDate > endDate) {
+                    alert("De startdatum moet kleiner zijn dan de einddatum van uw opdracht!");
+                    document.getElementById('endDate').value = "";
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        function SDate() {
+            var startDate = document.getElementById("startDate").value;
+            var currentDate = new Date().toISOString().split('T')[0];
+            if (startDate != null) {
+                if (startDate < currentDate) {
+                    alert("De startdatum moet groter of gelijk zijn aan de datum van vandaag!");
+                    document.getElementById('startDate').value = "";
+                    return false;
+                }
+                return true
+            }
+        }
+    </script>
+</body>
+
+</html>
