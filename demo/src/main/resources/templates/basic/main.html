@@ -27,18 +27,18 @@
                 <h1 th:text="${'Welkom ' + name}"></h1>
 
                 <!--GOED TE KEUREN-->
-                <h4 th:if="${externals} > 0 or ${assignments} > 0 ${enrolled} > 0" sec:authorize="hasRole('COORDINATOR')" class="extra">Goed te keuren <span class="badge badge-warning" th:text="${externals + assignments + enrolled}"></span></h4>
+                <h4 th:if="${externals} > 0 or ${assignments} > 0 or ${enrolled} > 0" sec:authorize="hasRole('COORDINATOR')" class="extra">Goed te keuren <span class="badge badge-warning" th:text="${externals + assignments + enrolled}"></span></h4>
                 <h4 th:if="${enrolled} > 0" sec:authorize="hasRole('DOCENT')" class="extra">Goed te keuren</h4>
 
-                <a sec:authorize="hasRole('COORDINATOR')" href="/listUnvalidatedExternal" th:if="${externals} > 0" type="button" class="btn btn-outline-danger">
+                <a sec:authorize="hasRole('COORDINATOR')" href="/listUnvalidatedExternal" th:if="${externals} > 0" class="btn btn-outline-danger">
                     Externe <span class="badge badge-warning" th:text="${externals}"></span>
                 </a>
 
-                <a sec:authorize="hasRole('COORDINATOR')" href="/unvalidatedassignments" th:if="${assignments} > 0" type="button" class="btn btn-outline-danger">
+                <a sec:authorize="hasRole('COORDINATOR')" href="/unvalidatedassignments" th:if="${assignments} > 0" class="btn btn-outline-danger">
                     Opdrachten <span class="badge badge-warning" th:text="${assignments}"></span>
                 </a>
 
-                <a sec:authorize="hasAnyRole('COORDINATOR','DOCENT')" href="/unapprovedEnrollments" th:if="${enrolled} > 0" type="button" class="btn btn-outline-danger">
+                <a sec:authorize="hasAnyRole('COORDINATOR','DOCENT')" href="/unapprovedEnrollments" th:if="${enrolled} > 0" class="btn btn-outline-danger">
                     Inschrijvingen <span class="badge badge-warning" th:text="${enrolled}"></span>
                 </a>
 
