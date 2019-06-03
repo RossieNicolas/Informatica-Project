@@ -20,17 +20,15 @@
                     <form id="multipleUploadForm" name="multipleUploadForm" th:action="@{/uploadfile}" method="POST" enctype="multipart/form-data">
                         <input id="multipleFileUploadInput" type="file" name="files" class="file-input" multiple required/><br>
                         <p>Type documentatie: </p>
-                        <select required>
+                        <select required name = "type">
                             <option>Contract</option>
                             <option>Bewijsdocumenten</option>
                             <option>Portfolio</option>
-                        </select>
+                        </select><br>
                         <p>Voor opdracht: </p>
-                        <select required>
-                            <!--TODO via de database generiek de juiste waarden laten binnenkomen-->
-                            <option>32</option>
-                            <option>36</option>
-                        </select>
+                        <select name='lists'>
+                            <option th:each="list : ${list}" id="${list.getAssignmentId()}" th:value="${list.getAssignmentId()}" th:text="${list.getAssignmentId()} + ' - ' + ${list.getTitle()}" ></option>
+                        </select><br>
                         <button type="submit">Submit</button>
                     </form>
                 </div>

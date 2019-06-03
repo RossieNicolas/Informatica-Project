@@ -1,7 +1,8 @@
 package com.architec.crediti.controllers;
 
-import com.architec.crediti.models.Documentation;
+import com.architec.crediti.models.*;
 import com.architec.crediti.repositories.DocumentationRepository;
+import com.architec.crediti.repositories.StudentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +20,13 @@ import javax.servlet.http.HttpServletRequest;
 import com.architec.crediti.repositories.FileRepository;
 import com.architec.crediti.repositories.UserRepository;
 import com.architec.crediti.upload.FileStorageService;
-import com.architec.crediti.models.File;
-import com.architec.crediti.models.User;
 import com.architec.crediti.utils.PortfolioUtil;
 
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /*
 Some functions from
@@ -47,13 +48,16 @@ public class PortfolioController {
 
     private final DocumentationRepository docRepo;
 
+    private final StudentRepository studentRepo;
+
     @Autowired
-    public PortfolioController(PortfolioUtil portfolioUtil, FileStorageService fileStorageService, FileRepository fileRepo, UserRepository userRepo, DocumentationRepository docRepo) {
+    public PortfolioController(PortfolioUtil portfolioUtil, FileStorageService fileStorageService, FileRepository fileRepo, UserRepository userRepo, DocumentationRepository docRepo, StudentRepository studRepo) {
         this.portfolioUtil = portfolioUtil;
         this.fileStorageService = fileStorageService;
         this.fileRepo = fileRepo;
         this.userRepo = userRepo;
         this.docRepo = docRepo;
+        this.studentRepo = studRepo;
     }
 
     @GetMapping("/portfolio")
@@ -71,16 +75,23 @@ public class PortfolioController {
         //pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());
         model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
+
+        //get all enrollments
+        Student student = studentRepo.findByUserId(currentUser);
+        Set<Assignment> list = student.getAssignments();
+
+        model.addAttribute("list", list);
         return "portfolio/upload";
     }
 
 
     @PostMapping("/uploadfile")
-    public String uploadMultipleFiles(@RequestParam("files") MultipartFile[] files, Principal principal) {
+    public String uploadMultipleFiles(@RequestParam("files") MultipartFile[] files, @RequestParam("type") String type,
+            @RequestParam("lists") int assignment , Principal principal) {
         User currentUser = userRepo.findByEmail(principal.getName());
 
         for (MultipartFile item: files) {
-            portfolioUtil.uploadFile(item, currentUser.getUserId());
+            portfolioUtil.uploadFile(item, currentUser.getUserId(), type, (long)assignment);
         }
 
         return "redirect:/portfolio";

@@ -16,6 +16,15 @@ public class File {
     @Column(name = "downloadlink")
     private String downloadLink;
 
+    @Column(name = "type_doc")
+    private String docType;
+
+    @Column(name = "assignmentId")
+    private long assignmentId;
+
+    @Column(name = "status")
+    private String status;
+
     @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
@@ -23,10 +32,13 @@ public class File {
     public File() {
     }
 
-    public File(String fileTitle, String download, User user) {
+    public File(String fileTitle, String download, User user, String typeDoc, long assignmentId) {
         this.title = fileTitle;
         this.downloadLink = download;
         this.user = user;
+        this.docType = typeDoc;
+        this.assignmentId = assignmentId;
+        this.status = "Start";
     }
 
     public int getFileId() {
