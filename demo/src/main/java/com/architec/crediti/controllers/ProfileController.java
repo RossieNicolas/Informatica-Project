@@ -37,7 +37,7 @@ public class ProfileController {
     public String getStudentProfile(Principal principal, @PathVariable("studentnumber") String studentNumber, Model model){
 
         Student st = stuRepo.findByStudentNumber(studentNumber);
-        List<File> files = fileRepo.findByUser(st.getUserId());
+        List<File> files = fileRepo.findByUserOrderByAssignmentId(st.getUserId());
 
         model.addAttribute("student", st);
         model.addAttribute("files", files);

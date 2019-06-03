@@ -35,22 +35,31 @@
                         <input th:if="${!a.isMobility()}" type="text" value="Zap">
                     </fieldset>
                 </form>
-                <table id="tablePortfolio">
-                    <thead>
-                    <tr>
-                        <th>Naam van een bestand</th>
-                        <th style="width: 18%"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <div id="profilePortfolio">
-                        <tr th:each="file : ${files}" class="tablebackground">
-                            <td th:text="${file.getTitle()}"></td>
-                            <td><a th:href="${file.getDownloadLink()}" class="button">Download</a></td>
+                <form>
+                    <h2>Portfolio</h2>
+                    <table id="tablePortfolio">
+                        <thead>
+                        <tr>
+                            <th>Fiche nr</th>
+                            <th>Bestandsnaam</th>
+                            <th>Type document</th>
+                            <th>Status</th>
+                            <th style="width: 18%"></th>
                         </tr>
-                    </div>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        <div id="profilePortfolio">
+                            <tr th:each="file : ${files}" class="tablebackground">
+                                <td th:text="${file.getAssignmentId()}"></td>
+                                <td th:text="${file.getTitle()}"></td>
+                                <td th:text="${file.getDocType()}"></td>
+                                <td th:text="${file.getStatus()}"></td>
+                                <td><a th:href="${file.getDownloadLink()}" class="button">Download</a></td>
+                            </tr>
+                        </div>
+                        </tbody>
+                    </table>
+                </form>
             </div>
         </div>
     </section>
