@@ -15,7 +15,7 @@
         <div class="container">
     <form th:action="@{'/allassignmentss/'${searchbar}'/'${tag}'}" method="GET" id="searchAs" style="padding-top: 10px;">
         <label for='searchbar'>Zoekwaarde: </label>
-        <input type='text' class='form-control' name='searchbar' id='searchbar'>&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type='text' class='form-control' name='searchbar' th:value ="${searchbar}" id='searchbar'>&nbsp;&nbsp;&nbsp;&nbsp;
         <tr th:each="a,iter : ${tags}" >
             <input th:checked="${status[iter.index]}" type="checkbox" name="tag" id ='tag' th:tr='${a.getTagName()}' th:value='${a.getTagId()}'/>
             <label th:text="${a.getTagName()}"></label>
@@ -91,16 +91,19 @@ function search(){
     item.forEach(function(element) {
         txt = txt + "&" + element;
     });
-    document.getElementById('searchbar').value = "";
     if(id != "" && txt != ""){
-    document.getElementById('searchAs').action  = '/allassignments/'+id + "/" + txt;
+        document.getElementById('searchAs').action  = '/allassignments/'+id + "/" + txt;
     } 
+    else if(txt=="" && id==""){
+        document.getElementById('searchAs').action  = '/allassignments';
+    }
     else if(id == ""){
         document.getElementById('searchAs').action  = '/allassignments/tag/' + txt;
     }
     else if (txt = ""){
         document.getElementById('searchAs').action  = '/allassignments/'+id;
     }
+
       
 
     
