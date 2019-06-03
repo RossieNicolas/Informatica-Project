@@ -80,4 +80,8 @@ public class File {
     public String getDocType() {
         return docType;
     }
+
+    public String getStatus() {
+        return status;
+    }
 }
