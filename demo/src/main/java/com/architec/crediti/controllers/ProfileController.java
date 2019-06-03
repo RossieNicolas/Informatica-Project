@@ -46,7 +46,6 @@ public class ProfileController {
         User currentUser = userRepo.findByEmail(principal.getName());
         model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
         return "student/studentDetail";
-
     }
 }
 
