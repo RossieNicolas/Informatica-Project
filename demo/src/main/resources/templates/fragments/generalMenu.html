@@ -40,17 +40,31 @@
                         <a class="nav-link" sec:authorize="!hasRole('EXTERN')" href="/documentation">Documentatie</a>
                     </li>
 
+                    <!--TAGS-->
+                    <li sec:authorize="hasAnyRole('COORDINATOR','DOCENT')" class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="tags" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tags</a>
+                        <div class="dropdown-menu" aria-labelledby="extras">
+                            <a class="dropdown-item" sec:authorize="hasRole('COORDINATOR')" href="/tag">Tag Toevoegen</a>
+                            <a class="dropdown-item" sec:authorize="hasRole('COORDINATOR')" href="/listAllTags">Lijst van Tags</a>
+                        </div>
+                    </li>
+
+                    <!--VALIDATION-->
+                    <li sec:authorize="hasAnyRole('COORDINATOR','DOCENT')" class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="validation" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Validatie</a>
+                        <div class="dropdown-menu" aria-labelledby="extras">
+                            <a class="dropdown-item" sec:authorize="hasRole('COORDINATOR')" href="/unvalidatedassignments">Ongevalideerde Opdrachten</a>
+                            <a class="dropdown-item" sec:authorize="hasRole('COORDINATOR')" href="/listUnvalidatedExternal">Ongevalideerde Externe</a>
+                            <a class="dropdown-item" sec:authorize="hasAnyRole('COORDINATOR','DOCENT')" href="/unapprovedEnrollments">Ongevalideerde Inschrijvingen</a>
+                        </div>
+                    </li>
+
                     <!--EXTRA's-->
                     <li sec:authorize="hasAnyRole('COORDINATOR','DOCENT')" class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="extras" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Extra's</a>
                         <div class="dropdown-menu" aria-labelledby="extras">
-                            <a class="dropdown-item" sec:authorize="hasRole('COORDINATOR')" href="/tag">Tag Toevoegen</a>
-                            <a class="dropdown-item" sec:authorize="hasRole('COORDINATOR')" href="/listAllTags">Lijst van Tags</a>
-                            <a class="dropdown-item" sec:authorize="hasRole('COORDINATOR')" href="/unvalidatedassignments">Ongevalideerde Opdrachten</a>
-                            <a class="dropdown-item" sec:authorize="hasRole('COORDINATOR')" href="/listUnvalidatedExternal">Ongevalideerde Externe</a>
                             <a class="dropdown-item" sec:authorize="hasAnyRole('COORDINATOR','DOCENT')" href="/liststudents">Alle Studenten</a>
                             <a class="dropdown-item" sec:authorize="hasRole('COORDINATOR')" href="/archive">Archief</a>
-                            <a class="dropdown-item" sec:authorize="hasAnyRole('COORDINATOR','DOCENT')" href="/unapprovedEnrollments">Ongevalideerde Inschrijvingen</a>
                         </div>
                     </li>
 
