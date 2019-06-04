@@ -36,7 +36,7 @@
         </thead>
         <tbody>
         <tr th:each="a : ${assignments}" class="tablebackground" th:if="${!a.isArchived()}">
-            <td><a th:href="${'/allassignments/' + a.getAssignmentId()}" class="button">📃</a>
+            <td><a th:href="${'/detailAssignmentEnrolled/' + a.getAssignmentId()}" class="button">📃</a>
             <td th:text="${a.getAssignmentId()}"></td>
             <td th:text="${a.getAssigner()}"></td>
             <td th:text="${a.getType()}"></td>

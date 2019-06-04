@@ -306,7 +306,8 @@ public class AssignmentController {
 
         if (as.getAmountStudents() == as.getMaxStudents()) {
             volzet = true;
-
+            as.setFull(true);
+            assignmentRepo.save(as);
         }
 
         model.addAttribute("volzet", volzet);
@@ -556,5 +557,27 @@ public class AssignmentController {
                 EmailTemplates.createdAssignment(assignment.getAssigner(),
                         assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments"));
         return "assignments/successfullAssignment";
+    }
+
+    @GetMapping("/detailAssignmentEnrolled/{assignmentId}")
+    public String getDetailAssignmentWhenEnrolled(Principal principal,@PathVariable("assignmentId") long assignmentId, Model model){
+        User user = userRepo.findByEmail(principal.getName());
+        Assignment assignments = assignmentRepo.findByAssignmentId(assignmentId);
+        long assignerId = assignments.getAssignerUserId();
+        User assigner = userRepo.findByUserId(assignerId);
+        if (externalRepo.existsByUserId(assigner)) {
+            ExternalUser external = externalRepo.findByUserId(assigner);
+            String company = external.getCompany();
+            model.addAttribute("company", company);
+        } else {
+            model.addAttribute("company", "t");
+        }
+        boolean roles2 = false;
+        if (assignments.getAssignerUserId() == user.getUserId() || user.getRole() == Role.COORDINATOR || user.getRole() == Role.DOCENT) {
+            roles2 = true;
+        }
+        model.addAttribute("roles2", roles2);
+        model.addAttribute("assignments", assignments);
+        return "assignments/detailAssignmentEnrolled";
     }
 }
