@@ -64,12 +64,12 @@ public class ExternalController {
         User user = new User(firstname, lastname, email, Role.EXTERN,false);
         // set the foreign key
         externalUser.setUserId(user);
+        long userId = userRepository.findByEmail(email).getUserId();
 
         if (!userRepository.existsByEmail(user.getEmail())) {
             userRepository.save(user);
             externalUserRepository.save(externalUser);
 
-            long userId = userRepository.findByEmail(email).getUserId();
             String name = firstname + " " + lastname;
             String fullAddress = address + ", " + postal + " " + city;
             //TODO: vervang 's097086@ap.be' door mail van coordinator
@@ -79,8 +79,11 @@ public class ExternalController {
             mail.sendSimpleMessage(externalUser.getEmail(),"Registratie", EmailTemplates.newExternal());
         }
         else{
-            model.addAttribute("error" , "Email bestaat al");
-            return "createExternal";
+            model.addAttribute("error" , true);
+            mail.sendSimpleMessage(userRepository.findByUserId(userId).getEmail(), "Externe registratie geannuleerd",
+                    EmailTemplates.userAlreadyExists());
+            return "external/createExternal";
+
         }
 
         return "redirect:/registersucces";

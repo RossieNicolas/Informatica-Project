@@ -1,116 +1,166 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8" />
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+
     <title>Crediti - Alle opdrachten</title>
-    <link rel="stylesheet" th:href="@{/css/APcss3.css}">
+
 </head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<body class="background">
-    <header th:insert="fragments/generalMenu_old.html :: header (name=${name})"></header>
-    <div class="container ">
-        <h2 class="extra">Alle opdrachten</h2>
-    </div>
-        <div class="container">
-    <form th:action="@{'/allassignmentss/'${searchbar}'/'${tag}'}" method="GET" id="searchAs" style="padding-top: 10px;">
-        <label for='searchbar'>Zoekwaarde: </label>
-        <input type='text' class='form-control' name='searchbar' th:value ="${searchbar}" id='searchbar'>&nbsp;&nbsp;&nbsp;&nbsp;
-        <tr th:each="a,iter : ${tags}" >
-            <input th:checked="${status[iter.index]}" type="checkbox" name="tag" id ='tag' th:tr='${a.getTagName()}' th:value='${a.getTagId()}'/>
-            <label th:text="${a.getTagName()}"></label>
-        </tr>
-        <input style="margin-right:20px;" type='SUBMIT' id="zoekKnop" value="Zoek" class="button" onclick = "search()"/>
-        </form>
 
-</div>
-    <div id='overview'>
-        <table>
-            <thead>
-                <tr>
-                    <th style="padding-left: 2.5%">Info</th>
-                    <th>Nr</th>
-                    <th>Opdrachtgever</th>
-                    <th>Type</th>
-                    <th>Naam</th>
-                    <th>Begin</th>
-                    <th>Einde</th>
-                    <th>Aantal uren</th>
-                    <th>Gevalideerd</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="a : ${assignments}" class="tablebackground" th:if="${!a.isArchived()}">
-                    <td><a th:href="${'/allassignments/detail/' + a.getAssignmentId()}" class="button">📃</a>
-                        <td th:text="${a.getAssignmentId()}"></td>
-                        <td th:text="${a.getAssigner()}"></td>
-                        <td th:text="${a.getType()}"></td>
-                        <td th:text="${a.getTitle()}" class="cell"></td>
-                        <td th:text="${a.getFormatStartDate()}"></td>
-                        <td th:text="${a.getFormatEndDate()}"></td>
-                        <td style="padding-left: 3.8%" th:text="${a.getAmountHours()}"></td>
-                        <td style="padding-left: 2.5%">
-                            <span th:if="${a.isValidated()}">✔️</span>
-                            <span th:unless="${a.isValidated()}">❌</span>
-                        </td>
-                </tr>
-            </tbody>
-        </table>
+<body class="bg" onload="tableFill()">
+<div id="page-container">
+    <div id="content-wrap">
+        <header th:insert="fragments/generalMenu.html :: header"></header>
+
+        <main role="main" class="container">
+            <div class='col-md-6 mt-2 mx-auto'>
+                <div class='search-box'>
+                    <form class='search-form'
+                          th:action="@{'/allassignmentss/'${searchbar}'/'${tag}'}"
+                          method="get" id="searchAs">
+                        <div>
+                            <input class='form-control' name='searchbar' id='searchbar'
+                                   placeholder='Zoeken...' type='text'>
+                            <button class="btn search-btn" type="SUBMIT" id="zoekKnop" onclick="search()">🔍</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="form-group pt-2">
+                    <label th:each="t, iter: ${tags}" class="custom-control custom-checkbox custom-control-inline"
+                           th:value="${t.getTagId()}">
+                        <input th:checked="${status[iter.index]}" type="checkbox" name="tag" id="tag" class="mytags custom-control-input"
+                               th:value="${t.getTagId()}">
+                        <span class="custom-control-label" th:text="${t.getTagName()}"></span>
+                    </label>
+                </div>
+            </div>
+
+
+            <div class="mt-5 jumbotron">
+                <h1 class="pb-4">Alle opdrachten</h1>
+                <div class="table-responsive">
+                    <table id="table" class="table table-hover">
+                        <thead>
+                        <tr class="d-flex">
+                            <th class="col-2" scope="col"></th>
+                            <th class="col-1" scope="col">Nr</th>
+                            <th class="col-2" scope="col">Opdrachtgever</th>
+                            <th class="col-1" scope="col">Type</th>
+                            <th class="col-2" scope="col">Naam</th>
+                            <th class="col-2" scope="col">Begin</th>
+                            <th class="col-2" scope="col">Einde</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="d-flex" th:each="a : ${assignments}" th:if="${!a.isArchived()}">
+                            <td class="col-2" scope="row"><a th:href="${'/allassignments/detail/' + a.getAssignmentId()}" class="btn btn-outline-secondary" role="button">📃 Info</a></td>
+                            <td class="col-1" th:text="${a.getAssignmentId()}"></td>
+                            <td class="col-2" th:text="${a.getAssigner()}"></td>
+                            <td class="col-1" th:text="${a.getType()}"></td>
+                            <td class="col-2" th:text="${a.getTitle()}"></td>
+                            <td class="col-2" th:text="${a.getFormatStartDate()}"></td>
+                            <td class="col-2" th:text="${a.getFormatEndDate()}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <br/>
+
+                    <nav th:if="${persons.totalPages !=1}">
+                        <ul class="pagination">
+                            <li th:classappend="(${persons.number == 0} ? disabled) + ' page-item'">
+                                <a class="page-link"
+                                   th:href="@{__${#httpServletRequest.requestURL}__(page=${persons.number})}"
+                                   aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                            </li>
+                            <li th:classappend="(${persons.number == (page - 1)} ? 'active pointer-disabled') + ' page-item'"
+                                th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
+                                <a class="page-link" th:href="@{__${#httpServletRequest.requestURL}__(page=${page})}" th:text="${page}"></a>
+                            </li>
+                            <li th:classappend="(${persons.number + 1 == persons.totalPages} ? disabled) + ' page-item'">
+                                <a class="page-link" th:href="@{__${#httpServletRequest.requestURL}__(page=${persons.number + 2})}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="alert alert-primary" role="alert" id="empty"></div>
+            </div>
+
+        </main>
+        <!-- /.container -->
+
     </div>
-    <div class="container">
-        <div th:if="${persons.totalPages !=1}">
-            <ul class="pagination">
-                <li th:class="${persons.number == 0} ? disabled">
-                    <a class="pageLink" th:href="@{__${#httpServletRequest.requestURL}__(page=${persons.number})}">&laquo;</a>
-                </li>
-                <li th:class="${persons.number == (page - 1)} ? 'active pointer-disabled'"
-                    th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
-                    <a class="pageLink" th:href="@{__${#httpServletRequest.requestURL}__(page=${page})}" th:text="${page}"></a>
-                </li>
-                <li th:class="${persons.number + 1 == persons.totalPages} ? disabled">
-                    <a class="pageLink" th:href="@{__${#httpServletRequest.requestURL}__(page=${persons.number + 2})}">&raquo;</a>
-                </li>
-            </ul>
-        </div>
+    <div th:insert="fragments/general.html :: footer">
+    </div>
 </div>
+<!-- Optional JavaScript -->
 <script>
-
-function search(){
-    var id = document.getElementById('searchbar').value;
-
-    var coffee = document.forms[0];
-    var item = new Array(coffee.length);
-    document.getElementById('searchAs').action  = '/allassignments/'+id ;
-    var txt ="";
-    var i;
-    for (i = 0; i < coffee.length; i++) {
-        if (coffee[i].checked) { 
-        item.push(coffee[i].value);
+    function tableFill() {
+        var tbl = document.getElementById('table');
+        if (tbl.rows.length === 1) {
+            var para = document.createElement("p");
+            var node = document.createTextNode("Er zijn momenteel geen opdrachten.");
+            para.appendChild(node);
+            var element = document.getElementById("empty");
+            element.style.visibility = "visible";
+            element.appendChild(para);
         }
     }
-    item.forEach(function(element) {
-        txt = txt + "&" + element;
-    });
-    if(id != "" && txt != ""){
-        document.getElementById('searchAs').action  = '/allassignments/'+id + "/" + txt;
-    } 
-    else if(txt=="" && id==""){
-        document.getElementById('searchAs').action  = '/allassignments';
-    }
-    else if(id == ""){
-        document.getElementById('searchAs').action  = '/allassignments/tag/' + txt;
-    }
-    else if (txt = ""){
-        document.getElementById('searchAs').action  = '/allassignments/'+id;
-    }
 
-      
+    function search() {
+        var id = document.getElementById('searchbar').value;
 
-    
-}
+        var tags = document.getElementsByClassName("mytags");
+
+        var item = new Array(tags.length);
+        document.getElementById('searchAs').action = '/allassignments/' + id;
+        var txt = "";
+        var i;
+        for (i = 0; i < tags.length; i++) {
+            if (tags[i].checked) {
+                item.push(tags[i].value);
+            }
+        }
+        item.forEach(function (element) {
+            txt = txt + "&" + element;
+        });
+        if (id !== "" && txt !== "") {
+            document.getElementById('searchAs').action = '/allassignments/' + id + "/" + txt;
+        } else if (txt === "" && id === "") {
+            document.getElementById('searchAs').action = '/allassignments';
+        } else if (id === "") {
+            document.getElementById('searchAs').action = '/allassignments/tag/' + txt;
+        } else if (txt === "") {
+            document.getElementById('searchAs').action = '/allassignments/' + id;
+        }
+    }
 
 </script>
-    <footer th:insert="fragments/generalMenu.html :: footer"></footer>
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

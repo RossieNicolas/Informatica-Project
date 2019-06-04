@@ -22,19 +22,24 @@
                 </div>
             </section>
             <div class="container">
-                <progress value="0" max="100"></progress>
+                <progress value="0" max="100" id="progressBar"></progress>
+                <button onclick="increment()">Ingediend</button>
                 <table class="smalltable" id="tabel">
                     <thead>
                         <tr>
-                            <th style="padding-left: 1%; width: 5%">Nr</th>
+                            <th style="padding-left: 1%; width: 5%">Fiche nr</th>
                             <th>Title</th>
+                            <th>Type of document</th>
+                            <th>Status</th>
                             <th width="26%"></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr th:each="file : ${files}" class="tablebackground">
-                            <td th:text="${file.getFileId()}"></td>
+                            <td th:text="${file.getAssignmentId()}"></td>
                             <td th:text="${file.getTitle()}"></td>
+                            <td th:text="${file.getDocType()}"></td>
+                            <td th:text="${file.getStatus()}"></td>
                             <td style="float: right">
                                 <a th:href="${file.getDownloadLink()}" class="button">DOWNLOAD</a> &nbsp;&nbsp;&nbsp;
                                 <a th:href="@{/deletefile/{id} (id=${file.getFileId()})}" class="button">🗑️</a>
@@ -55,6 +60,11 @@
                 var cell2 = x.insertCell(1)
                 cell2.innerHTML = "Momenteel is je portfolio nog leeg.";
             }
+        }
+        var count = 0;
+        function increment() {
+            count = count + 25;
+            document.getElementById("progressBar").value = count;
         }
     </script>
 </body>

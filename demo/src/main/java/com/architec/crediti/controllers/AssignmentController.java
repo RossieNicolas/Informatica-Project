@@ -25,6 +25,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.*;
@@ -37,24 +38,31 @@ public class AssignmentController {
     private static final int INITAL_PAGE = 0;
     private Log log = LogFactory.getLog(this.getClass());
 
-    private final TagRepo tagRepo;
 
-    private final AssignmentRepository assignmentRepo;
+    private final
+    TagRepo tagRepo;
 
-    private final StudentRepository studentRepo;
+    private final
+    AssignmentRepository assignmentRepo;
 
-    private final UserRepository userRepo;
+    private final
+    StudentRepository studentRepo;
 
-    private final ArchiveRepository archiveRepo;
+    private final
+    UserRepository userRepo;
 
-    private final EmailServiceImpl mail;
+    private final
+    ArchiveRepository archiveRepo;
 
-    private final ExternalUserRepository externalRepo;
+    private final
+    EmailServiceImpl mail;
+
+    private final
+    ExternalUserRepository externalRepo;
 
     @Autowired
     public AssignmentController(TagRepo tagRepo, AssignmentRepository assignmentRepo, StudentRepository studentRepo,
-            UserRepository userRepo, ArchiveRepository archiveRepo, EmailServiceImpl mail,
-            ExternalUserRepository externalRepo) {
+                                UserRepository userRepo, ArchiveRepository archiveRepo, EmailServiceImpl mail, ExternalUserRepository externalRepo) {
         this.tagRepo = tagRepo;
         this.assignmentRepo = assignmentRepo;
         this.studentRepo = studentRepo;
@@ -70,7 +78,7 @@ public class AssignmentController {
         List<Tag> tags = tagRepo.findAll();
 
         model.addAttribute("tags", tags);
-        // pass username to header fragment
+        //pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());
         model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
         return "assignments/assignment";
@@ -79,7 +87,7 @@ public class AssignmentController {
     // add assignment
     @PostMapping("/assignment")
     public String createAssignment(Principal principal, @Valid Assignment assignment,
-            @RequestParam(required = false, value = "tag") int[] tags) {
+                                   @RequestParam(required = false, value = "tag") int[] tags) {
         Set<Tag> set = new HashSet<>();
         User currentUser = userRepo.findByEmail(principal.getName());
 
@@ -94,79 +102,17 @@ public class AssignmentController {
         assignment.setAssignerUserId(currentUser);
         assignmentRepo.save(assignment);
 
+
         mail.sendSimpleMessage("alina.storme@student.ap.be", "Nieuwe opdracht gecreëerd",
-                EmailTemplates.createdAssignment(assignment.getAssigner(), assignment.getTitle(),
-                        currentUser.getEmail(), "http://vps092.ap.be/allassignments"));
+                EmailTemplates.createdAssignment(assignment.getAssigner(),
+                        assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments"));
         return "assignments/successfullAssignment";
     }
 
-    // list all assignments which are full
-    @GetMapping("/allFullAssignments")
-    public String getAllFullAssignment(Model model, @RequestParam("page") Optional<Integer> page, Principal principal) {
-
-        List<Assignment> fullas = new ArrayList<>();
-        for (Assignment item : assignmentRepo.findAll()) {
-            if (item.getAmountStudents() == item.getMaxStudents() && !item.isArchived()) {
-
-                fullas.add(item);
-            }
-        }
-        model.addAttribute("assignments", fullas);
-
-        int buttons = (int) assignmentRepo.count() / PAGE_SIZE;
-
-        if (assignmentRepo.count() % PAGE_SIZE != 0) {
-            buttons++;
-        }
-
-        int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
-
-        Page<Assignment> fiches = assignmentRepo.findByFullOrderByAssignmentIdDesc(false,
-                PageRequest.of(evalPage, PAGE_SIZE));
-        Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
-
-        model.addAttribute("persons", fiches);
-        model.addAttribute("pager", pager);
-
-        // pass username to header fragment
-        User currentUser = userRepo.findByEmail(principal.getName());
-        model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
-        return "assignments/listAllFullAssignments";
-    }
-
-    // list all unvalidated assignments
-    @GetMapping("/unvalidatedassignments")
-    public String getUnvalidatedAssingments(Model model, Principal principal) {
-        Iterable<Assignment> fiches = assignmentRepo.findAll();
-        List<Assignment> unvalidatedFiches = new ArrayList<>();
-
-        for (Assignment item : fiches) {
-            if (!item.isValidated()) {
-                unvalidatedFiches.add(item);
-            }
-        }
-
-        model.addAttribute("assignments", unvalidatedFiches);
-        // pass username to header fragment
-        User currentUser = userRepo.findByEmail(principal.getName());
-        model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
-        return "assignments/listUnvalidatedAssignments";
-    }
-
-    @GetMapping("/myassignments")
-    public String assignments(Principal principal, Model model) {
-        Student currentStudent = studentRepo.findByUserId(userRepo.findByEmail(principal.getName()));
-        Set<Assignment> myAssignments = currentStudent.getAssignments();
-        model.addAttribute("assignments", myAssignments);
-        // pass username to header fragment
-        User currentUser = userRepo.findByEmail(principal.getName());
-        model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
-        return "assignments/myassignments";
-    }
-
+    // list all assignments
     @GetMapping("/allassignments")
     public ModelAndView getAllAssignments(Model model, @RequestParam("page") Optional<Integer> page,
-            Principal principal, @RequestParam(required = false, value = "tag") int[] tags) {
+                                          Principal principal, @RequestParam(required = false, value = "tag") int[] tags) {
         ModelAndView view = new ModelAndView("assignments/listAllAssignments");
         // pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());
@@ -233,6 +179,59 @@ public class AssignmentController {
         return view;
     }
 
+
+    // list all assignments which are full
+    @GetMapping("/allFullAssignments")
+    public String getAllFullAssignment(Model model, @RequestParam("page") Optional<Integer> page, Principal principal) {
+
+        List<Assignment> fullas = new ArrayList<>();
+        for (Assignment item : assignmentRepo.findAll()) {
+            if (item.getAmountStudents() == item.getMaxStudents() && !item.isArchived()) {
+
+                fullas.add(item);
+            }
+        }
+        model.addAttribute("assignments", fullas);
+
+        int buttons = (int) assignmentRepo.count() / PAGE_SIZE;
+
+        if (assignmentRepo.count() % PAGE_SIZE != 0) {
+            buttons++;
+        }
+
+        int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
+
+        Page<Assignment> fiches = assignmentRepo.findByFullOrderByAssignmentIdDesc(false, PageRequest.of(evalPage, PAGE_SIZE));
+        Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
+
+        model.addAttribute("persons", fiches);
+        model.addAttribute("pager", pager);
+
+        //pass username to header fragment
+        User currentUser = userRepo.findByEmail(principal.getName());
+        model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
+        return "assignments/listAllFullAssignments";
+    }
+
+    // list all unvalidated assignments
+    @GetMapping("/unvalidatedassignments")
+    public String getUnvalidatedAssingments(Model model, Principal principal) {
+        Iterable<Assignment> fiches = assignmentRepo.findAll();
+        List<Assignment> unvalidatedFiches = new ArrayList<>();
+
+        for (Assignment item : fiches) {
+            if (!item.isValidated()) {
+                unvalidatedFiches.add(item);
+            }
+        }
+
+        model.addAttribute("assignments", unvalidatedFiches);
+        //pass username to header fragment
+        User currentUser = userRepo.findByEmail(principal.getName());
+        model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
+        return "assignments/listUnvalidatedAssignments";
+    }
+
     @GetMapping(value = "/allassignments/{searchbar}")
     public String searchByTitleorId(@PathVariable(value = "searchbar" , required = false) String searchbar, Model model,
                                     @RequestParam(value = "page", required = false) Optional<Integer> page){
@@ -264,7 +263,7 @@ public class AssignmentController {
 
             for (int i = 0; i < allTags.size(); i++) {
                         status[i] = false;
-                
+
             }
         model.addAttribute("status", status);
         model.addAttribute("assignments", fiches);
@@ -326,7 +325,7 @@ public class AssignmentController {
                     }
                 }
             }
-        
+
         model.addAttribute("status", status);
         model.addAttribute("assignments", fiches);
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
@@ -389,7 +388,7 @@ public class AssignmentController {
                     }
                 }
             }
-        
+
         model.addAttribute("status", status);
         model.addAttribute("assignments", fiches);
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
@@ -431,6 +430,7 @@ public class AssignmentController {
 
         if (as.getAmountStudents() == as.getMaxStudents()) {
             volzet = true;
+
         }
 
         model.addAttribute("volzet", volzet);
@@ -530,10 +530,9 @@ public class AssignmentController {
         return "redirect:/allassignments";
     }
 
-    // archive assignment
+    //archive assignment
     @GetMapping("/archiveassignment/{assignmentId}")
-    public String archiveAssignment(Principal principal, @PathVariable("assignmentId") long assignmentId, Model model,
-            @RequestParam(required = false, value = "tag") int[] tags) {
+    public String archiveAssignment(Principal principal, @PathVariable("assignmentId") long assignmentId, Model model, @RequestParam(required = false, value = "tag") int[] tags) {
         User currentUser = userRepo.findByEmail(principal.getName());
         ArrayList<Integer> list = new ArrayList<>();
         ArrayList<String> listNames = new ArrayList<>();
@@ -559,7 +558,7 @@ public class AssignmentController {
             for (Assignment studAssign : student.getAssignments()) {
                 if (studAssign.getAssignmentId() == assignment.getAssignmentId()) {
                     Set<Assignment> set = student.getAssignments();
-                    for (Iterator<Assignment> iterator = set.iterator(); iterator.hasNext();) {
+                    for (Iterator<Assignment> iterator = set.iterator(); iterator.hasNext(); ) {
                         Assignment a = iterator.next();
                         if (a.getAssignmentId() == assignment.getAssignmentId()) {
                             iterator.remove();
@@ -573,18 +572,17 @@ public class AssignmentController {
 
         model.addAttribute("assignments", assignmentRepo.findAll());
 
-        // TODO vervang 'to' door mail van coordinator
+        //TODO vervang 'to' door mail van coordinator
         mail.sendSimpleMessage("alina.storme@student.ap.be", "Opdracht gearchiveerd",
-                EmailTemplates.archivedAssignment(assignment.getAssigner(), assignment.getTitle(),
-                        currentUser.getEmail(), "http://vps092.ap.be/allassignments"));
+                EmailTemplates.archivedAssignment(assignment.getAssigner(),
+                        assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments"));
 
         return "redirect:/allassignments";
     }
 
-    // duplicate assignment
+    //duplicate assignment
     @GetMapping("/duplicateassignment/{assignmentId}")
-    public String duplicateAssignment(Principal principal, @PathVariable("assignmentId") long assignmentId,
-            Model model) {
+    public String duplicateAssignment(Principal principal, @PathVariable("assignmentId") long assignmentId, Model model) {
         User currentUser = userRepo.findByEmail(principal.getName());
 
         Assignment assignment = assignmentRepo.findByAssignmentId(assignmentId);
@@ -598,8 +596,8 @@ public class AssignmentController {
             int totaalUur = archivedAss.getAmountHours();
             int maxStud = archivedAss.getMaxStudents();
 
-            ArchivedAssignment duplicateAssignment = new ArchivedAssignment(title, type, omschrijving, totaalUur,
-                    maxStud, beginDat, eindDat, currentUser.toString());
+            ArchivedAssignment duplicateAssignment = new ArchivedAssignment(title, type, omschrijving, totaalUur, maxStud, beginDat,
+                    eindDat, currentUser.toString());
 
             List<Tag> tags = tagRepo.findAll();
 
@@ -662,7 +660,7 @@ public class AssignmentController {
     // add duplicate assignment
     @PostMapping("/duplicateassignment/{assignmentId}")
     public String createDuplicate(Principal principal, @Valid Assignment assignment,
-            @RequestParam(required = false, value = "tag") int[] tags) {
+                                  @RequestParam(required = false, value = "tag") int[] tags) {
         Set<Tag> set = new HashSet<>();
         User currentUser = userRepo.findByEmail(principal.getName());
 
@@ -677,9 +675,10 @@ public class AssignmentController {
         assignment.setAssignerUserId(currentUser);
         assignmentRepo.save(assignment);
 
+
         mail.sendSimpleMessage("alina.storme@student.ap.be", "Nieuwe opdracht gecreëerd",
-                EmailTemplates.createdAssignment(assignment.getAssigner(), assignment.getTitle(),
-                        currentUser.getEmail(), "http://vps092.ap.be/allassignments"));
+                EmailTemplates.createdAssignment(assignment.getAssigner(),
+                        assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments"));
         return "assignments/successfullAssignment";
     }
 }

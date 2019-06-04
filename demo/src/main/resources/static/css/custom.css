@@ -186,3 +186,25 @@ a {
     color: #fff;
     background-color: #e60005;
 }
+
+.page-item.active .page-link {
+    background-color: #e60005;
+    border-color: #e60005;
+}
+
+.page-link {
+    color: #e60005;
+}
+
+.page-link:hover {
+    color: #920005;
+}
+
+#save, #coorSave{
+    display: none;
+}
+
+::selection {
+    background-color: #e60005;
+    color: #fff
+}

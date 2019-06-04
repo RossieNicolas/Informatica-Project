@@ -37,15 +37,17 @@ public class ProfileController {
     public String getStudentProfile(Principal principal, @PathVariable("studentnumber") String studentNumber, Model model){
 
         Student st = stuRepo.findByStudentNumber(studentNumber);
-        List<File> files = fileRepo.findByUser(st.getUserId());
+        User us = userRepo.findByUserId(st.getUserId().getUserId());
+        List<File> files = fileRepo.findByUserOrderByAssignmentId(us);
 
         model.addAttribute("student", st);
         model.addAttribute("files", files);
+        model.addAttribute("status", fileRepo.findByDocType("Contract"));
         //pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());
         model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
         return "student/studentDetail";
-
     }
+
 }
 

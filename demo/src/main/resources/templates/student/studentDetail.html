@@ -35,22 +35,49 @@
                         <input th:if="${!a.isMobility()}" type="text" value="Zap">
                     </fieldset>
                 </form>
-                <table id="tablePortfolio">
-                    <thead>
-                    <tr>
-                        <th>Naam van een bestand</th>
-                        <th style="width: 18%"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <div id="profilePortfolio">
-                        <tr th:each="file : ${files}" class="tablebackground">
-                            <td th:text="${file.getTitle()}"></td>
-                            <td><a th:href="${file.getDownloadLink()}" class="button">Download</a></td>
+                <form>
+                    <h2>Portfolio</h2>
+                    <h4>Status</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Fiche nr</th>
+                                <th>Fiche naam</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="f : ${status}">
+                                <td th:text="${f.getAssignmentId()}"></td>
+                                <td th:text="${f.getTitle()}"></td>
+                                <td><a th:text="${f.getStatus()}" th:href="@{/status}" class="button"></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h4>Documenten</h4>
+                    <table id="tablePortfolio">
+                        <thead>
+                        <tr>
+                            <th>Fiche nr</th>
+                            <th>Bestandsnaam</th>
+                            <th>Type document</th>
+                            <th>Status</th>
+                            <th style="width: 18%"></th>
                         </tr>
-                    </div>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        <div id="profilePortfolio">
+                            <tr th:each="file : ${files}" class="tablebackground">
+                                <td th:text="${file.getAssignmentId()}"></td>
+                                <td th:text="${file.getTitle()}"></td>
+                                <td th:text="${file.getDocType()}"></td>
+                                <td th:text="${file.getStatus()}"></td>
+                                <td><a th:href="${file.getDownloadLink()}" class="button">Download</a></td>
+                            </tr>
+                        </div>
+                        </tbody>
+                    </table>
+                </form>
             </div>
         </div>
     </section>

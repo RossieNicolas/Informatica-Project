@@ -18,8 +18,50 @@
                 <div class="multiple-upload">
                     <h3 class="upload-title">Upload bestanden</h3>
                     <form id="multipleUploadForm" name="multipleUploadForm" th:action="@{/uploadfile}" method="POST" enctype="multipart/form-data">
-                        <input id="multipleFileUploadInput" type="file" name="files" class="file-input" multiple required/>
-                        <button type="submit">Submit</button>
+                        <input id="multipleFileUploadInput" type="file" name="files" class="file-input" multiple required/><br>
+                        <p>Type documentatie: </p>
+                        <select required name = "type">
+                            <option>Contract</option>
+                            <option>Bewijsdocumenten</option>
+                            <option>Portfolio</option>
+                        </select><br>
+                        <p>Voor opdracht: </p>
+                        <select name='lists'>
+                            <option th:each="list : ${list}" id="${list.getAssignmentId()}" th:value="${list.getAssignmentId()}" th:text="${list.getAssignmentId()} + ' - ' + ${list.getTitle()}" ></option>
+                        </select><br>
+                        <button>Submit</button>
+
+                        <!--TODO bootstrap the popup
+                        <button class="btn btn-outline-danger" role="button" data-toggle="modal"
+                                data-target="#submit">Submit
+                        </button>
+
+                        <div class="modal fade" id="submit" tabindex="-1" role="dialog"
+                             aria-labelledby="validateModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="validateModalLabel">Documenten uploaden</h5>
+                                        <button type="button" class="close" data-dismiss="modal"
+                                                aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Voor deze opdracht moet nog een contract worden toegevoegd.
+                                        Wilt u deze bestanden al uploaden?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                            Sluiten
+                                        </button>
+                                        <a>
+                                            <button type="submit" class="btn btn-success">Uploaden</button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
                     </form>
                 </div>
             </div>

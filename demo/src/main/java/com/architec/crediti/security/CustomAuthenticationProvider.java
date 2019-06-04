@@ -163,9 +163,11 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         Role role;
         switch (emailSubstring) {
             case "s":
+            case "S":
                 role = Role.STUDENT;
                 break;
             case "p":
+            case "P":
                 role = Role.DOCENT;
                 break;
             default:

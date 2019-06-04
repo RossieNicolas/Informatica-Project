@@ -22,6 +22,9 @@
 
     <main role="main" class="container">
         <div class="mt-5 mb-5 jumbotron">
+            <div th:if="${error}" class="alert alert-danger" role="alert">
+                Dit emailadres bestaat al!
+            </div>
             <h1>Profiel registreren</h1>
             <form th:action="@{/createexternal}" method="POST">
                 <div class="form-group">
@@ -63,7 +66,7 @@
 
                     <div class="col-md-5 pt-3">
                         <label for="email">E-mail:</label>
-                        <input type="email" class="form-control" name="email" id="email" maxlength="50" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>
+                        <input type="email" class="form-control" name="email" id="email" maxlength="50" onkeyup="this.value = this.value.toLowerCase();" pattern="^[_A-Za-z0-9-]+(\.[_A-Za-z0-9-]+)*(\+[A-Za-z0-9-]+)?@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*$" required>
                     </div>
 
                     <div class="col-md-5 pt-3">

@@ -21,7 +21,7 @@ public class EmailTemplates {
 
     public static String validatedAssignment(String name) {
         return  "Beste,\n\n"+
-                "De opdracht, ("+ name +"), die u via ons platform ingaf werd gevalideerd en is nu zichtbaar voor studenten. " +
+                "De opdracht, "+ name +", die u via ons platform ingaf werd gevalideerd en is nu zichtbaar voor studenten. " +
                 "Van het moment dat een student geïnteresseerd is, neemt hij met u contact op voor het invullen en ondertekenen " +
                 "van de contracten. Van zodra dat rond is (handtekening van uzelf, de verantwoordelijke van de hogeschool en " +
                 "de student) kan de student van start gaan.\n\n"+
@@ -33,7 +33,7 @@ public class EmailTemplates {
     }
 
     public static String enrolledAssignment( String title, String assigner, String email) {
-        return "Beste,\n\n"+
+        return "Beste,\n"+
                 "Nieuwe inschrijving van volgende opdracht: "+ title +".\n" +
                 "Naam student(e): "+ assigner + "\n" +
                 "E-mailadres: " + email;
@@ -100,6 +100,13 @@ public class EmailTemplates {
     public static String reminder(String opdrachtTitel ) {
         return "Beste,\n\n"+
                 "De deadline van opdracht : " + opdrachtTitel + " is morgen.\n\n" +
+                "AP-hogeschool";
+    }
+    public static String userAlreadyExists() {
+        return "Beste,\n\n"+
+                "Een externe opdrachtgever probeerde zich zojuist te registreren op het platform met dit emailadres." +
+                " Als u dit niet bent, of u herinnert uw wachtwoord niet meer, dan kan u een wachtwoordherstel aanvragen" +
+                " via volgende link: http://vps092.ap.be/forgotPassword\n\n" +
                 "AP-hogeschool";
     }
 
