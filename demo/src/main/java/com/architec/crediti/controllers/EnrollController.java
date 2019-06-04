@@ -80,6 +80,11 @@ public class EnrollController {
                 if (assignment.getAmountStudents() < assignment.getMaxStudents()) {
                     set.add(assignment);
                     assignment.setAmountStudents(counter + 1);
+                    assignmentRepo.save(assignment);
+                    if (assignment.getAmountStudents() == assignment.getMaxStudents()){
+                        assignment.setFull(true);
+                        assignmentRepo.save(assignment);
+                    }
                 }
             } else return "assignments/alreadyAssigned";
 

@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+
+    <title>Crediti - Coordinators beheren</title>
+
+</head>
+
+<body class="bg">
+<div id="page-container">
+    <div id="content-wrap">
+        <header th:insert="fragments/generalMenu.html :: header">
+        </header>
+
+        <main role="main" class="container">
+            <div class="text-center mt-5 mb-5 jumbotron">
+                <form>
+                    <h1>Coordinators</h1>
+                    <a href="/addcoordinator" class="btn btn-outline-success">➕ Coordinator toevoegen</a><br>
+                    <table class="table table-hover" id="tablePortfolio">
+                        <thead>
+                        <tr>
+                            <th>Naam</th>
+                            <th>Email</th>
+                            <th style="width: 18%"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <div id="profilePortfolio">
+                            <tr th:each="a : ${list}" class="tablebackground">
+                                <td th:text="${a.getFirstname()} + ' ' + ${a.getLastname()}"></td>
+                                <td th:text="${a.getEmail()}"></td>
+                                <td><a data-toggle="modal"
+                                        data-target="#deleteModal" th:attr="data-id=${a.getUserId()}"
+                                        class="btn btn-outline-danger ml-2" role="button">🗑️</a></td>
+
+                                <!-- Modal DELETE -->
+                                <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
+                                     aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="deleteModalLabel">Verwijderen</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Bent u zeker dat u deze coördinator wilt verwijderen?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                    Sluiten
+                                                </button>
+                                                <a class="delete-link" href="">
+                                                    <button type="button" class="btn btn-danger">Verwijder</button>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </tr>
+                        </div>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+
+        </main>
+        <!-- /.container -->
+    </div>
+    <footer th:insert="fragments/general.html :: footer">
+    </footer>
+</div>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script>
+
+        $('#deleteModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var recipient = button.data('id');
+        var modal = $(this);
+        modal.find(".delete-link").attr("href", "/deletecoordinator/" + recipient);
+    });
+
+</script>
+</body>
+
+</html>

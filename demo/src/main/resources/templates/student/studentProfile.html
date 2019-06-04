@@ -1,90 +1,153 @@
-<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
-    <meta charset="UTF-8"/>
-    <title>Crediti - Student profiel </title>
-    <link rel="stylesheet" th:href="@{/css/APcss3.css}">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+
+    <title>Crediti - Student Profiel</title>
+
 </head>
 
-<body class="background">
-<header th:insert="fragments/generalMenu_old.html :: header (name=${name})"></header>
-<div class="block">
-    <section class="find-edu">
-        <div class="container ">
-            <div class="col-xs-12 extra">
-                <h2 class="extra">Detail student</h2>
+<body class="bg" onload="tableFill()">
+<div id="page-container">
+    <div id="content-wrap">
+        <header th:insert="fragments/generalMenu.html :: header">
+        </header>
+        <main role="main" class="container">
+            <div class="mt-5 mb-5 jumbotron">
+                <h1>Detail student</h1>
                 <form th:each="a: ${student}" class="standard-form" method="post">
-                    <br><br>
-                    <label for="nummer">Studenten nummer:</label>
-                    <input name="nummer" id="nummer" type="text" th:value="*{a.getStudentNumber()}"
-                           required="required" disabled><br>
-                    <label for="Naam">Naam:</label>
-                    <input name="Naam" id="Naam" type="text" th:value="*{a.getUserId()}" required="required"
-                           disabled><br>
-                    <label for="Email">Email:</label>
-                    <input name="Email" id="Email" th:value="*{a.findEmail()}" type="text" required="required" disabled><br>
-                    <input type="button" value="✏️ BEWERKEN" class="button" onclick="toggleForm();"> <input
-                        type="submit" value="💾 BEWAREN" class="button" id="save">
-                    <fieldset disabled="disabled" id="studentEdit">
-                        <label for="Gsm">Gsm:</label><br>
-                        <input name="Gsm" id="Gsm" type="text" th:value="*{a.getGsm()}" required="required"><br>
-                        <label for="type">Type:</label>
-                        <select name="type" id="type" required>
-                            <option th:if="${a.isZap() && a.isMobility()}" selected>Zap en Mobility</option>
-                            <option th:if="${a.isZap() && !a.isMobility()}" selected>Zap</option>
-                            <option th:if="${!a.isZap() && a.isMobility()}" selected>Mobility</option>
-                            <option th:if="${!(a.isZap() && a.isMobility())}">Zap en Mobility</option>
-                            <option th:if="${!(a.isZap() && !a.isMobility())}">Zap</option>
-                            <option th:if="${!(!a.isZap() && a.isMobility())}">Mobility</option>
-                        </select>
-                    </fieldset>
-                    <label for="amoutHours">Aantal uur:</label><br>
-                    <input name="amoutHours" id="amoutHours" type="text" th:value="*{a.getAmoutHours()}"
-                           required="required" disabled><br>
-                </form>
-                <h2 class="extra">Uw aangemaakte opdrachten</h2>
-                <table id="profileTable">
-                    <thead>
-                    <tr>
-                        <th>Info</th>
-                        <th>Nr</th>
-                        <th>Type</th>
-                        <th>Naam</th>
-                        <th>Begin</th>
-                        <th>Einde</th>
-                        <th>Aantal uren</th>
-                        <th>Gevalideerd</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="a : ${assignments}" class="tablebackground ">
-                        <td><a th:href="${'/allassignments/' + a.getAssignmentId()}">📃 Info</a></td>
-                        <td th:text="${a.getAssignmentId()}"></td>
-                        <td th:text="${a.getType()}"></td>
-                        <td th:text="${a.getTitle()}" class="cell"></td>
-                        <td th:text="${a.getStartDate()}"></td>
-                        <td th:text="${a.getEndDate()}"></td>
-                        <td style="padding-left: 3.8%" th:text="${a.getAmountHours()}"></td>
-                        <td style="padding-left: 2.5%">
-                            <span th:if="${a.isValidated()}">✔️</span>
-                            <span th:unless="${a.isValidated()}">❌</span>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
-</div>
-<footer th:insert="fragments/generalMenu.html :: footer"></footer>
-</body>
-<script>
-    function toggleForm() {
-        document.getElementById('studentEdit').removeAttribute('disabled');
-        document.getElementById("save").style.display = "inline-block";
-    }
-</script>
+                    <br>
+                    <div class="col-md-5 ">
+                        <label for="nummer">Studenten nummer:</label>
+                        <input class="form-control" name="nummer" id="nummer" type="text"
+                               th:value="*{a.getStudentNumber()}"
+                               required="required" disabled><br>
+                    </div>
+                    <div class="col-md-5 pt-3">
+                        <label for="Naam">Naam:</label>
+                        <input class="form-control" name="Naam" id="Naam" type="text" th:value="*{a.getUserId()}"
+                               required="required"
+                               disabled><br>
+                    </div>
+                    <div class="col-md-5 pt-3">
 
+                        <label for="Email">Email:</label>
+                        <input class="form-control" name="Email" id="Email" th:value="*{a.findEmail()}" type="text"
+                               required="required" disabled><br>
+                    </div>
+                    <div class="col-md-5 pt-3">
+
+                        <label for="amoutHours">Aantal uur:</label><br>
+                        <input class="form-control" name="amoutHours" id="amoutHours" type="text"
+                               th:value="*{a.getAmoutHours()}"
+                               required="required" disabled><br>
+                    </div>
+                    <fieldset disabled="disabled" id="studentEdit">
+                        <div class="col-md-5 pt-3">
+
+                            <label for="Gsm">Gsm:</label><br>
+                            <input class="form-control" name="Gsm" id="Gsm" type="text" th:value="*{a.getGsm()}"
+                                   required="required"><br>
+                        </div>
+                        <div class="col-md-5 pt-3">
+
+                            <label for="type">Type:</label>
+                            <select class="form-control" name="type" id="type" required>
+                                <option th:if="${a.isZap() && a.isMobility()}" selected>Zap en Mobility</option>
+                                <option th:if="${a.isZap() && !a.isMobility()}" selected>Zap</option>
+                                <option th:if="${!a.isZap() && a.isMobility()}" selected>Mobility</option>
+                                <option th:if="${!(a.isZap() && a.isMobility())}">Zap en Mobility</option>
+                                <option th:if="${!(a.isZap() && !a.isMobility())}">Zap</option>
+                                <option th:if="${!(!a.isZap() && a.isMobility())}">Mobility</option>
+                            </select>
+                        </div>
+                    </fieldset>
+                    <br>
+                    <input class="btn btn-outline-secondary mb-4 ml-4" type="button" value="✏️ BEWERKEN"
+                           onclick="toggleForm();">
+                    <input class="btn btn-outline-success mb-4 ml-2" type="submit" value="💾 BEWAREN" id="save">
+                </form>
+
+                <h3 class="pb-4  mt-3 ">Uw aangemaakte opdrachten</h3>
+                <div>
+                    <table id="table" class="table table-hover table-condensed table-bordered">
+                        <thead>
+                        <tr class="d-flex">
+                            <th class="col-1" scope="col"></th>
+                            <th class="col-1" style="background-color: #dee2e6;" scope="col">Nr</th>
+                            <th class="col-1" style="background-color: #dee2e6;" scope="col">Type</th>
+                            <th class="col-2" style="background-color: #dee2e6;" scope="col">Naam</th>
+                            <th class="col-2" style="background-color: #dee2e6;" scope="col">Begin</th>
+                            <th class="col-2" style="background-color: #dee2e6;" scope="col">Einde</th>
+                            <th class="col-1" style="background-color: #dee2e6;" scope="col">Aantal uren</th>
+                            <th class="col-2" style="background-color: #dee2e6;" scope="col">Gevalideerd</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="d-flex" th:each="a : ${assignments}">
+                            <td class="col-1" scope="row"><a th:href="${'/allassignments/' + a.getAssignmentId()}"
+                                                             class="btn btn-outline-secondary" role="button">📃
+                            </a></td>
+                            <td class="col-1" th:text="${a.getAssignmentId()}"></td>
+                            <td class="col-1" th:text="${a.getType()}"></td>
+                            <td class="col-2" th:text="${a.getTitle()}"></td>
+                            <td class="col-2" th:text="${a.getFormatStartDate()}"></td>
+                            <td class="col-2" th:text="${a.getFormatEndDate()}"></td>
+                            <td class="col-1" th:text="${a.getAmountHours()}"></td>
+                            <td class="col-2 text-center">
+                                <span th:if="${a.isValidated()}">✔️</span>
+                                <span th:unless="${a.isValidated()}">❌</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="alert alert-primary" role="alert" id="empty"></div>
+            </div>
+        </main>
+    </div>
+    <!-- /.container -->
+    <footer th:insert="fragments/general.html :: footer">
+    </footer>
+    <!-- Optional JavaScript -->
+    <script>
+        function toggleForm() {
+            document.getElementById('studentEdit').removeAttribute('disabled');
+            document.getElementById("save").style.display = "inline-block";
+        }
+
+        function tableFill() {
+            var tbl = document.getElementById('table');
+            if (tbl.rows.length == 1) {
+                var para = document.createElement("p");
+                var node = document.createTextNode("Er zijn momenteel geen opdrachten.");
+                para.appendChild(node);
+                var element = document.getElementById("empty");
+                element.style.visibility = "visible";
+                element.appendChild(para);
+            }
+        }
+    </script>
+</div>
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
 
 </html>
