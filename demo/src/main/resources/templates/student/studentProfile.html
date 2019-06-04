@@ -76,43 +76,42 @@
                            onclick="toggleForm();">
                     <input class="btn btn-outline-success mb-4 ml-2" type="submit" value="💾 BEWAREN" id="save">
                 </form>
-                <div class="mt-4 jumbotron">
-                    <h3 class="pb-4">Uw aangemaakte opdrachten</h3>
-                    <div>
-                        <table id="table" class="table table-hover">
-                            <thead>
-                            <tr class="d-flex">
-                                <th class="col-1" scope="col"></th>
-                                <th class="col-1" scope="col">Nr</th>
-                                <th class="col-1" scope="col">Type</th>
-                                <th class="col-2" scope="col">Naam</th>
-                                <th class="col-2" scope="col">Begin</th>
-                                <th class="col-2" scope="col">Einde</th>
-                                <th class="col-1" scope="col">Aantal uren</th>
-                                <th class="col-2" scope="col">Gevalideerd</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr class="d-flex" th:each="a : ${assignments}">
-                                <td class="col-1" scope="row"><a th:href="${'/allassignments/' + a.getAssignmentId()}"
-                                                                 class="btn btn-outline-secondary" role="button">📃
-                                </a></td>
-                                <td class="col-1" th:text="${a.getAssignmentId()}"></td>
-                                <td class="col-1" th:text="${a.getType()}"></td>
-                                <td class="col-2" th:text="${a.getTitle()}"></td>
-                                <td class="col-2" th:text="${a.getFormatStartDate()}"></td>
-                                <td class="col-2" th:text="${a.getFormatEndDate()}"></td>
-                                <td class="col-1" th:text="${a.getAmountHours()}"></td>
-                                <td class="col-1 text-center">
-                                    <span th:if="${a.isValidated()}">✔️</span>
-                                    <span th:unless="${a.isValidated()}">❌</span>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="alert alert-primary" role="alert" id="empty"></div>
+
+                <h3 class="pb-4  mt-3 ">Uw aangemaakte opdrachten</h3>
+                <div>
+                    <table id="table" class="table table-hover table-condensed table-bordered">
+                        <thead>
+                        <tr class="d-flex">
+                            <th class="col-1" scope="col"></th>
+                            <th class="col-1" style="background-color: #dee2e6;" scope="col">Nr</th>
+                            <th class="col-1" style="background-color: #dee2e6;" scope="col">Type</th>
+                            <th class="col-2" style="background-color: #dee2e6;" scope="col">Naam</th>
+                            <th class="col-2" style="background-color: #dee2e6;" scope="col">Begin</th>
+                            <th class="col-2" style="background-color: #dee2e6;" scope="col">Einde</th>
+                            <th class="col-1" style="background-color: #dee2e6;" scope="col">Aantal uren</th>
+                            <th class="col-2" style="background-color: #dee2e6;" scope="col">Gevalideerd</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="d-flex" th:each="a : ${assignments}">
+                            <td class="col-1" scope="row"><a th:href="${'/allassignments/' + a.getAssignmentId()}"
+                                                             class="btn btn-outline-secondary" role="button">📃
+                            </a></td>
+                            <td class="col-1" th:text="${a.getAssignmentId()}"></td>
+                            <td class="col-1" th:text="${a.getType()}"></td>
+                            <td class="col-2" th:text="${a.getTitle()}"></td>
+                            <td class="col-2" th:text="${a.getFormatStartDate()}"></td>
+                            <td class="col-2" th:text="${a.getFormatEndDate()}"></td>
+                            <td class="col-1" th:text="${a.getAmountHours()}"></td>
+                            <td class="col-2 text-center">
+                                <span th:if="${a.isValidated()}">✔️</span>
+                                <span th:unless="${a.isValidated()}">❌</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
+                <div class="alert alert-primary" role="alert" id="empty"></div>
             </div>
         </main>
     </div>
