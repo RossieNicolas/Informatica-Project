@@ -48,5 +48,6 @@ public class ProfileController {
         model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
         return "student/studentDetail";
     }
+
 }
 

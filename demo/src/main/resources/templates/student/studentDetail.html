@@ -50,7 +50,7 @@
                             <tr th:each="f : ${status}">
                                 <td th:text="${f.getAssignmentId()}"></td>
                                 <td th:text="${f.getTitle()}"></td>
-                                <td><a th:text="${f.getStatus()}" class="button"></a></td>
+                                <td><a th:text="${f.getStatus()}" th:href="@{/status}" class="button"></a></td>
                             </tr>
                         </tbody>
                     </table>
