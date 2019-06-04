@@ -6,6 +6,7 @@ import com.architec.crediti.models.User;
 import com.architec.crediti.repositories.FileRepository;
 import com.architec.crediti.repositories.StudentRepository;
 import com.architec.crediti.repositories.UserRepository;
+import com.architec.crediti.security.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
