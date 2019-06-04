@@ -60,14 +60,18 @@
                 <h4 sec:authorize="!hasRole('EXTERN')" class="extra">Bekijken</h4>
                 <a sec:authorize="!hasRole('EXTERN')" class="mt-3 btn btn-outline-danger" href="/allassignments">Alle
                     opdrachten</a>
+                <a sec:authorize="hasAnyRole('COORDINATOR','DOCENT')" class="mt-3 btn btn-outline-danger"
+                   href="/allFullAssignments">Volzette opdrachten</a>
                 <a sec:authorize="hasRole('COORDINATOR')" class="mt-3 btn btn-outline-danger" href="/listAllTags">Alle
                     tags</a>
                 <a sec:authorize="hasAnyRole('COORDINATOR','DOCENT')" class="mt-3 btn btn-outline-danger"
                    href="/liststudents">Alle studenten</a>
-                <a sec:authorize="!hasAnyRole('EXTERN','DOCENT')" class="mt-3 btn btn-outline-danger"
+                <a sec:authorize="hasRole('STUDENT')" class="mt-3 btn btn-outline-danger"
                    href="/myassignments">Ingeschreven opdrachten</a>
                 <a sec:authorize="!hasRole('EXTERN')" class="mt-3 btn btn-outline-danger"
-                   href="/documentation">Documentatie</a><br><br>
+                   href="/documentation">Documentatie</a>
+                <a sec:authorize="hasRole('COORDINATOR')" class="mt-3 btn btn-outline-danger"
+                   href="/archive">Archief</a><br><br>
 
             </div>
 
