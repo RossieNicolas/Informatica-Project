@@ -16,7 +16,7 @@
 
 </head>
 
-<body class="bg">
+<body class="bg" onload="tableFill()">
 <div id="page-container">
     <div id="content-wrap">
         <header th:insert="fragments/generalMenu.html :: header">
@@ -72,12 +72,13 @@
                         </div>
                     </fieldset>
                     <br>
-                    <input class="btn btn-outline-secondary mb-4 ml-4" type="button" value="✏️ BEWERKEN" onclick="toggleForm();">
+                    <input class="btn btn-outline-secondary mb-4 ml-4" type="button" value="✏️ BEWERKEN"
+                           onclick="toggleForm();">
                     <input class="btn btn-outline-success mb-4 ml-2" type="submit" value="💾 BEWAREN" id="save">
                 </form>
                 <div class="mt-4 jumbotron">
                     <h3 class="pb-4">Uw aangemaakte opdrachten</h3>
-                    <div >
+                    <div>
                         <table id="table" class="table table-hover">
                             <thead>
                             <tr class="d-flex">
@@ -95,7 +96,7 @@
                             <tr class="d-flex" th:each="a : ${assignments}">
                                 <td class="col-1" scope="row"><a th:href="${'/allassignments/' + a.getAssignmentId()}"
                                                                  class="btn btn-outline-secondary" role="button">📃
-                                    </a></td>
+                                </a></td>
                                 <td class="col-1" th:text="${a.getAssignmentId()}"></td>
                                 <td class="col-1" th:text="${a.getType()}"></td>
                                 <td class="col-2" th:text="${a.getTitle()}"></td>
@@ -110,6 +111,7 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class="alert alert-primary" role="alert" id="empty"></div>
                 </div>
             </div>
         </main>
@@ -122,6 +124,18 @@
         function toggleForm() {
             document.getElementById('studentEdit').removeAttribute('disabled');
             document.getElementById("save").style.display = "inline-block";
+        }
+
+        function tableFill() {
+            var tbl = document.getElementById('table');
+            if (tbl.rows.length == 1) {
+                var para = document.createElement("p");
+                var node = document.createTextNode("Er zijn momenteel geen opdrachten.");
+                para.appendChild(node);
+                var element = document.getElementById("empty");
+                element.style.visibility = "visible";
+                element.appendChild(para);
+            }
         }
     </script>
 </div>
