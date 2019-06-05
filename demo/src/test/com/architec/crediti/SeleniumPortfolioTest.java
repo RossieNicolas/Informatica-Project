@@ -23,6 +23,7 @@ public class SeleniumPortfolioTest {
     JavascriptExecutor js;
     @Before
     public void setUp() {
+        System.setProperty("webdriver.gecko.driver", "C:\\toegepaste informatica\\J2\\M4\\Project\\geckodriver.exe");
         driver = new FirefoxDriver();
         js = (JavascriptExecutor) driver;
         vars = new HashMap<String, Object>();
@@ -31,7 +32,6 @@ public class SeleniumPortfolioTest {
     public void tearDown() {
         driver.quit();
     }
-
     //id= 53
     @Test
     public void portfolioLoad() {
@@ -49,13 +49,13 @@ public class SeleniumPortfolioTest {
     @Test
     public void portfolioViewLecturersOrCoordinators() {
         driver.get("http://vps092.ap.be/");
-        driver.manage().window().setSize(new Dimension(900, 701));
+        driver.manage().window().setSize(new Dimension(900, 705));
         driver.findElement(By.linkText("Login")).click();
         driver.findElement(By.id("username")).sendKeys("nicolas.rossie@gmail.com");
         driver.findElement(By.id("password")).sendKeys("testwachtwoord");
         driver.findElement(By.cssSelector(".btn")).click();
         driver.findElement(By.id("extras")).click();
-        driver.findElement(By.linkText("Alle Studenten")).click();
+        driver.findElement(By.linkText("Lijst Studenten")).click();
         driver.findElement(By.linkText("📃")).click();
     }
 }

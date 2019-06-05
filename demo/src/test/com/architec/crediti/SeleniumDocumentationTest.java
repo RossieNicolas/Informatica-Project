@@ -53,12 +53,12 @@ public class SeleniumDocumentationTest {
     @Test
     public void documentationDownload() {
         driver.get("http://vps092.ap.be/");
-        driver.manage().window().setSize(new Dimension(1550, 838));
+        driver.manage().window().setSize(new Dimension(900, 705));
         driver.findElement(By.linkText("Login")).click();
         driver.findElement(By.id("username")).sendKeys("nicolas.rossie@gmail.com");
         driver.findElement(By.id("password")).sendKeys("testwachtwoord");
         driver.findElement(By.cssSelector(".btn")).click();
         driver.findElement(By.linkText("Documentatie")).click();
-        driver.findElement(By.cssSelector(".tablebackground:nth-child(1) .button:nth-child(1)")).click();
+        driver.findElement(By.linkText("Download")).click();
     }
 }
