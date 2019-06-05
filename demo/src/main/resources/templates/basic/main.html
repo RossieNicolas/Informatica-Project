@@ -23,9 +23,9 @@
         </header>
 
         <main role="main" class="container">
-            <div class="mt-4 jumbotron">
+            <div class="mt-4 mb-4 jumbotron">
                 <h1 th:text="${'Welkom ' + name}"></h1>
-
+                <br>
                 <!--GOED TE KEUREN-->
                 <h4 th:if="${externals} > 0 or ${assignments} > 0 or ${enrolled} > 0" sec:authorize="hasRole('COORDINATOR')" class="extra">Goed te keuren <span class="badge badge-warning" th:text="${externals + assignments + enrolled}"></span></h4>
                 <h4 th:if="${enrolled} > 0" sec:authorize="hasRole('DOCENT')" class="extra">Goed te keuren</h4>
