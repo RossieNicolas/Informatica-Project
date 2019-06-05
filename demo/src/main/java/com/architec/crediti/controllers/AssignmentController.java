@@ -232,6 +232,18 @@ public class AssignmentController {
         return "assignments/listUnvalidatedAssignments";
     }
 
+    @GetMapping("/myassignments")
+    public String assignments(Principal principal, Model model) {
+        Student currentStudent = studentRepo.findByUserId(userRepo.findByEmail(principal.getName()));
+        Set<Assignment> myAssignments = currentStudent.getAssignments();
+        model.addAttribute("assignments", myAssignments);
+        //pass username to header fragment
+        User currentUser = userRepo.findByEmail(principal.getName());
+        model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
+        return "assignments/myassignments";
+    }
+
+
     @GetMapping(value = "/allassignments/{searchbar}")
     public String searchByTitleorId(@PathVariable(value = "searchbar" , required = false) String searchbar, Model model,
                                     @RequestParam(value = "page", required = false) Optional<Integer> page){
