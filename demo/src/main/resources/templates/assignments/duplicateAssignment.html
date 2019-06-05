@@ -2,122 +2,171 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8" />
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+
     <title>Crediti - Opdracht aanmaken</title>
-    <link rel="stylesheet" th:href="@{/css/APcss3.css}">
+
 </head>
 
-<body class="background">
-    <header th:insert="fragments/generalMenu_old.html :: header (name=${name})"></header>
-    </header>
-    <div class="block">
-        <section class="find-edu card">
-            <div class="container">
-                <div class="wrap-all col-xs-12 ">
-                    <h2>Invoerformulier voor opdrachtgevers</h2>
-                    <form th:each="a: ${duplicate}" method='POST' class="standard-form" th:action="@{/duplicateassignment/{id}(id=${a.assignmentId})}">
+<body class="bg">
+<div id="page-container">
+    <div id="content-wrap">
+        <header th:insert="fragments/generalMenu.html :: header">
+        </header>
 
-                        <label for="title">Titel:</label>
-                        <input name="title" id="title" type="text" th:value="*{a.getTitle()}" required="required"><br>
+        <main role="main" class="container">
+            <div class="mt-5 mb-5 jumbotron">
+                <h1>Invoerformulier voor opdrachtgevers</h1>
+                <form th:action="@{/duplicateassignment/{id}(id=${duplicate.getAssignmentId()})}" method="POST">
+                    <div class="form-group">
 
-                        <label for="type">Type:</label>
-                        <select name="type" id="type" required>
-                        <option value="" disabled selected>Kies een type</option>
-                        <option th:text="ZAP"></option>
-                        <option th:text="Mobility"></option>
-                    </select>
+                        <div class="col-md-5 pt-3">
+                            <label for="title">Titel:</label>
+                            <input type="text" class="form-control" name="title" id="title" th:value="${duplicate.getTitle()}" required>
+                        </div>
 
-                        <label for="task">Omschrijving opdracht:</label>
-                        <textarea name="task" id="task" th:text="*{a.getTask()}" required="required"></textarea><br>
+                        <div class="col-md-5 pt-3">
+                            <label for="type">Type:</label>
+                            <select class="custom-select custom-select-lg" name="type" id="type" required>
+                                <option value="" disabled selected>Kies een type</option>
+                                <option th:text="ZAP"></option>
+                                <option th:text="Mobility"></option>
+                            </select>
+                        </div>
 
-                        <label for="startDate">Begindatum:</label><br>
-                        <input name="startDate" id="startDate" type="date" onblur="SDate()" th:value="*{a.getStartDate()}" required="required"><br>
+                        <div class="col-md-5 pt-3">
+                            <label for="task">Omschrijving opdracht:</label>
+                            <textarea type="text" class="form-control" name="task" id="task" th:text="${duplicate.getTask()}" required></textarea>
+                        </div>
 
-                        <label for="endDate">Einddatum:</label><br>
-                        <input name="endDate" id="endDate" type="date" onblur="TDate()" th:value="*{a.getEndDate()}" required="required"><br><br>
+                        <div class="col-md-5 pt-3">
+                            <label for="startDate">Begindatum:</label>
+                            <input type="date" class="form-control" name="startDate" id="startDate" onblur="SDate()"
+                                   required>
+                        </div>
 
-                        <label for="amountHours">Totaal uur:</label>
-                        <input name="amountHours" id="amountHours" type="number" onblur="amoutH()" th:value="*{a.getAmountHours()}" required="required" min="1" max="78"><br>
+                        <div class="col-md-5 pt-3">
+                            <label for="endDate">Einddatum:</label>
+                            <input type="date" class="form-control" name="endDate" id="endDate" onblur="TDate()"
+                                   required>
+                        </div>
 
-                        <label for="maxStudents">Max Studenten:</label>
-                        <input name="maxStudents" id="maxStudents" type="number" th:value="*{a.getMaxStudents()}" required="required" min="1"><br>
-                        <label>Tags:</label>
-                        <ul>
-                            <th:block th:each='tag,iter: ${tags}'>
-                                <label for="tag" th:value="${tag.getTagId()}">
-                                <input th:checked="${status[iter.index]}" type="checkbox" id="tag"
-                                       name="tag" th:text='${tag.getTagName()}'
-                                       th:value='${tag.getTagId()}'/>
-                            </label>
+                        <div class="col-md-5 pt-3">
+                            <label for="amountHours">Totaal aantal uren:</label>
+                            <input type="number" class="form-control" name="amountHours" id="amountHours"
+                                   onblur="amoutH()" th:value="${duplicate.getAmountHours()}" min="1" max="78" required>
+                        </div>
 
-                            </th:block>
-                        </ul>
-                        <input class="button" type="SUBMIT" value="Kopie aanmaken">
+                        <div class="col-md-5 pt-3">
+                            <label for="maxStudents">Maximum aantal studenten:</label>
+                            <input type="number" class="form-control" name="maxStudents" id="maxStudents" min="1"
+                                   th:value="${duplicate.getMaxStudents()}"
+                                   required>
+                        </div>
 
-                    </form>
-                </div>
+                        <div class="col-md-5 pt-3">
+                            <label>Tags:</label>
+                            <div class="form-group">
+                                <label th:each="t, iter: ${tags}" class="custom-control custom-checkbox custom-control-inline"
+                                       th:value="${t.getTagId()}">
+                                    <input th:checked="${status[iter.index]}" type="checkbox" name="tag" class="custom-control-input"
+                                           th:value="${t.getTagId()}">
+                                    <span class="custom-control-label" th:text="${t.getTagName()}"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-5 pt-3">
+                        <button type="submit" class="btn btn-primary btn-lg">Kopie aanmaken</button>
+                    </div>
+                </form>
             </div>
-        </section>
+
+        </main>
     </div>
-    <footer th:insert="fragments/generalMenu.html :: footer">
+    <!-- /.container -->
+    <footer th:insert="fragments/general.html :: footer">
     </footer>
-    <script th:inline="javascript">
-        var type = /*[[${type}]]*/ 'kies een type';
-        SelectElement("type", type);
+</div>
+<!-- Optional JavaScript -->
 
-        function SelectElement(id, type) {
-            var element = document.getElementById(id);
-            element.value = type;
+<script th:inline="javascript">
+
+    var type = /*[[${type}]]*/ 'kies een type';
+    SelectElement("type", type);
+
+    function SelectElement(id, type) {
+        var element = document.getElementById(id);
+        element.value = type;
+    }
+
+    function amoutH() {
+        var amountHours = document.getElementById("amountHours").value;
+        var test = parseInt(amountHours);
+        if (test % 6 !== 0 && test <= 78) {
+            alert("Totaal uur moet een zesvoud zijn en kleiner of gelijk aan 78.");
+            document.getElementById('amountHours').value = "";
+            return false;
         }
+        return true
+    }
 
-        function amoutH() {
-            var amountHours = document.getElementById("amountHours").value;
-            var test = parseInt(amountHours);
-            if (test % 3 != 0 && test <= 78) {
-                alert("Totaal uur moet drievoud zijn en kleiner of gelijk aan 78.");
-                document.getElementById('amountHours').value = "";
+    /**
+     * @return {boolean}
+     */
+    function TDate() {
+        var startDate = document.getElementById("startDate").value;
+        var endDate = document.getElementById("endDate").value;
+
+        if (startDate != null && endDate != null) {
+            if (startDate > endDate) {
+                alert("De startdatum moet kleiner zijn dan de einddatum van uw opdracht!");
+                document.getElementById('endDate').value = "";
+                return false;
+            } else if (endDate < startDate) {
+                alert("De startdatum moet kleiner zijn dan de einddatum!");
+                document.getElementById('endDate').value = "";
+                return false;
+            }
+            return true;
+        }
+    }
+
+    /**
+     * @return {boolean}
+     */
+    function SDate() {
+        var startDate = document.getElementById("startDate").value;
+        var currentDate = new Date().toISOString().split('T')[0];
+        if (startDate != null) {
+            if (startDate < currentDate) {
+                alert("De startdatum moet groter of gelijk zijn aan de datum van vandaag!");
+                document.getElementById('startDate').value = "";
                 return false;
             }
             return true
-
-
         }
+    }
+</script>
 
-        function TDate() {
-            var startDate = document.getElementById("startDate").value;
-            var endDate = document.getElementById("endDate").value;
-
-            if (startDate != null && endDate != null) {
-                if (startDate > endDate) {
-                    alert("De startdatum moet kleiner zijn dan de einddatum van uw opdracht!");
-                    document.getElementById('endDate').value = "";
-                    return false;
-                } else if (endDate < startDate) {
-                    alert("De startdatum moet kleiner zijn dan de einddatum!");
-                    document.getElementById('endDate').value = "";
-                    return false;
-                }
-
-                return true;
-            }
-        }
-
-        function SDate() {
-            var startDate = document.getElementById("startDate").value;
-            var endDate = document.getElementById("endDate").value;
-            var currentDate = new Date().toISOString().split('T')[0];
-
-            if (startDate != null) {
-                if (startDate < currentDate) {
-                    alert("De startdatum moet groter of gelijk zijn aan de datum van vandaag!");
-                    document.getElementById('startDate').value = "";
-                    return false;
-                }
-
-                return true
-            }
-        }
-    </script>
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>
