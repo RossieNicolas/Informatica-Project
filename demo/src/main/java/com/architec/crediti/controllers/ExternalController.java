@@ -62,8 +62,10 @@ public class ExternalController {
         ExternalUser externalUser = new ExternalUser(firstname, lastname, company, phone, address, city, postal, hashedBytes[0].toString().toCharArray(),(byte[]) hashedBytes[1]);
         // create a internal user
         User user = new User(firstname, lastname, email, Role.EXTERN,false);
+        userRepository.save(user);
         // set the foreign key
         externalUser.setUserId(user);
+        externalUserRepository.save(externalUser);
         long userId = userRepository.findByEmail(email).getUserId();
 
         if (!userRepository.existsByEmail(user.getEmail())) {
@@ -72,9 +74,12 @@ public class ExternalController {
 
             String name = firstname + " " + lastname;
             String fullAddress = address + ", " + postal + " " + city;
-            //TODO: vervang 's097086@ap.be' door mail van coordinator
-            mail.sendSimpleMessage("s100605@ap.be", "Nieuwe externe registratie",
-            EmailTemplates.newExternalUser(userId, name, company, fullAddress, phone, email));
+
+            List<User> coordinators = userRepository.findAllByRole(Role.COORDINATOR);
+            for( User u : coordinators) {
+                mail.sendSimpleMessage(u.getEmail(), "Nieuwe externe registratie",
+                        EmailTemplates.newExternalUser(userId, name, company, fullAddress, phone, email));
+            }
 
             mail.sendSimpleMessage(externalUser.getEmail(),"Registratie", EmailTemplates.newExternal());
         }

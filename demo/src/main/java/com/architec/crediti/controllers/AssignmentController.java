@@ -61,6 +61,8 @@ public class AssignmentController {
     private final
     EnrolledRepository enrolledRepo;
 
+    private List<User> coordinators;
+
     @Autowired
     public AssignmentController(TagRepo tagRepo, AssignmentRepository assignmentRepo, StudentRepository studentRepo, EnrolledRepository enrolledRepo,
                                 UserRepository userRepo, ArchiveRepository archiveRepo, EmailServiceImpl mail, ExternalUserRepository externalRepo) {
@@ -72,6 +74,7 @@ public class AssignmentController {
         this.mail = mail;
         this.externalRepo = externalRepo;
         this.enrolledRepo = enrolledRepo;
+        coordinators = userRepo.findAllByRole(Role.COORDINATOR);
     }
 
     // get assignment form
@@ -152,10 +155,11 @@ public class AssignmentController {
             assignment.setValidated(true);
         }
 
-
-        mail.sendSimpleMessage("alina.storme@student.ap.be", "Nieuwe opdracht gecreëerd",
-                EmailTemplates.createdAssignment(assignment.getAssigner(),
-                        assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments"));
+        for(User u: coordinators) {
+            mail.sendSimpleMessage(u.getEmail(), "Nieuwe opdracht gecreëerd",
+                    EmailTemplates.createdAssignment(assignment.getAssigner(),
+                            assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments"));
+        }
         return "assignments/successfullAssignment";
     }
 
@@ -503,12 +507,6 @@ public class AssignmentController {
         assignmentRepo.delete(assignment);
 
         model.addAttribute("assignments", assignmentRepo.findAll());
-
-        //TODO vervang 'to' door mail van coordinator
-        mail.sendSimpleMessage("alina.storme@student.ap.be", "Opdracht gearchiveerd",
-                EmailTemplates.archivedAssignment(assignment.getAssigner(),
-                        assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments"));
-
         return "redirect:/allassignments";
     }
 
