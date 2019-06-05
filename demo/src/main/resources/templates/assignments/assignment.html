@@ -143,9 +143,9 @@
                 alert("De startdatum moet groter of gelijk zijn aan de datum van vandaag!");
                 document.getElementById('startDate').value = "";
                 return false;
-            } else if (endDate != null) {
+            } else if (endDate !== "") {
                 if(startDate > endDate) {
-                    alert("De startdatum moet kleiner zijn dan de einddatum van uw opdracht!");
+                    alert("De startdatum moet kleiner zijn dan de einddatum van uw opdracht!test");
                     document.getElementById('endDate').value = "";
                     return false;
                 }
