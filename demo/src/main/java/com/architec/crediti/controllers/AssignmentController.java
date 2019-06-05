@@ -59,8 +59,11 @@ public class AssignmentController {
     private final
     ExternalUserRepository externalRepo;
 
+    private final
+    EnrolledRepository enrolledRepo;
+
     @Autowired
-    public AssignmentController(TagRepo tagRepo, AssignmentRepository assignmentRepo, StudentRepository studentRepo,
+    public AssignmentController(TagRepo tagRepo, AssignmentRepository assignmentRepo, StudentRepository studentRepo, EnrolledRepository enrolledRepo,
                                 UserRepository userRepo, ArchiveRepository archiveRepo, EmailServiceImpl mail, ExternalUserRepository externalRepo) {
         this.tagRepo = tagRepo;
         this.assignmentRepo = assignmentRepo;
@@ -69,6 +72,7 @@ public class AssignmentController {
         this.archiveRepo = archiveRepo;
         this.mail = mail;
         this.externalRepo = externalRepo;
+        this.enrolledRepo = enrolledRepo;
     }
 
     // get assignment form
@@ -89,6 +93,7 @@ public class AssignmentController {
                                    @RequestParam(required = false, value = "tag") int[] tags) {
         Set<Tag> set = new HashSet<>();
         User currentUser = userRepo.findByEmail(principal.getName());
+        Student student = studentRepo.findByUserId(currentUser);
 
         assignment.setTags(set);
         if (tags != null) {
@@ -100,6 +105,49 @@ public class AssignmentController {
         assignment.setTags(set);
         assignment.setAssignerUserId(currentUser);
         assignmentRepo.save(assignment);
+
+        if(currentUser.getRole().equals(Role.STUDENT)) {
+            try {
+                Set<Assignment> set2 = new HashSet<>();
+                set2.addAll(student.getAssignments());
+                int counter = assignment.getAmountStudents();
+                boolean zelfde = false;
+
+                for (Assignment item : student.getAssignments()) {
+                    if (item.getAssignmentId() == assignment.getAssignmentId()) {
+                        zelfde = true;
+                    }
+                }
+
+                if (!zelfde) {
+                    if (assignment.getAmountStudents() < assignment.getMaxStudents()) {
+                        set2.add(assignment);
+                        assignment.setAmountStudents(counter + 1);
+                        assignmentRepo.save(assignment);
+                        if (assignment.getAmountStudents() == assignment.getMaxStudents()){
+                            assignment.setFull(true);
+                            assignmentRepo.save(assignment);
+                        }
+                    }
+                }
+
+
+                Enrolled enrolled = new Enrolled(currentUser.getFirstname() + " " + currentUser.getLastname(), currentUser.getEmail(), assignment.getAssignmentId(), assignment.getTitle(), currentUser.getUserId());
+                enrolledRepo.save(enrolled);
+
+                student.setAssignments(set2);
+                studentRepo.save(student);
+
+                mail.sendSimpleMessage(student.getEmail(), "Inschrijving opdracht",
+                        EmailTemplates.waitValidationEnrolledAssignmentStudent(assignment.getTitle()));
+                mail.sendSimpleMessage(currentUser.getEmail(), "Inschrijving opdracht",
+                        EmailTemplates.enrolledAssignment(assignment.getTitle(), student.getUserId().toString(), student.getEmail()));
+            } catch (Exception ex) {
+                log.error(ex.getMessage());
+            }
+        } else if (currentUser.getRole().equals(Role.COORDINATOR)){
+            assignment.setValidated(true);
+        }
 
 
         mail.sendSimpleMessage("alina.storme@student.ap.be", "Nieuwe opdracht gecreëerd",
