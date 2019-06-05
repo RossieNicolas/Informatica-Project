@@ -94,21 +94,6 @@ public class PortfolioController {
             @RequestParam("lists") int assignment , Principal principal) {
         User currentUser = userRepo.findByEmail(principal.getName());
 
-        List<File> list = fileRepo.findByUser(currentUser);
-        for (int i = 0; i < list.size(); i++) {
-            File item = list.get(i);
-            if(item.getAssignmentId() != (long)assignment) {
-                list.remove(item);
-            }
-        }
-
-        boolean contract = false;
-        for (File item : list) {
-            if (item.getDocType().equals("Contract")) {
-                contract = true;
-            }
-        }
-
         for (MultipartFile item: files) {
             portfolioUtil.uploadFile(item, currentUser.getUserId(), type, (long)assignment);
         }

@@ -44,13 +44,17 @@
                                 <th>Fiche nr</th>
                                 <th>Fiche naam</th>
                                 <th>Status</th>
+                                <th></th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody th:each="a: ${student}">
                             <tr th:each="f : ${status}">
                                 <td th:text="${f.getAssignmentId()}"></td>
                                 <td th:text="${f.getTitle()}"></td>
-                                <td><a th:text="${f.getStatus()}" th:href="@{/status}" class="button"></a></td>
+                                <td th:text="${f.getStatus()}"></td>
+                                <td style="float: right"><a th:href="@{/changestatus/{studentId}/{assignmentId} (studentId=${a.studentNumber}, assignmentId=${f.assignmentId})}" class="button">
+                                    Volgende status
+                                </a></td>
                             </tr>
                         </tbody>
                     </table>
