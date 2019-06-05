@@ -24,10 +24,7 @@ import com.architec.crediti.utils.PortfolioUtil;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 /*
 Some functions from
@@ -93,7 +90,6 @@ public class PortfolioController {
     public String uploadMultipleFiles(@RequestParam("files") MultipartFile[] files, @RequestParam("type") String type,
             @RequestParam("lists") int assignment , Principal principal) {
         User currentUser = userRepo.findByEmail(principal.getName());
-
         for (MultipartFile item: files) {
             portfolioUtil.uploadFile(item, currentUser.getUserId(), type, (long)assignment);
         }
