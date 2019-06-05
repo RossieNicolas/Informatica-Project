@@ -37,7 +37,6 @@ public class AssignmentController {
     private static final int INITAL_PAGE = 0;
     private Log log = LogFactory.getLog(this.getClass());
 
-
     private final
     TagRepo tagRepo;
 
@@ -171,7 +170,7 @@ public class AssignmentController {
             buttons++;
         }
         if (tags == null) {
-            fiches = assignmentRepo.findAllByOrderByAssignmentIdDesc(PageRequest.of(evalPage, PAGE_SIZE));
+            fiches = assignmentRepo.findByFullOrderByAssignmentIdDesc(false, PageRequest.of(evalPage, PAGE_SIZE));
         } else {
             List<Assignment> list3 = (List<Assignment>) assignmentRepo.findAll();
             List<Long> list = new ArrayList<>();
