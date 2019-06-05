@@ -93,6 +93,24 @@ public class AssignmentController {
     @PostMapping("/assignment")
     public String createAssignment(Principal principal, @Valid Assignment assignment,
                                    @RequestParam(required = false, value = "tag") int[] tags) {
+        User currentUser = userRepo.findByEmail(principal.getName());
+        Student student = studentRepo.findByUserId(currentUser);
+
+        if(currentUser.getRole().equals(Role.STUDENT)){
+            mail.sendSimpleMessage(student.getEmail(), "Inschrijving opdracht",
+                    EmailTemplates.waitValidationEnrolledAssignmentStudent(assignment.getTitle()));
+            mail.sendSimpleMessage(currentUser.getEmail(), "Inschrijving opdracht",
+                    EmailTemplates.enrolledAssignment(assignment.getTitle(), student.getUserId().toString(), student.getEmail()));
+        }else if(currentUser.getRole().equals(Role.COORDINATOR)){
+            assignment.setValidated(true);
+        }
+
+        log.info("mails c");
+        for(User u: coordinators) {
+            mail.sendSimpleMessage(u.getEmail(), "Nieuwe opdracht gecreëerd",
+                    EmailTemplates.createdAssignment(currentUser.getFirstname() +" " + currentUser.getLastname(),
+                            assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments"));
+        }
         return addAssignment(principal, assignment, tags);
     }
 
@@ -137,28 +155,14 @@ public class AssignmentController {
                     }
                 }
 
-
                 Enrolled enrolled = new Enrolled(currentUser.getFirstname() + " " + currentUser.getLastname(), currentUser.getEmail(), assignment.getAssignmentId(), assignment.getTitle(), currentUser.getUserId());
                 enrolledRepo.save(enrolled);
 
                 student.setAssignments(set2);
                 studentRepo.save(student);
-
-                mail.sendSimpleMessage(student.getEmail(), "Inschrijving opdracht",
-                        EmailTemplates.waitValidationEnrolledAssignmentStudent(assignment.getTitle()));
-                mail.sendSimpleMessage(currentUser.getEmail(), "Inschrijving opdracht",
-                        EmailTemplates.enrolledAssignment(assignment.getTitle(), student.getUserId().toString(), student.getEmail()));
             } catch (Exception ex) {
                 log.error(ex.getMessage());
             }
-        } else if (currentUser.getRole().equals(Role.COORDINATOR)){
-            assignment.setValidated(true);
-        }
-
-        for(User u: coordinators) {
-            mail.sendSimpleMessage(u.getEmail(), "Nieuwe opdracht gecreëerd",
-                    EmailTemplates.createdAssignment(assignment.getAssigner(),
-                            assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments"));
         }
         return "assignments/successfullAssignment";
     }
