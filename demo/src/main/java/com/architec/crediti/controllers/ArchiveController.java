@@ -5,8 +5,11 @@ import com.architec.crediti.repositories.ArchiveRepository;
 import com.architec.crediti.repositories.AssignmentRepository;
 import com.architec.crediti.repositories.TagRepo;
 import com.architec.crediti.repositories.UserRepository;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,8 +27,9 @@ import java.util.stream.Collectors;
 public class ArchiveController {
     private final
     ArchiveRepository archiveRepo;
-    private static final int INITIAL_PAGE = 0;
     private static final int PAGE_SIZE = 15;
+    private static final int INITAL_PAGE = 0;
+    private Log log = LogFactory.getLog(this.getClass());
     private final
     TagRepo tagRepo;
     private final UserRepository userRepo;
@@ -48,12 +52,22 @@ public class ArchiveController {
         if (archiveRepo.count() % PAGE_SIZE != 0) {
             buttons++;
         }
-        int evalPage = (page.orElse(0) < 1) ? INITIAL_PAGE : page.get() - 1;
+        int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
 
-        Page<ArchivedAssignment> fiches = archiveRepo.findAll(PageRequest.of(evalPage, PAGE_SIZE));
+        List<Tag> allTags = tagRepo.findAll();
+
+        boolean[] status = new boolean[allTags.size()];
+
+        for (int i = 0; i < allTags.size(); i++) {
+            status[i] = false;
+
+        }
+
+        Page<ArchivedAssignment> fiches = archiveRepo.findAllByOrderByAssignmentIdDesc(PageRequest.of(evalPage, PAGE_SIZE));
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
 
         User currentUser = userRepo.findByEmail(principal.getName());
+        modelAndView.addObject("status", status);
         modelAndView.addObject("persons", fiches);
         modelAndView.addObject("assignments", fiches);
         modelAndView.addObject("selectedPageSize", PAGE_SIZE);
@@ -64,59 +78,42 @@ public class ArchiveController {
     }
 
     //search in archive
-    @PostMapping("/archive")
-    public String getArchivedAssignment(@RequestParam("searchbar") String name, Model model, @RequestParam("page") Optional<Integer> page,
-                                        @RequestParam(required = false, value = "tag") int[] tags) {
-
-        if (tags == null) {
-            try {
-                ArchivedAssignment a = archiveRepo.findByAssignmentId((Integer.parseInt(name)));
-                model.addAttribute("assignments", a);
-
-            } catch (Exception e) {
-                model.addAttribute("assignments", archiveRepo.findByTitleContaining(name));
-            }
-
-        } else {
-            List<ArchivedAssignment> list = archiveRepo.findByTitleContaining(name);
-            List<ArchivedAssignment> list2 = new ArrayList<>();
-            for (int item : tags) {
-                for (ArchivedAssignment a : list) {
-                    String archiveTag = tagRepo.findBytagId(item).getTagName();
-                    String tag = a.getTagName();
-                    List<String> items = Arrays.asList(tag.replace("[", "").replace("]", "").split("\\s*,\\s*"));
-
-                    for (int i = 0; i < items.size(); i++) {
-                        if (archiveTag.contains(items.get(i)) && !tag.equals("[]")) {
-                            list2.add(a);
-                        }
-                    }
-
-                }
-            }
-
-            //delete double assignments in search
-            list2 = list2.stream().distinct().collect(Collectors.toList());
-
-            model.addAttribute("assignments", list2);
-        }
+    @GetMapping("/archive/{searchbar}")
+    public String searchByTitleOrId(@PathVariable("searchbar") String name, Model model, @RequestParam("page") Optional<Integer> page) {
+        Page fiches = null;
 
         int buttons = (int) archiveRepo.count() / PAGE_SIZE;
         if (archiveRepo.count() % PAGE_SIZE != 0) {
             buttons++;
         }
+        int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
 
-        int evalPage = (page.orElse(0) < 1) ? INITIAL_PAGE : page.get() - 1;
 
-        Page<ArchivedAssignment> fiches = archiveRepo.findAll(PageRequest.of(evalPage, PAGE_SIZE));
+        try {
+            fiches = archiveRepo.findByAssignmentIdOrderByAssignmentIdDesc((Integer.parseInt(name)), PageRequest.of(evalPage, PAGE_SIZE));
+
+        } catch (Exception e) {
+            fiches = archiveRepo.findByTitleContainingOrTagNameContainingOrderByAssignmentIdDesc(name, name,PageRequest.of(evalPage, PAGE_SIZE));
+
+        }
+
+        List<Tag> allTags = tagRepo.findAll();
+
+        boolean[] status = new boolean[allTags.size()];
+
+        for (int i = 0; i < allTags.size(); i++) {
+            status[i] = false;
+
+        }
+
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
-
+        model.addAttribute("status", status);
+        model.addAttribute("assignments", fiches);
         model.addAttribute("persons", fiches);
         model.addAttribute("selectedPageSize", PAGE_SIZE);
         model.addAttribute("pager", pager);
         model.addAttribute("tags", tagRepo.findAll());
-
         return "archive/archive";
     }
-
 }
+

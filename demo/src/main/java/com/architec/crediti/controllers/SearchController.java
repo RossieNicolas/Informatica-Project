@@ -66,7 +66,6 @@ public class SearchController {
                     PageRequest.of(evalPage, PAGE_SIZE));
             model.addAttribute("assignments", fiches);
         }
-        ArrayList<Tag> tag = new ArrayList<>();
         List<Tag> allTags = tagRepo.findAll();
 
         boolean[] status = new boolean[allTags.size()];
@@ -93,9 +92,7 @@ public class SearchController {
         for (int i = 0; i < test.length; i++) {
             test[i] = (Integer.parseInt(tags2[i + 1]));
         }
-        for (int item : test) {
-            System.out.println(item);
-        }
+
         int buttons = (int) assignmentRepo.count() / PAGE_SIZE;
         Page fiches = null;
         if (assignmentRepo.count() % PAGE_SIZE != 0) {

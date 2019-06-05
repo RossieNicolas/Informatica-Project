@@ -308,27 +308,69 @@ public class SeleniumAssignmentTest {
     @Test
     public void assignmentEnrollStudentNotValidated() {
         driver.get("http://vps092.ap.be/");
-        driver.manage().window().setSize(new Dimension(900, 701));
+        driver.manage().window().setSize(new Dimension(900, 705));
         driver.findElement(By.linkText("Login")).click();
         driver.findElement(By.id("username")).sendKeys("nicolasstudent@gmail.com");
         driver.findElement(By.id("password")).sendKeys("testwachtwoord");
         driver.findElement(By.cssSelector(".btn")).click();
         driver.findElement(By.id("assignments")).click();
+        driver.findElement(By.linkText("Opdracht Toevoegen")).click();
+        driver.findElement(By.id("title")).click();
+        driver.findElement(By.id("title")).sendKeys("SELENIUMtest");
+        driver.findElement(By.id("type")).click();
+        {
+            WebElement dropdown = driver.findElement(By.id("type"));
+            dropdown.findElement(By.xpath("//option[. = 'ZAP']")).click();
+        }
+        driver.findElement(By.cssSelector("option:nth-child(2)")).click();
+        driver.findElement(By.id("task")).click();
+        driver.findElement(By.id("task")).sendKeys("test");
+        driver.findElement(By.id("startDate")).click();
+        driver.findElement(By.id("startDate")).sendKeys("2019-06-28");
+        driver.findElement(By.id("endDate")).click();
+        driver.findElement(By.id("endDate")).sendKeys("2019-06-29");
+        driver.findElement(By.id("amountHours")).click();
+        driver.findElement(By.id("amountHours")).sendKeys("12");
+        driver.findElement(By.id("maxStudents")).click();
+        driver.findElement(By.id("maxStudents")).sendKeys("5");
+        driver.findElement(By.cssSelector(".btn")).click();
+        driver.findElement(By.id("assignments")).click();
         driver.findElement(By.linkText("Lopende Opdrachten")).click();
-        driver.findElement(By.cssSelector(".tablebackground:nth-child(2) .button")).click();
+        driver.findElement(By.linkText("📃 Info")).click();
     }
 
     //id= 49
     @Test
     public void archiveAssignmentNotPossibleRole() {
         driver.get("http://vps092.ap.be/");
-        driver.manage().window().setSize(new Dimension(900, 701));
+        driver.manage().window().setSize(new Dimension(900, 705));
         driver.findElement(By.linkText("Login")).click();
         driver.findElement(By.id("username")).sendKeys("nicolasstudent@gmail.com");
         driver.findElement(By.id("password")).sendKeys("testwachtwoord");
         driver.findElement(By.cssSelector(".btn")).click();
         driver.findElement(By.id("assignments")).click();
+        driver.findElement(By.linkText("Opdracht Toevoegen")).click();
+        driver.findElement(By.id("title")).click();
+        driver.findElement(By.id("title")).sendKeys("SELENIUMtest");
+        driver.findElement(By.id("type")).click();
+        {
+            WebElement dropdown = driver.findElement(By.id("type"));
+            dropdown.findElement(By.xpath("//option[. = 'ZAP']")).click();
+        }
+        driver.findElement(By.cssSelector("option:nth-child(2)")).click();
+        driver.findElement(By.id("task")).click();
+        driver.findElement(By.id("task")).sendKeys("test");
+        driver.findElement(By.id("startDate")).click();
+        driver.findElement(By.id("startDate")).sendKeys("2019-06-28");
+        driver.findElement(By.id("endDate")).click();
+        driver.findElement(By.id("endDate")).sendKeys("2019-06-29");
+        driver.findElement(By.id("amountHours")).click();
+        driver.findElement(By.id("amountHours")).sendKeys("12");
+        driver.findElement(By.id("maxStudents")).click();
+        driver.findElement(By.id("maxStudents")).sendKeys("5");
+        driver.findElement(By.cssSelector(".btn")).click();
+        driver.findElement(By.id("assignments")).click();
         driver.findElement(By.linkText("Lopende Opdrachten")).click();
-        driver.findElement(By.linkText("📃")).click();
+        driver.findElement(By.linkText("📃 Info")).click();
     }
 }
