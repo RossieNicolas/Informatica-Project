@@ -86,6 +86,10 @@ public class AssignmentController {
     @PostMapping("/assignment")
     public String createAssignment(Principal principal, @Valid Assignment assignment,
                                    @RequestParam(required = false, value = "tag") int[] tags) {
+        return addAssignment(principal, assignment, tags);
+    }
+
+    private String addAssignment(Principal principal, @Valid Assignment assignment, @RequestParam(required = false, value = "tag") int[] tags) {
         Set<Tag> set = new HashSet<>();
         User currentUser = userRepo.findByEmail(principal.getName());
 
@@ -541,25 +545,7 @@ public class AssignmentController {
     @PostMapping("/duplicateassignment/{assignmentId}")
     public String createDuplicate(Principal principal, @Valid Assignment assignment,
                                   @RequestParam(required = false, value = "tag") int[] tags) {
-        Set<Tag> set = new HashSet<>();
-        User currentUser = userRepo.findByEmail(principal.getName());
-
-        assignment.setTags(set);
-        if (tags != null) {
-            for (int item : tags) {
-                Tag tag = tagRepo.findBytagId(item);
-                set.add(tag);
-            }
-        }
-        assignment.setTags(set);
-        assignment.setAssignerUserId(currentUser);
-        assignmentRepo.save(assignment);
-
-
-        mail.sendSimpleMessage("alina.storme@student.ap.be", "Nieuwe opdracht gecreëerd",
-                EmailTemplates.createdAssignment(assignment.getAssigner(),
-                        assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments"));
-        return "assignments/successfullAssignment";
+        return addAssignment(principal, assignment, tags);
     }
 
     @GetMapping("/detailAssignmentEnrolled/{assignmentId}")
