@@ -1,37 +1,57 @@
-<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Crediti - Upload files</title>
-    <link rel="stylesheet" th:href="@{/css/APcss3.css}">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+
+    <title>Crediti - Upload bestanden</title>
+
 </head>
 
-<body>
-    <div class="background">
-        <header th:insert="fragments/generalMenu_old.html :: header (name=${name})"></header>
-        <div class="upload-container">
-            <div class="upload-header">
-                <h2>Upload files naar mijn portfolio</h2>
-            </div>
-            <div class="upload-content">
-                <div class="multiple-upload">
-                    <h3 class="upload-title">Upload bestanden</h3>
-                    <form id="multipleUploadForm" name="multipleUploadForm" th:action="@{/uploadfile}" method="POST" enctype="multipart/form-data">
-                        <input id="multipleFileUploadInput" type="file" name="files" class="file-input" multiple required/><br>
-                        <p>Type documentatie: </p>
-                        <select required name = "type">
-                            <option>Contract</option>
-                            <option>Bewijsdocumenten</option>
-                            <option>Portfolio</option>
-                        </select><br>
-                        <p>Voor opdracht: </p>
-                        <select name='lists'>
-                            <option th:each="list : ${list}" id="${list.getAssignmentId()}" th:value="${list.getAssignmentId()}" th:text="${list.getAssignmentId()} + ' - ' + ${list.getTitle()}" ></option>
-                        </select><br>
-                        <button>Submit</button>
+<body class="bg">
+<div id="page-container">
+    <div id="content-wrap">
+        <header th:insert="fragments/generalMenu.html :: header"></header>
 
-                        <!--TODO bootstrap the popup
+        <main role="main" class="container">
+            <div class="mt-5 jumbotron">
+                <div class="starter-template">
+                    <h1>Bestanden uploaden</h1>
+
+                    <form th:action="@{/uploadfile}" method="post" enctype="multipart/form-data">
+                        <div class="col-md-5 custom-file mt-5">
+                            <input type="file" class="custom-file-input" id="customFileLang" name="files" multiple required>
+                            <label class="custom-file-label" for="customFileLang">Bestand selecteren</label>
+
+                            <div class="pt-3">
+                                <label for="type">Type document:</label>
+                                <select class="custom-select custom-select" name="type" id="type" required>
+                                    <option>Contract</option>
+                                    <option>Bewijsdocument</option>
+                                    <option>Portfolio</option>
+                                </select>
+                            </div>
+
+                            <div class="pt-3">
+                                <label for="type">Voor opdracht:</label>
+                                <select class="custom-select custom-select" name="lists" required>
+                                    <option th:each="l : ${list}" id="${list.getAssignmentId()}" th:value="${l.getAssignmentId()}" th:text="${l.getAssignmentId()} + ' - ' + ${l.getTitle()}" ></option>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn btn-outline-success mt-3 btn-lg">Uploaden</button>
+                        </div>
+                    </form>
+
+                    <!--TODO bootstrap the popup
                         <button class="btn btn-outline-danger" role="button" data-toggle="modal"
                                 data-target="#submit">Submit
                         </button>
@@ -62,13 +82,43 @@
                                 </div>
                             </div>
                         </div>-->
-                    </form>
                 </div>
             </div>
-        </div>
-        <script src="/js/main.js"></script>
+        </main>
+        <!-- /.container -->
+
     </div>
-    <footer th:insert="fragments/generalMenu.html :: footer"></footer>
+    <div th:insert="fragments/general.html :: footer">
+    </div>
+</div>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+<script>
+    $('#deleteModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var recipient = button.data('id');
+        var modal = $(this);
+        modal.find(".delete-link").attr("href", "/deletedocumentation/" + recipient);
+    });
+
+    $('#customFileLang').on('change',function(){
+        //get the file name
+        var fileName = $(this).val();
+        var text = fileName.substring(fileName.lastIndexOf("\\") + 1, fileName.length);
+        //replace the "Choose a file" label
+        $(this).next('.custom-file-label').html(text);
+    })
+</script>
 </body>
 
 </html>
