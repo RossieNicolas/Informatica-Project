@@ -136,11 +136,19 @@
     function SDate() {
         var startDate = document.getElementById("startDate").value;
         var currentDate = new Date().toISOString().split('T')[0];
+        var endDate = document.getElementById("endDate").value;
+
         if (startDate != null) {
             if (startDate < currentDate) {
                 alert("De startdatum moet groter of gelijk zijn aan de datum van vandaag!");
                 document.getElementById('startDate').value = "";
                 return false;
+            } else if (endDate != null) {
+                if(startDate > endDate) {
+                    alert("De startdatum moet kleiner zijn dan de einddatum van uw opdracht!");
+                    document.getElementById('endDate').value = "";
+                    return false;
+                }
             }
             return true
         }
