@@ -30,6 +30,7 @@
                         <a class="nav-link dropdown-toggle" href="#" id="assignments" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Opdrachten</a>
                         <div class="dropdown-menu" aria-labelledby="assignments">
                             <a class="dropdown-item" sec:authorize="!hasRole('EXTERN')" href="/allassignments">Lopende Opdrachten</a>
+                            <a class="dropdown-item" sec:authorize="hasAnyRole('COORDINATOR','DOCENT')" href="/allFullAssignments">Alle Volzette Opdrachten</a>
                             <a class="dropdown-item" href="/assignment">Opdracht Toevoegen</a>
                             <a class="dropdown-item" sec:authorize="hasRole('STUDENT')" href="/myassignments">Ingeschreven Opdrachten</a>
                         </div>

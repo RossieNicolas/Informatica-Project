@@ -30,4 +30,7 @@ public interface AssignmentRepository extends PagingAndSortingRepository<Assignm
     @Query(value ="select * from assignments a where a.assignment_id in :tagId",nativeQuery=true)
     Page<Assignment> findByTagsOrderByAssignmentIdDesc(@Param("tagId") List<Long> tagId, Pageable pageable );
 
+    @Query(value ="select * from assignments a where a.amount_students_full = 1 and a.assignment_id in :tagId",nativeQuery=true)
+    Page<Assignment> findByTagsAndFullOrderByAssignmentIdDesc(@Param("tagId") List<Long> tagId, Pageable pageable );
+
 }

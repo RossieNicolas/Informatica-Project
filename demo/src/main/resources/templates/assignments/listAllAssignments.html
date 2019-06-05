@@ -24,11 +24,11 @@
             <div class='col-md-6 mt-2 mx-auto'>
                 <div class='search-box'>
                     <form class='search-form'
-                          th:action="@{'/allassignmentss/'${searchbar}'/'${tag}'}"
+                          th:action="@{'/allassignments/'${searchbar}'/'${tag}'}"
                           method="get" id="searchAs">
                         <div>
                             <input class='form-control' name='searchbar' id='searchbar'
-                                   placeholder='Zoeken...' type='text'>
+                                   placeholder='Zoeken...' type='text' th:value="${searchbar}">
                             <button class="btn search-btn" type="SUBMIT" id="zoekKnop" onclick="search()">🔍</button>
                         </div>
                     </form>
