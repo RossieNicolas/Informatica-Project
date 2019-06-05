@@ -23,19 +23,21 @@
         <main role="main" class="container">
             <div class='col-md-6 mt-2 mx-auto'>
                 <div class='search-box'>
-                    <form class='search-form' th:action='@{/allassignments}' method="POST">
+                    <form class='search-form'
+                          th:action="@{'/allassignmentss/'${searchbar}'/'${tag}'}"
+                          method="get" id="searchAs">
                         <div>
                             <input class='form-control' name='searchbar' id='searchbar'
                                    placeholder='Zoeken...' type='text'>
-                            <button class="btn search-btn" type="SUBMIT">🔍</button>
+                            <button class="btn search-btn" type="SUBMIT" id="zoekKnop" onclick="search()">🔍</button>
                         </div>
                     </form>
                 </div>
 
                 <div class="form-group pt-2">
-                    <label th:each="t: ${tags}" class="custom-control custom-checkbox custom-control-inline"
+                    <label th:each="t, iter: ${tags}" class="custom-control custom-checkbox custom-control-inline"
                            th:value="${t.getTagId()}">
-                        <input type="checkbox" name="tag" class="custom-control-input"
+                        <input th:checked="${status[iter.index]}" type="checkbox" name="tag" id="tag" class="mytags custom-control-input"
                                th:value="${t.getTagId()}">
                         <span class="custom-control-label" th:text="${t.getTagName()}"></span>
                     </label>
@@ -60,7 +62,7 @@
                         </thead>
                         <tbody>
                         <tr class="d-flex" th:each="a : ${assignments}" th:if="${!a.isArchived()}">
-                            <td class="col-2" scope="row"><a th:href="${'/allassignments/' + a.getAssignmentId()}" class="btn btn-outline-secondary" role="button">📃 Info</a></td>
+                            <td class="col-2" scope="row"><a th:href="${'/allassignments/detail/' + a.getAssignmentId()}" class="btn btn-outline-secondary" role="button">📃 Info</a></td>
                             <td class="col-1" th:text="${a.getAssignmentId()}"></td>
                             <td class="col-2" th:text="${a.getAssigner()}"></td>
                             <td class="col-1" th:text="${a.getType()}"></td>
@@ -76,17 +78,19 @@
                     <nav th:if="${persons.totalPages !=1}">
                         <ul class="pagination">
                             <li th:classappend="(${persons.number == 0} ? disabled) + ' page-item'">
-                                <a class="page-link" th:href="@{/allassignments/(page=${persons.number})}" aria-label="Previous">
+                                <a class="page-link"
+                                   th:href="@{__${#httpServletRequest.requestURL}__(page=${persons.number})}"
+                                   aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                     <span class="sr-only">Previous</span>
                                 </a>
                             </li>
                             <li th:classappend="(${persons.number == (page - 1)} ? 'active pointer-disabled') + ' page-item'"
                                 th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
-                                <a class="page-link" th:href="@{/allassignments/(page=${page})}" th:text="${page}"></a>
+                                <a class="page-link" th:href="@{__${#httpServletRequest.requestURL}__(page=${page})}" th:text="${page}"></a>
                             </li>
                             <li th:classappend="(${persons.number + 1 == persons.totalPages} ? disabled) + ' page-item'">
-                                <a class="page-link" th:href="@{/allassignments/(page=${persons.number + 2})}" aria-label="Next">
+                                <a class="page-link" th:href="@{__${#httpServletRequest.requestURL}__(page=${persons.number + 2})}" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                     <span class="sr-only">Next</span>
                                 </a>
@@ -107,7 +111,7 @@
 <script>
     function tableFill() {
         var tbl = document.getElementById('table');
-        if (tbl.rows.length == 1) {
+        if (tbl.rows.length === 1) {
             var para = document.createElement("p");
             var node = document.createTextNode("Er zijn momenteel geen opdrachten.");
             para.appendChild(node);
@@ -116,6 +120,35 @@
             element.appendChild(para);
         }
     }
+
+    function search() {
+        var id = document.getElementById('searchbar').value;
+
+        var tags = document.getElementsByClassName("mytags");
+
+        var item = new Array(tags.length);
+        document.getElementById('searchAs').action = '/allassignments/' + id;
+        var txt = "";
+        var i;
+        for (i = 0; i < tags.length; i++) {
+            if (tags[i].checked) {
+                item.push(tags[i].value);
+            }
+        }
+        item.forEach(function (element) {
+            txt = txt + "&" + element;
+        });
+        if (id !== "" && txt !== "") {
+            document.getElementById('searchAs').action = '/allassignments/' + id + "/" + txt;
+        } else if (txt === "" && id === "") {
+            document.getElementById('searchAs').action = '/allassignments';
+        } else if (id === "") {
+            document.getElementById('searchAs').action = '/allassignments/tag/' + txt;
+        } else if (txt === "") {
+            document.getElementById('searchAs').action = '/allassignments/' + id;
+        }
+    }
+
 </script>
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
