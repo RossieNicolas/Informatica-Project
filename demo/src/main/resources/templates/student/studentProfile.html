@@ -1,6 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <!-- Required meta tags -->
@@ -24,50 +23,50 @@
         <main role="main" class="container">
             <div class="mt-5 mb-5 jumbotron">
                 <h1>Detail student</h1>
-                <form th:each="a: ${student}" class="standard-form" method="post">
+                <form class="standard-form" method="post">
                     <br>
                     <div class="col-md-5 ">
-                        <label for="nummer">Studenten nummer:</label>
+                        <label for="nummer">Studentnummer:</label>
                         <input class="form-control" name="nummer" id="nummer" type="text"
-                               th:value="*{a.getStudentNumber()}"
+                               th:value="${student.getStudentNumber()}"
                                required="required" disabled><br>
                     </div>
                     <div class="col-md-5 pt-3">
                         <label for="Naam">Naam:</label>
-                        <input class="form-control" name="Naam" id="Naam" type="text" th:value="*{a.getUserId()}"
+                        <input class="form-control" name="Naam" id="Naam" type="text" th:value="${student.getUserId()}"
                                required="required"
                                disabled><br>
                     </div>
                     <div class="col-md-5 pt-3">
 
-                        <label for="Email">Email:</label>
-                        <input class="form-control" name="Email" id="Email" th:value="*{a.findEmail()}" type="text"
+                        <label for="Email">E-mail:</label>
+                        <input class="form-control" name="Email" id="Email" th:value="${student.findEmail()}" type="text"
                                required="required" disabled><br>
                     </div>
                     <div class="col-md-5 pt-3">
 
-                        <label for="amoutHours">Aantal uur:</label><br>
+                        <label for="amoutHours">Aantal uren:</label><br>
                         <input class="form-control" name="amoutHours" id="amoutHours" type="text"
-                               th:value="*{a.getAmoutHours()}"
+                               th:value="${student.getAmoutHours()}"
                                required="required" disabled><br>
                     </div>
                     <fieldset disabled="disabled" id="studentEdit">
                         <div class="col-md-5 pt-3">
 
                             <label for="Gsm">Gsm:</label><br>
-                            <input class="form-control" name="Gsm" id="Gsm" type="text" th:value="*{a.getGsm()}"
+                            <input class="form-control" name="Gsm" id="Gsm" type="text" th:value="${student.getGsm()}"
                                    required="required"><br>
                         </div>
                         <div class="col-md-5 pt-3">
 
                             <label for="type">Type:</label>
                             <select class="form-control" name="type" id="type" required>
-                                <option th:if="${a.isZap() && a.isMobility()}" selected>Zap en Mobility</option>
-                                <option th:if="${a.isZap() && !a.isMobility()}" selected>Zap</option>
-                                <option th:if="${!a.isZap() && a.isMobility()}" selected>Mobility</option>
-                                <option th:if="${!(a.isZap() && a.isMobility())}">Zap en Mobility</option>
-                                <option th:if="${!(a.isZap() && !a.isMobility())}">Zap</option>
-                                <option th:if="${!(!a.isZap() && a.isMobility())}">Mobility</option>
+                                <option th:if="${student.isZap() && student.isMobility()}" selected>Zap en Mobility</option>
+                                <option th:if="${student.isZap() && !student.isMobility()}" selected>Zap</option>
+                                <option th:if="${!student.isZap() && student.isMobility()}" selected>Mobility</option>
+                                <option th:if="${!(student.isZap() && student.isMobility())}">Zap en Mobility</option>
+                                <option th:if="${!(student.isZap() && !student.isMobility())}">Zap</option>
+                                <option th:if="${!(!student.isZap() && student.isMobility())}">Mobility</option>
                             </select>
                         </div>
                     </fieldset>
