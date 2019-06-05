@@ -12,13 +12,6 @@ public class EmailTemplates {
                 "\nTe vinden op: "+ url;
     }
 
-    public static String archivedAssignment(String assigner, String title, String email, String url) {
-        return"Beste,\n"+
-                "Volgende pdracht van student(e) "+ assigner +" werd gearchiveerd.\n" +
-                email + " naam opdracht: "+ title +
-                "\nTe vinden op: "+ url;
-    }
-
     public static String validatedAssignment(String name) {
         return  "Beste,\n\n"+
                 "De opdracht, "+ name +", die u via ons platform ingaf werd gevalideerd en is nu zichtbaar voor studenten. " +
@@ -97,7 +90,7 @@ public class EmailTemplates {
                 "U heeft zich zojuist geregistreerd. Gelieve te wachten op de validatie van de coördinator.\n\n" +
                 "AP-hogeschool";
     }
-    public static String reminder(String opdrachtTitel ) {
+    public static String reminder(String opdrachtTitel) {
         return "Beste,\n\n"+
                 "De deadline van opdracht : " + opdrachtTitel + " is morgen.\n\n" +
                 "AP-hogeschool";

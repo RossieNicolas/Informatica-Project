@@ -96,8 +96,8 @@ public class SeleniumTagTest {
         driver.findElement(By.cssSelector(".btn")).click();
         driver.findElement(By.id("extras")).click();
         driver.findElement(By.linkText("Lijst van Tags")).click();
-        driver.findElement(By.linkText("✏️ Bewerk")).click();
-        driver.findElement(By.linkText("✏️ Bewerk")).click();
+        driver.findElement(By.linkText("Bewerk")).click();
+        driver.findElement(By.linkText("Bewerk")).click();
         driver.findElement(By.id("tagName")).click();
         driver.findElement(By.id("tagName")).sendKeys("");
         driver.findElement(By.id("save")).click();
@@ -114,8 +114,8 @@ public class SeleniumTagTest {
         driver.findElement(By.cssSelector(".btn")).click();
         driver.findElement(By.id("extras")).click();
         driver.findElement(By.linkText("Lijst van Tags")).click();
-        driver.findElement(By.linkText("✏️ Bewerk")).click();
-        driver.findElement(By.linkText("✏️ Bewerk")).click();
+        driver.findElement(By.linkText("Bewerk")).click();
+        driver.findElement(By.linkText("Bewerk")).click();
         driver.findElement(By.id("tagName")).click();
         driver.findElement(By.id("tagName")).sendKeys("heelLangeSeleniumTESTNaamDieGroterIsDanVijftigKara");
     }

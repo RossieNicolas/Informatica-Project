@@ -146,6 +146,7 @@ public class EnrollController {
                     if (a.getAssignmentId() == enrolled.getAssignment()) {
                         iterator.remove();
                         studentRepo.save(student);
+
                         mail.sendSimpleMessage(student.getEmail(), "Inschrijving geweigerd",
                                 EmailTemplates.declinedEnrolledAssignmentStudent(enrolled.getTitle()));
                         return "redirect:/unapprovedEnrollments";
