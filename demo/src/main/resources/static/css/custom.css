@@ -138,7 +138,7 @@ a {
     table-layout: fixed;
 }
 
-#task {
+.overflow {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
