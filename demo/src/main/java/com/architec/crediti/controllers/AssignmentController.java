@@ -1,6 +1,5 @@
 package com.architec.crediti.controllers;
 
-import ch.qos.logback.core.rolling.helper.TimeBasedArchiveRemover;
 import com.architec.crediti.email.EmailServiceImpl;
 import com.architec.crediti.email.EmailTemplates;
 import com.architec.crediti.models.*;
@@ -124,7 +123,7 @@ public class AssignmentController {
             buttons++;
         }
         if (tags == null) {
-            fiches = assignmentRepo.findAll(PageRequest.of(evalPage, PAGE_SIZE));
+            fiches = assignmentRepo.findAllByOrderByAssignmentIdDesc(PageRequest.of(evalPage, PAGE_SIZE));
         } else {
             List<Assignment> list3 = (List<Assignment>) assignmentRepo.findAll();
             List<Long> list = new ArrayList<>();

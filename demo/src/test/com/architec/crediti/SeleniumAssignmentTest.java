@@ -52,7 +52,7 @@ public class SeleniumAssignmentTest {
     @Test
     public void deleteAssignmentInList() {
         driver.get("http://vps092.ap.be/");
-        driver.manage().window().setSize(new Dimension(1550, 838));
+        driver.manage().window().setSize(new Dimension(900, 704));
         driver.findElement(By.linkText("Login")).click();
         driver.findElement(By.id("username")).sendKeys("nicolas.rossie@gmail.com");
         driver.findElement(By.id("password")).sendKeys("testwachtwoord");
@@ -68,7 +68,7 @@ public class SeleniumAssignmentTest {
         }
         driver.findElement(By.cssSelector("option:nth-child(2)")).click();
         driver.findElement(By.id("task")).click();
-        driver.findElement(By.id("task")).sendKeys("SELENIUMtest");
+        driver.findElement(By.id("task")).sendKeys("test");
         driver.findElement(By.id("startDate")).click();
         driver.findElement(By.id("startDate")).sendKeys("2019-06-28");
         driver.findElement(By.id("endDate")).click();
@@ -77,30 +77,32 @@ public class SeleniumAssignmentTest {
         driver.findElement(By.id("amountHours")).sendKeys("12");
         driver.findElement(By.id("maxStudents")).click();
         driver.findElement(By.id("maxStudents")).sendKeys("6");
-        driver.findElement(By.cssSelector("label:nth-child(2) > #tag")).click();
-        driver.findElement(By.cssSelector(".button")).click();
-        driver.findElement(By.cssSelector(".button:nth-child(3)")).click();
-        driver.findElement(By.linkText("📃")).click();
-        driver.findElement(By.linkText("🗑️ VERWIJDEREN")).click();
+        driver.findElement(By.cssSelector(".btn")).click();
+        driver.findElement(By.id("assignments")).click();
+        driver.findElement(By.linkText("Lopende Opdrachten")).click();
+        driver.findElement(By.cssSelector(".search-btn")).click();
+        driver.findElement(By.linkText("📃 Info")).click();
+        driver.findElement(By.cssSelector(".btn-outline-danger")).click();
+        driver.findElement(By.cssSelector(".btn-danger")).click();
     }
     // id= 4
     @Test
     public void AddAssignmentEmpty() {
         driver.get("http://vps092.ap.be/");
-        driver.manage().window().setSize(new Dimension(1550, 838));
+        driver.manage().window().setSize(new Dimension(900, 704));
         driver.findElement(By.linkText("Login")).click();
         driver.findElement(By.id("username")).sendKeys("nicolas.rossie@gmail.com");
         driver.findElement(By.id("password")).sendKeys("testwachtwoord");
         driver.findElement(By.cssSelector(".btn")).click();
         driver.findElement(By.id("assignments")).click();
         driver.findElement(By.linkText("Opdracht Toevoegen")).click();
-        driver.findElement(By.cssSelector(".button")).click();
+        driver.findElement(By.cssSelector(".btn")).click();
     }
     // id= 5
     @Test
     public void addAssignmentHalfEmpty() {
         driver.get("http://vps092.ap.be/");
-        driver.manage().window().setSize(new Dimension(1550, 838));
+        driver.manage().window().setSize(new Dimension(900, 704));
         driver.findElement(By.linkText("Login")).click();
         driver.findElement(By.id("username")).sendKeys("nicolas.rossie@gmail.com");
         driver.findElement(By.id("password")).sendKeys("testwachtwoord");
@@ -121,15 +123,13 @@ public class SeleniumAssignmentTest {
         driver.findElement(By.id("endDate")).sendKeys("2019-06-29");
         driver.findElement(By.id("amountHours")).click();
         driver.findElement(By.id("amountHours")).sendKeys("12");
-        driver.findElement(By.cssSelector(".button")).click();
-        driver.findElement(By.id("task")).sendKeys("SELENIUMtest");
-        driver.findElement(By.cssSelector(".button")).click();
+        driver.findElement(By.cssSelector(".btn")).click();
     }
     // id= 7
     @Test
     public void addAssignmentEndDateSmaller() {
-        driver.get("http://localhost:8080/");
-        driver.manage().window().setSize(new Dimension(1550, 838));
+        driver.get("http://vps092.ap.be/");
+        driver.manage().window().setSize(new Dimension(900, 704));
         driver.findElement(By.linkText("Login")).click();
         driver.findElement(By.id("username")).sendKeys("nicolas.rossie@gmail.com");
         driver.findElement(By.id("password")).sendKeys("testwachtwoord");
@@ -155,9 +155,9 @@ public class SeleniumAssignmentTest {
     }
     // id= 9
     @Test
-    public void allAssignmentsNoChanges() {
+    public void allAssignmentsEditNoChanges() {
         driver.get("http://vps092.ap.be/");
-        driver.manage().window().setSize(new Dimension(1550, 838));
+        driver.manage().window().setSize(new Dimension(900, 704));
         driver.findElement(By.linkText("Login")).click();
         driver.findElement(By.id("username")).sendKeys("nicolas.rossie@gmail.com");
         driver.findElement(By.id("password")).sendKeys("testwachtwoord");
@@ -182,7 +182,7 @@ public class SeleniumAssignmentTest {
         driver.findElement(By.id("amountHours")).sendKeys("12");
         driver.findElement(By.id("maxStudents")).click();
         driver.findElement(By.id("maxStudents")).sendKeys("5");
-        driver.findElement(By.cssSelector(".button")).click();
+        driver.findElement(By.cssSelector(".btn")).click();
         driver.findElement(By.cssSelector(".button:nth-child(3)")).click();
         driver.findElement(By.linkText("📃")).click();
         driver.findElement(By.cssSelector(".button:nth-child(1)")).click();
