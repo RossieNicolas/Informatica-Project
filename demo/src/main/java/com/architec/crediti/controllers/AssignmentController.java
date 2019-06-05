@@ -123,7 +123,7 @@ public class AssignmentController {
             buttons++;
         }
         if (tags == null) {
-            fiches = assignmentRepo.findAllByOrderByAssignmentIdDesc(PageRequest.of(evalPage, PAGE_SIZE));
+            fiches = assignmentRepo.findByFullOrderByAssignmentIdDesc(false,PageRequest.of(evalPage, PAGE_SIZE));
         } else {
             List<Assignment> list3 = (List<Assignment>) assignmentRepo.findAll();
             List<Long> list = new ArrayList<>();
