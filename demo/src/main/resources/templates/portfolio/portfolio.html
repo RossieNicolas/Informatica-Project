@@ -1,70 +1,136 @@
-<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
-    <meta charset="UTF-8" />
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+
     <title>Crediti - Portfolio</title>
-    <link rel="stylesheet" th:href="@{/css/APcss3.css}">
+
 </head>
 
-<body onload="tableFill()">
-    <div class="background">
-        <header th:insert="fragments/generalMenu_old.html :: header (name=${name})"></header>
-        <div class="block">
-            <section class="find-edu">
-                <div class="container ">
-                    <div class="wrap-all col-xs-6">
-                        <h2 class="extra">Mijn portfolio</h2>
-                    </div>
-                    <div>
-                        <a href="/uploadfile" class="button">Bestanden toevoegen</a>
-                    </div>
-                </div>
-            </section>
-            <div class="container">
-                <table class="smalltable" id="tabel">
-                    <thead>
-                        <tr>
-                            <th style="padding-left: 1%; width: 5%">Fiche nr</th>
-                            <th>Title</th>
-                            <th>Type of document</th>
-                            <th>Status</th>
-                            <th width="26%"></th>
+<body class="bg" onload="tableFill()">
+<div id="page-container">
+    <div id="content-wrap">
+        <header th:insert="fragments/generalMenu.html :: header"></header>
+
+        <main role="main" class="container">
+            <div class="mt-5 jumbotron">
+                <h1 class="pb-4">Mijn portfolio</h1>
+
+
+                <a href="/uploadfile"
+                   class="btn btn-outline-success mb-3">➕ Bestanden toevoegen</a>
+
+
+                <div class="table-responsive">
+                    <table id="table" class="table table-hover">
+                        <thead>
+                        <tr class="d-flex">
+                            <th class="col-1" scope="col">Nr</th>
+                            <th class="col-4" scope="col">Titel</th>
+                            <th class="col-2" scope="col">Type document</th>
+                            <th class="col-2" scope="col">Status</th>
+                            <th class="col-3" scope="col"></th>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="file : ${files}" class="tablebackground">
-                            <td th:text="${file.getAssignmentId()}"></td>
-                            <td th:text="${file.getTitle()}"></td>
-                            <td th:text="${file.getDocType()}"></td>
-                            <td th:text="${file.getStatus()}"></td>
-                            <td style="float: right">
-                                <a th:href="${file.getDownloadLink()}" class="button">DOWNLOAD</a> &nbsp;&nbsp;&nbsp;
-                                <a th:href="@{/deletefile/{id} (id=${file.getFileId()})}" class="button">🗑️</a>
+                        </thead>
+                        <tbody>
+                        <tr class="d-flex" th:each="file : ${files}">
+                            <td class="col-1" th:text="${file.getAssignmentId()}"></td>
+                            <td class="col-4" th:text="${file.getTitle()}"></td>
+                            <td class="col-2" th:text="${file.getDocType()}"></td>
+                            <td class="col-2" th:text="${file.getStatus()}"></td>
+                            <td class="col-3">
+
+                                <span style="float: right;">
+                                <button data-toggle="modal"
+                                        data-target="#deleteModal" th:attr="data-id=${file.getFileId()}"
+                                        class="btn btn-outline-danger ml-2" role="button">🗑️</button>
+                                </span>
+
+                                <span style="float: right;"><a th:href="${file.getDownloadLink()}" class="btn btn-outline-secondary">Download</a></span>
                             </td>
                         </tr>
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Modal DELETE -->
+                <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
+                     aria-labelledby="deleteModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deleteModalLabel">Verwijderen</h5>
+                                <button type="button" class="close" data-dismiss="modal"
+                                        aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Bent u zeker dat u dit document wilt verwijderen?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                    Sluiten
+                                </button>
+                                <a class="delete-link" href="">
+                                    <button type="button" class="btn btn-danger">Verwijder</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="alert alert-primary" role="alert" id="empty"></div>
+
             </div>
-        </div>
+
+        </main>
+        <!-- /.container -->
+
     </div>
-    <footer th:insert="fragments/generalMenu.html :: footer"></footer>
-    <script>
-        function tableFill() {
-            var tbl = document.getElementById('tabel');
-            if (tbl.rows.length == 1) {
-                var x = tbl.insertRow(1);
-                var cell1 = x.insertCell(0)
-                var cell2 = x.insertCell(1)
-                cell2.innerHTML = "Momenteel is je portfolio nog leeg.";
-            }
+    <div th:insert="fragments/general.html :: footer">
+    </div>
+</div>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+<script>
+    function tableFill() {
+        var tbl = document.getElementById('table');
+        if (tbl.rows.length === 1) {
+            var para = document.createElement("p");
+            var node = document.createTextNode("U hebt nog geen bestanden geüpload in uw portfolio.");
+            para.appendChild(node);
+            var element = document.getElementById("empty");
+            element.style.visibility = "visible";
+            element.appendChild(para);
         }
-        var count = 0;
-        function increment() {
-            count = count + 25;
-            document.getElementById("progressBar").value = count;
-        }
-    </script>
+    }
+
+    $('#deleteModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var recipient = button.data('id');
+        var modal = $(this);
+        modal.find(".delete-link").attr("href", "/deletefile/" + recipient);
+    });
+</script>
 </body>
 
 </html>
