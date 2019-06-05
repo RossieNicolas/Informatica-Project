@@ -6,6 +6,7 @@ import com.architec.crediti.repositories.UserRepository;
 import com.architec.crediti.models.Student;
 import com.architec.crediti.models.User;
 import com.architec.crediti.repositories.StudentRepository;
+import com.architec.crediti.security.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -76,12 +77,15 @@ public class StudentController {
         List<Student> students = new ArrayList();
 
         try {
+            int stundentnr = Integer.parseInt(name);
             Student st = studentRepo.findByStudentNumber(name);
             model.addAttribute("students", st);
         } catch (Exception e) {
             if(!name.equals("")){
                 for (User item : userRepo.findByFirstnameContainingOrLastnameContaining(name, name)) {
-                    students.add(studentRepo.findByUserId(item));
+                    if(item.getRole() == Role.STUDENT) {
+                        students.add(studentRepo.findByUserId(item));
+                    }
                 }
                 model.addAttribute("students", students);
             }

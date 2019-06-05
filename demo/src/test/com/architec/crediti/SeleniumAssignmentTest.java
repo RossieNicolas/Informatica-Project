@@ -157,7 +157,7 @@ public class SeleniumAssignmentTest {
     @Test
     public void allAssignmentsEditNoChanges() {
         driver.get("http://vps092.ap.be/");
-        driver.manage().window().setSize(new Dimension(900, 704));
+        driver.manage().window().setSize(new Dimension(900, 705));
         driver.findElement(By.linkText("Login")).click();
         driver.findElement(By.id("username")).sendKeys("nicolas.rossie@gmail.com");
         driver.findElement(By.id("password")).sendKeys("testwachtwoord");
@@ -169,23 +169,24 @@ public class SeleniumAssignmentTest {
         driver.findElement(By.id("type")).click();
         {
             WebElement dropdown = driver.findElement(By.id("type"));
-            dropdown.findElement(By.xpath("//option[. = 'Mobility']")).click();
+            dropdown.findElement(By.xpath("//option[. = 'ZAP']")).click();
         }
-        driver.findElement(By.cssSelector("option:nth-child(3)")).click();
+        driver.findElement(By.cssSelector("option:nth-child(2)")).click();
         driver.findElement(By.id("task")).click();
-        driver.findElement(By.id("task")).sendKeys("SELENIUMtest");
+        driver.findElement(By.id("task")).sendKeys("test");
         driver.findElement(By.id("startDate")).click();
         driver.findElement(By.id("startDate")).sendKeys("2019-06-28");
         driver.findElement(By.id("endDate")).click();
-        driver.findElement(By.id("endDate")).sendKeys("2019-06-30");
+        driver.findElement(By.id("endDate")).sendKeys("2019-06-29");
         driver.findElement(By.id("amountHours")).click();
         driver.findElement(By.id("amountHours")).sendKeys("12");
         driver.findElement(By.id("maxStudents")).click();
         driver.findElement(By.id("maxStudents")).sendKeys("5");
         driver.findElement(By.cssSelector(".btn")).click();
-        driver.findElement(By.cssSelector(".button:nth-child(3)")).click();
-        driver.findElement(By.linkText("📃")).click();
-        driver.findElement(By.cssSelector(".button:nth-child(1)")).click();
+        driver.findElement(By.id("assignments")).click();
+        driver.findElement(By.linkText("Lopende Opdrachten")).click();
+        driver.findElement(By.linkText("📃 Info")).click();
+        driver.findElement(By.cssSelector(".mb-4")).click();
         driver.findElement(By.id("save")).click();
     }
     //id= 11
@@ -197,9 +198,31 @@ public class SeleniumAssignmentTest {
         driver.findElement(By.id("username")).sendKeys("nicolasstudent@gmail.com");
         driver.findElement(By.id("password")).sendKeys("testwachtwoord");
         driver.findElement(By.cssSelector(".btn")).click();
-        driver.findElement(By.cssSelector(".mt-3:nth-child(2)")).click();
+        driver.findElement(By.id("assignments")).click();
+        driver.findElement(By.linkText("Opdracht Toevoegen")).click();
+        driver.findElement(By.id("title")).click();
+        driver.findElement(By.id("title")).sendKeys("SELENIUMtest");
+        driver.findElement(By.id("type")).click();
+        {
+            WebElement dropdown = driver.findElement(By.id("type"));
+            dropdown.findElement(By.xpath("//option[. = 'ZAP']")).click();
+        }
+        driver.findElement(By.cssSelector("option:nth-child(2)")).click();
+        driver.findElement(By.id("task")).click();
+        driver.findElement(By.id("task")).sendKeys("test");
+        driver.findElement(By.id("startDate")).click();
+        driver.findElement(By.id("startDate")).sendKeys("2019-06-28");
+        driver.findElement(By.id("endDate")).click();
+        driver.findElement(By.id("endDate")).sendKeys("2019-06-29");
+        driver.findElement(By.id("amountHours")).click();
+        driver.findElement(By.id("amountHours")).sendKeys("12");
+        driver.findElement(By.id("maxStudents")).click();
+        driver.findElement(By.id("maxStudents")).sendKeys("5");
+        driver.findElement(By.cssSelector(".btn")).click();
+        driver.findElement(By.id("assignments")).click();
+        driver.findElement(By.linkText("Lopende Opdrachten")).click();
         driver.findElement(By.linkText("📃 Info")).click();
-        driver.findElement(By.cssSelector(".button:nth-child(1)")).click();
+        driver.findElement(By.cssSelector(".mb-4")).click();
         driver.findElement(By.id("save")).click();
     }
 
@@ -212,9 +235,31 @@ public class SeleniumAssignmentTest {
         driver.findElement(By.id("username")).sendKeys("nicolasstudent@gmail.com");
         driver.findElement(By.id("password")).sendKeys("testwachtwoord");
         driver.findElement(By.cssSelector(".btn")).click();
-        driver.findElement(By.cssSelector(".mt-3:nth-child(2)")).click();
+        driver.findElement(By.id("assignments")).click();
+        driver.findElement(By.linkText("Opdracht Toevoegen")).click();
+        driver.findElement(By.id("title")).click();
+        driver.findElement(By.id("title")).sendKeys("SELENIUMtest");
+        driver.findElement(By.id("type")).click();
+        {
+            WebElement dropdown = driver.findElement(By.id("type"));
+            dropdown.findElement(By.xpath("//option[. = 'ZAP']")).click();
+        }
+        driver.findElement(By.cssSelector("option:nth-child(2)")).click();
+        driver.findElement(By.id("task")).click();
+        driver.findElement(By.id("task")).sendKeys("test");
+        driver.findElement(By.id("startDate")).click();
+        driver.findElement(By.id("startDate")).sendKeys("2019-06-28");
+        driver.findElement(By.id("endDate")).click();
+        driver.findElement(By.id("endDate")).sendKeys("2019-06-29");
+        driver.findElement(By.id("amountHours")).click();
+        driver.findElement(By.id("amountHours")).sendKeys("12");
+        driver.findElement(By.id("maxStudents")).click();
+        driver.findElement(By.id("maxStudents")).sendKeys("5");
+        driver.findElement(By.cssSelector(".btn")).click();
+        driver.findElement(By.id("assignments")).click();
+        driver.findElement(By.linkText("Lopende Opdrachten")).click();
         driver.findElement(By.linkText("📃 Info")).click();
-        driver.findElement(By.cssSelector(".button:nth-child(1)")).click();
+        driver.findElement(By.cssSelector(".mb-4")).click();
         driver.findElement(By.id("title")).click();
         driver.findElement(By.id("title")).sendKeys("SELENIUMtestEDIT");
         driver.findElement(By.id("save")).click();
@@ -229,9 +274,31 @@ public class SeleniumAssignmentTest {
         driver.findElement(By.id("username")).sendKeys("nicolasstudent@gmail.com");
         driver.findElement(By.id("password")).sendKeys("testwachtwoord");
         driver.findElement(By.cssSelector(".btn")).click();
-        driver.findElement(By.cssSelector(".mt-3:nth-child(2)")).click();
+        driver.findElement(By.id("assignments")).click();
+        driver.findElement(By.linkText("Opdracht Toevoegen")).click();
+        driver.findElement(By.id("title")).click();
+        driver.findElement(By.id("title")).sendKeys("SELENIUMtest");
+        driver.findElement(By.id("type")).click();
+        {
+            WebElement dropdown = driver.findElement(By.id("type"));
+            dropdown.findElement(By.xpath("//option[. = 'ZAP']")).click();
+        }
+        driver.findElement(By.cssSelector("option:nth-child(2)")).click();
+        driver.findElement(By.id("task")).click();
+        driver.findElement(By.id("task")).sendKeys("test");
+        driver.findElement(By.id("startDate")).click();
+        driver.findElement(By.id("startDate")).sendKeys("2019-06-28");
+        driver.findElement(By.id("endDate")).click();
+        driver.findElement(By.id("endDate")).sendKeys("2019-06-29");
+        driver.findElement(By.id("amountHours")).click();
+        driver.findElement(By.id("amountHours")).sendKeys("12");
+        driver.findElement(By.id("maxStudents")).click();
+        driver.findElement(By.id("maxStudents")).sendKeys("5");
+        driver.findElement(By.cssSelector(".btn")).click();
+        driver.findElement(By.id("assignments")).click();
+        driver.findElement(By.linkText("Lopende Opdrachten")).click();
         driver.findElement(By.linkText("📃 Info")).click();
-        driver.findElement(By.cssSelector(".button:nth-child(1)")).click();
+        driver.findElement(By.cssSelector(".mb-4")).click();
         driver.findElement(By.id("title")).click();
         driver.findElement(By.id("title")).sendKeys("");
         driver.findElement(By.id("save")).click();
