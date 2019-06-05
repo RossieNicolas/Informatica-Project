@@ -1,80 +1,156 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <title>ExternalUserProfile</title>
-    <link rel="stylesheet" th:href="@{/css/APcss3.css}">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+
+    <title>Crediti - Externe Profiel</title>
+
 </head>
 
-<body class="background">
-    <div>
-        <header th:insert="fragments/generalMenu_old.html :: header (name=${name})"></header>
-        <div class="block">
-            <section class="find-edu card">
-                <div class="container ">
-                    <div class="wrap-all col-xs-12 ">
-                        <h2 class="extra">Profiel externe gebruiker</h2>
-                        <form th:each="a: ${externalUsers}" th:action="@{/externalUserProfile}" method='POST' class="standard-form">
-                            <input type="button" value="✏️PROFIEL BEWERKEN" class="button" onclick="toggleForm();" name = "edit">
-                            <fieldset disabled="disabled" id="externalInfo">
-                                <label for='lastname'>Naam: </label>
-                                <input type='text' name='lastname' id='lastname' maxlength="50" placeholder="lastname" th:value="*{a.getLastname()}" required><br/>
-                                <label for='firstname'>Voornaam: </label>
-                                <input type='text' name='firstname' id='firstname' maxlength="50" placeholder="firstname" th:value="*{a.getFirstname()}" required><br/>
-                                <label for='company'>Bedrijf: </label>
-                                <input type='text' name='company' id='company' maxlength="50" placeholder="company" th:value="*{a.getCompany()}" required><br/>
-                                <label for='phone'>Telefoonnummer: </label>
-                                <input type='tel' name='phone' id='phone' maxlength="50" placeholder="phone" th:value="*{a.getPhone()}" pattern="([(+]*[0-9]+[()+. -]*)" required><br/>
-                                <label for='address'>Adres: </label>
-                                <input type='text' name='address' id='address' maxlength="50" placeholder="address" th:value="*{a.getAddress()}" required><br/>
-                                <label for='city'>Gemeente: </label>
-                                <input type='text' name='city' id='city' maxlength="50" placeholder="city" th:value="*{a.getCity()}" required><br/>
-                                <label for='postal'>Postcode: </label>
-                                <input type='number' name='postal' id='postal' maxlength="50" placeholder="postal" th:value="*{a.getPostal()}" required><br/>
-                                <a>Je kan je wachtwoord <a href="/forgotPassword"><b>hier</b></a> wijzigen.</a>
-                            </fieldset>
-                            <input class="button" type="submit" value="💾 AANPASSINGEN BEWAREN" name="save">
-                            <h2 class="extra">Uw aangemaakte opdrachten</h2>
-                            <table id="profileTable">
-                                <thead>
-                                    <tr>
-                                        <th>Nr</th>
-                                        <th>Type</th>
-                                        <th>Naam</th>
-                                        <th>Begin</th>
-                                        <th>Einde</th>
-                                        <th>Aantal uren</th>
-                                        <th>Gevalideerd</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr th:each="a : ${assignments}" class="tablebackground ">
-                                        <td th:text="${a.getAssignmentId()}"></td>
-                                        <td th:text="${a.getType()}"></td>
-                                        <td th:text="${a.getTitle()}" class="cell"></td>
-                                        <td th:text="${a.getStartDate()}"></td>
-                                        <td th:text="${a.getEndDate()}"></td>
-                                        <td style="padding-left: 3.8%" th:text="${a.getAmountHours()}"></td>
-                                        <td style="padding-left: 2.5%">
-                                            <span th:if="${a.isValidated()}">✔️</span>
-                                            <span th:unless="${a.isValidated()}">❌</span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </form>
-                    </div>
+<body class="bg" onload="tableFill()">
+<div id="page-container">
+    <div id="content-wrap">
+        <header th:insert="fragments/generalMenu.html :: header">
+        </header>
+        <main role="main" class="container">
+            <div class="mt-5 mb-5 jumbotron">
+                <h1>Uw profiel</h1>
+                <input class="btn btn-outline-secondary mb-3 mt-3" type="button" value="✏️ Bewerken"
+                       onclick="toggleForm();">
+                <input class="btn btn-outline-success mb-3 mt-3 ml-2" type="submit" value="💾 Bewaren" id="save">
+
+
+                <form th:action="@{/externalUserProfile}" class="standard-form" method="post">
+                    <fieldset disabled="disabled" id="externalInfo">
+                        <div class="form-group">
+
+                            <div class="col-md-5 pt-3">
+                                <label for="firstname">Voornaam:</label>
+                                <input th:value="${externalUsers.getFirstname()}" type="text" class="form-control" name="firstname" id="firstname" maxlength="50" required>
+                            </div>
+
+                            <div class="col-md-5 pt-3">
+                                <label for="lastname">Achternaam:</label>
+                                <input th:value="${externalUsers.getLastname()}" type="text" class="form-control" name="lastname" id="lastname" maxlength="50" required>
+                            </div>
+
+                            <div class="col-md-5 pt-3">
+                                <label for="company">Naam bedrijf:</label>
+                                <input th:value="${externalUsers.getCompany()}" type="text" class="form-control" name="company" id="company" required>
+                            </div>
+
+                            <div class="col-md-5 pt-3">
+                                <label for="address">Adres:</label>
+                                <input th:value="${externalUsers.getAddress()}" type="text" class="form-control" name="address" id="address" required>
+                            </div>
+
+                            <div class="col-md-5 pt-3">
+                                <label for="postal">Postcode:</label>
+                                <input th:value="${externalUsers.getPostal()}" type="text" class="form-control" name="postal" id="postal" maxlength="50" required>
+                            </div>
+
+                            <div class="col-md-5 pt-3">
+                                <label for="city">Gemeente:</label>
+                                <input th:value="${externalUsers.getCity()}" type="text" class="form-control" name="city" id="city" maxlength="50" required>
+                            </div>
+
+                            <div class="col-md-5 pt-3">
+                                <label for="phone">Telefoonnummer:</label>
+                                <input th:value="${externalUsers.getPhone()}" type="text" class="form-control" name="phone" id="phone" maxlength="50" pattern="([(+]*[0-9]+[()+. -]*)" required>
+                            </div>
+
+                            <div class="col-md-5 pt-3"><p class="lead">U kan uw wachtwoord <a href="/forgotPassword"><b>hier</b></a> wijzigen.
+                            </p>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <br>
+                    <input class="btn btn-outline-secondary mb-4 ml-3" type="button" value="✏️ Bewerken"
+                           onclick="toggleForm();">
+                    <input class="btn btn-outline-success mb-4 ml-2" type="submit" value="💾 Bewaren" id="save2">
+                </form>
+
+                <h3 class="pb-4  mt-3 ">Uw aangemaakte opdrachten</h3>
+                <div>
+                    <table id="table" class="table table-hover table-condensed table-bordered">
+                        <thead>
+                        <tr class="d-flex">
+                            <th class="col-1" scope="col"></th>
+                            <th class="col-1" style="background-color: #dee2e6;" scope="col">Nr</th>
+                            <th class="col-1" style="background-color: #dee2e6;" scope="col">Type</th>
+                            <th class="col-2" style="background-color: #dee2e6;" scope="col">Naam</th>
+                            <th class="col-2" style="background-color: #dee2e6;" scope="col">Begin</th>
+                            <th class="col-2" style="background-color: #dee2e6;" scope="col">Einde</th>
+                            <th class="col-1" style="background-color: #dee2e6;" scope="col">Aantal uren</th>
+                            <th class="col-2" style="background-color: #dee2e6;" scope="col">Gevalideerd</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="d-flex" th:each="a : ${assignments}">
+                            <td class="col-1" scope="row"><a th:href="${'/allassignments/' + a.getAssignmentId()}"
+                                                             class="btn btn-outline-secondary" role="button">📃
+                            </a></td>
+                            <td class="col-1" th:text="${a.getAssignmentId()}"></td>
+                            <td class="col-1" th:text="${a.getType()}"></td>
+                            <td class="col-2" th:text="${a.getTitle()}"></td>
+                            <td class="col-2" th:text="${a.getFormatStartDate()}"></td>
+                            <td class="col-2" th:text="${a.getFormatEndDate()}"></td>
+                            <td class="col-1" th:text="${a.getAmountHours()}"></td>
+                            <td class="col-2 text-center">
+                                <span th:if="${a.isValidated()}">✔️</span>
+                                <span th:unless="${a.isValidated()}">❌</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
-            </section>
-        </div>
+                <div class="alert alert-primary" role="alert" id="empty"></div>
+            </div>
+        </main>
     </div>
-    <footer th:insert="fragments/generalMenu.html :: footer"></footer>
+    <!-- /.container -->
+    <footer th:insert="fragments/general.html :: footer">
+    </footer>
+    <!-- Optional JavaScript -->
     <script>
         function toggleForm() {
             document.getElementById('externalInfo').removeAttribute('disabled');
+            document.getElementById("save").style.display = "inline-block";
+            document.getElementById("save2").style.display = "inline-block";
+
+        }
+
+        function tableFill() {
+            var tbl = document.getElementById('table');
+            if (tbl.rows.length == 1) {
+                var para = document.createElement("p");
+                var node = document.createTextNode("U hebt geen opdrachten aangemaakt.");
+                para.appendChild(node);
+                var element = document.getElementById("empty");
+                element.style.visibility = "visible";
+                element.appendChild(para);
+            }
         }
     </script>
+</div>
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

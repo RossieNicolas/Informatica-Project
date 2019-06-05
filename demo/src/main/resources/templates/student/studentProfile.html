@@ -71,9 +71,9 @@
                         </div>
                     </fieldset>
                     <br>
-                    <input class="btn btn-outline-secondary mb-4 ml-4" type="button" value="✏️ BEWERKEN"
+                    <input class="btn btn-outline-secondary mb-4 ml-4" type="button" value="✏️ Bewerken"
                            onclick="toggleForm();">
-                    <input class="btn btn-outline-success mb-4 ml-2" type="submit" value="💾 BEWAREN" id="save">
+                    <input class="btn btn-outline-success mb-4 ml-2" type="submit" value="💾 Bewaren" id="save">
                 </form>
 
                 <h3 class="pb-4  mt-3 ">Uw aangemaakte opdrachten</h3>
@@ -128,7 +128,7 @@
             var tbl = document.getElementById('table');
             if (tbl.rows.length == 1) {
                 var para = document.createElement("p");
-                var node = document.createTextNode("Er zijn momenteel geen opdrachten.");
+                var node = document.createTextNode("U hebt geen opdrachten aangemaakt.");
                 para.appendChild(node);
                 var element = document.getElementById("empty");
                 element.style.visibility = "visible";

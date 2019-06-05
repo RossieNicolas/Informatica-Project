@@ -124,8 +124,7 @@ public class ExternalController {
                                 @RequestParam ("phone") String phone,
                                 @RequestParam ("address") String address,
                                 @RequestParam ("city") String city,
-                                @RequestParam ("postal") String postal,
-                                @RequestParam ("password") String password) {
+                                @RequestParam ("postal") String postal) {
 
 
         User user = userRepository.findByEmail(principal.getName());
@@ -137,10 +136,6 @@ public class ExternalController {
         externalUser.setAddress(address);
         externalUser.setCity(city);
         externalUser.setPostal(postal);
-
-        Object[] hashBytes = HashPass.convertToPbkdf2(password.toCharArray());
-        externalUser.setPassword(hashBytes[0].toString().toCharArray());
-        externalUser.setSalt((byte[]) hashBytes[1]);
 
         externalUserRepository.save(externalUser);
 
