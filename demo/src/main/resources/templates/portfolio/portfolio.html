@@ -44,7 +44,7 @@
                         <tbody>
                         <tr class="d-flex" th:each="file : ${files}">
                             <td class="col-1" th:text="${file.getAssignmentId()}"></td>
-                            <td class="col-4" th:text="${file.getTitle()}"></td>
+                            <td class="col-4 overflow" th:text="${file.getTitle()}"></td>
                             <td class="col-2" th:text="${file.getDocType()}"></td>
                             <td class="col-2" th:text="${file.getStatus()}"></td>
                             <td class="col-3">
