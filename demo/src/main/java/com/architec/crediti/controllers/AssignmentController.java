@@ -1,6 +1,5 @@
 package com.architec.crediti.controllers;
 
-import ch.qos.logback.core.rolling.helper.TimeBasedArchiveRemover;
 import com.architec.crediti.email.EmailServiceImpl;
 import com.architec.crediti.email.EmailTemplates;
 import com.architec.crediti.models.*;
@@ -37,9 +36,6 @@ public class AssignmentController {
     private static final int PAGE_SIZE = 15;
     private static final int INITAL_PAGE = 0;
     private Log log = LogFactory.getLog(this.getClass());
-    private String name = "";
-    private int[] tags;
-    List<Long> list = null;
 
 
     private final
@@ -114,43 +110,74 @@ public class AssignmentController {
 
     // list all assignments
     @GetMapping("/allassignments")
-    public ModelAndView getAllAssignments(Model model, @RequestParam("page") Optional<Integer> page, Principal principal) {
+    public ModelAndView getAllAssignments(Model model, @RequestParam("page") Optional<Integer> page,
+                                          Principal principal, @RequestParam(required = false, value = "tag") int[] tags) {
         ModelAndView view = new ModelAndView("assignments/listAllAssignments");
-        //pass username to header fragment
+        // pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());
         model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
         int buttons = (int) assignmentRepo.count() / PAGE_SIZE;
         Page<Assignment> fiches = null;
+        int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
         if (assignmentRepo.count() % PAGE_SIZE != 0) {
             buttons++;
         }
-
-        int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
-        if (studentRepo.existsByUserId(currentUser)) {
-            Student student = studentRepo.findByUserId(currentUser);
-            if (student.isMobility() && !student.isZap()) {
-                fiches = assignmentRepo.findByTitleContainingAndFullAndTypeEqualsOrderByAssignmentIdDesc(name, false, PageRequest.of(evalPage, PAGE_SIZE), "Mobility");
-
-            } else if (student.isZap() && !student.isMobility()) {
-                fiches = assignmentRepo.findByTitleContainingAndFullAndTypeEqualsOrderByAssignmentIdDesc(name, false, PageRequest.of(evalPage, PAGE_SIZE), "ZAP");
-            } else {
-                fiches = assignmentRepo.findByTitleContainingAndFullOrderByAssignmentIdDesc(name, false, PageRequest.of(evalPage, PAGE_SIZE));
-
-            }
+        if (tags == null) {
+            fiches = assignmentRepo.findAllByOrderByAssignmentIdDesc(PageRequest.of(evalPage, PAGE_SIZE));
         } else {
-            fiches = assignmentRepo.findByTitleContainingAndFullOrderByAssignmentIdDesc(name, false, PageRequest.of(evalPage, PAGE_SIZE));
-
+            List<Assignment> list3 = (List<Assignment>) assignmentRepo.findAll();
+            List<Long> list = new ArrayList<>();
+            for (int item : tags) {
+                for (Assignment a : list3) {
+                    if (a.getTags().contains(tagRepo.findBytagId(item))) {
+                        list.add(a.getAssignmentId());
+                    }
+                }
+            }
+            list = list.stream().distinct().collect(Collectors.toList());
+            if (list.size() > 0) {
+                fiches = assignmentRepo.findByTagsOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE));
+            } else {
+                List<Assignment> list54 = new ArrayList();
+                fiches = new PageImpl<>(list54);
+            }
         }
 
         model.addAttribute("assignments", fiches);
+
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
 
+        List<Tag> allTags = tagRepo.findAll();
+        boolean[] status = new boolean[allTags.size()];
+        if (tags == null) {
+            for (int i = 0; i < allTags.size(); i++) {
+                status[i] = false;
+            }
+        } else {
+            ArrayList<Tag> tag = new ArrayList<>();
+
+            for (int var : tags) {
+                tag.add(tagRepo.findBytagId(var));
+            }
+
+            for (int i = 0; i < allTags.size(); i++) {
+                for (Tag item : tag) {
+                    if (allTags.get(i).getTagId() == item.getTagId()) {
+                        status[i] = true;
+                    }
+                }
+            }
+            model.addAttribute("status", status);
+        }
+        model.addAttribute("status", status);
+        model.addAttribute("selectedPageSize", PAGE_SIZE);
         view.addObject("persons", fiches);
         view.addObject("pager", pager);
         view.addObject("tags", tagRepo.findAll());
 
         return view;
     }
+
 
     // list all assignments which are full
     @GetMapping("/allFullAssignments")
@@ -204,67 +231,6 @@ public class AssignmentController {
         return "assignments/listUnvalidatedAssignments";
     }
 
-    // search assignments
-    @PostMapping("/allassignments")
-    public String getAssignment(@RequestParam("searchbar") String name,
-                                Model model, @RequestParam("page") Optional<Integer> page,
-                                @RequestParam(required = false, value = "tag") int[] tags, Principal principal) {
-
-        this.tags = tags;
-        this.name = name;
-        Page<Assignment> fiches = null;
-        int buttons = (int) assignmentRepo.count() / PAGE_SIZE;
-
-        if (assignmentRepo.count() % PAGE_SIZE != 0) {
-            buttons++;
-        }
-
-        int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
-        if (tags == null) {
-            this.list = null;
-            try {
-                Assignment a = assignmentRepo.findByAssignmentId((Integer.parseInt(name)));
-                if (a.getAmountStudents() != a.getMaxStudents()) {
-                    model.addAttribute("assignments", a);
-                    List<Assignment> listsd = new ArrayList();
-                    listsd.add(a);
-                    fiches = new PageImpl<>(listsd);
-                }
-
-            } catch (Exception e) {
-
-                fiches = assignmentRepo.findByTitleContainingAndFullOrderByAssignmentIdDesc(name, false, PageRequest.of(evalPage, PAGE_SIZE));
-                model.addAttribute("assignments", fiches);
-            }
-        } else {
-            List<Assignment> list3 = assignmentRepo.findByTitleContainingAndFullOrderByAssignmentIdDesc(name, false);
-            list = new ArrayList<>();
-            for (int item : tags) {
-                for (Assignment a : list3) {
-                    if (a.getTags().contains(tagRepo.findBytagId(item))) {
-                        list.add(a.getAssignmentId());
-                    }
-                }
-            }
-            list = list.stream().distinct().collect(Collectors.toList());
-            fiches = assignmentRepo.findByTagsOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE));
-            model.addAttribute("assignments", fiches);
-        }
-
-        Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
-        model.addAttribute("persons", fiches);
-        model.addAttribute("pager", pager);
-        model.addAttribute("tags", tagRepo.findAll());
-
-        //pass username to header fragment
-        User currentUser = userRepo.findByEmail(principal.getName());
-        model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
-
-        return "assignments/listAllAssignments";
-
-    }
-
-
     @GetMapping("/myassignments")
     public String assignments(Principal principal, Model model) {
         Student currentStudent = studentRepo.findByUserId(userRepo.findByEmail(principal.getName()));
@@ -276,9 +242,178 @@ public class AssignmentController {
         return "assignments/myassignments";
     }
 
+
+    @GetMapping(value = "/allassignments/{searchbar}")
+    public String searchByTitleorId(@PathVariable(value = "searchbar" , required = false) String searchbar, Model model,
+                                    @RequestParam(value = "page", required = false) Optional<Integer> page){
+        int buttons = (int) assignmentRepo.count() / PAGE_SIZE;
+        Page fiches = null;
+        if (assignmentRepo.count() % PAGE_SIZE != 0) {
+            buttons++;
+        }
+        int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
+        try {
+            Assignment a = assignmentRepo.findByAssignmentId((Integer.parseInt(searchbar)));
+            if (a.getAmountStudents() != a.getMaxStudents()) {
+                model.addAttribute("assignments", a);
+                List<Assignment> listsd = new ArrayList();
+                listsd.add(a);
+                fiches = new PageImpl<>(listsd);
+            }
+
+        } catch (Exception e) {
+
+            fiches = assignmentRepo.findByTitleContainingAndFullOrderByAssignmentIdDesc(searchbar, false,
+                    PageRequest.of(evalPage, PAGE_SIZE));
+            model.addAttribute("assignments", fiches);
+        }
+        ArrayList<Tag> tag = new ArrayList<>();
+            List<Tag> allTags = tagRepo.findAll();
+
+            boolean[] status = new boolean[allTags.size()];
+
+            for (int i = 0; i < allTags.size(); i++) {
+                        status[i] = false;
+
+            }
+        model.addAttribute("status", status);
+        model.addAttribute("assignments", fiches);
+        Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
+        model.addAttribute("persons", fiches);
+        model.addAttribute("selectedPageSize", PAGE_SIZE);
+        model.addAttribute("pager", pager);
+        model.addAttribute("tags", tagRepo.findAll());
+        return "assignments/listAllAssignments";
+    }
+    @GetMapping(value = "/allassignments/tag/{tag}")
+    public String searchByTags(@RequestParam(value = "page", required = false) Optional<Integer> page,
+    @PathVariable(required = false, value = "tag") String tags, Model model){
+        String[] tags2 = tags.split("&");
+        int[] test = new int[tags2.length -1];
+        for(int i =0 ; i <test.length; i++){
+            test[i] = (Integer.parseInt(tags2[i+1]));
+        }
+        for (int item : test) {
+            System.out.println(item);
+        }
+        int buttons = (int) assignmentRepo.count() / PAGE_SIZE;
+        Page fiches = null;
+        if (assignmentRepo.count() % PAGE_SIZE != 0) {
+            buttons++;
+        }
+        int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
+            List<Assignment> list3 = (List<Assignment>) assignmentRepo
+                    .findByTitleContainingAndFullOrderByAssignmentIdDesc("", false);
+            List<Long> list = new ArrayList<>();
+            for (int item : test) {
+                for (Assignment a : list3) {
+                    if (a.getTags().contains(tagRepo.findBytagId(item))) {
+                        list.add(a.getAssignmentId());
+                    }
+                }
+            }
+            list = list.stream().distinct().collect(Collectors.toList());
+            if (list.size() > 0) {
+                fiches = assignmentRepo.findByTagsOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE));
+            } else {
+                List<Assignment> list54 = new ArrayList();
+                fiches = new PageImpl<>(list54);
+            }
+
+            ArrayList<Tag> tag = new ArrayList<>();
+            List<Tag> allTags = tagRepo.findAll();
+
+            for (int var : test) {
+                tag.add(tagRepo.findBytagId(var));
+            }
+
+            boolean[] status = new boolean[allTags.size()];
+
+            for (int i = 0; i < allTags.size(); i++) {
+                for (Tag item : tag) {
+                    if (allTags.get(i).getTagId() == item.getTagId()) {
+                        status[i] = true;
+                    }
+                }
+            }
+
+        model.addAttribute("status", status);
+        model.addAttribute("assignments", fiches);
+        Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
+        model.addAttribute("persons", fiches);
+        model.addAttribute("selectedPageSize", PAGE_SIZE);
+        model.addAttribute("pager", pager);
+        model.addAttribute("tags", tagRepo.findAll());
+        return "assignments/listAllAssignments";
+    }
+    // search assignments
+    @GetMapping(value = "/allassignments/{searchbar}/{tag}")
+    public String getAssignment(@PathVariable(value = "searchbar" , required = false) String searchbar, Model model,
+            @RequestParam(value = "page", required = false) Optional<Integer> page,
+            @PathVariable(required = false, value = "tag") String tags) {
+        String[] tags2 = tags.split("&");
+        int[] test = new int[tags2.length -1];
+        for(int i =0 ; i <test.length; i++){
+            test[i] = (Integer.parseInt(tags2[i+1]));
+        }
+        for (int item : test) {
+            System.out.println(item);
+        }
+        int buttons = (int) assignmentRepo.count() / PAGE_SIZE;
+        Page fiches = null;
+        if (assignmentRepo.count() % PAGE_SIZE != 0) {
+            buttons++;
+        }
+        int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
+            List<Assignment> list3 = (List<Assignment>) assignmentRepo
+                    .findByTitleContainingAndFullOrderByAssignmentIdDesc(searchbar, false);
+            List<Long> list = new ArrayList<>();
+            for (int item : test) {
+                for (Assignment a : list3) {
+                    if (a.getTags().contains(tagRepo.findBytagId(item))) {
+                        list.add(a.getAssignmentId());
+                    }
+                }
+            }
+            list = list.stream().distinct().collect(Collectors.toList());
+            if (list.size() > 0) {
+                fiches = assignmentRepo.findByTagsOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE));
+            } else {
+                List<Assignment> list54 = new ArrayList();
+                fiches = new PageImpl<>(list54);
+            }
+
+            ArrayList<Tag> tag = new ArrayList<>();
+            List<Tag> allTags = tagRepo.findAll();
+
+            for (int var : test) {
+                tag.add(tagRepo.findBytagId(var));
+            }
+
+            boolean[] status = new boolean[allTags.size()];
+
+            for (int i = 0; i < allTags.size(); i++) {
+                for (Tag item : tag) {
+                    if (allTags.get(i).getTagId() == item.getTagId()) {
+                        status[i] = true;
+                    }
+                }
+            }
+
+        model.addAttribute("status", status);
+        model.addAttribute("assignments", fiches);
+        Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
+        model.addAttribute("persons", fiches);
+        model.addAttribute("selectedPageSize", PAGE_SIZE);
+        model.addAttribute("pager", pager);
+        model.addAttribute("tags", tagRepo.findAll());
+        return "assignments/listAllAssignments";
+    }
+
     // find specific assignment to edit out of all assignments
-    @GetMapping("/allassignments/{assignmentId}")
-    public String getAssignmentsToUpdate(@PathVariable("assignmentId") int assignmentId, Model model, Principal principal) {
+    @GetMapping("/allassignments/detail/{assignmentId}")
+    public String getAssignmentsToUpdate(@PathVariable("assignmentId") int assignmentId, Model model,
+            Principal principal) {
         List<Tag> updatetag = tagRepo.findAll();
         Assignment as = assignmentRepo.findByAssignmentId(assignmentId);
         User user = userRepo.findByEmail(principal.getName());
@@ -306,7 +441,8 @@ public class AssignmentController {
 
         if (as.getAmountStudents() == as.getMaxStudents()) {
             volzet = true;
-
+            as.setFull(true);
+            assignmentRepo.save(as);
         }
 
         model.addAttribute("volzet", volzet);
@@ -343,13 +479,14 @@ public class AssignmentController {
             roles = true;
         }
 
-        if (as.getAssignerUserId() == user.getUserId() || user.getRole() == Role.COORDINATOR || user.getRole() == Role.DOCENT) {
+        if (as.getAssignerUserId() == user.getUserId() || user.getRole() == Role.COORDINATOR
+                || user.getRole() == Role.DOCENT) {
             roles2 = true;
         }
 
         model.addAttribute("roles", roles);
         model.addAttribute("roles2", roles2);
-        //pass username to header fragment
+        // pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());
         model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
         return "assignments/updateAssignment";
@@ -357,8 +494,8 @@ public class AssignmentController {
 
     // update specific assignment
     @PostMapping(value = "/allassignments/{assignmentId}")
-    public String updateAssignment(@PathVariable("assignmentId") int assignmentId,
-                                   @Valid Assignment assignment, @RequestParam(required = false, value = "tag") int[] tags) {
+    public String updateAssignment(@PathVariable("assignmentId") int assignmentId, @Valid Assignment assignment,
+            @RequestParam(required = false, value = "tag") int[] tags) {
         Set<Tag> set = new HashSet<>();
         Assignment a = assignmentRepo.findByAssignmentId(assignmentId);
 
@@ -375,7 +512,6 @@ public class AssignmentController {
         assignmentRepo.save(assignment);
         return "redirect:/allassignments";
     }
-
 
     // delete specific assignment
     @GetMapping("/deleteassignment/{assignmentId}")
@@ -556,5 +692,27 @@ public class AssignmentController {
                 EmailTemplates.createdAssignment(assignment.getAssigner(),
                         assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments"));
         return "assignments/successfullAssignment";
+    }
+
+    @GetMapping("/detailAssignmentEnrolled/{assignmentId}")
+    public String getDetailAssignmentWhenEnrolled(Principal principal,@PathVariable("assignmentId") long assignmentId, Model model){
+        User user = userRepo.findByEmail(principal.getName());
+        Assignment assignments = assignmentRepo.findByAssignmentId(assignmentId);
+        long assignerId = assignments.getAssignerUserId();
+        User assigner = userRepo.findByUserId(assignerId);
+        if (externalRepo.existsByUserId(assigner)) {
+            ExternalUser external = externalRepo.findByUserId(assigner);
+            String company = external.getCompany();
+            model.addAttribute("company", company);
+        } else {
+            model.addAttribute("company", "t");
+        }
+        boolean roles2 = false;
+        if (assignments.getAssignerUserId() == user.getUserId() || user.getRole() == Role.COORDINATOR || user.getRole() == Role.DOCENT) {
+            roles2 = true;
+        }
+        model.addAttribute("roles2", roles2);
+        model.addAttribute("assignments", assignments);
+        return "assignments/detailAssignmentEnrolled";
     }
 }

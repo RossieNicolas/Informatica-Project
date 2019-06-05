@@ -38,7 +38,7 @@
                         </thead>
                         <tbody>
                         <tr class="d-flex" th:each="a : ${assignments}">
-                            <td class="col-1" scope="row"><a th:href="${'/allassignments/' + a.getAssignmentId()}" class="btn btn-outline-secondary" role="button">📃</a></td>
+                            <td class="col-1" scope="row"><a th:href="${'/detailAssignmentEnrolled/' + a.getAssignmentId()}" class="btn btn-outline-secondary" role="button">📃</a></td>
                             <td class="col-1" th:text="${a.getAssignmentId()}"></td>
                             <td class="col-1" th:text="${a.getTitle()}"></td>
                             <td class="col-1" th:text="${a.getType()}"></td>
