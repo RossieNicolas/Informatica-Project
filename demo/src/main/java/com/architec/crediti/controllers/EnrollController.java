@@ -104,7 +104,6 @@ public class EnrollController {
         //pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());
         model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
-
         return "enroll/studentenroll";
     }
 
