@@ -16,7 +16,7 @@
 
 </head>
 
-<body class="bg">
+<body class="bg" onload="tableFill()">
 <div id="page-container">
     <div id="content-wrap">
         <header th:insert="fragments/generalMenu.html :: header"></header>
@@ -26,8 +26,8 @@
                 <h1 class="pb-4">Documentatie</h1>
 
 
-                    <a sec:authorize="hasRole('COORDINATOR')" href="/uploaddocumentation"
-                       class="btn btn-outline-success">➕ Bestanden toevoegen</a>
+                <a sec:authorize="hasRole('COORDINATOR')" href="/uploaddocumentation"
+                   class="btn btn-outline-success">➕ Bestanden toevoegen</a>
 
 
                 <div class="table-responsive">
@@ -50,11 +50,13 @@
                                         class="btn btn-outline-danger ml-2" role="button">🗑️</button>
                                 </span>
 
-                                <span style="float: right;"><a th:href="${file.getDownloadLink()}" class="btn btn-outline-secondary">Download</a></span>
+                                <span style="float: right;"><a th:href="${file.getDownloadLink()}"
+                                                               class="btn btn-outline-secondary">Download</a></span>
                             </td>
                         </tr>
                         </tbody>
                     </table>
+                    <div class="alert alert-primary" role="alert" id="empty"></div>
                 </div>
 
                 <!-- Modal DELETE -->
@@ -94,6 +96,19 @@
     </div>
 </div>
 <!-- Optional JavaScript -->
+<script>
+    function tableFill() {
+        var tbl = document.getElementById('table');
+        if (tbl.rows.length === 1) {
+            var para = document.createElement("p");
+            var node = document.createTextNode("Er is momenteel geen documentatie.");
+            para.appendChild(node);
+            var element = document.getElementById("empty");
+            element.style.visibility = "visible";
+            element.appendChild(para);
+        }
+    }
+</script>
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

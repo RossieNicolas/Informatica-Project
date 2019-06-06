@@ -51,7 +51,7 @@ public class ExternalController {
 
     @PostMapping("/createexternal")
     public String createUser(Model model,
-                            @RequestParam("lastname") String lastname, @RequestParam("firstname") String firstname,
+                             @RequestParam("lastname") String lastname, @RequestParam("firstname") String firstname,
                              @RequestParam("company") String company, @RequestParam("address") String address,
                              @RequestParam("postal") String postal, @RequestParam("city") String city, @RequestParam("phone") String phone,
                              @RequestParam("email") String email, @RequestParam("password") String password) {
@@ -59,9 +59,9 @@ public class ExternalController {
 
         Object[] hashedBytes = HashPass.convertToPbkdf2(password.toCharArray());
         // create an external user
-        ExternalUser externalUser = new ExternalUser(firstname, lastname, company, phone, address, city, postal, hashedBytes[0].toString().toCharArray(),(byte[]) hashedBytes[1]);
+        ExternalUser externalUser = new ExternalUser(firstname, lastname, company, phone, address, city, postal, hashedBytes[0].toString().toCharArray(), (byte[]) hashedBytes[1]);
         // create a internal user
-        User user = new User(firstname, lastname, email, Role.EXTERN,false);
+        User user = new User(firstname, lastname, email, Role.EXTERN, false);
         if (!userRepository.existsByEmail(user.getEmail())) {
             userRepository.save(user);
             // set the foreign key
@@ -76,14 +76,13 @@ public class ExternalController {
             String fullAddress = address + ", " + postal + " " + city;
 
             List<User> coordinators = userRepository.findAllByRole(Role.COORDINATOR);
-            for( User u : coordinators) {
+            for (User u : coordinators) {
                 mail.sendSimpleMessage(u.getEmail(), "Nieuwe externe registratie",
                         EmailTemplates.newExternalUser(userId, name, company, fullAddress, phone, email));
             }
 
-            mail.sendSimpleMessage(externalUser.getEmail(),"Registratie", EmailTemplates.newExternal());
-        }
-        else{
+            mail.sendSimpleMessage(externalUser.getEmail(), "Registratie", EmailTemplates.newExternal());
+        } else {
             mail.sendSimpleMessage(email, "Externe registratie geannuleerd",
                     EmailTemplates.userAlreadyExists());
         }
@@ -113,19 +112,19 @@ public class ExternalController {
         model.addAttribute("externalUsers", externalUser);
         model.addAttribute("assignments", assignments);
         //pass username to header fragment
-        model.addAttribute("name",user.getFirstname() + " " + user.getLastname().substring(0,1) + ".");
+        model.addAttribute("name", user.getFirstname() + " " + user.getLastname().substring(0, 1) + ".");
         return "external/externalUserProfile";
     }
 
     @PostMapping("/externalUserProfile")
     public String changeExtUser(Principal principal,
-                                @RequestParam ("lastname") String lastname,
-                                @RequestParam ("firstname") String firstname,
-                                @RequestParam ("company") String company,
-                                @RequestParam ("phone") String phone,
-                                @RequestParam ("address") String address,
-                                @RequestParam ("city") String city,
-                                @RequestParam ("postal") String postal) {
+                                @RequestParam("lastname") String lastname,
+                                @RequestParam("firstname") String firstname,
+                                @RequestParam("company") String company,
+                                @RequestParam("phone") String phone,
+                                @RequestParam("address") String address,
+                                @RequestParam("city") String city,
+                                @RequestParam("postal") String postal) {
 
 
         User user = userRepository.findByEmail(principal.getName());
@@ -148,8 +147,10 @@ public class ExternalController {
         List<User> users = userRepository.findAllByRole(Role.EXTERN);
         List<ExternalUser> externalUsers = new ArrayList<>();
         for (User u : users) {
-            if (!externalUserRepository.findByUserId(u).isApproved()) {
-                externalUsers.add(externalUserRepository.findByUserId(u));
+            if (u != null) {
+                if (!externalUserRepository.findByUserId(u).isApproved()) {
+                    externalUsers.add(externalUserRepository.findByUserId(u));
+                }
             }
         }
 
@@ -157,7 +158,7 @@ public class ExternalController {
         model.addAttribute("users", users);
         //pass username to header fragment
         User currentUser = userRepository.findByEmail(principal.getName());
-        model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
+        model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
         return "external/listUnvalidatedExternal";
     }
 
