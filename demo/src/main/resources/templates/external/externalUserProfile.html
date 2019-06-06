@@ -44,12 +44,12 @@
 
                             <div class="col-md-5 pt-3">
                                 <label for="address">Adres:</label>
-                                <input th:value="${externalUsers.getAddress()}" type="text" class="form-control" name="address" id="address"  pattern="^([A-Za-z]+[,.]?[ ]?[é]?[è]?|[A-Za-z]+['-]?)+$" title="Er zijn geen speciale tekens toegelaten" required>
+                                <input th:value="${externalUsers.getAddress()}" type="text" class="form-control" name="address" id="address"  pattern="^([A-Za-z0-9]+[,.]?[ ]?[é]?[è]?|[A-Za-z]+['-]?)+$" title="Er zijn geen speciale tekens toegelaten" required>
                             </div>
 
                             <div class="col-md-5 pt-3">
                                 <label for="postal">Postcode:</label>
-                                <input th:value="${externalUsers.getPostal()}" type="text" class="form-control" name="postal" id="postal" maxlength="50" pattern="[0-9a-Z]" title="Er zijn geen cijfers of speciale tekens toegelaten" required>
+                                <input th:value="${externalUsers.getPostal()}" type="text" class="form-control" name="postal" id="postal" maxlength="50" pattern="[0-9a-Z]" title="Er zijn geen speciale tekens toegelaten" required>
                             </div>
 
                             <div class="col-md-5 pt-3">
