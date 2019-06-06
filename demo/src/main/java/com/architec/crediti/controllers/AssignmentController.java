@@ -445,11 +445,19 @@ public class AssignmentController {
 
     // delete specific assignment
     @GetMapping("/deleteassignment/{assignmentId}")
-    public String deleteAssignment(@PathVariable("assignmentId") int assignmentId, Model model) {
+    public String deleteAssignment(@PathVariable("assignmentId") int assignmentId, Model model, Principal principal){
         Assignment assignment = assignmentRepo.findById((long) assignmentId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid assignment Id:" + assignmentId));
-        assignmentRepo.delete(assignment);
+        try{
+            assignmentRepo.delete(assignment);
+        }catch (Exception E){
+            User currentUser = userRepo.findByEmail(principal.getName());
+            model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
+            return "basic/assignmentError";
+        }
         model.addAttribute("assignments", assignmentRepo.findAll());
+        User currentUser = userRepo.findByEmail(principal.getName());
+        model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
         return "redirect:/allassignments";
     }
 

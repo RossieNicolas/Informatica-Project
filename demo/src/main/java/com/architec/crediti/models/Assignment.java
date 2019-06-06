@@ -6,12 +6,12 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Set;
-
 @Entity
+@SequenceGenerator(name="seq", initialValue=1050)
 @Table(name = "assignments")
 public class Assignment {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="seq")
     private long assignmentId;
 
     @NotNull(message = "Titel mag niet leeg zijn!")

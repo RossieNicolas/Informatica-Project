@@ -1,6 +1,5 @@
 package com.architec.crediti.controllers;
 
-import com.architec.crediti.models.ExternalUser;
 import com.architec.crediti.models.User;
 import com.architec.crediti.repositories.AssignmentRepository;
 import com.architec.crediti.repositories.EnrolledRepository;
@@ -12,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.security.Principal;
-import java.util.List;
 
 @Controller
 public class MainController {
