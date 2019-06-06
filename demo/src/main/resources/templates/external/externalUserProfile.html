@@ -44,7 +44,7 @@
 
                             <div class="col-md-5 pt-3">
                                 <label for="address">Adres:</label>
-                                <input th:value="${externalUsers.getAddress()}" type="text" class="form-control" name="address" id="address" pattern="^[A-Za-z0-9 -]+$" title="Er zijn geen speciale tekens toegelaten" required>
+                                <input th:value="${externalUsers.getAddress()}" type="text" class="form-control" name="address" id="address"  pattern="^([A-Za-z]+[,.]?[ ]?[é]?[è]?|[A-Za-z]+['-]?)+$" title="Er zijn geen speciale tekens toegelaten" required>
                             </div>
 
                             <div class="col-md-5 pt-3">
@@ -54,7 +54,7 @@
 
                             <div class="col-md-5 pt-3">
                                 <label for="city">Gemeente:</label>
-                                <input th:value="${externalUsers.getCity()}" type="text" class="form-control" name="city" id="city" maxlength="50" pattern="^[A-Za-z -]+$" title="Er zijn geen cijfers of speciale tekens toegelaten" required>
+                                <input th:value="${externalUsers.getCity()}" type="text" class="form-control" name="city" id="city" maxlength="50"  pattern="^([A-Za-z]+[,.]?[ ]?[é]?[è]?|[A-Za-z]+['-]?)+$" title="Er zijn geen cijfers of speciale tekens toegelaten" required>
                             </div>
 
                             <div class="col-md-5 pt-3">
