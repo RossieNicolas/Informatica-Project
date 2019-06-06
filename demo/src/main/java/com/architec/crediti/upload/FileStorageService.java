@@ -90,8 +90,6 @@ public class FileStorageService {
     public Resource loadFileAsResource(String fileName, String userId, HttpServletResponse response) {
         response.setContentType("text/csv; charset=utf-8");
         response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
-        response.setHeader("filename", fileName);
-
         return new FileSystemResource(this.fileStorageLocation + File.separator + userId + File.separator + fileName);
     }
 }
