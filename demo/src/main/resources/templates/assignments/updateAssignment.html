@@ -122,7 +122,8 @@
 
                     <br/>
 
-                    <button th:if="${!assignments.isValidated() and roles}"
+                    <button sec:authorize="hasRole('DOCENT')"
+                            th:if="${!assignments.isValidated()}"
                        class="mt-3 btn btn-outline-danger" type="button"
                        data-toggle="modal" data-target="#deleteModal">
                         🗑️ Verwijderen</button>
