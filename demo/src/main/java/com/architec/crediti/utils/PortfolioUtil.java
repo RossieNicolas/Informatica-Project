@@ -46,7 +46,7 @@ public class PortfolioUtil {
     public void uploadFile(MultipartFile file, long userId, String docType, long assignmentID) {
         User current = userRepo.findByUserId(userId);
         Student st = studentRepo.findByUserId(current);
-        String fileName = fileStorageService.storeFile(file, userId + "");
+        String fileName = fileStorageService.storeFile(file, st.getStudentNumber());
 
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path(st.getStudentNumber() + "/downloadFile/")
                 .path(fileName).toUriString();
@@ -65,7 +65,7 @@ public class PortfolioUtil {
     public void uploadDocumentation(MultipartFile file) {
         String fileName = fileStorageService.storeFile(file, "documentation");
 
-        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/downloadFile/")
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/documentation/downloadFile/")
                 .path(fileName).toUriString();
 
         List<Documentation> docs = docRepo.findAll();
