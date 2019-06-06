@@ -39,7 +39,7 @@
                         <tr th:each="e : ${extern}">
                             <td class="overflow" th:text="${e.getFirstname() + ' ' + e.getLastname()}"></td>
                             <td class="overflow" th:text="${e.getCompany()}"></td>
-                            <td class="overflow" th:text="${e.getUserId().getEmail()}"></td>
+                            <td class="overflow"><a th:href="'mailto:' + ${e.getUserId().getEmail()}"><div th:text="${e.getUserId().getEmail()}"></div></a></td>
                             <td class="overflow" th:text="${e.getPhone()}"></td>
                             <td th:text="${e.getAddress()} + ', ' + ${e.getPostal()} + ' ' + ${e.getCity()}"></td>
                             <td>

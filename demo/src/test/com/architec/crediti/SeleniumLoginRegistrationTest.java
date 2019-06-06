@@ -95,26 +95,25 @@ public class SeleniumLoginRegistrationTest {
     }
 
     //id= 32
-    //TODO breaks tests new hash password
-    /*@Test
+    @Test
     public void updateExternalUserProfileNoEdits() {
         driver.get("http://vps092.ap.be/");
-        driver.manage().window().setSize(new Dimension(900, 701));
+        driver.manage().window().setSize(new Dimension(900, 707));
         driver.findElement(By.linkText("Login")).click();
         driver.findElement(By.id("username")).sendKeys("nicolasextern@gmail.com");
         driver.findElement(By.id("password")).sendKeys("testwachtwoord");
         driver.findElement(By.cssSelector(".btn")).click();
         driver.findElement(By.id("profile")).click();
         driver.findElement(By.linkText("Mijn profiel")).click();
-        driver.findElement(By.name("edit")).click();
-        driver.findElement(By.name("save")).click();
-    }*/
+        driver.findElement(By.cssSelector(".btn:nth-child(2)")).click();
+        driver.findElement(By.id("save")).click();
+    }
 
     //id= 40
     @Test
     public void passwordRecoveryLoad() {
         driver.get("http://vps092.ap.be/");
-        driver.manage().window().setSize(new Dimension(900, 701));
+        driver.manage().window().setSize(new Dimension(900, 707));
         driver.findElement(By.linkText("Login")).click();
         driver.findElement(By.cssSelector(".mt-5")).click();
         driver.findElement(By.cssSelector("a:nth-child(6) > b")).click();
@@ -124,7 +123,7 @@ public class SeleniumLoginRegistrationTest {
     @Test
     public void passwordRecoveryRedirect() {
         driver.get("http://vps092.ap.be/");
-        driver.manage().window().setSize(new Dimension(900, 701));
+        driver.manage().window().setSize(new Dimension(900, 707));
         driver.findElement(By.linkText("Login")).click();
         driver.findElement(By.cssSelector(".mt-5")).click();
         driver.findElement(By.cssSelector("a:nth-child(6) > b")).click();
