@@ -12,7 +12,10 @@ import java.util.List;
 public interface ExternalUserRepository extends JpaRepository<ExternalUser, Long> {
 
     ExternalUser findByUserId(User user);
+
     ExternalUser findByResettoken(String resetToken);
+
     boolean existsByUserId(User user);
+
     int countByApproved(boolean approved);
 }

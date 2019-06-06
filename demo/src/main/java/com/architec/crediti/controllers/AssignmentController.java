@@ -91,30 +91,30 @@ public class AssignmentController {
 
     // add assignment
     @PostMapping("/assignment")
-    public String createAssignment(Principal principal, @Valid Assignment assignment,
+    public String createAssignment(Model model, Principal principal, @Valid Assignment assignment,
                                    @RequestParam(required = false, value = "tag") int[] tags) {
         User currentUser = userRepo.findByEmail(principal.getName());
         Student student = studentRepo.findByUserId(currentUser);
 
-        if(currentUser.getRole().equals(Role.STUDENT)){
+        if (currentUser.getRole().equals(Role.STUDENT)) {
             mail.sendSimpleMessage(student.getEmail(), "Inschrijving opdracht",
                     EmailTemplates.waitValidationEnrolledAssignmentStudent(assignment.getTitle()));
             mail.sendSimpleMessage(currentUser.getEmail(), "Inschrijving opdracht",
                     EmailTemplates.enrolledAssignment(assignment.getTitle(), student.getUserId().toString(), student.getEmail()));
-        }else if(currentUser.getRole().equals(Role.COORDINATOR)){
+        } else if (currentUser.getRole().equals(Role.COORDINATOR)) {
             assignment.setValidated(true);
         }
 
         log.info("mails c");
-        for(User u: coordinators) {
+        for (User u : coordinators) {
             mail.sendSimpleMessage(u.getEmail(), "Nieuwe opdracht gecreëerd",
-                    EmailTemplates.createdAssignment(currentUser.getFirstname() +" " + currentUser.getLastname(),
+                    EmailTemplates.createdAssignment(currentUser.getFirstname() + " " + currentUser.getLastname(),
                             assignment.getTitle(), currentUser.getEmail(), "http://vps092.ap.be/allassignments"));
         }
-        return addAssignment(principal, assignment, tags);
+        return addAssignment(model, principal, assignment, tags);
     }
 
-    private String addAssignment(Principal principal, @Valid Assignment assignment, @RequestParam(required = false, value = "tag") int[] tags) {
+    private String addAssignment(Model model, Principal principal, @Valid Assignment assignment, @RequestParam(required = false, value = "tag") int[] tags) {
         Set<Tag> set = new HashSet<>();
         User currentUser = userRepo.findByEmail(principal.getName());
         Student student = studentRepo.findByUserId(currentUser);
@@ -130,7 +130,7 @@ public class AssignmentController {
         assignment.setAssignerUserId(currentUser);
         assignmentRepo.save(assignment);
 
-        if(currentUser.getRole().equals(Role.STUDENT)) {
+        if (currentUser.getRole().equals(Role.STUDENT)) {
             try {
                 Set<Assignment> set2 = new HashSet<>();
                 set2.addAll(student.getAssignments());
@@ -148,7 +148,7 @@ public class AssignmentController {
                         set2.add(assignment);
                         assignment.setAmountStudents(counter + 1);
                         assignmentRepo.save(assignment);
-                        if (assignment.getAmountStudents() == assignment.getMaxStudents()){
+                        if (assignment.getAmountStudents() == assignment.getMaxStudents()) {
                             assignment.setFull(true);
                             assignmentRepo.save(assignment);
                         }
@@ -164,6 +164,8 @@ public class AssignmentController {
                 log.error(ex.getMessage());
             }
         }
+        //pass username to header fragment
+        model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
         return "assignments/successfullAssignment";
     }
 
@@ -554,7 +556,7 @@ public class AssignmentController {
             }
 
             model.addAttribute("status", status);
-
+            model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
             return "assignments/duplicateAssignment";
 
         } else {
@@ -586,16 +588,18 @@ public class AssignmentController {
                 }
             }
             model.addAttribute("status", status);
-
+            model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
             return "assignments/duplicateAssignment";
         }
     }
 
     // add duplicate assignment
     @PostMapping("/duplicateassignment/{assignmentId}")
-    public String createDuplicate(Principal principal, @Valid Assignment assignment,
+    public String createDuplicate(Model model, Principal principal, @Valid Assignment assignment,
                                   @RequestParam(required = false, value = "tag") int[] tags) {
-        return addAssignment(principal, assignment, tags);
+        User currentUser = userRepo.findByEmail(principal.getName());
+        model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
+        return addAssignment(model, principal, assignment, tags);
     }
 
     @GetMapping("/detailAssignmentEnrolled/{assignmentId}")

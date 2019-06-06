@@ -12,8 +12,13 @@ import java.util.List;
 @Repository
 public interface ArchiveRepository extends PagingAndSortingRepository<ArchivedAssignment, Long> {
     ArchivedAssignment findByAssignmentId(long assignmentId);
+
     Page<ArchivedAssignment> findAllByOrderByAssignmentIdDesc(Pageable page);
-    Page<ArchivedAssignment> findByTitleContainingOrTagNameContainingOrderByAssignmentIdDesc(String name,String tagName, Pageable page);
-    Page<ArchivedAssignment> findByAssignmentIdOrderByAssignmentIdDesc(long assignmentId,  Pageable page);
-    List<ArchivedAssignment> findByTitleContaining(String name);
+
+    Page<ArchivedAssignment> findByTitleContainingOrTagNameContainingOrderByAssignmentIdDesc(String name, String tagName, Pageable page);
+
+    Page<ArchivedAssignment> findByAssignmentIdOrderByAssignmentIdDesc(long assignmentId, Pageable page);
+
+    //Used for testing
+    List<ArchivedAssignment> findByTitleContaining(String title);
 }
