@@ -6,10 +6,12 @@ public class EmailTemplates {
 
     //voor coördinator
     public static String createdAssignment(String assigner, String title, String email, String url) {
-        return "Beste,\n"+
-                "Nieuwe opdracht van lector/externe/student(e) "+ assigner +".\n" +
-                email + " naam opdracht: "+ title +
-                "\nTe vinden op: "+ url;
+        return "Beste,\n\n"+
+                "Nieuwe opdracht van lector/externe/student(e) "+ assigner +" (" + email + ").\n" +
+                "Naam opdracht: "+ title +
+                ", te vinden op: "+ url + "\n\n"+
+                "Bedankt voor de samenwerking" + "\n\n" +
+                "AP-hogeschool";
     }
 
     public static String validatedAssignment(String name) {
@@ -21,15 +23,17 @@ public class EmailTemplates {
                 "Na het uitvoeren van de opdracht verwacht de hogeschool nog een ondertekend bewijsdocument van u en " +
                 "verwachten wij dat de student de nodige bewijsstukken " +
                 "( teksten, audio, video, vergaderverslagen, oefeningen, fotomateriaal,…) kan aanleveren.\n\n"+
-                "Bedankt voor de samenwerking.\n\n"+
+                "Bedankt voor de samenwerking.\n"+
                 "AP-hogeschool";
     }
 
     public static String enrolledAssignment( String title, String assigner, String email) {
-        return "Beste,\n"+
+        return "Beste,\n\n"+
                 "Nieuwe inschrijving van volgende opdracht: "+ title +".\n" +
                 "Naam student(e): "+ assigner + "\n" +
-                "E-mailadres: " + email;
+                "E-mailadres: " + email + "\n\n"+
+                "Bedankt voor de samenwerking.\n"+
+                "AP-hogeschool";
     }
 
     // voor student
