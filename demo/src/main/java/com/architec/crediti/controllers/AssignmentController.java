@@ -143,15 +143,13 @@ public class AssignmentController {
                     }
                 }
 
-                if (!zelfde) {
-                    if (assignment.getAmountStudents() < assignment.getMaxStudents()) {
-                        set2.add(assignment);
-                        assignment.setAmountStudents(counter + 1);
+                if (!zelfde && assignment.getAmountStudents() < assignment.getMaxStudents()) {
+                    set2.add(assignment);
+                    assignment.setAmountStudents(counter + 1);
+                    assignmentRepo.save(assignment);
+                    if (assignment.getAmountStudents() == assignment.getMaxStudents()) {
+                        assignment.setFull(true);
                         assignmentRepo.save(assignment);
-                        if (assignment.getAmountStudents() == assignment.getMaxStudents()) {
-                            assignment.setFull(true);
-                            assignmentRepo.save(assignment);
-                        }
                     }
                 }
 
@@ -196,7 +194,7 @@ public class AssignmentController {
                 }
             }
             list = list.stream().distinct().collect(Collectors.toList());
-            if (list.size() > 0) {
+            if (list.isEmpty()) {
                 fiches = assignmentRepo.findByTagsOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE));
             } else {
                 List<Assignment> list54 = new ArrayList();
@@ -257,7 +255,6 @@ public class AssignmentController {
             fiches = assignmentRepo.findByFullOrderByAssignmentIdDesc(true, PageRequest.of(evalPage, PAGE_SIZE));
         } else {
             List<Assignment> list3 = (List<Assignment>) assignmentRepo.findByFullOrderByAssignmentIdDesc(true, PageRequest.of(evalPage, PAGE_SIZE));
-            ;
             List<Long> list = new ArrayList<>();
             for (int item : tags) {
                 for (Assignment a : list3) {
@@ -267,7 +264,7 @@ public class AssignmentController {
                 }
             }
             list = list.stream().distinct().collect(Collectors.toList());
-            if (list.size() > 0) {
+            if (list.isEmpty()) {
                 fiches = assignmentRepo.findByTagsAndFullOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE));
             } else {
                 List<Assignment> list54 = new ArrayList();
@@ -482,8 +479,7 @@ public class AssignmentController {
 
     //archive assignment
     @GetMapping("/archiveassignment/{assignmentId}")
-    public String archiveAssignment(Principal principal, @PathVariable("assignmentId") long assignmentId, Model model, @RequestParam(required = false, value = "tag") int[] tags) {
-        User currentUser = userRepo.findByEmail(principal.getName());
+    public String archiveAssignment(Principal principal, @PathVariable("assignmentId") long assignmentId, Model model) {
         ArrayList<Integer> list = new ArrayList<>();
         ArrayList<String> listNames = new ArrayList<>();
 

@@ -3,12 +3,8 @@ package com.architec.crediti.controllers;
 import com.architec.crediti.models.*;
 import com.architec.crediti.repositories.DocumentationRepository;
 import com.architec.crediti.repositories.StudentRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +19,6 @@ import com.architec.crediti.repositories.UserRepository;
 import com.architec.crediti.upload.FileStorageService;
 import com.architec.crediti.utils.PortfolioUtil;
 
-import java.io.IOException;
 import java.security.Principal;
 import java.util.*;
 
@@ -34,9 +29,6 @@ https://github.com/callicoder/spring-boot-file-upload-download-rest-api-example/
 
 @Controller
 public class PortfolioController {
-
-    private static final Logger logger = LoggerFactory.getLogger(PortfolioController.class);
-
     private final PortfolioUtil portfolioUtil;
 
     private final FileStorageService fileStorageService;
@@ -100,8 +92,7 @@ public class PortfolioController {
 
     @GetMapping("/{studentNumber}/downloadFile/{fileName:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, @PathVariable("studentNumber") String studentNumber, HttpServletRequest request, HttpServletResponse response) {
-        Student usr = studentRepo.findByStudentNumber(studentNumber);
-        Resource file = this.fileStorageService.loadFileAsResource(fileName, studentNumber, response);
+        Resource file = this.fileStorageService.loadFileAsResource(fileName, studentNumber);
 
         String contentType = "application/octet-stream";
         response.setContentType(contentType);

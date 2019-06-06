@@ -14,15 +14,7 @@ public enum Progress {
         return info;
     }
 
-    public void setInfo(String info) {
-        this.info = info;
-    }
-
     public int getStatus() {
         return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
     }
 }

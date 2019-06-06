@@ -5,10 +5,11 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
+@SequenceGenerator(name="seq", initialValue=1050)
 @Table(name = "archive")
 public class ArchivedAssignment {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="seq")
     private long assignmentId;
 
     @NotNull(message = "Titel mag niet leeg zijn!")

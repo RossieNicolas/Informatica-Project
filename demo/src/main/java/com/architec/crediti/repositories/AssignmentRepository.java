@@ -2,7 +2,6 @@ package com.architec.crediti.repositories;
 
 import com.architec.crediti.models.Assignment;
 
-import com.architec.crediti.models.Tag;
 import com.architec.crediti.models.User;
 
 import org.springframework.data.domain.Page;
@@ -20,17 +19,11 @@ public interface AssignmentRepository extends PagingAndSortingRepository<Assignm
 
     List<Assignment> findByAssignerUserId(User user);
 
-    List<Assignment> findByTags(Tag tag);
-
-    Page<Assignment> findAllByOrderByAssignmentIdDesc(Pageable pageable);
-
     Page<Assignment> findByTitleContainingAndFullOrderByAssignmentIdDesc(String title, boolean full, Pageable pageable);
 
     Page<Assignment> findByFullOrderByAssignmentIdDesc(boolean full, Pageable pageable);
 
     List<Assignment> findByTitleContainingAndFullOrderByAssignmentIdDesc(String title, boolean full);
-
-    Page<Assignment> findByTitleContainingAndFullAndTypeEqualsOrderByAssignmentIdDesc(String title, boolean full, Pageable pageable, String type);
 
     List<Assignment> findByTitleContainingAndArchived(String name, boolean archived);
 

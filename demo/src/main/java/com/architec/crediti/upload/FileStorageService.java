@@ -3,24 +3,17 @@ package com.architec.crediti.upload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.core.env.Environment;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
-import com.architec.crediti.repositories.UserRepository;
-
-import javax.servlet.http.HttpServletResponse;
 
 /*
 from https://github.com/callicoder/spring-boot-file-upload-download-rest-api-example/blob/master/src/main/java/com/example/filedemo/service/FileStorageService.java
@@ -87,8 +80,7 @@ public class FileStorageService {
 
     }
 
-    public Resource loadFileAsResource(String fileName, String userId, HttpServletResponse response) {
-
+    public Resource loadFileAsResource(String fileName, String userId) {
         return new FileSystemResource(this.fileStorageLocation + File.separator + userId + File.separator + fileName);
     }
 }

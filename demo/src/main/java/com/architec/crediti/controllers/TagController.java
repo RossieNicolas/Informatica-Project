@@ -4,7 +4,6 @@ import com.architec.crediti.models.Assignment;
 import com.architec.crediti.models.Pager;
 import com.architec.crediti.models.Tag;
 import com.architec.crediti.models.User;
-import com.architec.crediti.repositories.AssignmentRepository;
 import com.architec.crediti.repositories.TagRepo;
 import com.architec.crediti.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -26,13 +24,11 @@ public class TagController {
     private final
     TagRepo tagRepo;
     private final UserRepository userRepo;
-    private final AssignmentRepository assignRepo;
 
     @Autowired
-    public TagController(TagRepo tagRepo, UserRepository userRepo, AssignmentRepository assignRepo) {
+    public TagController(TagRepo tagRepo, UserRepository userRepo) {
         this.tagRepo = tagRepo;
         this.userRepo = userRepo;
-        this.assignRepo = assignRepo;
     }
 
     // get create tag page
