@@ -88,7 +88,6 @@ public class EnrollController {
                 }
             } else return "assignments/alreadyAssigned";
 
-
             Enrolled enrolled = new Enrolled(user.getFirstname() + " " + user.getLastname(), user.getEmail(), assignment.getAssignmentId(), assignment.getTitle(), user.getUserId());
             enrolledRepo.save(enrolled);
 

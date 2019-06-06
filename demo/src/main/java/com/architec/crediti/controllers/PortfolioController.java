@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import com.architec.crediti.repositories.FileRepository;
 import com.architec.crediti.repositories.UserRepository;
@@ -24,10 +25,7 @@ import com.architec.crediti.utils.PortfolioUtil;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 /*
 Some functions from
@@ -93,7 +91,6 @@ public class PortfolioController {
     public String uploadMultipleFiles(@RequestParam("files") MultipartFile[] files, @RequestParam("type") String type,
             @RequestParam("lists") int assignment , Principal principal) {
         User currentUser = userRepo.findByEmail(principal.getName());
-
         for (MultipartFile item: files) {
             portfolioUtil.uploadFile(item, currentUser.getUserId(), type, (long)assignment);
         }
@@ -101,29 +98,17 @@ public class PortfolioController {
         return "redirect:/portfolio";
     }
 
-    @GetMapping("/downloadFile/{fileName:.+}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request, Principal principal) {
-        // Load file as Resource
-        User currentUser = userRepo.findByEmail(principal.getName());
-        Resource resource = fileStorageService.loadFileAsResource(fileName, currentUser.getUserId() + "");
+    @GetMapping("/{studentNumber}/downloadFile/{fileName:.+}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, @PathVariable("studentNumber") String studentNumber, HttpServletRequest request, HttpServletResponse response) {
+        Student usr = studentRepo.findByStudentNumber(studentNumber);
+        Resource file = this.fileStorageService.loadFileAsResource(fileName, studentNumber, response);
 
-        // Try to determine file's content type
-        String contentType = null;
-        try {
-            contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
-        } catch (IOException ex) {
-            logger.info("Could not determine file type.");
-        }
+        String contentType = "application/octet-stream";
+        response.setContentType(contentType);
 
-        // Fallback to the default content type if type could not be determined
-        if (contentType == null) {
-            contentType = "application/octet-stream";
-        }
-
-        return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-                .body(resource);
+        return ResponseEntity.ok().header("Content-Disposition", "attachment; filename=" + fileName).body(file);
     }
+
 
     @GetMapping("/deletefile/{id}")
     public String deleteFile(@PathVariable("id") int id) {

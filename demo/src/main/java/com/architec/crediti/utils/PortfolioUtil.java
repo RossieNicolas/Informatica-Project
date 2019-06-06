@@ -2,12 +2,13 @@ package com.architec.crediti.utils;
 
 import com.architec.crediti.models.Documentation;
 import com.architec.crediti.models.File;
+import com.architec.crediti.models.Student;
 import com.architec.crediti.models.User;
 import com.architec.crediti.repositories.DocumentationRepository;
 import com.architec.crediti.repositories.FileRepository;
+import com.architec.crediti.repositories.StudentRepository;
 import com.architec.crediti.repositories.UserRepository;
 import com.architec.crediti.upload.FileStorageService;
-import com.architec.crediti.upload.UploadFileResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,24 +27,28 @@ public class PortfolioUtil {
 
     private DocumentationRepository docRepo;
 
+    private StudentRepository studentRepo;
+
     @Autowired
     public PortfolioUtil(FileStorageService fileStorageService, FileRepository fileRepo, UserRepository userRepo,
-            DocumentationRepository documRepo) {
+            DocumentationRepository documRepo, StudentRepository studentRepository) {
         this.fileStorageService = fileStorageService;
         this.fileRepo = fileRepo;
         this.userRepo = userRepo;
         this.docRepo = documRepo;
+        this.studentRepo = studentRepository;
     }
 
     public PortfolioUtil() {
 
     }
 
-    public UploadFileResponse uploadFile(MultipartFile file, long userId, String docType, long assignmentID) {
+    public void uploadFile(MultipartFile file, long userId, String docType, long assignmentID) {
         User current = userRepo.findByUserId(userId);
-        String fileName = fileStorageService.storeFile(file, userId + "");
+        Student st = studentRepo.findByUserId(current);
+        String fileName = fileStorageService.storeFile(file, st.getStudentNumber());
 
-        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/downloadFile/")
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path(st.getStudentNumber() + "/downloadFile/")
                 .path(fileName).toUriString();
 
         List<File> docs = fileRepo.findAll();
@@ -55,13 +60,12 @@ public class PortfolioUtil {
         }
 
         fileRepo.save(new File(fileName, fileDownloadUri, current, docType, assignmentID));
-        return new UploadFileResponse(fileName, fileDownloadUri, file.getContentType(), file.getSize());
     }
 
     public void uploadDocumentation(MultipartFile file) {
         String fileName = fileStorageService.storeFile(file, "documentation");
 
-        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/downloadFile/")
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/documentation/downloadFile/")
                 .path(fileName).toUriString();
 
         List<Documentation> docs = docRepo.findAll();

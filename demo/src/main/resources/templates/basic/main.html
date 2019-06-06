@@ -58,7 +58,7 @@
 
                 <!--BEKIJKEN-->
                 <h4 sec:authorize="!hasRole('EXTERN')" class="extra">Bekijken</h4>
-                <a sec:authorize="!hasRole('EXTERN')" class="mt-3 btn btn-outline-danger" href="/allassignments">Alle
+                <a sec:authorize="!hasRole('EXTERN')" class="mt-3 btn btn-outline-danger" href="/allassignments">Lopende
                     opdrachten</a>
                 <a sec:authorize="hasAnyRole('COORDINATOR','DOCENT')" class="mt-3 btn btn-outline-danger"
                    href="/allFullAssignments">Volzette opdrachten</a>
