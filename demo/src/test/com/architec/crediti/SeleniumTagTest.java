@@ -41,13 +41,13 @@ public class SeleniumTagTest {
     @Test
     public void createTagHalfFillIn() {
         driver.get("http://vps092.ap.be/");
-        driver.manage().window().setSize(new Dimension(1550, 838));
+        driver.manage().window().setSize(new Dimension(900, 707));
         driver.findElement(By.linkText("Login")).click();
         driver.findElement(By.id("username")).sendKeys("nicolas.rossie@gmail.com");
         driver.findElement(By.id("password")).sendKeys("testwachtwoord");
         driver.findElement(By.cssSelector(".btn")).click();
-        driver.findElement(By.id("extras")).click();
-        driver.findElement(By.linkText("Tag Toevoegen")).click();
+        driver.findElement(By.id("tags")).click();
+        driver.findElement(By.linkText("Toevoegen")).click();
         driver.findElement(By.id("tagName")).click();
         driver.findElement(By.id("tagName")).sendKeys("SELENIUMtest");
         driver.findElement(By.cssSelector(".btn")).click();
@@ -57,13 +57,13 @@ public class SeleniumTagTest {
     @Test
     public void createTagEmpty() {
         driver.get("http://vps092.ap.be/");
-        driver.manage().window().setSize(new Dimension(1550, 838));
+        driver.manage().window().setSize(new Dimension(900, 707));
         driver.findElement(By.linkText("Login")).click();
         driver.findElement(By.id("username")).sendKeys("nicolas.rossie@gmail.com");
         driver.findElement(By.id("password")).sendKeys("testwachtwoord");
         driver.findElement(By.cssSelector(".btn")).click();
-        driver.findElement(By.id("extras")).click();
-        driver.findElement(By.linkText("Tag Toevoegen")).click();
+        driver.findElement(By.id("tags")).click();
+        driver.findElement(By.linkText("Toevoegen")).click();
         driver.findElement(By.cssSelector(".btn")).click();
     }
 
@@ -71,14 +71,13 @@ public class SeleniumTagTest {
     @Test
     public void createTagTooLong() {
         driver.get("http://vps092.ap.be/");
-        driver.manage().window().setSize(new Dimension(1550, 838));
+        driver.manage().window().setSize(new Dimension(900, 707));
         driver.findElement(By.linkText("Login")).click();
         driver.findElement(By.id("username")).sendKeys("nicolas.rossie@gmail.com");
         driver.findElement(By.id("password")).sendKeys("testwachtwoord");
         driver.findElement(By.cssSelector(".btn")).click();
-        driver.findElement(By.id("extras")).click();
-        driver.findElement(By.linkText("Tag Toevoegen")).click();
-        driver.findElement(By.id("tagName")).click();
+        driver.findElement(By.id("tags")).click();
+        driver.findElement(By.linkText("Toevoegen")).click();
         driver.findElement(By.id("tagName")).sendKeys("heelLangeSeleniumTESTNaamDieGroterIsDanVijftigKara");
         driver.findElement(By.id("tagDescription")).click();
         driver.findElement(By.id("tagDescription")).sendKeys("SELENIUMtest");

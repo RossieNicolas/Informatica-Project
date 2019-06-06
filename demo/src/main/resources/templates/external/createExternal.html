@@ -31,12 +31,12 @@
 
                     <div class="col-md-5 pt-3">
                         <label for="firstname">Voornaam:</label>
-                        <input type="text" class="form-control" name="firstname" id="firstname" maxlength="50" required>
+                        <input type="text" class="form-control" name="firstname" id="firstname" maxlength="50" pattern="[A-Za-z]+" title="Geen cijfers of speciale tekens toegestaan" required>
                     </div>
 
                     <div class="col-md-5 pt-3">
                         <label for="lastname">Achternaam:</label>
-                        <input type="text" class="form-control" name="lastname" id="lastname" maxlength="50" required>
+                        <input type="text" class="form-control" name="lastname" id="lastname" maxlength="50" pattern="[A-Za-z]+" title="Geen cijfers of speciale tekens toegestaan" required>
                     </div>
 
                     <div class="col-md-5 pt-3">
@@ -56,7 +56,7 @@
 
                     <div class="col-md-5 pt-3">
                         <label for="city">Gemeente:</label>
-                        <input type="text" class="form-control" name="city" id="city" maxlength="50" required>
+                        <input type="text" class="form-control" name="city" id="city" maxlength="50" required pattern="[A-Za-z]+" title="Geen cijfers of speciale tekens toegestaan">
                     </div>
 
                     <div class="col-md-5 pt-3">
