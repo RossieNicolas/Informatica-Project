@@ -74,7 +74,7 @@ public class ProfileController {
             }
         }
 
-        String status = "start";
+        String status;
         status = file.getStatus();
         String newStatus ;
         if(status.equals(Progress.START.getInfo())){

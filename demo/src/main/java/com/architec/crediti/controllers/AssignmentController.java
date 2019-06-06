@@ -143,15 +143,13 @@ public class AssignmentController {
                     }
                 }
 
-                if (!zelfde) {
-                    if (assignment.getAmountStudents() < assignment.getMaxStudents()) {
-                        set2.add(assignment);
-                        assignment.setAmountStudents(counter + 1);
+                if (!zelfde && assignment.getAmountStudents() < assignment.getMaxStudents()) {
+                    set2.add(assignment);
+                    assignment.setAmountStudents(counter + 1);
+                    assignmentRepo.save(assignment);
+                    if (assignment.getAmountStudents() == assignment.getMaxStudents()) {
+                        assignment.setFull(true);
                         assignmentRepo.save(assignment);
-                        if (assignment.getAmountStudents() == assignment.getMaxStudents()) {
-                            assignment.setFull(true);
-                            assignmentRepo.save(assignment);
-                        }
                     }
                 }
 

@@ -3,8 +3,6 @@ package com.architec.crediti.controllers;
 import com.architec.crediti.models.*;
 import com.architec.crediti.repositories.DocumentationRepository;
 import com.architec.crediti.repositories.StudentRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;

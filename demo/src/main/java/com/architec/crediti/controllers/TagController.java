@@ -25,13 +25,11 @@ public class TagController {
     private final
     TagRepo tagRepo;
     private final UserRepository userRepo;
-    private final AssignmentRepository assignRepo;
 
     @Autowired
-    public TagController(TagRepo tagRepo, UserRepository userRepo, AssignmentRepository assignRepo) {
+    public TagController(TagRepo tagRepo, UserRepository userRepo) {
         this.tagRepo = tagRepo;
         this.userRepo = userRepo;
-        this.assignRepo = assignRepo;
     }
 
     // get create tag page
