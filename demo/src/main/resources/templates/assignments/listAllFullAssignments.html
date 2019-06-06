@@ -1,31 +1,24 @@
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/custom.css}">
-
     <title>Crediti - Alle volzette opdrachten</title>
-
 </head>
-
 <body class="bg" onload="tableFill()">
 <div id="page-container">
     <div id="content-wrap">
         <header th:insert="fragments/generalMenu.html :: header"></header>
-
         <main role="main" class="container">
             <div class='col-md-6 mt-2 mx-auto'>
                 <div class='search-box'>
                     <form class='search-form'
-                          th:action="@{'/allassignments/'${searchbar}'/'${tag}'}"
-                          method="get" id="searchAs">
+                          th:action="@{'/allassignments/'${searchbar}'/'${tag}'}" method="get" id="searchAs">
                         <div>
                             <input class='form-control' name='searchbar' id='searchbar'
                                    placeholder='Zoeken...' type='text' th:value="${searchbar}">
@@ -33,7 +26,6 @@
                         </div>
                     </form>
                 </div>
-
                 <p>
                     <a class="mt-3" data-toggle="collapse" href="#collapseExample" role="button"
                        aria-expanded="false" aria-controls="collapseExample">
@@ -55,8 +47,6 @@
                     </div>
                 </div>
             </div>
-
-
             <div class="mt-5 jumbotron">
                 <h1 class="pb-4">Alle volzette opdrachten</h1>
                 <div>
@@ -92,9 +82,7 @@
                         </tbody>
                     </table>
                     <div class="alert alert-primary" role="alert" id="empty"></div>
-
                     <br/>
-
                     <nav th:if="${persons.totalPages !=1}">
                         <ul class="pagination">
                             <li th:classappend="(${persons.number == 0} ? disabled) + ' page-item'">
@@ -105,39 +93,33 @@
                                     <span class="sr-only">Previous</span>
                                 </a>
                             </li>
-
                             <!-- Eerste pager -->
                             <li th:classappend="(${persons.getNumber() <= pager.getStartPage()} ? disabled) + ' page-item'">
                                 <a class="page-link" th:href="@{__${#httpServletRequest.requestURL}__(page=${pager.getStartPage()})}"
                                    th:text="Eerste"></a>
                             </li>
-
                             <!-- Vorige # pager -->
                             <li th:if="${persons.getNumber() + 1 != pager.getStartPage()}"
                                 th:classappend="'page-item'">
                                 <a class="page-link" th:href="@{__${#httpServletRequest.requestURL}__(page=${persons.getNumber()})}"
                                    th:text="${persons.getNumber()}"></a>
                             </li>
-
                             <!-- Huidige # pager -->
                             <li th:classappend="'page-item'">
                                 <a class="page-link" th:href="@{__${#httpServletRequest.requestURL}__(page=${persons.getNumber() + 1})}"
                                    th:text="${persons.getNumber() + 1}"></a>
                             </li>
-
                             <!-- Volgende # pager -->
                             <li th:if="${persons.getNumber() + 1 != persons.getTotalPages()}"
                                 th:classappend="'page-item'">
                                 <a class="page-link" th:href="@{__${#httpServletRequest.requestURL}__(page=${persons.getNumber() + 2})}"
                                    th:text="${persons.getNumber() + 2}"></a>
                             </li>
-
                             <!-- Laatste pager -->
                             <li th:classappend="(${persons.getNumber() + 1 >= persons.getTotalPages()} ? disabled) + ' page-item'">
                                 <a class="page-link" th:href="@{__${#httpServletRequest.requestURL}__(page=${pager.getEndPage()})}"
                                    th:text="Laatste"></a>
                             </li>
-
                             <li th:classappend="(${persons.number + 1 >= persons.totalPages} ? disabled) + ' page-item'">
                                 <a class="page-link"
                                    th:href="@{__${#httpServletRequest.requestURL}__(page=${persons.number + 2})}"
@@ -149,10 +131,10 @@
                         </ul>
                     </nav>
                 </div>
+                <div class="alert alert-primary" role="alert" id="empty"></div>
             </div>
         </main>
         <!-- /.container -->
-
     </div>
     <div th:insert="fragments/general.html :: footer">
     </div>
@@ -198,7 +180,6 @@
             document.getElementById('searchAs').action = '/allFullAssignments/' + id;
         }
     }
-
 </script>
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -211,5 +192,4 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
 </body>
-
 </html>

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -10,9 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/custom.css}">
-
     <title>Crediti - Opdracht aanmaken</title>
-
 </head>
 
 <body class="bg">
@@ -20,7 +17,6 @@
     <div id="content-wrap">
         <header th:insert="fragments/generalMenu.html :: header">
         </header>
-
         <main role="main" class="container">
             <div class="mt-5 mb-5 jumbotron">
                 <h1>Invoerformulier voor opdrachtgevers</h1>
@@ -31,7 +27,6 @@
                             <label for="title">Titel:</label>
                             <input type="text" class="form-control" name="title" pattern="[A-Za-z ]+" title="Er zijn geen cijfers of speciale tekens toegestaan" id="title" required>
                         </div>
-
                         <div class="col-md-5 pt-3">
                             <label for="type">Type:</label>
                             <select class="custom-select custom-select-lg" name="type" id="type" required>
@@ -40,12 +35,10 @@
                                 <option th:text="Mobility"></option>
                             </select>
                         </div>
-
                         <div class="col-md-5 pt-3">
                             <label for="task">Omschrijving opdracht:</label>
                             <textarea type="text" class="form-control" name="task" id="task" required></textarea>
                         </div>
-
                         <div class="col-md-5 pt-3">
                             <label for="startDate">Begindatum:</label>
                             <input type="date" class="form-control" name="startDate" id="startDate" onblur="SDate()"
@@ -69,7 +62,6 @@
                             <input type="number" class="form-control" name="maxStudents" id="maxStudents" min="1"
                                    required>
                         </div>
-
                         <div class="col-md-5 pt-3">
                             <label>Tags:</label>
                             <div class="form-group">
@@ -81,7 +73,6 @@
                                 </label>
                             </div>
                         </div>
-
                     </div>
                     <div class="col-md-5 pt-3">
                         <button id='saveBtn' onclick="Loading();" type="submit" class="btn btn-primary btn-lg">Opdracht aanmaken</button>
@@ -99,7 +90,6 @@
     </footer>
 </div>
 <!-- Optional JavaScript -->
-
 <script>
     function amoutH() {
         var amountHours = document.getElementById("amountHours").value;
@@ -157,7 +147,6 @@
         }
     }
 </script>
-
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -168,7 +157,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-
 <script>
     function Loading(){
         var $form = $('form')[0];
@@ -181,5 +169,4 @@
     }
 </script>
 </body>
-
 </html>

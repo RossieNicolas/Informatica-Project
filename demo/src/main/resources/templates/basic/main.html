@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -11,17 +10,13 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/custom.css}">
-
     <title>Crediti - Startpagina</title>
-
 </head>
-
 <body class="bg">
 <div id="page-container">
     <div id="content-wrap">
         <header th:insert="fragments/generalMenu.html :: header (name=${name})">
         </header>
-
         <main role="main" class="container">
             <div class="mt-4 mb-4 jumbotron">
                 <h1 th:text="${'Welkom ' + name}"></h1>
@@ -29,19 +24,15 @@
                 <!--GOED TE KEUREN-->
                 <h4 th:if="${externals} > 0 or ${assignments} > 0 or ${enrolled} > 0" sec:authorize="hasRole('COORDINATOR')" class="extra">Goed te keuren <span class="badge badge-warning" th:text="${externals + assignments + enrolled}"></span></h4>
                 <h4 th:if="${enrolled} > 0" sec:authorize="hasRole('DOCENT')" class="extra">Goed te keuren</h4>
-
                 <a sec:authorize="hasRole('COORDINATOR')" href="/listUnvalidatedExternal" th:if="${externals} > 0" class="btn btn-outline-danger">
                     Externe <span class="badge badge-warning" th:text="${externals}"></span>
                 </a>
-
                 <a sec:authorize="hasRole('COORDINATOR')" href="/unvalidatedassignments" th:if="${assignments} > 0" class="btn btn-outline-danger">
                     Opdrachten <span class="badge badge-warning" th:text="${assignments}"></span>
                 </a>
-
                 <a sec:authorize="hasAnyRole('COORDINATOR','DOCENT')" href="/unapprovedEnrollments" th:if="${enrolled} > 0" class="btn btn-outline-danger">
                     Inschrijvingen <span class="badge badge-warning" th:text="${enrolled}"></span>
                 </a>
-
                 <!--PROFIEL STUDENT / EXTERN-->
                 <a sec:authorize="hasRole('STUDENT')" class="mt-3 btn btn-outline-danger" href="/studentProfile">Mijn
                     profiel</a>
@@ -49,13 +40,11 @@
                     profiel</a>
                 <a sec:authorize="hasRole('STUDENT')" class="mt-3 btn btn-outline-danger" href="/portfolio">Mijn
                     portfolio</a><br><br>
-
                 <!--TOEVOEGEN-->
                 <h4 class="extra">Toevoegen</h4>
                 <a class="mt-3 btn btn-outline-danger" href="/assignment">Opdracht toevoegen</a>
                 <a sec:authorize="hasRole('COORDINATOR')" class="mt-3 btn btn-outline-danger" href="/tag">Tag
                     toevoegen</a><br><br>
-
                 <!--BEKIJKEN-->
                 <h4 sec:authorize="!hasRole('EXTERN')" class="extra">Bekijken</h4>
                 <a sec:authorize="!hasRole('EXTERN')" class="mt-3 btn btn-outline-danger" href="/allassignments">Lopende
@@ -72,20 +61,13 @@
                    href="/documentation">Documentatie</a>
                 <a sec:authorize="hasRole('COORDINATOR')" class="mt-3 btn btn-outline-danger"
                    href="/archive">Archief</a><br><br>
-
             </div>
-
         </main>
         <!-- /.container -->
-
     </div>
     <footer th:insert="fragments/general.html :: footer">
     </footer>
 </div>
-<!-- Optional JavaScript -->
-<script>
-
-</script>
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -96,7 +78,5 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-
 </body>
-
 </html>

@@ -10,9 +10,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/custom.css}">
-
     <title>Crediti - Ingeschreven opdracht details</title>
-
 </head>
 
 <body class="bg">
@@ -20,33 +18,24 @@
     <div id="content-wrap">
         <header th:insert="fragments/generalMenu.html :: header">
         </header>
-
         <main role="main" class="container">
             <div class="mt-5 mb-5 jumbotron">
                 <h1>Details opdracht</h1>
-
                 <form th:action="@{/detailAssignmentEnrolled/{id}(id=${assignments.getAssignmentId()})}" method="post">
-
                     <fieldset disabled id="assignmentInfo">
-
                         <label for="opdrachtgever"><strong>Opdrachtgever naam: </strong></label>
                         <a id="opdrachtgever" type="text" th:text="*{assignments.getName()}"></a>
-
                         <br/>
-
                         <label for="opdrachtgeveremail"><strong>Opdrachtgever e-mail: </strong></label>
                         <a id="opdrachtgeveremail" type="text" th:text="*{assignments.getEmail()}" th:href="'mailto:' + ${assignments.getEmail()}"></a>
-
                         <div class="col-md-5 pt-3">
                             <label for="company" th:if="${!company.equalsIgnoreCase('t')}">Bedrijf:</label>
                             <input th:if="${!company.equalsIgnoreCase('t')}" type="text" class="form-control" id="company" th:value="*{company}">
                         </div>
-
                         <div class="col-md-5 pt-3">
                             <label for="title">Titel:</label>
                             <input type="text" class="form-control" name="title" id="title" th:value="*{assignments.getTitle()}" required>
                         </div>
-
                         <div class="col-md-5 pt-3">
                             <label for="type">Type:</label>
                             <select class="custom-select custom-select-lg" name="type" id="type" required>
@@ -55,32 +44,26 @@
                                 <option value="ZAP">ZAP</option>
                             </select>
                         </div>
-
                         <div class="col-md-5 pt-3">
                             <label for="task">Omschrijving opdracht:</label>
                             <textarea class="form-control" name="task" id="task" th:text="*{assignments.getTask()}" maxlength="255" required></textarea>
                         </div>
-
                         <div class="col-md-5 pt-3">
                             <label for="startDate">Begindatum:</label>
                             <input type="date" class="form-control" name="startDate" id="startDate" onblur="SDate()" th:value="*{assignments.getStartDate()}" required>
                         </div>
-
                         <div class="col-md-5 pt-3">
                             <label for="endDate">Begindatum:</label>
                             <input type="date" class="form-control" name="endDate" id="endDate" onblur="TDate()" th:value="*{assignments.getEndDate()}" required>
                         </div>
-
                         <div class="col-md-5 pt-3">
                             <label for="amountHours">Totaal uur:</label>
                             <input type="number" class="form-control" name="amountHours" id="amountHours" th:value="*{assignments.getAmountHours()}" onblur="amoutH()" min="6" max="78" required>
                         </div>
-
                         <div class="col-md-5 pt-3">
                             <label for="maxStudents">Max Studenten:</label>
                             <input type="number" class="form-control" name="maxStudents" id="maxStudents" th:value="*{assignments.getMaxStudents()}" min="1" required>
                         </div>
-
                         <div class="col-md-5 pt-3">
                             <label>Tags:</label>
                             <div class="form-group">
@@ -113,7 +96,6 @@
     </footer>
 </div>
 <!-- Optional JavaScript -->
-
 <script th:inline="javascript">
     var type = /*[[${type}]]*/ 'kies een type';
     SelectElement("type", type);
@@ -171,7 +153,6 @@
         }
     }
 </script>
-
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -183,5 +164,4 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
 </body>
-
 </html>
