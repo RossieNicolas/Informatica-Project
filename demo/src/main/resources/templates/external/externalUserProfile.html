@@ -23,18 +23,13 @@
         <main role="main" class="container">
             <div class="mt-5 mb-5 jumbotron">
                 <h1>Uw profiel</h1>
-                <input class="btn btn-outline-secondary mb-3 mt-3" type="button" value="✏️ Bewerken"
-                       onclick="toggleForm();">
-                <input class="btn btn-outline-success mb-3 mt-3 ml-2" type="submit" value="💾 Bewaren" id="save">
-
-
                 <form th:action="@{/externalUserProfile}" class="standard-form" method="post">
                     <fieldset disabled="disabled" id="externalInfo">
                         <div class="form-group">
 
                             <div class="col-md-5 pt-3">
                                 <label for="firstname">Voornaam:</label>
-                                <input th:value="${externalUsers.getFirstname()}" type="text" class="form-control" name="firstname" id="firstname" maxlength="50" pattern="[A-Za-z]+" oninput="this.setCustomValidity('Er zijn geen cijfers of speciale tekens toegelaten')" required>
+                                <input th:value="${externalUsers.getFirstname()}" type="text" class="form-control" name="firstname" id="firstname" maxlength="50" oninput="this.setCustomValidity('Er zijn geen cijfers of speciale tekens toegelaten')" required>
                             </div>
 
                             <div class="col-md-5 pt-3">
@@ -75,7 +70,7 @@
                     <br>
                     <input class="btn btn-outline-secondary mb-4 ml-3" type="button" value="✏️ Bewerken"
                            onclick="toggleForm();">
-                    <input class="btn btn-outline-success mb-4 ml-2" type="submit" value="💾 Bewaren" id="save2">
+                    <input class="btn btn-outline-success mb-4 ml-2" type="submit" value="💾 Bewaren" id="save">
                 </form>
 
                 <h3 class="pb-4  mt-3 ">Uw aangemaakte opdrachten</h3>
@@ -124,8 +119,6 @@
         function toggleForm() {
             document.getElementById('externalInfo').removeAttribute('disabled');
             document.getElementById("save").style.display = "inline-block";
-            document.getElementById("save2").style.display = "inline-block";
-
         }
 
         function tableFill() {
