@@ -34,37 +34,37 @@
 
                             <div class="col-md-5 pt-3">
                                 <label for="firstname">Voornaam:</label>
-                                <input th:value="${externalUsers.getFirstname()}" type="text" class="form-control" name="firstname" id="firstname" maxlength="50" pattern="[A-Za-z]+" oninput="this.setCustomValidity('Er zijn geen cijfers of speciale tekens toegelaten')" required>
+                                <input th:value="${externalUsers.getFirstname()}" type="text" class="form-control" name="firstname" id="firstname" maxlength="50" pattern="[A-Za-z]+" title="Er zijn geen cijfers of speciale tekens toegelaten" required>
                             </div>
 
                             <div class="col-md-5 pt-3">
                                 <label for="lastname">Achternaam:</label>
-                                <input th:value="${externalUsers.getLastname()}" type="text" class="form-control" name="lastname" id="lastname" maxlength="50" pattern="[A-Za-z]" oninput="this.setCustomValidity('Er zijn geen cijfers of speciale tekens toegelaten')" required>
+                                <input th:value="${externalUsers.getLastname()}" type="text" class="form-control" name="lastname" id="lastname" maxlength="50" pattern="[A-Za-z]" title="Er zijn geen cijfers of speciale tekens toegelaten" required>
                             </div>
 
                             <div class="col-md-5 pt-3">
                                 <label for="company">Naam bedrijf:</label>
-                                <input th:value="${externalUsers.getCompany()}" type="text" class="form-control" name="company" id="company" pattern="[A-Za-z]" oninput="this.setCustomValidity('Er zijn geen cijfers of speciale tekens toegelaten')" required>
+                                <input th:value="${externalUsers.getCompany()}" type="text" class="form-control" name="company" id="company" pattern="[A-Za-z]" title="Er zijn geen cijfers of speciale tekens toegelaten" required>
                             </div>
 
                             <div class="col-md-5 pt-3">
                                 <label for="address">Adres:</label>
-                                <input th:value="${externalUsers.getAddress()}" type="text" class="form-control" name="address" id="address" pattern="[A-Za-z0-9]" oninput="this.setCustomValidity('Er zijn geen speciale tekens toegelaten')" required>
+                                <input th:value="${externalUsers.getAddress()}" type="text" class="form-control" name="address" id="address" pattern="[A-Za-z0-9]" title="Er zijn geen speciale tekens toegelaten" required>
                             </div>
 
                             <div class="col-md-5 pt-3">
                                 <label for="postal">Postcode:</label>
-                                <input th:value="${externalUsers.getPostal()}" type="text" class="form-control" name="postal" id="postal" maxlength="50" pattern="[A-Za-z0-9]" oninput="this.setCustomValidity('Er zijn geen cijfers of speciale tekens toegelaten')" required>
+                                <input th:value="${externalUsers.getPostal()}" type="text" class="form-control" name="postal" id="postal" maxlength="50" pattern="[A-Za-z0-9]" title="Er zijn geen cijfers of speciale tekens toegelaten" required>
                             </div>
 
                             <div class="col-md-5 pt-3">
                                 <label for="city">Gemeente:</label>
-                                <input th:value="${externalUsers.getCity()}" type="text" class="form-control" name="city" id="city" maxlength="50" pattern="[A-Za-z]" oninput="this.setCustomValidity('Er zijn geen cijfers of speciale tekens toegelaten')" required>
+                                <input th:value="${externalUsers.getCity()}" type="text" class="form-control" name="city" id="city" maxlength="50" pattern="[A-Za-z]" title="Er zijn geen cijfers of speciale tekens toegelaten" required>
                             </div>
 
                             <div class="col-md-5 pt-3">
                                 <label for="phone">Telefoonnummer:</label>
-                                <input th:value="${externalUsers.getPhone()}" type="text" class="form-control" name="phone" id="phone" maxlength="10" pattern="([(+]*[0-9]+[()+. -]*)" oninput="this.setCustomValidity('Er zijn geen speciale tekens toegelaten')" required>
+                                <input th:value="${externalUsers.getPhone()}" type="text" class="form-control" name="phone" id="phone" maxlength="10" pattern="([(+]*[0-9]+[()+. -]*)" title="Er zijn geen speciale tekens toegelaten" required>
                             </div>
 
                             <div class="col-md-5 pt-3"><p class="lead">U kan uw wachtwoord <a href="/forgotPassword"><b>hier</b></a> wijzigen.

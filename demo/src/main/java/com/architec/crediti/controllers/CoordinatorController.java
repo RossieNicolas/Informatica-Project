@@ -55,17 +55,19 @@ public class CoordinatorController {
     public String deleteCoordiantor(@PathVariable("id") int id){
         User usr = userRepo.findByUserId((long) id);
 
-        switch (usr.getEmail().substring(0,1).toLowerCase()){
-            case "s":
-                usr.setRole(Role.STUDENT);
-                break;
-            case "p":
-                usr.setRole(Role.DOCENT);
-            default:
-                usr.setRole(Role.EXTERN);
-        }
+        if(usr != null) {
+            switch (usr.getEmail().substring(0, 1).toLowerCase()) {
+                case "s":
+                    usr.setRole(Role.STUDENT);
+                    break;
+                case "p":
+                    usr.setRole(Role.DOCENT);
+                default:
+                    usr.setRole(Role.EXTERN);
+            }
 
-        userRepo.save(usr);
+            userRepo.save(usr);
+        }
 
         return "redirect:/coordinator";
     }
