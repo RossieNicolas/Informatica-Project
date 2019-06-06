@@ -34,8 +34,7 @@
                     <div class="col-md-5 pt-3">
                         <label for="Naam">Naam:</label>
                         <input class="form-control" name="Naam" id="Naam" type="text" th:value="${student.getUserId()}"
-                               required="required"
-                               disabled><br>
+                               required="required" disabled><br>
                     </div>
                     <div class="col-md-5 pt-3">
 
@@ -55,7 +54,7 @@
 
                             <label for="Gsm">Gsm:</label><br>
                             <input class="form-control" name="Gsm" id="Gsm" type="text" th:value="${student.getGsm()}"
-                                   required="required"><br>
+                                   required="required" maxlength="10" pattern="([(+]*[0-9]+[()+. -]*)" oninput="this.setCustomValidity('Er zijn geen speciale tekens toegelaten')"><br>
                         </div>
                         <div class="col-md-5 pt-3">
 
