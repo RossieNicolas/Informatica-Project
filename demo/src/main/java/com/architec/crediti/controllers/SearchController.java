@@ -1,6 +1,5 @@
 package com.architec.crediti.controllers;
 
-import com.architec.crediti.email.EmailServiceImpl;
 import com.architec.crediti.models.Assignment;
 import com.architec.crediti.models.Pager;
 import com.architec.crediti.models.Tag;

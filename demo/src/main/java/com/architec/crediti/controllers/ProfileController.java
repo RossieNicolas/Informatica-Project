@@ -5,18 +5,15 @@ import com.architec.crediti.repositories.AssignmentRepository;
 import com.architec.crediti.repositories.FileRepository;
 import com.architec.crediti.repositories.StudentRepository;
 import com.architec.crediti.repositories.UserRepository;
-import com.architec.crediti.security.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Controller
 public class ProfileController {
@@ -47,7 +44,7 @@ public class ProfileController {
 
         Student st = stuRepo.findByStudentNumber(studentNumber);
         User us = userRepo.findByUserId(st.getUserId().getUserId());
-        List<File> files = fileRepo.findByUser(us);
+        List<File> files = fileRepo.findByUserOrderByAssignmentId(us);
 
         model.addAttribute("student", st);
         model.addAttribute("files", files);

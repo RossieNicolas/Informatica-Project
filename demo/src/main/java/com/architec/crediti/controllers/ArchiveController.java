@@ -2,11 +2,8 @@ package com.architec.crediti.controllers;
 
 import com.architec.crediti.models.*;
 import com.architec.crediti.repositories.ArchiveRepository;
-import com.architec.crediti.repositories.AssignmentRepository;
 import com.architec.crediti.repositories.TagRepo;
 import com.architec.crediti.repositories.UserRepository;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Controller
 public class ArchiveController {
@@ -27,16 +23,12 @@ public class ArchiveController {
     ArchiveRepository archiveRepo;
     private static final int PAGE_SIZE = 15;
     private static final int INITAL_PAGE = 0;
-    private Log log = LogFactory.getLog(this.getClass());
-    private final
-    TagRepo tagRepo;
+    private final TagRepo tagRepo;
     private final UserRepository userRepo;
-    private final AssignmentRepository assignmentRepo;
 
     @Autowired
-    public ArchiveController(ArchiveRepository archiveRepo, AssignmentRepository assignmentRepo, TagRepo tagRepo, UserRepository userRepo) {
+    public ArchiveController(ArchiveRepository archiveRepo, TagRepo tagRepo, UserRepository userRepo) {
         this.archiveRepo = archiveRepo;
-        this.assignmentRepo = assignmentRepo;
         this.tagRepo = tagRepo;
         this.userRepo = userRepo;
     }
@@ -117,4 +109,3 @@ public class ArchiveController {
         return "archive/archive";
     }
 }
-

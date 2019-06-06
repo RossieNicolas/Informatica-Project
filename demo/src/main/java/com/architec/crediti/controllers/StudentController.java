@@ -4,7 +4,6 @@ import com.architec.crediti.models.*;
 import com.architec.crediti.repositories.AssignmentRepository;
 import com.architec.crediti.repositories.UserRepository;
 import com.architec.crediti.repositories.StudentRepository;
-import com.architec.crediti.security.Role;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;

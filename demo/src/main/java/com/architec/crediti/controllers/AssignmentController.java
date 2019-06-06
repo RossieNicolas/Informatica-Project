@@ -196,7 +196,7 @@ public class AssignmentController {
                 }
             }
             list = list.stream().distinct().collect(Collectors.toList());
-            if (list.size() > 0) {
+            if (list.isEmpty()) {
                 fiches = assignmentRepo.findByTagsOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE));
             } else {
                 List<Assignment> list54 = new ArrayList();
