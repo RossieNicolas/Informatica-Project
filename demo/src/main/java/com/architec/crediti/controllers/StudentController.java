@@ -105,6 +105,8 @@ public class StudentController {
         int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
 
         try {
+            //DEZE ONGEBRUIKTE CODE MAG NIET WEG!!
+            int studentenNummer = Integer.parseInt(name);
             students = studentRepo.findByStudentNumberContainingOrderByStudentId(name, PageRequest.of(evalPage, PAGE_SIZE));
 
         } catch (Exception e) {
@@ -114,6 +116,7 @@ public class StudentController {
                 usersId.add(item.getUserId());
             }
             if (!usersId.isEmpty()) {
+
                 students = studentRepo.findByUserids(usersId, PageRequest.of(evalPage, PAGE_SIZE));
 
             } else {
