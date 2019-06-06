@@ -101,7 +101,7 @@ public class PortfolioController {
     @GetMapping("/{studentNumber}/downloadFile/{fileName:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, @PathVariable("studentNumber") String studentNumber, HttpServletRequest request, HttpServletResponse response) {
         Student usr = studentRepo.findByStudentNumber(studentNumber);
-        Resource file = this.fileStorageService.loadFileAsResource(fileName, usr.getUserId().getUserId() + "", response);
+        Resource file = this.fileStorageService.loadFileAsResource(fileName, studentNumber, response);
 
         String contentType = "application/octet-stream";
         response.setContentType(contentType);
