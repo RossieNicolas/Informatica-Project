@@ -31,12 +31,12 @@
 
                     <div class="col-md-5 pt-3">
                         <label for="firstname">Voornaam:</label>
-                        <input type="text" class="form-control" name="firstname" id="firstname" maxlength="50" pattern="[A-Za-z]+" title="Geen cijfers of speciale tekens toegestaan" required>
+                        <input type="text" class="form-control" name="firstname" id="firstname" maxlength="50" pattern="^([A-Za-z]+[,.]?[ ]?[é]?[è]?|[A-Za-z]+['-]?)+$" title="Geen cijfers of speciale tekens toegestaan" required>
                     </div>
 
                     <div class="col-md-5 pt-3">
                         <label for="lastname">Achternaam:</label>
-                        <input type="text" class="form-control" name="lastname" id="lastname" maxlength="50" pattern="[A-Za-z]+" title="Geen cijfers of speciale tekens toegestaan" required>
+                        <input type="text" class="form-control" name="lastname" id="lastname" maxlength="50" pattern="^([A-Za-z]+[,.]?[ ]?[é]?[è]?|[A-Za-z]+['-]?)+$" title="Geen cijfers of speciale tekens toegestaan" required>
                     </div>
 
                     <div class="col-md-5 pt-3">
@@ -46,17 +46,17 @@
 
                     <div class="col-md-5 pt-3">
                         <label for="address">Adres:</label>
-                        <input type="text" class="form-control" name="address" id="address" required>
+                        <input type="text" class="form-control" name="address" pattern="^[A-Za-z0-9 -]+$" id="address" title="Er zijn geen cijfers of speciale tekens toegelaten" required>
                     </div>
 
                     <div class="col-md-5 pt-3">
                         <label for="postal">Postcode:</label>
-                        <input type="text" class="form-control" name="postal" id="postal" maxlength="50" title="Geen spaties of speciale tekens gebruiken" pattern="[A-Za-z0-9]+" required>
+                        <input type="text" class="form-control" name="postal" id="postal" maxlength="50" pattern="[0-9a-Z]" title="Geen spaties of speciale tekens gebruiken" pattern="[A-Za-z0-9]+" required>
                     </div>
 
                     <div class="col-md-5 pt-3">
                         <label for="city">Gemeente:</label>
-                        <input type="text" class="form-control" name="city" id="city" maxlength="50" required pattern="[A-Za-z]+" title="Geen cijfers of speciale tekens toegestaan">
+                        <input type="text" class="form-control" name="city" id="city" maxlength="50" pattern="^[A-Za-z -]+$" title="Geen cijfers of speciale tekens toegestaan">
                     </div>
 
                     <div class="col-md-5 pt-3">
