@@ -57,7 +57,6 @@ public class ProfileController {
 
     @GetMapping("/changestatus/{studentId}/{assignmentId}")
     public String changeStatus(@PathVariable("studentId") String userId, @PathVariable("assignmentId") int assignmentId){
-        int studentId = Integer.parseInt(userId);
         Student usr = stuRepo.findByStudentNumber(userId);
         User u = userRepo.findByUserId(usr.getUserId().getUserId());
 
@@ -75,8 +74,9 @@ public class ProfileController {
             }
         }
 
-        String status = file.getStatus();
-        String newStatus = "start";
+        String status = "start";
+        status = file.getStatus();
+        String newStatus ;
         if(status.equals(Progress.START.getInfo())){
             newStatus = Progress.CONTRACT.getInfo();
         } else if(status.equals(Progress.CONTRACT.getInfo())){

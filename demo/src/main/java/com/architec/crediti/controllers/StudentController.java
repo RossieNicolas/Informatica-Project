@@ -35,7 +35,6 @@ public class StudentController {
 
     private static final int PAGE_SIZE = 15;
     private static final int INITAL_PAGE = 0;
-    private Log log = LogFactory.getLog(this.getClass());
 
 
     @Autowired
@@ -108,7 +107,6 @@ public class StudentController {
         int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
 
         try {
-            int studentenNummer = Integer.parseInt(name);
             students = studentRepo.findByStudentNumberContainingOrderByStudentId(name, PageRequest.of(evalPage, PAGE_SIZE));
 
         } catch (Exception e) {
@@ -117,7 +115,7 @@ public class StudentController {
             for (User item : users) {
                 usersId.add(item.getUserId());
             }
-            if (usersId.size() != 0) {
+            if (!usersId.isEmpty()) {
                 students = studentRepo.findByUserids(usersId, PageRequest.of(evalPage, PAGE_SIZE));
 
             } else {

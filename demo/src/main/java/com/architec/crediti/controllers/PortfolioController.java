@@ -31,9 +31,6 @@ https://github.com/callicoder/spring-boot-file-upload-download-rest-api-example/
 
 @Controller
 public class PortfolioController {
-
-    private static final Logger logger = LoggerFactory.getLogger(PortfolioController.class);
-
     private final PortfolioUtil portfolioUtil;
 
     private final FileStorageService fileStorageService;
@@ -97,7 +94,6 @@ public class PortfolioController {
 
     @GetMapping("/{studentNumber}/downloadFile/{fileName:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, @PathVariable("studentNumber") String studentNumber, HttpServletRequest request, HttpServletResponse response) {
-        Student usr = studentRepo.findByStudentNumber(studentNumber);
         Resource file = this.fileStorageService.loadFileAsResource(fileName, studentNumber);
 
         String contentType = "application/octet-stream";

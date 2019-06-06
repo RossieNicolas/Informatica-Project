@@ -29,7 +29,6 @@ public class SearchController {
     private static final int INITAL_PAGE = 0;
     private Log log = LogFactory.getLog(this.getClass());
 
-
     private final
     TagRepo tagRepo;
 
@@ -107,7 +106,7 @@ public class SearchController {
             buttons++;
         }
         int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
-        List<Assignment> list3 = (List<Assignment>) assignmentRepo
+        List<Assignment> list3 = assignmentRepo
                 .findByTitleContainingAndFullOrderByAssignmentIdDesc("", false);
         List<Long> list = new ArrayList<>();
         for (int item : test) {
@@ -118,7 +117,7 @@ public class SearchController {
             }
         }
         list = list.stream().distinct().collect(Collectors.toList());
-        if (list.size() > 0) {
+        if (list.isEmpty()) {
             fiches = assignmentRepo.findByTagsOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE));
         } else {
             List<Assignment> list54 = new ArrayList();
@@ -166,7 +165,7 @@ public class SearchController {
             test[i] = (Integer.parseInt(tags2[i + 1]));
         }
         for (int item : test) {
-            System.out.println(item);
+            log.info(item);
         }
         int buttons = (int) assignmentRepo.count() / PAGE_SIZE;
         Page fiches = null;
@@ -174,7 +173,7 @@ public class SearchController {
             buttons++;
         }
         int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
-        List<Assignment> list3 = (List<Assignment>) assignmentRepo
+        List<Assignment> list3 = assignmentRepo
                 .findByTitleContainingAndFullOrderByAssignmentIdDesc(searchbar, false);
         List<Long> list = new ArrayList<>();
         for (int item : test) {
@@ -185,7 +184,7 @@ public class SearchController {
             }
         }
         list = list.stream().distinct().collect(Collectors.toList());
-        if (list.size() > 0) {
+        if (list.isEmpty()) {
             fiches = assignmentRepo.findByTagsOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE));
         } else {
             List<Assignment> list54 = new ArrayList();
@@ -246,7 +245,6 @@ public class SearchController {
                     PageRequest.of(evalPage, PAGE_SIZE));
             model.addAttribute("assignments", fiches);
         }
-        ArrayList<Tag> tag = new ArrayList<>();
         List<Tag> allTags = tagRepo.findAll();
 
         boolean[] status = new boolean[allTags.size()];
@@ -277,7 +275,7 @@ public class SearchController {
             test[i] = (Integer.parseInt(tags2[i + 1]));
         }
         for (int item : test) {
-            System.out.println(item);
+            log.info(item);
         }
         int buttons = (int) assignmentRepo.count() / PAGE_SIZE;
         Page fiches = null;
@@ -285,7 +283,7 @@ public class SearchController {
             buttons++;
         }
         int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
-        List<Assignment> list3 = (List<Assignment>) assignmentRepo
+        List<Assignment> list3 = assignmentRepo
                 .findByTitleContainingAndFullOrderByAssignmentIdDesc("", true);
         List<Long> list = new ArrayList<>();
         for (int item : test) {
@@ -296,7 +294,7 @@ public class SearchController {
             }
         }
         list = list.stream().distinct().collect(Collectors.toList());
-        if (list.size() > 0) {
+        if (list.isEmpty()) {
             fiches = assignmentRepo.findByTagsAndFullOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE));
         } else {
             List<Assignment> list54 = new ArrayList();
@@ -344,7 +342,7 @@ public class SearchController {
             test[i] = (Integer.parseInt(tags2[i + 1]));
         }
         for (int item : test) {
-            System.out.println(item);
+            log.info(item);
         }
         int buttons = (int) assignmentRepo.count() / PAGE_SIZE;
         Page fiches = null;
@@ -352,7 +350,7 @@ public class SearchController {
             buttons++;
         }
         int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
-        List<Assignment> list3 = (List<Assignment>) assignmentRepo
+        List<Assignment> list3 = assignmentRepo
                 .findByTitleContainingAndFullOrderByAssignmentIdDesc(searchbar, true);
         List<Long> list = new ArrayList<>();
         for (int item : test) {
@@ -363,7 +361,7 @@ public class SearchController {
             }
         }
         list = list.stream().distinct().collect(Collectors.toList());
-        if (list.size() > 0) {
+        if (list.isEmpty()) {
             fiches = assignmentRepo.findByTagsAndFullOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE));
         } else {
             List<Assignment> list54 = new ArrayList();

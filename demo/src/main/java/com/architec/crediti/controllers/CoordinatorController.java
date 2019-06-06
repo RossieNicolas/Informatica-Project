@@ -62,8 +62,10 @@ public class CoordinatorController {
                     break;
                 case "p":
                     usr.setRole(Role.DOCENT);
+                    break;
                 default:
                     usr.setRole(Role.EXTERN);
+                    break;
             }
 
             userRepo.save(usr);
