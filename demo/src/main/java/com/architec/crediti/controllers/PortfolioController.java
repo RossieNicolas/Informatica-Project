@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import com.architec.crediti.repositories.FileRepository;
 import com.architec.crediti.repositories.UserRepository;
@@ -24,10 +25,7 @@ import com.architec.crediti.utils.PortfolioUtil;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 /*
 Some functions from
@@ -93,7 +91,6 @@ public class PortfolioController {
     public String uploadMultipleFiles(@RequestParam("files") MultipartFile[] files, @RequestParam("type") String type,
             @RequestParam("lists") int assignment , Principal principal) {
         User currentUser = userRepo.findByEmail(principal.getName());
-
         for (MultipartFile item: files) {
             portfolioUtil.uploadFile(item, currentUser.getUserId(), type, (long)assignment);
         }
@@ -102,27 +99,10 @@ public class PortfolioController {
     }
 
     @GetMapping("/downloadFile/{fileName:.+}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request, Principal principal) {
-        // Load file as Resource
-        User currentUser = userRepo.findByEmail(principal.getName());
-        Resource resource = fileStorageService.loadFileAsResource(fileName, currentUser.getUserId() + "");
-
-        // Try to determine file's content type
-        String contentType = null;
-        try {
-            contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
-        } catch (IOException ex) {
-            logger.info("Could not determine file type.");
-        }
-
-        // Fallback to the default content type if type could not be determined
-        if (contentType == null) {
-            contentType = "application/octet-stream";
-        }
-
-        return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-                .body(resource);
+    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, Principal principal, HttpServletResponse request) {
+        User usr = userRepo.findByEmail(principal.getName());
+        Resource file = this.fileStorageService.loadFileAsResource(fileName, usr.getUserId()+"", request);
+        return ResponseEntity.ok().body(file);
     }
 
     @GetMapping("/deletefile/{id}")

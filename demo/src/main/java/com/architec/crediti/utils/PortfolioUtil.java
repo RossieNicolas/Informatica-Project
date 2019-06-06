@@ -39,7 +39,7 @@ public class PortfolioUtil {
 
     }
 
-    public UploadFileResponse uploadFile(MultipartFile file, long userId, String docType, long assignmentID) {
+    public void uploadFile(MultipartFile file, long userId, String docType, long assignmentID) {
         User current = userRepo.findByUserId(userId);
         String fileName = fileStorageService.storeFile(file, userId + "");
 
@@ -55,7 +55,6 @@ public class PortfolioUtil {
         }
 
         fileRepo.save(new File(fileName, fileDownloadUri, current, docType, assignmentID));
-        return new UploadFileResponse(fileName, fileDownloadUri, file.getContentType(), file.getSize());
     }
 
     public void uploadDocumentation(MultipartFile file) {

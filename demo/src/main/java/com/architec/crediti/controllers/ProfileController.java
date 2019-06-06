@@ -47,11 +47,11 @@ public class ProfileController {
 
         Student st = stuRepo.findByStudentNumber(studentNumber);
         User us = userRepo.findByUserId(st.getUserId().getUserId());
-        List<File> files = fileRepo.findByUserOrderByAssignmentId(us);
+        List<File> files = fileRepo.findByUser(us);
 
         model.addAttribute("student", st);
         model.addAttribute("files", files);
-        model.addAttribute("status", fileRepo.findByDocType("Contract"));
+        model.addAttribute("status", fileRepo.findByDocTypeAndUser("Contract", us));
         //pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());
         model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
