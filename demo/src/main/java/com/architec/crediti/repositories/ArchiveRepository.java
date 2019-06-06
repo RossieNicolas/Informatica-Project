@@ -18,4 +18,7 @@ public interface ArchiveRepository extends PagingAndSortingRepository<ArchivedAs
     Page<ArchivedAssignment> findByTitleContainingOrTagNameContainingOrderByAssignmentIdDesc(String name, String tagName, Pageable page);
 
     Page<ArchivedAssignment> findByAssignmentIdOrderByAssignmentIdDesc(long assignmentId, Pageable page);
+
+    //Used for testing
+    List<ArchivedAssignment> findByTitleContaining(String title);
 }
