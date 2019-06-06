@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Set;
 @Entity
-@SequenceGenerator(name="seq", initialValue=10000)
+@SequenceGenerator(name="seq", initialValue=1050)
 @Table(name = "assignments")
 public class Assignment {
     @Id
