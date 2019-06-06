@@ -35,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(staticResources).permitAll()
 
                 //Everyone can see these pages
-                .antMatchers("/login", "/", "/createexternaluser","/registersucces", "/createexternal", "/forgotPassword", "/notapproved", "/reset").permitAll()
+                .antMatchers("/favicon.ico", "/login", "/", "/createexternaluser","/registersucces", "/createexternal", "/forgotPassword", "/notapproved", "/reset").permitAll()
 
                 //COORDINATOR && DOCENT
                 .antMatchers( "/allFullAssignments", "/listStudents", "/unapprovedEnrollments", "/approveEnroll/{id}", "/deleteEnroll/{id}").hasAnyRole("DOCENT", "COORDINATOR")

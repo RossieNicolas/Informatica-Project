@@ -23,40 +23,69 @@
         <main role="main" class="container">
             <div class='col-md-6 mt-2 mx-auto'>
                 <div class='search-box'>
-                    <form class='search-form' th:action='@{/liststudents}' method='POST'>
+                    <form class='search-form' th:action="@{'/listStudents/search/'${searchbar}'}"
+                          method="GET" id="searchAs">
                         <div>
                             <input class='form-control' name='searchbar' id='searchbar'
-                                   placeholder='Zoeken...' type='text'>
-                            <button class="btn search-btn" type="SUBMIT">🔍</button>
+                                   placeholder='Zoeken...' type='text' th:value="${searchbar}">
+                            <button class="btn search-btn" type="SUBMIT" id="zoekKnop" onclick="search()">🔍</button>
                         </div>
                     </form>
                 </div>
             </div>
             <div class="mt-5 jumbotron">
                 <h1 class="pb-4">Alle studenten</h1>
-                    <table id="table" class="table table-hover">
-                        <thead>
-                        <tr>
-                            <th scope="col"></th>
-                            <th scope="col">Studenten nummer</th>
-                            <th scope="col">Naam</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Gsm</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="a : ${students}">
-                            <td><a th:href="${'/liststudents/' + a.getStudentNumber()}"
-                                   class="btn btn-outline-danger" role="button">📃</a></td>
-                            <td th:text="${a.getStudentNumber()}"></td>
-                            <td class="overflow" th:text="${a.getUserId()}"></td>
-                            <td class="overflow" th:text="${a.findEmail()}"></td>
-                            <td class="overflow" th:text="${a.getGsm()}"></td>
-                        </tr>
-                        </tbody>
-                    </table>
+                <table id="table" class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Studenten nummer</th>
+                        <th scope="col">Naam</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Gsm</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="a : ${students}">
+                        <td><a th:href="${'/liststudents/' + a.getStudentNumber()}"
+                               class="btn btn-outline-danger" role="button">📃</a></td>
+                        <td th:text="${a.getStudentNumber()}"></td>
+                        <td class="overflow" th:text="${a.getUserId()}"></td>
+                        <td class="overflow" th:text="${a.findEmail()}"></td>
+                        <td class="overflow" th:text="${a.getGsm()}"></td>
+                    </tr>
+                    </tbody>
+                </table>
 
                 <div class="alert alert-primary" role="alert" id="empty"></div>
+
+                <br/>
+
+                <nav th:if="${persons.totalPages !=1}">
+                    <ul class="pagination">
+                        <li th:classappend="(${persons.number == 0} ? disabled) + ' page-item'">
+                            <a class="page-link"
+                               th:href="@{__${#httpServletRequest.requestURL}__(page=${persons.number})}"
+                               aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                        <li th:classappend="(${persons.number == (page - 1)} ? 'active pointer-disabled') + ' page-item'"
+                            th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
+                            <a class="page-link" th:href="@{__${#httpServletRequest.requestURL}__(page=${page})}"
+                               th:text="${page}"></a>
+                        </li>
+                        <li th:classappend="(${persons.number + 1 == persons.totalPages} ? disabled) + ' page-item'">
+                            <a class="page-link"
+                               th:href="@{__${#httpServletRequest.requestURL}__(page=${persons.number + 2})}"
+                               aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
 
         </main>
@@ -77,6 +106,17 @@
             element.style.visibility = "visible";
             element.appendChild(para);
         }
+    }
+
+    function search() {
+        var id = document.getElementById('searchbar').value;
+        if(id == ""){
+            document.getElementById('searchAs').action = '/liststudents/';
+        }
+        else{
+            document.getElementById('searchAs').action = '/liststudents/search/' + id;
+        }
+
     }
 </script>
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

@@ -9,13 +9,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -79,7 +77,7 @@ public class ArchiveController {
 
     //search in archive
     @GetMapping("/archive/{searchbar}")
-    public String searchByTitleOrId(@PathVariable("searchbar") String name, Model model, @RequestParam("page") Optional<Integer> page) {
+    public String searchByTitleOrId(@PathVariable("searchbar") String name, Model model, @RequestParam("page") Optional<Integer> page, Principal principal) {
         Page fiches = null;
 
         int buttons = (int) archiveRepo.count() / PAGE_SIZE;
@@ -93,7 +91,7 @@ public class ArchiveController {
             fiches = archiveRepo.findByAssignmentIdOrderByAssignmentIdDesc((Integer.parseInt(name)), PageRequest.of(evalPage, PAGE_SIZE));
 
         } catch (Exception e) {
-            fiches = archiveRepo.findByTitleContainingOrTagNameContainingOrderByAssignmentIdDesc(name, name,PageRequest.of(evalPage, PAGE_SIZE));
+            fiches = archiveRepo.findByTitleContainingOrTagNameContainingOrderByAssignmentIdDesc(name, name, PageRequest.of(evalPage, PAGE_SIZE));
 
         }
 
@@ -113,6 +111,9 @@ public class ArchiveController {
         model.addAttribute("selectedPageSize", PAGE_SIZE);
         model.addAttribute("pager", pager);
         model.addAttribute("tags", tagRepo.findAll());
+        //pass username to header fragment
+        User currentUser = userRepo.findByEmail(principal.getName());
+        model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
         return "archive/archive";
     }
 }
