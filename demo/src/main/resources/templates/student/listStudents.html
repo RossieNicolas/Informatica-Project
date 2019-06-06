@@ -1,25 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/custom.css}">
-
     <title>Alle studenten</title>
 </head>
-
 <body class="bg" onload="tableFill()">
 <div id="page-container">
     <div id="content-wrap">
-
         <header th:insert="fragments/generalMenu.html :: header"></header>
-
         <main role="main" class="container">
             <div class='col-md-6 mt-2 mx-auto'>
                 <div class='search-box'>
@@ -56,11 +50,8 @@
                     </tr>
                     </tbody>
                 </table>
-
                 <div class="alert alert-primary" role="alert" id="empty"></div>
-
                 <br/>
-
                 <nav th:if="${persons.totalPages !=1}">
                     <ul class="pagination">
                         <li th:classappend="(${persons.number == 0} ? disabled) + ' page-item'">
@@ -87,7 +78,6 @@
                     </ul>
                 </nav>
             </div>
-
         </main>
         <!-- /.container -->
     </div>
@@ -116,7 +106,6 @@
         else{
             document.getElementById('searchAs').action = '/liststudents/search/' + id;
         }
-
     }
 </script>
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -130,5 +119,4 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
 </body>
-
 </html>

@@ -1,35 +1,25 @@
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/custom.css}">
-
     <title>Crediti - Documentatie</title>
-
 </head>
-
 <body class="bg" onload="tableFill()">
 <div id="page-container">
     <div id="content-wrap">
         <header th:insert="fragments/generalMenu.html :: header"></header>
-
         <main role="main" class="container">
             <div class="mt-5 jumbotron">
                 <h1 class="pb-4">Documentatie</h1>
-
-
                 <a sec:authorize="hasRole('COORDINATOR')" href="/uploaddocumentation"
                    class="btn btn-outline-success">➕ Bestanden toevoegen</a>
-
-
                 <div class="table-responsive">
                     <table id="table" class="table table-hover">
                         <thead>
@@ -42,14 +32,12 @@
                         <tr class="d-flex" th:each="file : ${files}">
                             <td class="col-4 overflow" th:text="${file.getTitle()}"></td>
                             <td class="col-8">
-
                                 <span style="float: right;">
                                 <button sec:authorize="hasRole('COORDINATOR')"
                                         data-toggle="modal"
                                         data-target="#deleteModal" th:attr="data-id=${file.getId()}"
                                         class="btn btn-outline-danger ml-2" role="button">🗑️</button>
                                 </span>
-
                                 <span style="float: right;"><a th:href="${file.getDownloadLink()}"
                                                                class="btn btn-outline-secondary">Download</a></span>
                             </td>
@@ -58,7 +46,6 @@
                     </table>
                     <div class="alert alert-primary" role="alert" id="empty"></div>
                 </div>
-
                 <!-- Modal DELETE -->
                 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
                      aria-labelledby="deleteModalLabel" aria-hidden="true">
@@ -85,12 +72,9 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </main>
         <!-- /.container -->
-
     </div>
     <div th:insert="fragments/general.html :: footer">
     </div>
@@ -119,7 +103,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-
 <script>
     $('#deleteModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
@@ -129,5 +112,4 @@
     });
 </script>
 </body>
-
 </html>

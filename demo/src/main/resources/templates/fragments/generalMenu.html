@@ -1,31 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <!-- Bootstrap CSS -->
     <link rel="shortcut icon" type="image/x-icon" th:href="@{images/favicon.ico}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/custom.css}">
-
     <title>Crediti - Thuispagina</title>
-
 </head>
-
 <body class="background">
     <header>
         <nav class="navbar navbar-expand-md navbar-light bg-nav static-top">
             <a href="/main"><img th:src="@{/images/logo-ap.svg}"></a>
-
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarsExampleDefault">
                 <ul class="navbar-nav mr-auto">
-
                     <!-- OPDRACHTEN-->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="assignments" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Opdrachten</a>
@@ -36,12 +29,10 @@
                             <a class="dropdown-item" sec:authorize="hasRole('STUDENT')" href="/myassignments">Ingeschreven Opdrachten</a>
                         </div>
                     </li>
-
                     <!--DOCUMENTATIE-->
                     <li class="nav-item">
                         <a class="nav-link" sec:authorize="!hasRole('EXTERN')" href="/documentation">Documentatie</a>
                     </li>
-
                     <!--TAGS-->
                     <li sec:authorize="hasRole('COORDINATOR')" class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="tags" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tags</a>
@@ -50,7 +41,6 @@
                             <a class="dropdown-item" sec:authorize="hasRole('COORDINATOR')" href="/listAllTags">Lijst</a>
                         </div>
                     </li>
-
                     <!--VALIDATION-->
                     <li sec:authorize="hasAnyRole('COORDINATOR','DOCENT')" class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="validation" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Validatie</a>
@@ -60,7 +50,6 @@
                             <a class="dropdown-item" sec:authorize="hasAnyRole('COORDINATOR','DOCENT')" href="/unapprovedEnrollments">Inschrijvingen</a>
                         </div>
                     </li>
-
                     <!--EXTRA's-->
                     <li sec:authorize="hasAnyRole('COORDINATOR','DOCENT')" class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="extras" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Extra's</a>
@@ -70,10 +59,7 @@
                             <a class="dropdown-item" sec:authorize="hasRole('COORDINATOR')" href="/archive">Archief</a>
                         </div>
                     </li>
-
-
                 </ul>
-
                 <ul class="nav navbar-nav navbar-right">
                     <li class="nav-item dropdown">
                         <img class="img-user pr-1 mt-1" th:src="@{/images/user.svg}">
@@ -90,7 +76,6 @@
             </div>
         </nav>
     </header>
-
     <footer class="footer mt-auto py-3">
         <div class="container">
             <span style="float: left">Ontworpen door studenten Toegepaste Informatica.</span>
@@ -100,7 +85,5 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
 </body>
-
 </html>

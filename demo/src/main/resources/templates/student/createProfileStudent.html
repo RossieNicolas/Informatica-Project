@@ -1,40 +1,31 @@
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/custom.css}">
-
     <title>Crediti - Profiel student aanmaken</title>
-
 </head>
-
 <body class="bg">
 <div id="page-container">
     <div id="content-wrap">
         <header th:insert="fragments/general.html :: header">
         </header>
-
         <main role="main" class="container">
             <div class="mt-5 mb-5 jumbotron">
                 <h1>Profiel</h1>
                 <p class="lead">Het is de eerste keer dat je inlogt. We hebben wat extra informatie nodig en dan kan je
                     van start gaan.</p>
-
                 <form th:action="@{/createstudentprofile}" method="POST">
                     <div class="form-group">
-
                         <div class="col-md-5">
                             <label for="gsm">Gsm-nummer:</label>
                             <input maxlength="10" type="tel" class="form-control" name="gsm" id="gsm" pattern="([(+]*[0-9]+[()+. -]*)" title="Er zijn geen speciale tekens of letters toegelaten" required>
                         </div>
-
                         <div class="col-md-5 pt-3">
                             <label for="zap">ZAP en/of Mobility?:</label>
                             <div class="custom-control custom-checkbox">
@@ -50,9 +41,7 @@
                         <button type="submit" class="btn btn-primary btn-lg">Profiel aanmaken</button>
                     </div>
                 </form>
-
             </div>
-
         </main>
     </div>
     <!-- /.container -->
@@ -71,5 +60,4 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
 </body>
-
 </html>

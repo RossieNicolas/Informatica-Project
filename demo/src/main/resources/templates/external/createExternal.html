@@ -5,13 +5,10 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/custom.css}">
-
     <title>Crediti - Registreren</title>
-
 </head>
 
 <body class="bg">
@@ -19,7 +16,6 @@
     <div id="content-wrap">
     <header th:insert="fragments/general.html :: header">
     </header>
-
     <main role="main" class="container">
         <div class="mt-5 mb-5 jumbotron">
             <div th:if="${error}" class="alert alert-danger" role="alert">
@@ -28,61 +24,49 @@
             <h1>Profiel registreren</h1>
             <form th:action="@{/createexternal}" method="POST">
                 <div class="form-group">
-
                     <div class="col-md-5 pt-3">
                         <label for="firstname">Voornaam:</label>
                         <input type="text" class="form-control" name="firstname" id="firstname" maxlength="50" pattern="^([A-Za-z]+[,.]?[ ]?[é]?[è]?|[A-Za-z]+['-]?)+$" title="Geen cijfers of speciale tekens toegestaan" required>
                     </div>
-
                     <div class="col-md-5 pt-3">
                         <label for="lastname">Achternaam:</label>
                         <input type="text" class="form-control" name="lastname" id="lastname" maxlength="50" pattern="^([A-Za-z]+[,.]?[ ]?[é]?[è]?|[A-Za-z]+['-]?)+$" title="Geen cijfers of speciale tekens toegestaan" required>
                     </div>
-
                     <div class="col-md-5 pt-3">
                         <label for="company">Naam bedrijf:</label>
                         <input type="text" class="form-control" name="company" id="company" required>
                     </div>
-
                     <div class="col-md-5 pt-3">
                         <label for="address">Adres:</label>
                         <input type="text" class="form-control" name="address" pattern="^([A-Za-z0-9]+[,.]?[ ]?[é]?[è]?|[A-Za-z]+['-]?)+$" id="address" title="Er zijn geen speciale tekens toegelaten" required>
                     </div>
-
                     <div class="col-md-5 pt-3">
                         <label for="postal">Postcode:</label>
                         <input type="text" class="form-control" name="postal" id="postal" maxlength="50" pattern="[0-9a-Z]" title="Geen spaties of speciale tekens gebruiken" required>
                     </div>
-
                     <div class="col-md-5 pt-3">
                         <label for="city">Gemeente:</label>
                         <input type="text" class="form-control" name="city" id="city" maxlength="50" pattern="^([A-Za-z]+[,.]?[ ]?[é]?[è]?|[A-Za-z]+['-]?)+$" title="Geen cijfers of speciale tekens toegestaan">
                     </div>
-
                     <div class="col-md-5 pt-3">
                         <label for="phone">Telefoonnummer:</label>
                         <input type="text" class="form-control" name="phone" id="phone" maxlength="10" pattern="([(+]*[0-9]+[()+. -]*)" title="bv: 0496 22 11 22" required>
                     </div>
-
                     <div class="col-md-5 pt-3">
                         <label for="email">E-mail:</label>
                         <input type="email" class="form-control" name="email" id="email" maxlength="50" onkeyup="this.value = this.value.toLowerCase();" pattern="^[_A-Za-z0-9-]+(\.[_A-Za-z0-9-]+)*(\+[A-Za-z0-9-]+)?@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*$" required>
                     </div>
-
                     <div class="col-md-5 pt-3">
                         <label for="password">Wachtwoord:</label>
                         <input type="password" class="form-control" name="password" id="password" required>
                     </div>
                 </div>
-
                 <button id="registerBtn" onclick="Loading();" type="submit" class="btn btn-primary btn-lg">Registreer</button>
                 <div id="save" class="spinner-border text-danger" role="status">
                     <span class="sr-only">Loading...</span>
                 </div>
-
             </form>
         </div>
-
     </main>
     </div>
     <!-- /.container -->
@@ -94,7 +78,6 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
 <script>
     function Loading(){
         var $form = $('form')[0];
@@ -106,7 +89,6 @@
         }
     }
 </script>
-
 </body>
 
 </html>

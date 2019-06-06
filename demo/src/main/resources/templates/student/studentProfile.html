@@ -1,20 +1,15 @@
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/custom.css}">
-
     <title>Crediti - Student Profiel</title>
-
 </head>
-
 <body class="bg" onload="tableFill()">
 <div id="page-container">
     <div id="content-wrap">
@@ -37,13 +32,11 @@
                                required="required" disabled><br>
                     </div>
                     <div class="col-md-5 pt-3">
-
                         <label for="Email">E-mail:</label>
                         <input class="form-control" name="Email" id="Email" th:value="${student.findEmail()}" type="text"
                                required="required" disabled><br>
                     </div>
                     <div class="col-md-5 pt-3">
-
                         <label for="amoutHours">Aantal uren:</label><br>
                         <input class="form-control" name="amoutHours" id="amoutHours" type="text"
                                th:value="${student.getAmoutHours()}"
@@ -51,13 +44,11 @@
                     </div>
                     <fieldset disabled="disabled" id="studentEdit">
                         <div class="col-md-5 pt-3">
-
                             <label for="Gsm">Gsm:</label><br>
                             <input class="form-control" name="Gsm" id="Gsm" type="text" th:value="${student.getGsm()}"
                                    required="required" maxlength="10" pattern="([(+]*[0-9]+[()+. -]*)" title="Er zijn geen speciale tekens toegelaten"><br>
                         </div>
                         <div class="col-md-5 pt-3">
-
                             <label for="type">Type:</label>
                             <select class="form-control" name="type" id="type" required>
                                 <option th:if="${student.isZap() && student.isMobility()}" selected>Zap en Mobility</option>
@@ -74,7 +65,6 @@
                            onclick="toggleForm();">
                     <input class="btn btn-outline-success mb-4 ml-2" type="submit" value="💾 Bewaren" id="save">
                 </form>
-
                 <h3 class="pb-4  mt-3 ">Uw aangemaakte opdrachten</h3>
                 <div>
                     <table id="table" class="table table-hover table-condensed table-bordered">
@@ -147,5 +137,4 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
 </body>
-
 </html>

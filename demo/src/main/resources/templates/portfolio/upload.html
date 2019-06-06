@@ -1,36 +1,28 @@
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
+    <!-- bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/custom.css}">
-
     <title>Crediti - Upload bestanden</title>
-
 </head>
-
 <body class="bg">
 <div id="page-container">
     <div id="content-wrap">
         <header th:insert="fragments/generalMenu.html :: header"></header>
-
         <main role="main" class="container">
             <div class="mt-5 jumbotron">
                 <div class="starter-template">
                     <h1>Bestanden uploaden</h1>
-
                     <form th:action="@{/uploadfile}" method="post" enctype="multipart/form-data">
                         <div class="col-md-5 custom-file mt-5">
                             <input type="file" class="custom-file-input" id="customFileLang" name="files" multiple required>
                             <label class="custom-file-label" for="customFileLang">Bestand selecteren</label>
-
                             <div class="pt-3">
                                 <label for="type">Type document:</label>
                                 <select class="custom-select custom-select" name="type" id="type" required>
@@ -39,54 +31,19 @@
                                     <option>Portfolio</option>
                                 </select>
                             </div>
-
                             <div class="pt-3">
                                 <label for="type">Voor opdracht:</label>
                                 <select class="custom-select custom-select" name="lists" required>
                                     <option th:each="l : ${list}" id="${list.getAssignmentId()}" th:value="${l.getAssignmentId()}" th:text="${l.getAssignmentId()} + ' - ' + ${l.getTitle()}" ></option>
                                 </select>
                             </div>
-
                             <button type="submit" class="btn btn-outline-success mt-3 btn-lg">Uploaden</button>
                         </div>
                     </form>
-
-                    <!--TODO bootstrap the popup
-                        <button class="btn btn-outline-danger" role="button" data-toggle="modal"
-                                data-target="#submit">Submit
-                        </button>
-
-                        <div class="modal fade" id="submit" tabindex="-1" role="dialog"
-                             aria-labelledby="validateModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="validateModalLabel">Documenten uploaden</h5>
-                                        <button type="button" class="close" data-dismiss="modal"
-                                                aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        Voor deze opdracht moet nog een contract worden toegevoegd.
-                                        Wilt u deze bestanden al uploaden?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                            Sluiten
-                                        </button>
-                                        <a>
-                                            <button type="submit" class="btn btn-success">Uploaden</button>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>-->
                 </div>
             </div>
         </main>
         <!-- /.container -->
-
     </div>
     <div th:insert="fragments/general.html :: footer">
     </div>
@@ -102,7 +59,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-
 <script>
     $('#deleteModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
@@ -120,5 +76,4 @@
     })
 </script>
 </body>
-
 </html>
