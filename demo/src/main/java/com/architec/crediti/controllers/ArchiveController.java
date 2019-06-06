@@ -77,7 +77,7 @@ public class ArchiveController {
 
     //search in archive
     @GetMapping("/archive/{searchbar}")
-    public String searchByTitleOrId(@PathVariable("searchbar") String name, Model model, @RequestParam("page") Optional<Integer> page) {
+    public String searchByTitleOrId(@PathVariable("searchbar") String name, Model model, @RequestParam("page") Optional<Integer> page, Principal principal) {
         Page fiches = null;
 
         int buttons = (int) archiveRepo.count() / PAGE_SIZE;
@@ -111,6 +111,9 @@ public class ArchiveController {
         model.addAttribute("selectedPageSize", PAGE_SIZE);
         model.addAttribute("pager", pager);
         model.addAttribute("tags", tagRepo.findAll());
+        //pass username to header fragment
+        User currentUser = userRepo.findByEmail(principal.getName());
+        model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
         return "archive/archive";
     }
 }
