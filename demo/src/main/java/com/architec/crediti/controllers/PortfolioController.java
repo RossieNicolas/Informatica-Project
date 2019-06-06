@@ -98,11 +98,27 @@ public class PortfolioController {
         return "redirect:/portfolio";
     }
 
-    @GetMapping("/downloadFile/{fileName:.+}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, Principal principal, HttpServletResponse request) {
-        User usr = userRepo.findByEmail(principal.getName());
-        Resource file = this.fileStorageService.loadFileAsResource(fileName, usr.getUserId()+"", request);
-        return ResponseEntity.ok().body(file);
+    @GetMapping("/{studentNumber}/downloadFile/{fileName:.+}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, @PathVariable("studentNumber") String studentNumber, HttpServletRequest request, HttpServletResponse response) {
+        Student usr = studentRepo.findByStudentNumber(studentNumber);
+        Resource file = this.fileStorageService.loadFileAsResource(fileName, usr.getUserId().getUserId() + "", response);
+
+
+        // Try to determine file's content type
+        String contentType = "application/octet-stream";
+        /*try {
+            contentType = request.getServletContext().getMimeType(file.getFile().getAbsolutePath());
+        } catch (IOException ex) {
+            logger.info("Could not determine file type.");
+        }
+
+        // Fallback to the default content type if type could not be determined
+        if (contentType == null) {
+            contentType = "application/octet-stream";
+        }*/
+        response.setContentType(contentType);
+
+        return ResponseEntity.ok().header("Content-Disposition", "attachment; filename=" + fileName).body(file);
     }
 
 
