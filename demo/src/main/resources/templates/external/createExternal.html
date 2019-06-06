@@ -51,7 +51,7 @@
 
                     <div class="col-md-5 pt-3">
                         <label for="postal">Postcode:</label>
-                        <input type="text" class="form-control" name="postal" id="postal" maxlength="50" required>
+                        <input type="text" class="form-control" name="postal" id="postal" maxlength="50" title="Geen spaties of speciale tekens gebruiken" pattern="[A-Za-z0-9]+" required>
                     </div>
 
                     <div class="col-md-5 pt-3">
@@ -61,7 +61,7 @@
 
                     <div class="col-md-5 pt-3">
                         <label for="phone">Telefoonnummer:</label>
-                        <input type="text" class="form-control" name="phone" id="phone" maxlength="50" pattern="([(+]*[0-9]+[()+. -]*)" required>
+                        <input type="text" class="form-control" name="phone" id="phone" maxlength="10" pattern="([(+]*[0-9]+[()+. -]*)" title="bv: 0496 22 11 22" required>
                     </div>
 
                     <div class="col-md-5 pt-3">
