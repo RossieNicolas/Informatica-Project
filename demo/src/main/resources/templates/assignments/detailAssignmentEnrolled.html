@@ -92,9 +92,7 @@
                                 </label>
                             </div>
                         </div>
-
                     </fieldset>
-
                     <a sec:authorize="hasRole('COORDINATOR')"
                        th:if="${assignments.isValidated()}"
                        th:href="@{/archiveassignment/{id} (id=${assignments.getAssignmentId()})}"
@@ -106,12 +104,8 @@
                        th:href="@{/duplicateassignment/{id} (id=${assignments.getAssignmentId()})}"
                        class="mt-3 btn btn-outline-secondary" role="button">
                         🗂️ Kopie</a>
-
-
                 </form>
-
             </div>
-
         </main>
     </div>
     <!-- /.container -->

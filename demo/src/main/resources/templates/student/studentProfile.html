@@ -54,7 +54,7 @@
 
                             <label for="Gsm">Gsm:</label><br>
                             <input class="form-control" name="Gsm" id="Gsm" type="text" th:value="${student.getGsm()}"
-                                   required="required" maxlength="10" pattern="([(+]*[0-9]+[()+. -]*)" oninput="this.setCustomValidity('Er zijn geen speciale tekens toegelaten')"><br>
+                                   required="required" maxlength="10" pattern="([(+]*[0-9]+[()+. -]*)" title="Er zijn geen speciale tekens toegelaten"><br>
                         </div>
                         <div class="col-md-5 pt-3">
 

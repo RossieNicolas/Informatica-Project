@@ -29,7 +29,7 @@
 
                         <div class="col-md-5 pt-3">
                             <label for="title">Titel:</label>
-                            <input type="text" class="form-control" name="title" id="title" th:value="${duplicate.getTitle()}" required>
+                            <input type="text" class="form-control" name="title" id="title" pattern="[A-Za-z ]+" title="Er zijn geen cijfers of speciale tekens toegestaan" th:value="${duplicate.getTitle()}" required>
                         </div>
 
                         <div class="col-md-5 pt-3">

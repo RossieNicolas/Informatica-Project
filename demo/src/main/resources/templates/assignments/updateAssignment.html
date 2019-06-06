@@ -28,10 +28,8 @@
 
                 <form th:action="@{/allassignments/{id}(id=${assignments.getAssignmentId()})}" method="post">
 
-                    <input th:if="${!assignments.isValidated() and roles}" value="✏ Bewerk"
-                           class="btn btn-outline-secondary mb-4" type="button" onclick="toggleForm();">
-                    <input sec:authorize="hasRole('COORDINATOR')" th:if="${assignments.isValidated()}" value="✏ Bewerk"
-                           class="btn btn-outline-secondary mb-4" type="button" onclick="toggleForm();">
+                    <input th:if="${!assignments.isValidated() and roles}" value="✏ Bewerk" class="btn btn-outline-secondary mb-4" type="button" onclick="toggleForm();">
+                    <input sec:authorize="hasRole('COORDINATOR')" th:if="${assignments.isValidated()}" value="✏ Bewerk" class="btn btn-outline-secondary mb-4" type="button" onclick="toggleForm();">
 
                     <fieldset disabled id="assignmentInfo">
 
@@ -53,8 +51,7 @@
 
                         <div class="col-md-5 pt-3">
                             <label for="title">Titel:</label>
-                            <input type="text" class="form-control" name="title" id="title"
-                                   th:value="*{assignments.getTitle()}" required>
+                            <input type="text" class="form-control" name="title" id="title" th:value="*{assignments.getTitle()}" pattern="[A-Za-z ]+" title="Er zijn geen cijfers of speciale tekens toegestaan" required>
                         </div>
 
                         <div class="col-md-5 pt-3">
@@ -68,27 +65,22 @@
 
                         <div class="col-md-5 pt-3">
                             <label for="task">Omschrijving opdracht:</label>
-                            <textarea class="form-control" name="task" id="task" th:text="*{assignments.getTask()}"
-                                      maxlength="255" required></textarea>
+                            <textarea class="form-control" name="task" id="task" th:text="*{assignments.getTask()}" maxlength="255" required></textarea>
                         </div>
 
                         <div class="col-md-5 pt-3">
                             <label for="startDate">Begindatum:</label>
-                            <input type="date" class="form-control" name="startDate" id="startDate" onblur="SDate()"
-                                   th:value="*{assignments.getStartDate()}" required>
+                            <input type="date" class="form-control" name="startDate" id="startDate" onblur="SDate()" th:value="*{assignments.getStartDate()}" required>
                         </div>
 
                         <div class="col-md-5 pt-3">
-                            <label for="endDate">Begindatum:</label>
-                            <input type="date" class="form-control" name="endDate" id="endDate" onblur="TDate()"
-                                   th:value="*{assignments.getEndDate()}" required>
+                            <label for="endDate">Einddatum:</label>
+                            <input type="date" class="form-control" name="endDate" id="endDate" onblur="TDate()" th:value="*{assignments.getEndDate()}" required>
                         </div>
 
                         <div class="col-md-5 pt-3">
                             <label for="amountHours">Totaal uur:</label>
-                            <input type="number" class="form-control" name="amountHours" id="amountHours"
-                                   th:value="*{assignments.getAmountHours()}" onblur="amoutH()" min="6" max="78"
-                                   required>
+                            <input type="number" class="form-control" name="amountHours" id="amountHours" th:value="*{assignments.getAmountHours()}" onblur="amoutH()" min="6" max="78" required>
                         </div>
 
                         <div class="col-md-5 pt-3">
@@ -139,10 +131,10 @@
                     <br/>
 
                     <button sec:authorize="hasRole('COORDINATOR')"
-                            class="mt-3 btn btn-outline-danger" type="button"
-                            data-toggle="modal" data-target="#deleteModal">
-                        🗑️ Verwijderen
-                    </button>
+                       th:if="${assignments.isValidated()}"
+                       class="mt-3 btn btn-outline-danger" type="button"
+                       data-toggle="modal" data-target="#deleteModal">
+                        🗑️ Verwijderen</button>
 
                     <button sec:authorize="hasRole('COORDINATOR')"
                             th:if="${!assignments.isValidated()}"

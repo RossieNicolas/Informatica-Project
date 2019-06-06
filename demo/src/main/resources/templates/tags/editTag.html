@@ -29,7 +29,7 @@
                     <fieldset id="tagInfo" disabled>
                         <div>
                             <label for="tagName">Tag:</label>
-                            <input type="text" class="form-control" th:value="*{t.getTagName()}" name="tagName" id="tagName" maxlength="50" required>
+                            <input type="text" class="form-control" th:value="*{t.getTagName()}" name="tagName" id="tagName" maxlength="50"pattern="[A-Za-z ]+" title="Er zijn geen cijfers of speciale tekens toegestaan" required>
                         </div>
 
                         <div>
