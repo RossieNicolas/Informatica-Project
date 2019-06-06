@@ -39,7 +39,7 @@
                             <td th:text="${e.getAssignment()}"></td>
                             <td class="overflow" th:text="${e.getTitle()}"></td>
                             <td class="overflow" th:text="${e.getFullname()}"></td>
-                            <td class="overflow" th:text="${e.getEmail()}"></td>
+                            <td class="overflow"><a th:href="'mailto:' + ${e.getEmail()}"><div th:text="${e.getEmail()}"></div></a></td>
                             <td>
                                 <button class="btn btn-outline-success" role="button" data-toggle="modal"
                                         data-target="#validateModal" th:attr="data-id=${e.getEnrolledId()}">✔️
