@@ -591,6 +591,43 @@ public class AssignmentController {
                     }
                 }
             }
+
+            if(currentUser.getRole().equals(Role.COORDINATOR)){
+                duplicateAssignment.setValidated(true);
+            } else if (currentUser.getRole().equals(Role.STUDENT)) {
+                try {
+                    Student student = studentRepo.findByUserId(currentUser);
+                    Set<Assignment> set2 = new HashSet<>();
+                    set2.addAll(student.getAssignments());
+                    int counter = assignment.getAmountStudents();
+                    boolean zelfde = false;
+
+                    for (Assignment item : student.getAssignments()) {
+                        if (item.getAssignmentId() == assignment.getAssignmentId()) {
+                            zelfde = true;
+                        }
+                    }
+
+                    if (!zelfde && assignment.getAmountStudents() < assignment.getMaxStudents()) {
+                        set2.add(assignment);
+                        assignment.setAmountStudents(counter + 1);
+                        assignmentRepo.save(assignment);
+                        if (assignment.getAmountStudents() == assignment.getMaxStudents()) {
+                            assignment.setFull(true);
+                            assignmentRepo.save(assignment);
+                        }
+                    }
+
+                    Enrolled enrolled = new Enrolled(currentUser.getFirstname() + " " + currentUser.getLastname(), currentUser.getEmail(), assignment.getAssignmentId(), assignment.getTitle(), currentUser.getUserId());
+                    enrolledRepo.save(enrolled);
+
+                    student.setAssignments(set2);
+                    studentRepo.save(student);
+                } catch (Exception ex) {
+                    log.error(ex.getMessage());
+                }
+            }
+
             model.addAttribute("status", status);
             model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
             return "assignments/duplicateAssignment";
