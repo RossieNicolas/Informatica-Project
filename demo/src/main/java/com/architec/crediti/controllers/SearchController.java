@@ -118,7 +118,7 @@ public class SearchController {
                 }
             }
             list = list.stream().distinct().collect(Collectors.toList());
-            if (list.size() > 0) {
+            if (list.isEmpty()) {
                 fiches = assignmentRepo.findByTagsOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE));
             } else {
                 List<Assignment> list54 = new ArrayList();
@@ -163,9 +163,6 @@ public class SearchController {
         for(int i =0 ; i <test.length; i++){
             test[i] = (Integer.parseInt(tags2[i+1]));
         }
-        for (int item : test) {
-            System.out.println(item);
-        }
         int buttons = (int) assignmentRepo.count() / PAGE_SIZE;
         Page fiches = null;
         if (assignmentRepo.count() % PAGE_SIZE != 0) {
@@ -183,7 +180,7 @@ public class SearchController {
                 }
             }
             list = list.stream().distinct().collect(Collectors.toList());
-            if (list.size() > 0) {
+            if (list.isEmpty()) {
                 fiches = assignmentRepo.findByTagsOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE));
             } else {
                 List<Assignment> list54 = new ArrayList();
@@ -338,9 +335,7 @@ public class SearchController {
         for (int i = 0; i < test.length; i++) {
             test[i] = (Integer.parseInt(tags2[i + 1]));
         }
-        for (int item : test) {
-            log.info(item);
-        }
+
         int buttons = (int) assignmentRepo.count() / PAGE_SIZE;
         Page fiches = null;
         if (assignmentRepo.count() % PAGE_SIZE != 0) {
