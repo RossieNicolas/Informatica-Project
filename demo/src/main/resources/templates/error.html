@@ -13,7 +13,14 @@
 <body class="bg">
 <div id="page-container">
     <div id="content-wrap">
-        <header th:insert="fragments/general.html :: header">
+        <header>
+            <nav class="navbar navbar-expand-md navbar-light bg-nav static-top">
+                <a href="/main"><img th:src="@{/images/logo-ap.svg}"></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+            </nav>
         </header>
         <main role="main" class="container">
             <div class="mt-5 jumbotron">
