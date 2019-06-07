@@ -52,8 +52,9 @@ public class CoordinatorController {
     }
 
     @GetMapping("/deletecoordinator/{id}")
-    public String deleteCoordiantor(@PathVariable("id") int id){
+    public String deleteCoordiantor(@PathVariable("id") int id, Principal principal){
         User usr = userRepo.findByUserId((long) id);
+        User current = userRepo.findByEmail(principal.getName());
 
         if(usr != null) {
             switch (usr.getEmail().substring(0, 1).toLowerCase()) {
@@ -71,6 +72,11 @@ public class CoordinatorController {
             userRepo.save(usr);
         }
 
-        return "redirect:/coordinator";
+        String output = "redirect:/coordinator";
+        if(current.getEmail().equals(usr.getEmail())){
+            output = "redirect:/login";
+        }
+
+        return output;
     }
 }
