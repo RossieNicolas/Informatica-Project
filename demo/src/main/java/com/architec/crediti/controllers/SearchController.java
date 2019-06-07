@@ -90,56 +90,60 @@ public class SearchController {
         model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
         return "assignments/listAllAssignments";
     }
+    
+    //search by tag
 
-    @GetMapping(value = "/allassignments/tag/{tag}")
+   @GetMapping(value = "/allassignments/tag/{tag}")
     public String searchByTags(@RequestParam(value = "page", required = false) Optional<Integer> page,
-                               @PathVariable(required = false, value = "tag") String tags, Model model, Principal principal) {
+    @PathVariable(required = false, value = "tag") String tags, Model model){
         String[] tags2 = tags.split("&");
-        int[] test = new int[tags2.length - 1];
-        for (int i = 0; i < test.length; i++) {
-            test[i] = (Integer.parseInt(tags2[i + 1]));
+        int[] test = new int[tags2.length -1];
+        for(int i =0 ; i <test.length; i++){
+            test[i] = (Integer.parseInt(tags2[i+1]));
         }
-
+        for (int item : test) {
+            System.out.println(item);
+        }
         int buttons = (int) assignmentRepo.count() / PAGE_SIZE;
         Page fiches = null;
         if (assignmentRepo.count() % PAGE_SIZE != 0) {
             buttons++;
         }
         int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
-        List<Assignment> list3 = assignmentRepo
-                .findByTitleContainingAndFullOrderByAssignmentIdDesc("", false);
-        List<Long> list = new ArrayList<>();
-        for (int item : test) {
-            for (Assignment a : list3) {
-                if (a.getTags().contains(tagRepo.findBytagId(item))) {
-                    list.add(a.getAssignmentId());
+            List<Assignment> list3 = (List<Assignment>) assignmentRepo
+                    .findByTitleContainingAndFullOrderByAssignmentIdDesc("", false);
+            List<Long> list = new ArrayList<>();
+            for (int item : test) {
+                for (Assignment a : list3) {
+                    if (a.getTags().contains(tagRepo.findBytagId(item))) {
+                        list.add(a.getAssignmentId());
+                    }
                 }
             }
-        }
-        list = list.stream().distinct().collect(Collectors.toList());
-        if (list.isEmpty()) {
-            fiches = assignmentRepo.findByTagsOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE));
-        } else {
-            List<Assignment> list54 = new ArrayList();
-            fiches = new PageImpl<>(list54);
-        }
+            list = list.stream().distinct().collect(Collectors.toList());
+            if (list.size() > 0) {
+                fiches = assignmentRepo.findByTagsOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE));
+            } else {
+                List<Assignment> list54 = new ArrayList();
+                fiches = new PageImpl<>(list54);
+            }
 
-        ArrayList<Tag> tag = new ArrayList<>();
-        List<Tag> allTags = tagRepo.findAll();
+            ArrayList<Tag> tag = new ArrayList<>();
+            List<Tag> allTags = tagRepo.findAll();
 
-        for (int var : test) {
-            tag.add(tagRepo.findBytagId(var));
-        }
+            for (int var : test) {
+                tag.add(tagRepo.findBytagId(var));
+            }
 
-        boolean[] status = new boolean[allTags.size()];
+            boolean[] status = new boolean[allTags.size()];
 
-        for (int i = 0; i < allTags.size(); i++) {
-            for (Tag item : tag) {
-                if (allTags.get(i).getTagId() == item.getTagId()) {
-                    status[i] = true;
+            for (int i = 0; i < allTags.size(); i++) {
+                for (Tag item : tag) {
+                    if (allTags.get(i).getTagId() == item.getTagId()) {
+                        status[i] = true;
+                    }
                 }
             }
-        }
 
         model.addAttribute("status", status);
         model.addAttribute("assignments", fiches);
@@ -148,24 +152,22 @@ public class SearchController {
         model.addAttribute("selectedPageSize", PAGE_SIZE);
         model.addAttribute("pager", pager);
         model.addAttribute("tags", tagRepo.findAll());
-        //pass username to header fragment
-        User currentUser = userRepo.findByEmail(principal.getName());
-        model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
         return "assignments/listAllAssignments";
     }
 
-    // search full assignments
+
+   // search assignments
     @GetMapping(value = "/allassignments/{searchbar}/{tag}")
-    public String getAssignmentByTagAndText(@PathVariable(value = "searchbar", required = false) String searchbar, Model model,
-                                @RequestParam(value = "page", required = false) Optional<Integer> page,
-                                @PathVariable(required = false, value = "tag") String tags, Principal principal) {
+    public String getAssignment(@PathVariable(value = "searchbar" , required = false) String searchbar, Model model,
+            @RequestParam(value = "page", required = false) Optional<Integer> page,
+            @PathVariable(required = false, value = "tag") String tags) {
         String[] tags2 = tags.split("&");
-        int[] test = new int[tags2.length - 1];
-        for (int i = 0; i < test.length; i++) {
-            test[i] = (Integer.parseInt(tags2[i + 1]));
+        int[] test = new int[tags2.length -1];
+        for(int i =0 ; i <test.length; i++){
+            test[i] = (Integer.parseInt(tags2[i+1]));
         }
         for (int item : test) {
-            log.info(item);
+            System.out.println(item);
         }
         int buttons = (int) assignmentRepo.count() / PAGE_SIZE;
         Page fiches = null;
@@ -173,40 +175,40 @@ public class SearchController {
             buttons++;
         }
         int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
-        List<Assignment> list3 = assignmentRepo
-                .findByTitleContainingAndFullOrderByAssignmentIdDesc(searchbar, false);
-        List<Long> list = new ArrayList<>();
-        for (int item : test) {
-            for (Assignment a : list3) {
-                if (a.getTags().contains(tagRepo.findBytagId(item))) {
-                    list.add(a.getAssignmentId());
+            List<Assignment> list3 = (List<Assignment>) assignmentRepo
+                    .findByTitleContainingAndFullOrderByAssignmentIdDesc(searchbar, false);
+            List<Long> list = new ArrayList<>();
+            for (int item : test) {
+                for (Assignment a : list3) {
+                    if (a.getTags().contains(tagRepo.findBytagId(item))) {
+                        list.add(a.getAssignmentId());
+                    }
                 }
             }
-        }
-        list = list.stream().distinct().collect(Collectors.toList());
-        if (list.isEmpty()) {
-            fiches = assignmentRepo.findByTagsOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE));
-        } else {
-            List<Assignment> list54 = new ArrayList();
-            fiches = new PageImpl<>(list54);
-        }
+            list = list.stream().distinct().collect(Collectors.toList());
+            if (list.size() > 0) {
+                fiches = assignmentRepo.findByTagsOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE));
+            } else {
+                List<Assignment> list54 = new ArrayList();
+                fiches = new PageImpl<>(list54);
+            }
 
-        ArrayList<Tag> tag = new ArrayList<>();
-        List<Tag> allTags = tagRepo.findAll();
+            ArrayList<Tag> tag = new ArrayList<>();
+            List<Tag> allTags = tagRepo.findAll();
 
-        for (int var : test) {
-            tag.add(tagRepo.findBytagId(var));
-        }
+            for (int var : test) {
+                tag.add(tagRepo.findBytagId(var));
+            }
 
-        boolean[] status = new boolean[allTags.size()];
+            boolean[] status = new boolean[allTags.size()];
 
-        for (int i = 0; i < allTags.size(); i++) {
-            for (Tag item : tag) {
-                if (allTags.get(i).getTagId() == item.getTagId()) {
-                    status[i] = true;
+            for (int i = 0; i < allTags.size(); i++) {
+                for (Tag item : tag) {
+                    if (allTags.get(i).getTagId() == item.getTagId()) {
+                        status[i] = true;
+                    }
                 }
             }
-        }
 
         model.addAttribute("status", status);
         model.addAttribute("assignments", fiches);
@@ -215,11 +217,9 @@ public class SearchController {
         model.addAttribute("selectedPageSize", PAGE_SIZE);
         model.addAttribute("pager", pager);
         model.addAttribute("tags", tagRepo.findAll());
-        //pass username to header fragment
-        User currentUser = userRepo.findByEmail(principal.getName());
-        model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
         return "assignments/listAllAssignments";
     }
+
 
     @GetMapping(value = "/allFullAssignments/{searchbar}")
     public String searchFullByTitleorId(@PathVariable(value = "searchbar", required = false) String searchbar, Model model,
