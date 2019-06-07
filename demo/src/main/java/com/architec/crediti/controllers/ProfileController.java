@@ -99,7 +99,7 @@ public class ProfileController {
         stuRepo.save(usr);
         userRepo.save(u);
 
-        return "redirect:/liststudents/"+userId;
+        return "redirect:/liststudents/"+userId+"#Status";
     }
 
 }
