@@ -45,7 +45,7 @@
                                class="btn btn-outline-danger" role="button">📃</a></td>
                         <td th:text="${a.getStudentNumber()}"></td>
                         <td class="overflow" th:text="${a.getUserId()}"></td>
-                        <td class="overflow" th:text="${a.findEmail()}"></td>
+                        <td class="overflow"><a th:href="'mailto:' + ${a.findEmail()}"><div th:text="${a.findEmail()}"></div></a></td>
                         <td class="overflow" th:text="${a.getGsm()}"></td>
                     </tr>
                     </tbody>
