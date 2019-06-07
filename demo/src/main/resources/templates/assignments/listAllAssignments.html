@@ -54,24 +54,26 @@
                     <table id="table" class="table table-hover">
                         <thead>
                         <tr class="d-flex">
-                            <th class="col-2" scope="col"></th>
+                            <th class="col-1" scope="col"></th>
                             <th class="col-1" scope="col">Nr</th>
                             <th class="col-2" scope="col">Opdrachtgever</th>
                             <th class="col-1" scope="col">Type</th>
                             <th class="col-2" scope="col">Naam</th>
+                            <th class="col-1" scope="col">Aantal uren</th>
                             <th class="col-2" scope="col">Begin</th>
                             <th class="col-2" scope="col">Einde</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr class="d-flex" th:each="a : ${assignments}" th:if="${!a.isArchived()}">
-                            <td class="col-2" scope="row"><a
+                            <td class="col-1" scope="row"><a
                                     th:href="${'/allassignments/detail/' + a.getAssignmentId()}"
                                     class="btn btn-outline-secondary" role="button">📃 Info</a></td>
                             <td class="col-1" th:text="${a.getAssignmentId()}"></td>
                             <td class="col-2 overflow" th:text="${a.getAssigner()}"></td>
                             <td class="col-1" th:text="${a.getType()}"></td>
                             <td class="col-2 overflow" th:text="${a.getTitle()}"></td>
+                            <td class="col-1" th:text="${a.getAmountHours()}"></td>
                             <td class="col-2" th:text="${a.getFormatStartDate()}"></td>
                             <td class="col-2" th:text="${a.getFormatEndDate()}"></td>
                         </tr>
