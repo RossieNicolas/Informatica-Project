@@ -90,8 +90,8 @@
                         </tr>
                         </tbody>
                     </table>
+                    <div class="alert alert-primary" role="alert" id="empty"></div>
                 </div>
-                <div class="alert alert-primary" role="alert" id="empty"></div>
                 <h5>Documenten</h5>
                 <div>
                     <table id="table2" class="table table-hover table-condensed table-bordered">
@@ -116,6 +116,7 @@
                         </tr>
                         </tbody>
                     </table>
+                    <div class="alert alert-primary" role="alert" id="empty2"></div>
                 </div>
             </div>
         </main>
@@ -125,16 +126,33 @@
     </footer>
     <!-- Optional JavaScript -->
     <script>
-        function tableFill() {
+        function tableFill1() {
             var tbl = document.getElementById('table');
-            if (tbl.rows.length == 1) {
+            if (tbl.rows.length === 1) {
                 var para = document.createElement("p");
                 var node = document.createTextNode("Leeg");
-                para.appendChild(node);
                 var element = document.getElementById("empty");
+                para.appendChild(node);
                 element.style.visibility = "visible";
                 element.appendChild(para);
             }
+        }
+
+        function tableFill2() {
+            var tbl = document.getElementById('table2');
+            if (tbl.rows.length === 1) {
+                var para = document.createElement("p");
+                var node = document.createTextNode("Leeg");
+                var element = document.getElementById("empty2");
+                para.appendChild(node);
+                element.style.visibility = "visible";
+                element.appendChild(para);
+            }
+        }
+
+        function tableFill() {
+            tableFill1();
+            tableFill2();
         }
     </script>
 </div>
