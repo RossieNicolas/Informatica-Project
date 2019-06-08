@@ -73,22 +73,20 @@
                         <tr class="d-flex">
                             <th class="col-1" scope="col">Fiche nr</th>
                             <th class="col-4" scope="col">Fiche naam</th>
-                            <th class="col-2" scope="col">Status</th>
+                            <th class="col-4" scope="col">Status</th>
                             <th class="col-3">Volgend status</th>
-                            <th class="col-2"></th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr class="d-flex" th:each="s : ${status}">
                             <td class="col-1" th:text="${s.getAssignmentId()}"></td>
                             <td class="col-4" th:text="${s.getTitle()}"></td>
-                            <td class="col-2" th:text="${s.getStatus()}"></td>
-                            <td class="col-3"></td>
-                            <td class="col-2">
-                                <a th:href="@{/changestatus/{studentId}/{assignmentId} (studentId=${student.getStudentNumber()}, assignmentId=${s.assignmentId})}"
-                                   class="btn btn-primary">
-                                    Volgende status
-                                </a></td>
+                            <td class="col-4" th:text="${s.getStatus().getInfo()}"></td>
+                            <td class="col-3">
+                                    <a th:href="@{/changestatus/{studentId}/{assignmentId} (studentId=${student.getStudentNumber()}, assignmentId=${s.assignmentId})}"
+                                       th:text="${s.getStatus().getNext()}" class="btn btn-primary">Contract
+                                    </a>
+                            </td>
                         </tr>
                         </tbody>
                     </table>

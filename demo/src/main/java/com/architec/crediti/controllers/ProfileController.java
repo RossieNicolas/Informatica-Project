@@ -45,10 +45,11 @@ public class ProfileController {
         Student st = stuRepo.findByStudentNumber(studentNumber);
         User us = userRepo.findByUserId(st.getUserId().getUserId());
         List<File> files = fileRepo.findByUserOrderByAssignmentId(us);
+        List<File> contracts = fileRepo.findByDocTypeAndUser("Contract", us);
 
         model.addAttribute("student", st);
         model.addAttribute("files", files);
-        model.addAttribute("status", fileRepo.findByDocTypeAndUser("Contract", us));
+        model.addAttribute("status", contracts);
         //pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());
         model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
@@ -74,21 +75,21 @@ public class ProfileController {
             }
         }
 
-        String status;
+        Progress status;
         status = file.getStatus();
-        String newStatus ;
-        if(status.equals(Progress.START.getInfo())){
-            newStatus = Progress.CONTRACT.getInfo();
-        } else if(status.equals(Progress.CONTRACT.getInfo())){
-            newStatus = Progress.PORTFOLIO.getInfo();
-        } else if(status.equals(Progress.PORTFOLIO.getInfo())){
-            newStatus = Progress.BEWIJS.getInfo();
-        }else if(status.equals(Progress.BEWIJS.getInfo())){
-            newStatus = Progress.END.getInfo();
+        Progress newStatus ;
+        if(status.equals(Progress.START)){
+            newStatus = Progress.CONTRACT;
+        } else if(status.equals(Progress.CONTRACT)){
+            newStatus = Progress.PORTFOLIO;
+        } else if(status.equals(Progress.PORTFOLIO)){
+            newStatus = Progress.BEWIJS;
+        }else if(status.equals(Progress.BEWIJS)){
+            newStatus = Progress.END;
             Assignment ass = assignmentRepo.findByAssignmentId(file.getAssignmentId());
             usr.setAmoutHours(usr.getAmoutHours() + ass.getAmountHours());
         } else {
-            newStatus = Progress.END.getInfo();
+            newStatus = Progress.END;
         }
 
         for(File f : rightFiles) {

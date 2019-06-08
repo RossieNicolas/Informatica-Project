@@ -17,4 +17,17 @@ public enum Progress {
     public int getStatus() {
         return status;
     }
+
+    public String getNext() {
+        switch (status){
+            case 0:
+                return "contract";
+            case 25:
+                return "portfolio";
+            case 50:
+                return "bewijsdocument";
+            default:
+                return "afgerond";
+        }
+    }
 }
