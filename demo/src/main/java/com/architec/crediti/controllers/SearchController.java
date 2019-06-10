@@ -5,6 +5,8 @@ import com.architec.crediti.models.Pager;
 import com.architec.crediti.models.Tag;
 import com.architec.crediti.models.User;
 import com.architec.crediti.repositories.*;
+import com.architec.crediti.utils.AssignmentMethods;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,14 +72,9 @@ public class SearchController {
                     PageRequest.of(evalPage, PAGE_SIZE));
             model.addAttribute("assignments", fiches);
         }
-        List<Tag> allTags = tagRepo.findAll();
 
-        boolean[] status = new boolean[allTags.size()];
+        boolean[] status = AssignmentMethods.getStatusFalse(tagRepo.findAll());
 
-        for (int i = 0; i < allTags.size(); i++) {
-            status[i] = false;
-
-        }
         model.addAttribute("status", status);
         model.addAttribute("assignments", fiches);
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
@@ -97,9 +94,9 @@ public class SearchController {
     public String searchByTags(@RequestParam(value = "page", required = false) Optional<Integer> page,
     @PathVariable(required = false, value = "tag") String tags, Model model){
         String[] tags2 = tags.split("&");
-        int[] test = new int[tags2.length -1];
-        for(int i =0 ; i <test.length; i++){
-            test[i] = (Integer.parseInt(tags2[i+1]));
+        int[] arrayOftagIds = new int[tags2.length -1];
+        for(int i =0 ; i <arrayOftagIds.length; i++){
+            arrayOftagIds[i] = (Integer.parseInt(tags2[i+1]));
         }
         int buttons = (int) assignmentRepo.count() / PAGE_SIZE;
         Page fiches = null;
@@ -110,7 +107,7 @@ public class SearchController {
             List<Assignment> list3 = (List<Assignment>) assignmentRepo
                     .findByTitleContainingAndFullOrderByAssignmentIdDesc("", false);
             List<Long> list = new ArrayList<>();
-            for (int item : test) {
+            for (int item : arrayOftagIds) {
                 for (Assignment a : list3) {
                     if (a.getTags().contains(tagRepo.findBytagId(item))) {
                         list.add(a.getAssignmentId());
@@ -126,21 +123,15 @@ public class SearchController {
             }
 
             ArrayList<Tag> tag = new ArrayList<>();
-            List<Tag> allTags = tagRepo.findAll();
 
-            for (int var : test) {
+
+            for (int var : arrayOftagIds) {
                 tag.add(tagRepo.findBytagId(var));
             }
 
-            boolean[] status = new boolean[allTags.size()];
+            boolean[] status = AssignmentMethods.getStatus(tag, tagRepo.findAll());
 
-            for (int i = 0; i < allTags.size(); i++) {
-                for (Tag item : tag) {
-                    if (allTags.get(i).getTagId() == item.getTagId()) {
-                        status[i] = true;
-                    }
-                }
-            }
+            
 
         model.addAttribute("status", status);
         model.addAttribute("assignments", fiches);
@@ -159,9 +150,9 @@ public class SearchController {
             @RequestParam(value = "page", required = false) Optional<Integer> page,
             @PathVariable(required = false, value = "tag") String tags) {
         String[] tags2 = tags.split("&");
-        int[] test = new int[tags2.length -1];
-        for(int i =0 ; i <test.length; i++){
-            test[i] = (Integer.parseInt(tags2[i+1]));
+        int[] arrayOftagIds = new int[tags2.length -1];
+        for(int i =0 ; i <arrayOftagIds.length; i++){
+            arrayOftagIds[i] = (Integer.parseInt(tags2[i+1]));
         }
         int buttons = (int) assignmentRepo.count() / PAGE_SIZE;
         Page fiches = null;
@@ -172,7 +163,7 @@ public class SearchController {
             List<Assignment> list3 = (List<Assignment>) assignmentRepo
                     .findByTitleContainingAndFullOrderByAssignmentIdDesc(searchbar, false);
             List<Long> list = new ArrayList<>();
-            for (int item : test) {
+            for (int item : arrayOftagIds) {
                 for (Assignment a : list3) {
                     if (a.getTags().contains(tagRepo.findBytagId(item))) {
                         list.add(a.getAssignmentId());
@@ -188,21 +179,12 @@ public class SearchController {
             }
 
             ArrayList<Tag> tag = new ArrayList<>();
-            List<Tag> allTags = tagRepo.findAll();
 
-            for (int var : test) {
+            for (int var : arrayOftagIds) {
                 tag.add(tagRepo.findBytagId(var));
             }
 
-            boolean[] status = new boolean[allTags.size()];
-
-            for (int i = 0; i < allTags.size(); i++) {
-                for (Tag item : tag) {
-                    if (allTags.get(i).getTagId() == item.getTagId()) {
-                        status[i] = true;
-                    }
-                }
-            }
+            boolean[] status = AssignmentMethods.getStatus(tag , tagRepo.findAll());
 
         model.addAttribute("status", status);
         model.addAttribute("assignments", fiches);
