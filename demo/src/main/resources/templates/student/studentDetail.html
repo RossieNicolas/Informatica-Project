@@ -109,7 +109,7 @@
                             <td class="col-1" th:text="${f.getAssignmentId()}"></td>
                             <td class="col-4" th:text="${f.getTitle()}"></td>
                             <td class="col-2" th:text="${f.getDocType()}"></td>
-                            <td class="col-3" th:text="${f.getStatus()}"></td>
+                            <td class="col-3" th:text="${f.getStatus().getInfo()}"></td>
                             <td class="col-2"><a th:href="${f.getDownloadLink()}" class="btn btn-primary">
                                 Download
                             </a></td>
