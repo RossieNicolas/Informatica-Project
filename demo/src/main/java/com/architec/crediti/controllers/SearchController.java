@@ -95,7 +95,7 @@ public class SearchController {
 
    @GetMapping(value = "/allassignments/tag/{tag}")
     public String searchByTags(@RequestParam(value = "page", required = false) Optional<Integer> page,
-    @PathVariable(required = false, value = "tag") String tags, Model model){
+    @PathVariable(required = false, value = "tag") String tags, Model model, Principal principal){
         String[] tags2 = tags.split("&");
         int[] test = new int[tags2.length -1];
         for(int i =0 ; i <test.length; i++){
@@ -149,6 +149,9 @@ public class SearchController {
         model.addAttribute("selectedPageSize", PAGE_SIZE);
         model.addAttribute("pager", pager);
         model.addAttribute("tags", tagRepo.findAll());
+       //pass username to header fragment
+       User currentUser = userRepo.findByEmail(principal.getName());
+       model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
         return "assignments/listAllAssignments";
     }
 
@@ -157,7 +160,7 @@ public class SearchController {
     @GetMapping(value = "/allassignments/{searchbar}/{tag}")
     public String getAssignment(@PathVariable(value = "searchbar" , required = false) String searchbar, Model model,
             @RequestParam(value = "page", required = false) Optional<Integer> page,
-            @PathVariable(required = false, value = "tag") String tags) {
+            @PathVariable(required = false, value = "tag") String tags, Principal principal) {
         String[] tags2 = tags.split("&");
         int[] test = new int[tags2.length -1];
         for(int i =0 ; i <test.length; i++){
@@ -211,6 +214,10 @@ public class SearchController {
         model.addAttribute("selectedPageSize", PAGE_SIZE);
         model.addAttribute("pager", pager);
         model.addAttribute("tags", tagRepo.findAll());
+
+        //pass username to header fragment
+        User currentUser = userRepo.findByEmail(principal.getName());
+        model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
         return "assignments/listAllAssignments";
     }
 
