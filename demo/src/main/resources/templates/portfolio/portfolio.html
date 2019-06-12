@@ -36,7 +36,7 @@
                             <td class="col-1" th:text="${file.getAssignmentId()}"></td>
                             <td class="col-4 overflow" th:text="${file.getTitle()}"></td>
                             <td class="col-2" th:text="${file.getDocType()}"></td>
-                            <td class="col-2" th:text="${file.getStatus()}"></td>
+                            <td class="col-2" th:text="${file.getStatus().getInfo()}"></td>
                             <td class="col-3">
                                 <span style="float: right;">
                                 <button data-toggle="modal"
