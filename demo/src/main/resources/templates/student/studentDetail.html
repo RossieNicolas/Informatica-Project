@@ -83,9 +83,9 @@
                             <td class="col-4" th:text="${s.getTitle()}"></td>
                             <td class="col-4" th:text="${s.getStatus().getInfo()}"></td>
                             <td class="col-3">
-                                    <a th:href="@{/changestatus/{studentId}/{assignmentId} (studentId=${student.getStudentNumber()}, assignmentId=${s.assignmentId})}"
-                                       th:text="${s.getStatus().getNext()}" class="btn btn-primary">Contract
-                                    </a>
+                                <a th:href="@{/changestatus/{studentId}/{assignmentId} (studentId=${student.getStudentNumber()}, assignmentId=${s.assignmentId})}"
+                                   th:text="${s.getStatus().getNext()}" class="btn btn-primary">Contract
+                                </a>
                             </td>
                         </tr>
                         </tbody>
@@ -109,7 +109,7 @@
                             <td class="col-1" th:text="${f.getAssignmentId()}"></td>
                             <td class="col-4" th:text="${f.getTitle()}"></td>
                             <td class="col-2" th:text="${f.getDocType()}"></td>
-                            <td class="col-3" th:text="${f.getStatus()}"></td>
+                            <td class="col-3" th:text="${f.getStatus().getInfo()}"></td>
                             <td class="col-2"><a th:href="${f.getDownloadLink()}" class="btn btn-primary">
                                 Download
                             </a></td>
