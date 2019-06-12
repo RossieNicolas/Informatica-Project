@@ -3,8 +3,6 @@ package com.architec.crediti.utils;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import com.architec.crediti.models.Assignment;
 import com.architec.crediti.models.Tag;
@@ -20,16 +18,7 @@ public class AssignmentMethods {
         return assignments;
     }
 
-    public static Page<Assignment> removeFullAssignmentsPage (Page<Assignment> assignments ) {
-        Iterator<Assignment> list = assignments.iterator();
-        while (list.hasNext()) {
-            Assignment item = list.next();
-            if (item.getAmountStudents() == item.getMaxStudents()) {
-                list.remove();
-            }
-        }
-        return assignments;
-    }
+
 
     public static boolean[] getStatusFalse(List<Tag> allTags){
         boolean[] status = new boolean[allTags.size()];
@@ -50,5 +39,13 @@ public class AssignmentMethods {
             }
         }
         return status;
+    }
+    public static int[] getTagIds(String tags){
+        String[] tags2 = tags.split("&");
+        int[] arrayOftagIds = new int[tags2.length -1];
+        for(int i =0 ; i <arrayOftagIds.length; i++){
+            arrayOftagIds[i] = (Integer.parseInt(tags2[i+1]));
+        }
+        return arrayOftagIds;
     }
 }
