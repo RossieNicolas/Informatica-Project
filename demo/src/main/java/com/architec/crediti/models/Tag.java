@@ -1,5 +1,6 @@
 package com.architec.crediti.models;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Entity
@@ -18,6 +19,10 @@ public class Tag {
 
     @ManyToMany(mappedBy = "tags", cascade = CascadeType.REMOVE)
     Set<Assignment> assignedTags;
+
+    @NotNull
+    @Column(name = "inactive")
+    private boolean inactive;
 
     public int getTagId() {
         return tagId;
@@ -43,12 +48,21 @@ public class Tag {
         this.tagDescription = tagDescription;
     }
 
+    public boolean isInactive() {
+        return inactive;
+    }
+
+    public void setInactive(boolean inactive) {
+        this.inactive = inactive;
+    }
+
     public Tag() {
     }
 
-    public Tag(String tagName, String tagDescription) {
+    public Tag(String tagName, String tagDescription, boolean inactive) {
         this.tagName = tagName;
         this.tagDescription = tagDescription;
+        this.inactive = inactive;
     }
 
     public Set<Assignment> getAssignedTags() {

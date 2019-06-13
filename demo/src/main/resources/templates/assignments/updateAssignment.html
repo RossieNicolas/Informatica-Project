@@ -69,13 +69,13 @@
                         <div class="col-md-5 pt-3">
                             <label>Tags:</label>
                             <div class="form-group">
-                                <label th:each="tag, iter: ${updatetag}"
+                                <label th:if="${!tag.isInactive()}" th:each="tag, iter: ${updatetag}"
                                        class="custom-control custom-checkbox custom-control-inline"
                                        th:value="${tag.getTagId()}">
-                                    <input th:checked="${status[iter.index]}" type="checkbox" name="tag"
+                                    <input th:if="${!tag.isInactive()}" th:checked="${status[iter.index]}" type="checkbox" name="tag"
                                            class="custom-control-input"
                                            th:value="${tag.getTagId()}">
-                                    <span class="custom-control-label" th:text="${tag.getTagName()}"></span>
+                                    <span class="custom-control-label" th:if="${!tag.isInactive()}" th:text="${tag.getTagName()}"></span>
                                 </label>
                             </div>
                         </div>

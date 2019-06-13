@@ -123,7 +123,9 @@ public class AssignmentController {
         if (tags != null) {
             for (int item : tags) {
                 Tag tag = tagRepo.findBytagId(item);
-                set.add(tag);
+                if (!tag.isInactive()) {
+                    set.add(tag);
+                }
             }
         }
         assignment.setTags(set);
@@ -429,7 +431,9 @@ public class AssignmentController {
         if (tags != null) {
             for (int item : tags) {
                 Tag tag = tagRepo.findBytagId(item);
-                set.add(tag);
+                if (!tag.isInactive()) {
+                    set.add(tag);
+                }
             }
         }
 
@@ -552,7 +556,7 @@ public class AssignmentController {
             if (!items.get(0).equals("")) {
                 for (int i = 0; i < tags.size(); i++) {
                     for (String item : items) {
-                        if (tags.get(i).getTagId() == Integer.parseInt(item)) {
+                        if (tags.get(i).getTagId() == Integer.parseInt(item) && !tags.get(i).isInactive()) {
                             status[i] = true;
                         }
                     }
@@ -586,7 +590,7 @@ public class AssignmentController {
 
             for (int i = 0; i < tags.size(); i++) {
                 for (Tag item : selectedTags) {
-                    if (tags.get(i).getTagId() == item.getTagId()) {
+                    if (tags.get(i).getTagId() == item.getTagId() && !tags.get(i).isInactive()) {
                         status[i] = true;
                     }
                 }
@@ -668,7 +672,7 @@ public class AssignmentController {
 
         for (int i = 0; i < allTags.size(); i++) {
             for (Tag item : tags) {
-                if (allTags.get(i).getTagId() == item.getTagId()) {
+                if (allTags.get(i).getTagId() == item.getTagId() && !allTags.get(i).isInactive()) {
                     status[i] = true;
                 }
             }

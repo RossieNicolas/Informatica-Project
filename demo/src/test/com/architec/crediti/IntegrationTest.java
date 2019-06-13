@@ -173,7 +173,7 @@ public class IntegrationTest {
     public void createEditFindTag(){
 
         //arrange
-        Tag t = new Tag("test","test");
+        Tag t = new Tag("test","test", false);
         String input = "success";
 
         //act
@@ -199,7 +199,7 @@ public class IntegrationTest {
         byte[] salt = new byte[10];
         ExternalUser e = new ExternalUser("test", "test", "test","00000000000","test","test","test", password, salt);
         Student s = new Student("0000000000","000000",u);
-        Tag t = new Tag("test","test");
+        Tag t = new Tag("test","test", false);
         Assignment a = new Assignment("test","test","test",5,6,"2019-05-05","2019-05-06",false,false,u);
         ArchivedAssignment ar = new ArchivedAssignment("test","ZAP","test",5,5,6,"2019-05-05","2019-05-06","testuser","test_tags");
 

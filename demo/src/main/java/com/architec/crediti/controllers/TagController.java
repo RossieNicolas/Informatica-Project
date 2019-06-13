@@ -44,7 +44,7 @@ public class TagController {
     @PostMapping("/tag")
     public String createTag(Model model, @RequestParam("tagName") String tagName,
                             @RequestParam("tagDescription") String tagDescription) {
-        Tag tag = new Tag(tagName, tagDescription);
+        Tag tag = new Tag(tagName, tagDescription, false);
         boolean existsName = tagRepo.existsByTagName(tagName);
         if (!existsName) {
             tagRepo.save(tag);
@@ -130,4 +130,15 @@ public class TagController {
 
     }
 
+    @GetMapping("/deletetag/{id}/inactivetag")
+    public String setTagInactive(@PathVariable("id") int id, Model model)
+    {
+        Tag tag = tagRepo.findBytagId(id);
+        if (!tag.isInactive()){
+            tag.setInactive(true);
+            tagRepo.save(tag);
+        }
+        model.addAttribute("tags", tagRepo.findAll());
+        return "redirect:/listAllTags";
+    }
 }

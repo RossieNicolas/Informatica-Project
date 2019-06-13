@@ -62,10 +62,10 @@
                             <label>Tags:</label>
                             <div class="form-group">
                                 <label th:each="t, iter: ${tags}" class="custom-control custom-checkbox custom-control-inline"
-                                       th:value="${t.getTagId()}">
+                                       th:if="${!t.isInactive()}" th:value="${t.getTagId()}">
                                     <input th:checked="${status[iter.index]}" type="checkbox" name="tag" class="custom-control-input"
-                                           th:value="${t.getTagId()}">
-                                    <span class="custom-control-label" th:text="${t.getTagName()}"></span>
+                                           th:if="${!t.isInactive()}" th:value="${t.getTagId()}">
+                                    <span class="custom-control-label" th:if="${!t.isInactive()}" th:text="${t.getTagName()}"></span>
                                 </label>
                             </div>
                         </div>

@@ -24,7 +24,7 @@ public class TagTest {
 
         //arrange
         int tagLength = (int) tags.count();
-        Tag t = new Tag("test", "test");
+        Tag t = new Tag("test", "test", false);
 
         //act
         tags.save(t);
@@ -43,7 +43,7 @@ public class TagTest {
     public void findByIdTagShouldReturnCorrectTag() {
 
         //arrange
-        Tag t = new Tag("test", "test");
+        Tag t = new Tag("test", "test", false);
         tags.save(t);
         int tagIdAdded = t.getTagId();
 
@@ -61,7 +61,7 @@ public class TagTest {
     public void findByTagNameExistsShouldReturnCorrectTag(){
 
         //arrange
-        Tag t = new Tag("test", "test");
+        Tag t = new Tag("test", "test", false);
         tags.save(t);
 
         //act
@@ -79,7 +79,7 @@ public class TagTest {
     public void RemoveTagShouldRemoveTagFromDB() {
 
         //arrange
-        Tag t = new Tag("test", "test");
+        Tag t = new Tag("test", "test", false);
         tags.save(t);
         int tagLength = (int) tags.count();
 
@@ -97,7 +97,7 @@ public class TagTest {
     public void editTagNameShouldReturnEditedTag() {
 
         //arrange
-        Tag t = new Tag("test", "test");
+        Tag t = new Tag("test", "test", false);
         tags.save(t);
         String input = "testEdit";
 
@@ -116,7 +116,7 @@ public class TagTest {
     public void editTagDescriptionShouldReturnEditedTag() {
 
         //arrange
-        Tag t = new Tag("test", "test");
+        Tag t = new Tag("test", "test", false);
         tags.save(t);
         String input = "testEdit";
 
