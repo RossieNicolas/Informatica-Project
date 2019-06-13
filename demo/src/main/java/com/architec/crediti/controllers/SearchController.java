@@ -92,7 +92,7 @@ public class SearchController {
 
     @GetMapping(value = "/allassignments/tag/{tag}")
     public String searchByTags(@RequestParam(value = "page", required = false) Optional<Integer> page,
-            @PathVariable(required = false, value = "tag") String tags, Model model) {
+            @PathVariable(required = false, value = "tag") String tags, Model model, Principal principal) {
         int[] arrayOftagIds = AssignmentMethods.getTagIds(tags);
 
         int buttons = (int) assignmentRepo.count() / PAGE_SIZE;
@@ -144,7 +144,7 @@ public class SearchController {
     @GetMapping(value = "/allassignments/{searchbar}/{tag}")
     public String getAssignment(@PathVariable(value = "searchbar", required = false) String searchbar, Model model,
             @RequestParam(value = "page", required = false) Optional<Integer> page,
-            @PathVariable(required = false, value = "tag") String tags) {
+            @PathVariable(required = false, value = "tag") String tags, Principal principal) {
         int[] arrayOftagIds = AssignmentMethods.getTagIds(tags);
         int buttons = (int) assignmentRepo.count() / PAGE_SIZE;
         Page fiches = null;
