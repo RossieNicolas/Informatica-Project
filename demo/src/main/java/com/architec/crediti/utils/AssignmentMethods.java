@@ -1,14 +1,14 @@
 package com.architec.crediti.utils;
 
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
-import org.springframework.data.domain.Page;
 import com.architec.crediti.models.Assignment;
+import com.architec.crediti.models.Tag;
+import com.architec.crediti.repositories.TagRepo;
 
 public class AssignmentMethods {
 
-    private AssignmentMethods(){
-
+    private AssignmentMethods(TagRepo tagRepo){
     }
 
     public static List<Assignment> removeFullAssignments (List<Assignment> assignments ) {
@@ -16,14 +16,34 @@ public class AssignmentMethods {
         return assignments;
     }
 
-    public static Page<Assignment> removeFullAssignmentsPage (Page<Assignment> assignments ) {
-        Iterator<Assignment> list = assignments.iterator();
-        while (list.hasNext()) {
-            Assignment item = list.next();
-            if (item.getAmountStudents() == item.getMaxStudents()) {
-                list.remove();
+
+
+    public static boolean[] getStatusFalse(List<Tag> allTags){
+        boolean[] status = new boolean[allTags.size()];
+        for (int i = 0; i < allTags.size(); i++) {
+            status[i] = false;
+
+        }
+        return status;
+    }
+
+    public static boolean[] getStatus(ArrayList<Tag> tag  , List<Tag>allTags){
+        boolean[] status = new boolean[allTags.size()];
+        for (int i = 0; i < allTags.size(); i++) {
+            for (Tag item : tag) {
+                if (allTags.get(i).getTagId() == item.getTagId()) {
+                    status[i] = true;
+                }
             }
         }
-        return assignments;
+        return status;
+    }
+    public static int[] getTagIds(String tags){
+        String[] tags2 = tags.split("&");
+        int[] arrayOftagIds = new int[tags2.length -1];
+        for(int i =0 ; i <arrayOftagIds.length; i++){
+            arrayOftagIds[i] = (Integer.parseInt(tags2[i+1]));
+        }
+        return arrayOftagIds;
     }
 }

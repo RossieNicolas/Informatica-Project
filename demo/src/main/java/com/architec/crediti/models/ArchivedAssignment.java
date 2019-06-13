@@ -5,7 +5,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@SequenceGenerator(name="seq", initialValue=1050)
+@SequenceGenerator(name="seq", initialValue=223)
 @Table(name = "archive")
 public class ArchivedAssignment {
     @Id
