@@ -85,6 +85,7 @@ public class ExternalController {
         } else {
             mail.sendSimpleMessage(email, "Externe registratie geannuleerd",
                     EmailTemplates.userAlreadyExists());
+            return "redirect:/registerfail";
         }
         return "redirect:/registersucces";
     }
@@ -94,6 +95,12 @@ public class ExternalController {
     public String getSucces() {
         return "external/registerSucces";
     }
+
+    @GetMapping("/registerfail")
+    public String getFail() {
+        return "external/registerFail";
+    }
+
 
     @GetMapping("/notapproved")
     public String notApproved() {
