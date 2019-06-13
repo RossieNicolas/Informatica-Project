@@ -1,9 +1,7 @@
 package com.architec.crediti.utils;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import org.springframework.data.domain.Page;
 import com.architec.crediti.models.Assignment;
 import com.architec.crediti.models.Tag;
 import com.architec.crediti.repositories.TagRepo;
