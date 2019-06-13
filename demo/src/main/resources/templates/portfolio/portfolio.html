@@ -25,18 +25,42 @@
                         <thead>
                         <tr class="d-flex">
                             <th class="col-1" scope="col">Nr</th>
-                            <th class="col-4" scope="col">Titel</th>
+                            <th class="col-3" scope="col">Titel</th>
                             <th class="col-2" scope="col">Type document</th>
-                            <th class="col-2" scope="col">Status</th>
+                            <th class="col-3" scope="col">Status</th>
                             <th class="col-3" scope="col"></th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr class="d-flex" th:each="file : ${files}">
                             <td class="col-1" th:text="${file.getAssignmentId()}"></td>
-                            <td class="col-4 overflow" th:text="${file.getTitle()}"></td>
+                            <td class="col-3 overflow" th:text="${file.getTitle()}"></td>
                             <td class="col-2" th:text="${file.getDocType()}"></td>
-                            <td class="col-2" th:text="${file.getStatus().getInfo()}"></td>
+                            <td class="col-3" th:if="${file.getStatus().getInfo().equalsIgnoreCase('start')}"><div class="progress">
+                                <div class="progress-bar bg-success" role="progressbar" aria-valuenow="0"
+                                     aria-valuemin="0" aria-valuemax="100" style="width:0%">
+                                </div>
+                            </div></td>
+                            <td class="col-3" th:if="${file.getStatus().getInfo().equalsIgnoreCase('contract')}"><div class="progress">
+                                <div class="progress-bar bg-success" role="progressbar" aria-valuenow="25"
+                                     aria-valuemin="0" aria-valuemax="100" style="width:25%">Contract
+                                </div>
+                            </div></td>
+                            <td class="col-3" th:if="${file.getStatus().getInfo().equalsIgnoreCase('portfolio')}"><div class="progress">
+                                <div class="progress-bar bg-success" role="progressbar" aria-valuenow="50"
+                                     aria-valuemin="0" aria-valuemax="100" style="width:50%">Portfolio
+                                </div>
+                            </div></td>
+                            <td class="col-3" th:if="${file.getStatus().getInfo().equalsIgnoreCase('bewijsdocument')}"><div class="progress">
+                                <div class="progress-bar bg-success" role="progressbar" aria-valuenow="75"
+                                     aria-valuemin="0" aria-valuemax="100" style="width:75%">Bewijsdocument
+                                </div>
+                            </div></td>
+                            <td class="col-3" th:if="${file.getStatus().getInfo().equalsIgnoreCase('afgerond')}"><div class="progress">
+                                <div class="progress-bar bg-success" role="progressbar" aria-valuenow="100"
+                                     aria-valuemin="0" aria-valuemax="100" style="width:100%">Afgerond
+                                </div>
+                            </div></td>
                             <td class="col-3">
                                 <span style="float: right;">
                                 <button data-toggle="modal"
