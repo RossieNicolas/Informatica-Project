@@ -94,7 +94,7 @@
     function amoutH() {
         var amountHours = document.getElementById("amountHours").value;
         var test = parseInt(amountHours);
-        if (test => 78) {
+        if (test >= 78) {
             alert("Totaal uur moet kleiner of gelijk aan 78.");
             document.getElementById('amountHours').value = "";
             return false;
