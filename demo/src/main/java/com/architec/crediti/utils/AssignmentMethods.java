@@ -4,12 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import com.architec.crediti.models.Assignment;
 import com.architec.crediti.models.Tag;
-import com.architec.crediti.repositories.TagRepo;
 
 public class AssignmentMethods {
-
-    private AssignmentMethods(TagRepo tagRepo){
-    }
 
     public static List<Assignment> removeFullAssignments (List<Assignment> assignments ) {
         assignments.removeIf(item -> item.getAmountStudents() == item.getMaxStudents());

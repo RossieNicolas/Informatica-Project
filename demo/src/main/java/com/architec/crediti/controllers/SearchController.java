@@ -29,7 +29,6 @@ import java.util.stream.Collectors;
 public class SearchController {
     private static final int PAGE_SIZE = 15;
     private static final int INITAL_PAGE = 0;
-    private Log log = LogFactory.getLog(this.getClass());
 
     private final
     TagRepo tagRepo;
@@ -101,7 +100,7 @@ public class SearchController {
             buttons++;
         }
         int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
-        List<Assignment> listOfAllAssignments = (List<Assignment>) assignmentRepo
+        List<Assignment> listOfAllAssignments = assignmentRepo
                 .findByTitleContainingAndFullOrderByAssignmentIdDesc("", false);
         List<Long> listoftagIds = new ArrayList<>();
         for (int item : arrayOftagIds) {
@@ -152,7 +151,7 @@ public class SearchController {
             buttons++;
         }
         int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
-        List<Assignment> listOfAllAssignments = (List<Assignment>) assignmentRepo
+        List<Assignment> listOfAllAssignments = assignmentRepo
                 .findByTitleContainingAndFullOrderByAssignmentIdDesc(searchbar, false);
         List<Long> list = new ArrayList<>();
         for (int item : arrayOftagIds) {
@@ -243,7 +242,7 @@ public class SearchController {
             buttons++;
         }
         int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
-        List<Assignment> listOfAllAssignments = (List<Assignment>) assignmentRepo
+        List<Assignment> listOfAllAssignments = assignmentRepo
                 .findByTitleContainingAndFullOrderByAssignmentIdDesc("", true);
         List<Long> listoftagIds = new ArrayList<>();
         for (int item : arrayOftagIds) {
@@ -295,7 +294,7 @@ public class SearchController {
             buttons++;
         }
         int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
-        List<Assignment> listOfAllAssignments = (List<Assignment>) assignmentRepo
+        List<Assignment> listOfAllAssignments = assignmentRepo
                 .findByTitleContainingAndFullOrderByAssignmentIdDesc(searchbar, true);
         List<Long> list = new ArrayList<>();
         for (int item : arrayOftagIds) {

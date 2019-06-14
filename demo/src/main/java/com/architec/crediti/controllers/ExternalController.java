@@ -154,10 +154,8 @@ public class ExternalController {
         List<User> users = userRepository.findAllByRole(Role.EXTERN);
         List<ExternalUser> externalUsers = new ArrayList<>();
         for (User u : users) {
-            if (u != null) {
-                if (!externalUserRepository.findByUserId(u).isApproved()) {
-                    externalUsers.add(externalUserRepository.findByUserId(u));
-                }
+            if (u != null && !externalUserRepository.findByUserId(u).isApproved()) {
+                externalUsers.add(externalUserRepository.findByUserId(u));
             }
         }
 
