@@ -183,27 +183,94 @@ public class AssignmentController {
         if (assignmentRepo.count() % PAGE_SIZE != 0) {
             buttons++;
         }
-        if (tags == null) {
-            fiches = assignmentRepo.findByFullOrderByAssignmentIdDesc(false, PageRequest.of(evalPage, PAGE_SIZE));
-        } else {
-            List<Assignment> list3 = (List<Assignment>) assignmentRepo.findAll();
-            List<Long> list = new ArrayList<>();
-            for (int item : tags) {
-                for (Assignment a : list3) {
-                    if (a.getTags().contains(tagRepo.findBytagId(item))) {
-                        list.add(a.getAssignmentId());
+        if (studentRepo.existsByUserId(currentUser)) {
+            Student student = studentRepo.findByUserId(currentUser);
+            if (student.isMobility() && !student.isZap()) {
+                if (tags == null) {
+                    fiches = assignmentRepo.findByFullAndTypeEqualsOrderByAssignmentIdDesc(false, PageRequest.of(evalPage, PAGE_SIZE), "Mobility");
+                } else {
+                    List<Assignment> list3 = (List<Assignment>) assignmentRepo.findAll();
+                    List<Long> list = new ArrayList<>();
+                    for (int item : tags) {
+                        for (Assignment a : list3) {
+                            if (a.getTags().contains(tagRepo.findBytagId(item))) {
+                                list.add(a.getAssignmentId());
+                            }
+                        }
+                    }
+                    list = list.stream().distinct().collect(Collectors.toList());
+                    if (list.isEmpty()) {
+                        fiches = assignmentRepo.findByTagsAndTypeEqualsOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE), "Mobility");
+                    } else {
+                        List<Assignment> list54 = new ArrayList();
+                        fiches = new PageImpl<>(list54);
+                    }
+                }
+            } else if (student.isZap() && !student.isMobility()) {
+                if (tags == null) {
+                    fiches = assignmentRepo.findByFullAndTypeEqualsOrderByAssignmentIdDesc(false, PageRequest.of(evalPage, PAGE_SIZE), "ZAP");
+                } else {
+                    List<Assignment> list3 = (List<Assignment>) assignmentRepo.findAll();
+                    List<Long> list = new ArrayList<>();
+                    for (int item : tags) {
+                        for (Assignment a : list3) {
+                            if (a.getTags().contains(tagRepo.findBytagId(item))) {
+                                list.add(a.getAssignmentId());
+                            }
+                        }
+                    }
+                    list = list.stream().distinct().collect(Collectors.toList());
+                    if (list.isEmpty()) {
+                        fiches = assignmentRepo.findByTagsAndTypeEqualsOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE), "ZAP");
+                    } else {
+                        List<Assignment> list54 = new ArrayList();
+                        fiches = new PageImpl<>(list54);
+                    }
+                }
+            } else {
+                if (tags == null) {
+                    fiches = assignmentRepo.findByFullOrderByAssignmentIdDesc(false, PageRequest.of(evalPage, PAGE_SIZE));
+                } else {
+                    List<Assignment> list3 = (List<Assignment>) assignmentRepo.findAll();
+                    List<Long> list = new ArrayList<>();
+                    for (int item : tags) {
+                        for (Assignment a : list3) {
+                            if (a.getTags().contains(tagRepo.findBytagId(item))) {
+                                list.add(a.getAssignmentId());
+                            }
+                        }
+                    }
+                    list = list.stream().distinct().collect(Collectors.toList());
+                    if (list.isEmpty()) {
+                        fiches = assignmentRepo.findByTagsOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE));
+                    } else {
+                        List<Assignment> list54 = new ArrayList();
+                        fiches = new PageImpl<>(list54);
                     }
                 }
             }
-            list = list.stream().distinct().collect(Collectors.toList());
-            if (list.isEmpty()) {
-                fiches = assignmentRepo.findByTagsOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE));
+        } else {
+            if (tags == null) {
+                fiches = assignmentRepo.findByFullOrderByAssignmentIdDesc(false, PageRequest.of(evalPage, PAGE_SIZE));
             } else {
-                List<Assignment> list54 = new ArrayList();
-                fiches = new PageImpl<>(list54);
+                List<Assignment> list3 = (List<Assignment>) assignmentRepo.findAll();
+                List<Long> list = new ArrayList<>();
+                for (int item : tags) {
+                    for (Assignment a : list3) {
+                        if (a.getTags().contains(tagRepo.findBytagId(item))) {
+                            list.add(a.getAssignmentId());
+                        }
+                    }
+                }
+                list = list.stream().distinct().collect(Collectors.toList());
+                if (list.isEmpty()) {
+                    fiches = assignmentRepo.findByTagsOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE));
+                } else {
+                    List<Assignment> list54 = new ArrayList();
+                    fiches = new PageImpl<>(list54);
+                }
             }
         }
-
         model.addAttribute("assignments", fiches);
 
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
