@@ -189,7 +189,7 @@ public class AssignmentController {
             Student student = studentRepo.findByUserId(currentUser);
             if (student.isMobility() && !student.isZap()) {
                 if (tags == null) {
-                    fiches = assignmentRepo.findByValidatedAndFullAndTypeEqualsOrderByAssignmentIdDesc(true , false, PageRequest.of(evalPage, PAGE_SIZE), "Mobility");
+                    fiches = assignmentRepo.findByValidatedAndFullAndTypeEqualsOrderByAssignmentIdDesc(true, false, PageRequest.of(evalPage, PAGE_SIZE), "Mobility");
                 } else {
                     List<Assignment> list3 = (List<Assignment>) assignmentRepo.findAll();
                     List<Long> list = new ArrayList<>();
@@ -202,7 +202,7 @@ public class AssignmentController {
                     }
                     list = list.stream().distinct().collect(Collectors.toList());
                     if (list.isEmpty()) {
-                        fiches = assignmentRepo.findByValidatedAndTagsAndTypeEqualsOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE), "Mobility",true);
+                        fiches = assignmentRepo.findByValidatedAndTagsAndTypeEqualsOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE), "Mobility", true);
                     } else {
                         List<Assignment> list54 = new ArrayList();
                         fiches = new PageImpl<>(list54);
@@ -210,7 +210,7 @@ public class AssignmentController {
                 }
             } else if (student.isZap() && !student.isMobility()) {
                 if (tags == null) {
-                    fiches = assignmentRepo.findByValidatedAndFullAndTypeEqualsOrderByAssignmentIdDesc(true , false, PageRequest.of(evalPage, PAGE_SIZE), "ZAP");
+                    fiches = assignmentRepo.findByValidatedAndFullAndTypeEqualsOrderByAssignmentIdDesc(true, false, PageRequest.of(evalPage, PAGE_SIZE), "ZAP");
                 } else {
                     List<Assignment> list3 = (List<Assignment>) assignmentRepo.findAll();
                     List<Long> list = new ArrayList<>();
@@ -223,7 +223,7 @@ public class AssignmentController {
                     }
                     list = list.stream().distinct().collect(Collectors.toList());
                     if (list.isEmpty()) {
-                        fiches = assignmentRepo.findByValidatedAndTagsAndTypeEqualsOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE), "ZAP",true);
+                        fiches = assignmentRepo.findByValidatedAndTagsAndTypeEqualsOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE), "ZAP", true);
                     } else {
                         List<Assignment> list54 = new ArrayList();
                         fiches = new PageImpl<>(list54);
@@ -244,7 +244,7 @@ public class AssignmentController {
                     }
                     list = list.stream().distinct().collect(Collectors.toList());
                     if (list.isEmpty()) {
-                        fiches = assignmentRepo.findByValidatedAndTagsOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE),true);
+                        fiches = assignmentRepo.findByValidatedAndTagsOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE), true);
                     } else {
                         List<Assignment> list54 = new ArrayList();
                         fiches = new PageImpl<>(list54);
@@ -266,7 +266,7 @@ public class AssignmentController {
                 }
                 list = list.stream().distinct().collect(Collectors.toList());
                 if (list.isEmpty()) {
-                    fiches = assignmentRepo.findByValidatedAndTagsOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE),true);
+                    fiches = assignmentRepo.findByValidatedAndTagsOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE), true);
                 } else {
                     List<Assignment> list54 = new ArrayList();
                     fiches = new PageImpl<>(list54);
@@ -277,7 +277,7 @@ public class AssignmentController {
 
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
 
-        boolean[] status ;
+        boolean[] status;
         if (tags == null) {
             status = AssignmentMethods.getStatusFalse(tagRepo.findAll());
         } else {
@@ -495,12 +495,12 @@ public class AssignmentController {
 
     // delete specific assignment
     @GetMapping("/deleteassignment/{assignmentId}")
-    public String deleteAssignment(@PathVariable("assignmentId") int assignmentId, Model model, Principal principal){
+    public String deleteAssignment(@PathVariable("assignmentId") int assignmentId, Model model, Principal principal) {
         Assignment assignment = assignmentRepo.findById((long) assignmentId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid assignment Id:" + assignmentId));
-        try{
+        try {
             assignmentRepo.delete(assignment);
-        }catch (Exception E){
+        } catch (Exception E) {
             User currentUser = userRepo.findByEmail(principal.getName());
             model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
             return "basic/assignmentError";
@@ -645,7 +645,7 @@ public class AssignmentController {
                 }
             }
 
-            if(currentUser.getRole().equals(Role.COORDINATOR)){
+            if (currentUser.getRole().equals(Role.COORDINATOR)) {
                 duplicateAssignment.setValidated(true);
             } else if (currentUser.getRole().equals(Role.STUDENT)) {
                 try {

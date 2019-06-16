@@ -24,7 +24,7 @@ public class Student {
     private boolean mobility;
 
     @Column(name = "amoutHours")
-    private double amoutHours ;
+    private double amoutHours;
 
 
     @ManyToMany(cascade = CascadeType.REMOVE)
@@ -34,8 +34,8 @@ public class Student {
             inverseJoinColumns = @JoinColumn(name = "assign_id"))
     private Set<Assignment> assignments;
 
-    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = { CascadeType.MERGE,
-            CascadeType.REMOVE })
+    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = {CascadeType.MERGE,
+            CascadeType.REMOVE})
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User userId;
 
@@ -81,7 +81,7 @@ public class Student {
         this.studentNumber = studentNumber;
     }
 
-    public String findEmail(){
+    public String findEmail() {
         return this.userId.getEmail();
     }
 
@@ -106,9 +106,10 @@ public class Student {
         return userId;
     }
 
-    public String getEmail(){
+    public String getEmail() {
         return userId.getEmail();
     }
+
     public double getAmoutHours() {
         return this.amoutHours;
     }

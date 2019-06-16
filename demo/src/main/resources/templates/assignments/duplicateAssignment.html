@@ -23,7 +23,9 @@
 
                         <div class="col-md-5 pt-3">
                             <label for="title">Titel:</label>
-                            <input type="text" class="form-control" name="title" id="title" pattern="[A-Za-z ]+" title="Er zijn geen cijfers of speciale tekens toegestaan" th:value="${duplicate.getTitle()}" required>
+                            <input type="text" class="form-control" name="title" id="title" pattern="[A-Za-z ]+"
+                                   title="Er zijn geen cijfers of speciale tekens toegestaan"
+                                   th:value="${duplicate.getTitle()}" required>
                         </div>
                         <div class="col-md-5 pt-3">
                             <label for="type">Type:</label>
@@ -35,7 +37,8 @@
                         </div>
                         <div class="col-md-5 pt-3">
                             <label for="task">Omschrijving opdracht:</label>
-                            <textarea type="text" class="form-control" name="task" id="task" th:text="${duplicate.getTask()}" required></textarea>
+                            <textarea type="text" class="form-control" name="task" id="task"
+                                      th:text="${duplicate.getTask()}" required></textarea>
                         </div>
                         <div class="col-md-5 pt-3">
                             <label for="startDate">Begindatum:</label>
@@ -61,11 +64,14 @@
                         <div class="col-md-5 pt-3">
                             <label>Tags:</label>
                             <div class="form-group">
-                                <label th:each="t, iter: ${tags}" class="custom-control custom-checkbox custom-control-inline"
+                                <label th:each="t, iter: ${tags}"
+                                       class="custom-control custom-checkbox custom-control-inline"
                                        th:if="${!t.isInactive()}" th:value="${t.getTagId()}">
-                                    <input th:checked="${status[iter.index]}" type="checkbox" name="tag" class="custom-control-input"
+                                    <input th:checked="${status[iter.index]}" type="checkbox" name="tag"
+                                           class="custom-control-input"
                                            th:if="${!t.isInactive()}" th:value="${t.getTagId()}">
-                                    <span class="custom-control-label" th:if="${!t.isInactive()}" th:text="${t.getTagName()}"></span>
+                                    <span class="custom-control-label" th:if="${!t.isInactive()}"
+                                          th:text="${t.getTagName()}"></span>
                                 </label>
                             </div>
                         </div>

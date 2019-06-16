@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <!-- Required meta tags -->
@@ -27,14 +28,17 @@
                         <a id="opdrachtgever" type="text" th:text="*{assignments.getName()}"></a>
                         <br/>
                         <label for="opdrachtgeveremail"><strong>Opdrachtgever e-mail: </strong></label>
-                        <a id="opdrachtgeveremail" type="text" th:text="*{assignments.getEmail()}" th:href="'mailto:' + ${assignments.getEmail()}"></a>
+                        <a id="opdrachtgeveremail" type="text" th:text="*{assignments.getEmail()}"
+                           th:href="'mailto:' + ${assignments.getEmail()}"></a>
                         <div class="col-md-5 pt-3">
                             <label for="company" th:if="${!company.equalsIgnoreCase('t')}">Bedrijf:</label>
-                            <input th:if="${!company.equalsIgnoreCase('t')}" type="text" class="form-control" id="company" th:value="*{company}">
+                            <input th:if="${!company.equalsIgnoreCase('t')}" type="text" class="form-control"
+                                   id="company" th:value="*{company}">
                         </div>
                         <div class="col-md-5 pt-3">
                             <label for="title">Titel:</label>
-                            <input type="text" class="form-control" name="title" id="title" th:value="*{assignments.getTitle()}" required>
+                            <input type="text" class="form-control" name="title" id="title"
+                                   th:value="*{assignments.getTitle()}" required>
                         </div>
                         <div class="col-md-5 pt-3">
                             <label for="type">Type:</label>
@@ -46,32 +50,41 @@
                         </div>
                         <div class="col-md-5 pt-3">
                             <label for="task">Omschrijving opdracht:</label>
-                            <textarea class="form-control" name="task" id="task" th:text="*{assignments.getTask()}" maxlength="255" required></textarea>
+                            <textarea class="form-control" name="task" id="task" th:text="*{assignments.getTask()}"
+                                      maxlength="255" required></textarea>
                         </div>
                         <div class="col-md-5 pt-3">
                             <label for="startDate">Begindatum:</label>
-                            <input type="date" class="form-control" name="startDate" id="startDate" onblur="SDate()" th:value="*{assignments.getStartDate()}" required>
+                            <input type="date" class="form-control" name="startDate" id="startDate" onblur="SDate()"
+                                   th:value="*{assignments.getStartDate()}" required>
                         </div>
                         <div class="col-md-5 pt-3">
                             <label for="endDate">Begindatum:</label>
-                            <input type="date" class="form-control" name="endDate" id="endDate" onblur="TDate()" th:value="*{assignments.getEndDate()}" required>
+                            <input type="date" class="form-control" name="endDate" id="endDate" onblur="TDate()"
+                                   th:value="*{assignments.getEndDate()}" required>
                         </div>
                         <div class="col-md-5 pt-3">
                             <label for="amountHours">Totaal uur:</label>
-                            <input type="number" class="form-control" name="amountHours" id="amountHours" th:value="*{assignments.getAmountHours()}" onblur="amoutH()" min="6" max="78" required>
+                            <input type="number" class="form-control" name="amountHours" id="amountHours"
+                                   th:value="*{assignments.getAmountHours()}" onblur="amoutH()" min="6" max="78"
+                                   required>
                         </div>
                         <div class="col-md-5 pt-3">
                             <label for="maxStudents">Max Studenten:</label>
-                            <input type="number" class="form-control" name="maxStudents" id="maxStudents" th:value="*{assignments.getMaxStudents()}" min="1" required>
+                            <input type="number" class="form-control" name="maxStudents" id="maxStudents"
+                                   th:value="*{assignments.getMaxStudents()}" min="1" required>
                         </div>
                         <div class="col-md-5 pt-3">
                             <label>Tags:</label>
                             <div class="form-group">
-                                <label th:each="tag, iter: ${tags}" class="custom-control custom-checkbox custom-control-inline"
+                                <label th:each="tag, iter: ${tags}"
+                                       class="custom-control custom-checkbox custom-control-inline"
                                        th:if="${!tag.isInactive()}" th:value="${tag.getTagId()}">
-                                    <input th:checked="${status[iter.index]}" type="checkbox" name="tag" class="custom-control-input"
+                                    <input th:checked="${status[iter.index]}" type="checkbox" name="tag"
+                                           class="custom-control-input"
                                            th:if="${!tag.isInactive()}" th:value="${tag.getTagId()}">
-                                    <span class="custom-control-label" th:if="${!tag.isInactive()}" th:text="${tag.getTagName()}"></span>
+                                    <span class="custom-control-label" th:if="${!tag.isInactive()}"
+                                          th:text="${tag.getTagName()}"></span>
                                 </label>
                             </div>
                         </div>

@@ -43,7 +43,7 @@ public class PasswordRecoveryController {
     }
 
     @PostMapping("/forgotPassword")
-    public ModelAndView processForgotPasswordForm( ModelAndView modelAndView, @RequestParam("email") String userEmail, HttpServletRequest request) {
+    public ModelAndView processForgotPasswordForm(ModelAndView modelAndView, @RequestParam("email") String userEmail, HttpServletRequest request) {
 
         // Lookup user in database by e-mail
         ExternalUser user = externalUserRepo.findByUserId(userRepo.findByEmail(userEmail));
@@ -67,7 +67,7 @@ public class PasswordRecoveryController {
             passwordResetEmail.setText("Om je wachtwoord te resetten, click op onderstaande link:\n" + appUrl
                     + "/reset?token=" + user.getResetToken());
 
-            emailImpl.sendSimpleMessage(user.getEmail() , "Wachtwoord herstellen" , "Klik op onderstaande link om uw wachtwoord te resetten:\n" + appUrl
+            emailImpl.sendSimpleMessage(user.getEmail(), "Wachtwoord herstellen", "Klik op onderstaande link om uw wachtwoord te resetten:\n" + appUrl
                     + "/reset?token=" + user.getResetToken());
 
             // Add success message to view
@@ -101,7 +101,7 @@ public class PasswordRecoveryController {
     public ModelAndView setNewPassword(ModelAndView modelAndView,
                                        @RequestParam Map<String, String> requestParams,
                                        RedirectAttributes redir,
-                                        @RequestParam("newpassword") String password) {
+                                       @RequestParam("newpassword") String password) {
 
         // Find the user associated with the reset token
         ExternalUser extUser = externalUserRepo.findByResettoken(requestParams.get("token"));

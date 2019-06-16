@@ -63,11 +63,11 @@ public class SearchController {
                 model.addAttribute("assignments", a);
                 listAssignemnt.add(a);
             }
-        fiches = new PageImpl<>(listAssignemnt);
+            fiches = new PageImpl<>(listAssignemnt);
 
         } catch (Exception e) {
 
-            fiches = assignmentRepo.findByValidatedAndTitleContainingAndFullOrderByAssignmentIdDesc(true,searchbar, false,
+            fiches = assignmentRepo.findByValidatedAndTitleContainingAndFullOrderByAssignmentIdDesc(true, searchbar, false,
                     PageRequest.of(evalPage, PAGE_SIZE));
             model.addAttribute("assignments", fiches);
         }
@@ -86,12 +86,12 @@ public class SearchController {
         model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
         return "assignments/listAllAssignments";
     }
-    
+
     //search by tag
 
     @GetMapping(value = "/allassignments/tag/{tag}")
     public String searchByTags(@RequestParam(value = "page", required = false) Optional<Integer> page,
-            @PathVariable(required = false, value = "tag") String tags, Model model, Principal principal) {
+                               @PathVariable(required = false, value = "tag") String tags, Model model, Principal principal) {
         int[] arrayOftagIds = AssignmentMethods.getTagIds(tags);
 
         int buttons = (int) assignmentRepo.count() / PAGE_SIZE;
@@ -113,7 +113,7 @@ public class SearchController {
         listoftagIds = listoftagIds.stream().distinct().collect(Collectors.toList());
         if (!listoftagIds.isEmpty()) {
             fiches = assignmentRepo.findByValidatedAndTagsOrderByAssignmentIdDesc(listoftagIds,
-                    PageRequest.of(evalPage, PAGE_SIZE),true);
+                    PageRequest.of(evalPage, PAGE_SIZE), true);
         } else {
             // als deze else verwijderd wordt dat gaat er er fout gebeuren als en geen
             // assignments gevonden worden bij een tag
@@ -133,17 +133,17 @@ public class SearchController {
         model.addAttribute("selectedPageSize", PAGE_SIZE);
         model.addAttribute("pager", pager);
         model.addAttribute("tags", tagRepo.findAll());
-       //pass username to header fragment
-       User currentUser = userRepo.findByEmail(principal.getName());
-       model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
+        //pass username to header fragment
+        User currentUser = userRepo.findByEmail(principal.getName());
+        model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
         return "assignments/listAllAssignments";
     }
 
     // search assignments
     @GetMapping(value = "/allassignments/{searchbar}/{tag}")
     public String getAssignment(@PathVariable(value = "searchbar", required = false) String searchbar, Model model,
-            @RequestParam(value = "page", required = false) Optional<Integer> page,
-            @PathVariable(required = false, value = "tag") String tags, Principal principal) {
+                                @RequestParam(value = "page", required = false) Optional<Integer> page,
+                                @PathVariable(required = false, value = "tag") String tags, Principal principal) {
         int[] arrayOftagIds = AssignmentMethods.getTagIds(tags);
         int buttons = (int) assignmentRepo.count() / PAGE_SIZE;
         Page fiches = null;
@@ -152,7 +152,7 @@ public class SearchController {
         }
         int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
         List<Assignment> listOfAllAssignments = assignmentRepo
-                .findByValidatedAndTitleContainingAndFullOrderByAssignmentIdDesc(true ,searchbar, false);
+                .findByValidatedAndTitleContainingAndFullOrderByAssignmentIdDesc(true, searchbar, false);
         List<Long> list = new ArrayList<>();
         for (int item : arrayOftagIds) {
             for (Assignment a : listOfAllAssignments) {
@@ -163,7 +163,7 @@ public class SearchController {
         }
         list = list.stream().distinct().collect(Collectors.toList());
         if (!list.isEmpty()) {
-            fiches = assignmentRepo.findByValidatedAndTagsOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE),true);
+            fiches = assignmentRepo.findByValidatedAndTagsOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE), true);
         } else {
             // als deze else verwijderd wordt dat gaat er er fout gebeuren als en geen
             // assignments gevonden worden bij een tag
@@ -193,7 +193,7 @@ public class SearchController {
 
     @GetMapping(value = "/allFullAssignments/{searchbar}")
     public String searchFullByTitleorId(@PathVariable(value = "searchbar", required = false) String searchbar,
-            Model model, @RequestParam(value = "page", required = false) Optional<Integer> page, Principal principal) {
+                                        Model model, @RequestParam(value = "page", required = false) Optional<Integer> page, Principal principal) {
         int buttons = (int) assignmentRepo.count() / PAGE_SIZE;
         Page fiches = null;
         if (assignmentRepo.count() % PAGE_SIZE != 0) {
@@ -206,8 +206,8 @@ public class SearchController {
             if (a.isFull()) {
                 model.addAttribute("assignments", a);
                 listFullAssignemet.add(a);
-               }
-        fiches = new PageImpl<>(listFullAssignemet);
+            }
+            fiches = new PageImpl<>(listFullAssignemet);
 
         } catch (Exception e) {
 
@@ -233,7 +233,7 @@ public class SearchController {
 
     @GetMapping(value = "/allFullAssignments/tag/{tag}")
     public String searchFullByTags(@RequestParam(value = "page", required = false) Optional<Integer> page,
-            @PathVariable(required = false, value = "tag") String tags, Model model, Principal principal) {
+                                   @PathVariable(required = false, value = "tag") String tags, Model model, Principal principal) {
         int[] arrayOftagIds = AssignmentMethods.getTagIds(tags);
 
         int buttons = (int) assignmentRepo.count() / PAGE_SIZE;
@@ -285,8 +285,8 @@ public class SearchController {
     // search assignments
     @GetMapping(value = "/allFullAssignments/{searchbar}/{tag}")
     public String getFullAssignmentByTagAndText(@PathVariable(value = "searchbar", required = false) String searchbar,
-            Model model, @RequestParam(value = "page", required = false) Optional<Integer> page,
-            @PathVariable(required = false, value = "tag") String tags, Principal principal) {
+                                                Model model, @RequestParam(value = "page", required = false) Optional<Integer> page,
+                                                @PathVariable(required = false, value = "tag") String tags, Principal principal) {
         int[] arrayOftagIds = AssignmentMethods.getTagIds(tags);
         int buttons = (int) assignmentRepo.count() / PAGE_SIZE;
         Page fiches = null;

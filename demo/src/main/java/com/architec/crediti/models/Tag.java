@@ -1,4 +1,5 @@
 package com.architec.crediti.models;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Set;

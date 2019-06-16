@@ -33,7 +33,9 @@
                             <td th:text="${e.getAssignment()}"></td>
                             <td class="overflow" th:text="${e.getTitle()}"></td>
                             <td class="overflow" th:text="${e.getFullname()}"></td>
-                            <td class="overflow"><a th:href="'mailto:' + ${e.getEmail()}"><div th:text="${e.getEmail()}"></div></a></td>
+                            <td class="overflow"><a th:href="'mailto:' + ${e.getEmail()}">
+                                <div th:text="${e.getEmail()}"></div>
+                            </a></td>
                             <td>
                                 <button class="btn btn-outline-success" role="button" data-toggle="modal"
                                         data-target="#validateModal" th:attr="data-id=${e.getEnrolledId()}">✔️
@@ -60,8 +62,10 @@
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
                                                     Sluiten
                                                 </button>
-                                                    <a class="validate-link" href="">
-                                                    <button type="button" class="btn btn-success btn-validate">Valideer</button>
+                                                <a class="validate-link" href="">
+                                                    <button type="button" class="btn btn-success btn-validate">
+                                                        Valideer
+                                                    </button>
                                                 </a>
                                             </div>
                                         </div>
@@ -87,7 +91,7 @@
                                                     Sluiten
                                                 </button>
                                                 <a class="delete-link" href="">
-                                                <button type="button" class="btn btn-danger">Verwijder</button>
+                                                    <button type="button" class="btn btn-danger">Verwijder</button>
                                                 </a>
                                             </div>
                                         </div>

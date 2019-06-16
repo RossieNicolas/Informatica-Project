@@ -21,7 +21,8 @@
                     <h1>Bestanden uploaden</h1>
                     <form th:action="@{/uploadfile}" method="post" enctype="multipart/form-data">
                         <div class="col-md-5 custom-file mt-5">
-                            <input type="file" class="custom-file-input" id="customFileLang" name="files" multiple required>
+                            <input type="file" class="custom-file-input" id="customFileLang" name="files" multiple
+                                   required>
                             <label class="custom-file-label" for="customFileLang">Bestand selecteren</label>
                             <div class="pt-3">
                                 <label for="type">Type document:</label>
@@ -34,7 +35,9 @@
                             <div class="pt-3">
                                 <label for="type">Voor opdracht:</label>
                                 <select class="custom-select custom-select" name="lists" required>
-                                    <option th:each="l : ${list}" id="${list.getAssignmentId()}" th:value="${l.getAssignmentId()}" th:text="${l.getAssignmentId()} + ' - ' + ${l.getTitle()}" ></option>
+                                    <option th:each="l : ${list}" id="${list.getAssignmentId()}"
+                                            th:value="${l.getAssignmentId()}"
+                                            th:text="${l.getAssignmentId()} + ' - ' + ${l.getTitle()}"></option>
                                 </select>
                             </div>
                             <button type="submit" class="btn btn-outline-success mt-3 btn-lg">Uploaden</button>
@@ -67,7 +70,7 @@
         modal.find(".delete-link").attr("href", "/deletedocumentation/" + recipient);
     });
 
-    $('#customFileLang').on('change',function(){
+    $('#customFileLang').on('change', function () {
         //get the file name
         var fileName = $(this).val();
         var text = fileName.substring(fileName.lastIndexOf("\\") + 1, fileName.length);

@@ -9,10 +9,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableScheduling
-@EnableConfigurationProperties({ FileStorageProperties.class })
+@EnableConfigurationProperties({FileStorageProperties.class})
 public class CreditiApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(CreditiApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(CreditiApplication.class, args);
+    }
 }

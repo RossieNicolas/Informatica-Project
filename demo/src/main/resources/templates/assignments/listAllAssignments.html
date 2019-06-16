@@ -93,29 +93,34 @@
                             </li>
                             <!-- Eerste pager -->
                             <li th:classappend="(${persons.getNumber() <= pager.getStartPage()} ? disabled) + ' page-item'">
-                                <a class="page-link" th:href="@{__${#httpServletRequest.requestURL}__(page=${pager.getStartPage()})}"
+                                <a class="page-link"
+                                   th:href="@{__${#httpServletRequest.requestURL}__(page=${pager.getStartPage()})}"
                                    th:text="Eerste"></a>
                             </li>
                             <!-- Vorige # pager -->
                             <li th:if="${persons.getNumber() + 1 != pager.getStartPage()}"
-                                    th:classappend="'page-item'">
-                                <a class="page-link" th:href="@{__${#httpServletRequest.requestURL}__(page=${persons.getNumber()})}"
+                                th:classappend="'page-item'">
+                                <a class="page-link"
+                                   th:href="@{__${#httpServletRequest.requestURL}__(page=${persons.getNumber()})}"
                                    th:text="${persons.getNumber()}"></a>
                             </li>
                             <!-- Huidige # pager -->
                             <li th:classappend="'page-item'">
-                                <a class="page-link" th:href="@{__${#httpServletRequest.requestURL}__(page=${persons.getNumber() + 1})}"
+                                <a class="page-link"
+                                   th:href="@{__${#httpServletRequest.requestURL}__(page=${persons.getNumber() + 1})}"
                                    th:text="${persons.getNumber() + 1}"></a>
                             </li>
                             <!-- Volgende # pager -->
                             <li th:if="${persons.getNumber() + 1 != persons.getTotalPages()}"
-                                    th:classappend="'page-item'">
-                                <a class="page-link" th:href="@{__${#httpServletRequest.requestURL}__(page=${persons.getNumber() + 2})}"
+                                th:classappend="'page-item'">
+                                <a class="page-link"
+                                   th:href="@{__${#httpServletRequest.requestURL}__(page=${persons.getNumber() + 2})}"
                                    th:text="${persons.getNumber() + 2}"></a>
                             </li>
                             <!-- Laatste pager -->
                             <li th:classappend="(${persons.getNumber() + 1 >= persons.getTotalPages()} ? disabled) + ' page-item'">
-                                <a class="page-link" th:href="@{__${#httpServletRequest.requestURL}__(page=${pager.getEndPage()})}"
+                                <a class="page-link"
+                                   th:href="@{__${#httpServletRequest.requestURL}__(page=${pager.getEndPage()})}"
                                    th:text="Laatste"></a>
                             </li>
                             <li th:classappend="(${persons.number + 1 >= persons.totalPages} ? disabled) + ' page-item'">

@@ -31,7 +31,7 @@ public class PortfolioUtil {
 
     @Autowired
     public PortfolioUtil(FileStorageService fileStorageService, FileRepository fileRepo, UserRepository userRepo,
-            DocumentationRepository documRepo, StudentRepository studentRepository) {
+                         DocumentationRepository documRepo, StudentRepository studentRepository) {
         this.fileStorageService = fileStorageService;
         this.fileRepo = fileRepo;
         this.userRepo = userRepo;
@@ -72,7 +72,7 @@ public class PortfolioUtil {
 
         for (Documentation item : docs) {
             if (item.getTitle().equals(fileName)) {
-                    docRepo.delete(item);
+                docRepo.delete(item);
             }
         }
 

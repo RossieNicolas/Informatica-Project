@@ -23,7 +23,7 @@ public class EmailServiceImpl implements EmailService {
 
     private final UserRepository userRepo;
 
-    public EmailServiceImpl(UserRepository userRepo){
+    public EmailServiceImpl(UserRepository userRepo) {
         this.userRepo = userRepo;
     }
 
@@ -33,7 +33,7 @@ public class EmailServiceImpl implements EmailService {
             message.setTo(to);
 
             List<User> coordinators = userRepo.findAllByRole(Role.COORDINATOR);
-            for(User u: coordinators){
+            for (User u : coordinators) {
                 message.setCc(u.getEmail());
             }
 

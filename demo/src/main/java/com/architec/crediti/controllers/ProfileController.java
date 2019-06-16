@@ -32,7 +32,7 @@ public class ProfileController {
     FileRepository fileRepo;
 
     @Autowired
-    public ProfileController(StudentRepository stuRepo , FileRepository fileRepo, UserRepository userRepo, AssignmentRepository assRepo) {
+    public ProfileController(StudentRepository stuRepo, FileRepository fileRepo, UserRepository userRepo, AssignmentRepository assRepo) {
         this.stuRepo = stuRepo;
         this.fileRepo = fileRepo;
         this.userRepo = userRepo;
@@ -40,7 +40,7 @@ public class ProfileController {
     }
 
     @GetMapping("liststudents/{studentnumber}")
-    public String getStudentProfile(Principal principal, @PathVariable("studentnumber") String studentNumber, Model model){
+    public String getStudentProfile(Principal principal, @PathVariable("studentnumber") String studentNumber, Model model) {
 
         Student st = stuRepo.findByStudentNumber(studentNumber);
         User us = userRepo.findByUserId(st.getUserId().getUserId());
@@ -52,12 +52,12 @@ public class ProfileController {
         model.addAttribute("status", contracts);
         //pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());
-        model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
+        model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
         return "student/studentDetail";
     }
 
     @GetMapping("/changestatus/{studentId}/{assignmentId}")
-    public String changeStatus(@PathVariable("studentId") String userId, @PathVariable("assignmentId") int assignmentId){
+    public String changeStatus(@PathVariable("studentId") String userId, @PathVariable("assignmentId") int assignmentId) {
         Student usr = stuRepo.findByStudentNumber(userId);
         User u = userRepo.findByUserId(usr.getUserId().getUserId());
 
@@ -65,11 +65,11 @@ public class ProfileController {
         List<File> rightFiles = new ArrayList<>();
         File file = null;
 
-        for(File f : files) {
-            if(f.getAssignmentId() == assignmentId){
+        for (File f : files) {
+            if (f.getAssignmentId() == assignmentId) {
                 rightFiles.add(f);
 
-                if(f.getDocType().equalsIgnoreCase("Contract")) {
+                if (f.getDocType().equalsIgnoreCase("Contract")) {
                     file = f;
                 }
             }
@@ -77,14 +77,14 @@ public class ProfileController {
 
         Progress status;
         status = file.getStatus();
-        Progress newStatus ;
-        if(status.equals(Progress.START)){
+        Progress newStatus;
+        if (status.equals(Progress.START)) {
             newStatus = Progress.CONTRACT;
-        } else if(status.equals(Progress.CONTRACT)){
+        } else if (status.equals(Progress.CONTRACT)) {
             newStatus = Progress.PORTFOLIO;
-        } else if(status.equals(Progress.PORTFOLIO)){
+        } else if (status.equals(Progress.PORTFOLIO)) {
             newStatus = Progress.BEWIJS;
-        }else if(status.equals(Progress.BEWIJS)){
+        } else if (status.equals(Progress.BEWIJS)) {
             newStatus = Progress.END;
             Assignment ass = assignmentRepo.findByAssignmentId(file.getAssignmentId());
             usr.setAmoutHours(usr.getAmoutHours() + ass.getAmountHours());
@@ -92,7 +92,7 @@ public class ProfileController {
             newStatus = Progress.END;
         }
 
-        for(File f : rightFiles) {
+        for (File f : rightFiles) {
             f.setStatus(newStatus);
         }
 
@@ -100,7 +100,7 @@ public class ProfileController {
         stuRepo.save(usr);
         userRepo.save(u);
 
-        return "redirect:/liststudents/"+userId+"#Status";
+        return "redirect:/liststudents/" + userId + "#Status";
     }
 
 }

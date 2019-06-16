@@ -6,12 +6,13 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Set;
+
 @Entity
-@SequenceGenerator(name="seq", initialValue=323)
+@SequenceGenerator(name = "seq", initialValue = 323)
 @Table(name = "assignments")
 public class Assignment {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
     private long assignmentId;
 
     @NotNull(message = "Titel mag niet leeg zijn!")
@@ -131,14 +132,14 @@ public class Assignment {
     public String getFormatStartDate() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        startDate= LocalDate.parse(startDate, formatter2).format(formatter);
+        startDate = LocalDate.parse(startDate, formatter2).format(formatter);
         return startDate;
     }
 
     public String getFormatEndDate() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        endDate= LocalDate.parse(endDate, formatter2).format(formatter);
+        endDate = LocalDate.parse(endDate, formatter2).format(formatter);
         return endDate;
     }
 
@@ -226,10 +227,12 @@ public class Assignment {
     public void setTags(Set<Tag> tags) {
         this.tags = tags;
     }
-    public String getEmail(){
+
+    public String getEmail() {
         return assignerUserId.getEmail();
     }
-    public String getName(){
+
+    public String getName() {
         return assignerUserId.getFirstname() + " " + assignerUserId.getLastname();
     }
 

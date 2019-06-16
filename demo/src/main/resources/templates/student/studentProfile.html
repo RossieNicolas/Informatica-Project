@@ -33,7 +33,8 @@
                     </div>
                     <div class="col-md-5 pt-3">
                         <label for="Email">E-mail:</label>
-                        <input class="form-control" name="Email" id="Email" th:value="${student.findEmail()}" type="text"
+                        <input class="form-control" name="Email" id="Email" th:value="${student.findEmail()}"
+                               type="text"
                                required="required" disabled><br>
                     </div>
                     <div class="col-md-5 pt-3">
@@ -46,12 +47,14 @@
                         <div class="col-md-5 pt-3">
                             <label for="Gsm">Gsm:</label><br>
                             <input class="form-control" name="Gsm" id="Gsm" type="text" th:value="${student.getGsm()}"
-                                   required="required" maxlength="10" pattern="([(+]*[0-9]+[()+. -]*)" title="Er zijn geen speciale tekens toegelaten"><br>
+                                   required="required" maxlength="10" pattern="([(+]*[0-9]+[()+. -]*)"
+                                   title="Er zijn geen speciale tekens toegelaten"><br>
                         </div>
                         <div class="col-md-5 pt-3">
                             <label for="type">Type:</label>
                             <select class="form-control" name="type" id="type" required>
-                                <option th:if="${student.isZap() && student.isMobility()}" selected>Zap en Mobility</option>
+                                <option th:if="${student.isZap() && student.isMobility()}" selected>Zap en Mobility
+                                </option>
                                 <option th:if="${student.isZap() && !student.isMobility()}" selected>Zap</option>
                                 <option th:if="${!student.isZap() && student.isMobility()}" selected>Mobility</option>
                                 <option th:if="${!(student.isZap() && student.isMobility())}">Zap en Mobility</option>
@@ -82,8 +85,9 @@
                         </thead>
                         <tbody>
                         <tr class="d-flex" th:each="a : ${assignments}">
-                            <td class="col-1" scope="row"><a th:href="${'/allassignments/detail/' + a.getAssignmentId()}"
-                                                             class="btn btn-outline-secondary" role="button">📃
+                            <td class="col-1" scope="row"><a
+                                    th:href="${'/allassignments/detail/' + a.getAssignmentId()}"
+                                    class="btn btn-outline-secondary" role="button">📃
                             </a></td>
                             <td class="col-1" th:text="${a.getAssignmentId()}"></td>
                             <td class="col-1" th:text="${a.getType()}"></td>

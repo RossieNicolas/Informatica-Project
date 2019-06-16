@@ -35,15 +35,15 @@ public class CheckAssignmentDeadlineService {
 
     @Scheduled(cron = "0 00 05 * * ?")
     public void create() {
-         for (Student student : stRepo.findAll()) {
-             for ( Assignment as : student.getAssignments()){
+        for (Student student : stRepo.findAll()) {
+            for (Assignment as : student.getAssignments()) {
                 Assignment currentas = asRepo.findByAssignmentId(as.getAssignmentId());
                 LocalDate dateline = LocalDate.parse(currentas.getEndDate());
                 LocalDate date = LocalDate.now().plusDays(1);
-                 if(dateline.equals(date)){
+                if (dateline.equals(date)) {
                     mail.sendSimpleMessage(student.getEmail(), "Herinnering",
-                    EmailTemplates.reminder(currentas.getTitle()));
-                 }
+                            EmailTemplates.reminder(currentas.getTitle()));
+                }
 
             }
         }

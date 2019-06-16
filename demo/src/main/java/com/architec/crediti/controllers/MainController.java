@@ -51,7 +51,7 @@ public class MainController {
         int unvalidatedAssignments = assignRepo.countByValidated(false);
         int unapprovedEnrollments = enrollRepo.countAllByEnrolledIdNotNull();
 
-        model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
+        model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
         model.addAttribute("externals", unapprovedExternals);
         model.addAttribute("assignments", unvalidatedAssignments);
         model.addAttribute("enrolled", unapprovedEnrollments);

@@ -60,7 +60,7 @@ public class PortfolioController {
 
 
         //pass username to header fragment
-        model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
+        model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
         return "portfolio/portfolio";
     }
 
@@ -68,7 +68,7 @@ public class PortfolioController {
     public String getUploadFile(Model model, Principal principal) {
         //pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());
-        model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
+        model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
 
         //get all enrollments
         Student student = studentRepo.findByUserId(currentUser);
@@ -81,10 +81,10 @@ public class PortfolioController {
 
     @PostMapping("/uploadfile")
     public String uploadMultipleFiles(@RequestParam("files") MultipartFile[] files, @RequestParam("type") String type,
-            @RequestParam("lists") int assignment , Principal principal) {
+                                      @RequestParam("lists") int assignment, Principal principal) {
         User currentUser = userRepo.findByEmail(principal.getName());
-        for (MultipartFile item: files) {
-            portfolioUtil.uploadFile(item, currentUser.getUserId(), type, (long)assignment);
+        for (MultipartFile item : files) {
+            portfolioUtil.uploadFile(item, currentUser.getUserId(), type, (long) assignment);
         }
 
         return "redirect:/portfolio";
@@ -115,7 +115,7 @@ public class PortfolioController {
         model.addAttribute("files", files);
         //pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());
-        model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
+        model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
         return "documentation/documentation";
     }
 
@@ -123,14 +123,14 @@ public class PortfolioController {
     public String getUploadDoc(Model model, Principal principal) {
         //pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());
-        model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
+        model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
         return "documentation/uploadDocumentation";
     }
 
     @PostMapping("/uploaddocumentation")
     public String uploadDocumentation(@RequestParam("files") MultipartFile[] files) {
 
-        for (MultipartFile item: files) {
+        for (MultipartFile item : files) {
             portfolioUtil.uploadDocumentation(item);
         }
 

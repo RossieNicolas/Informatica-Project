@@ -21,17 +21,17 @@ public class HashPass {
         return salt;
     }
 
-    public static byte[] hashPassword( final char[] password, final byte[] salt) {
+    public static byte[] hashPassword(final char[] password, final byte[] salt) {
 
         final int iterations = 10000;
         final int keyLength = 256;
         try {
-            SecretKeyFactory skf = SecretKeyFactory.getInstance( "PBKDF2WithHmacSHA512" );
-            PBEKeySpec spec = new PBEKeySpec( password, salt, iterations, keyLength );
-            SecretKey key = skf.generateSecret( spec );
-            return key.getEncoded( );
-        } catch ( NoSuchAlgorithmException | InvalidKeySpecException e ) {
-            throw new RuntimeException( e );
+            SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512");
+            PBEKeySpec spec = new PBEKeySpec(password, salt, iterations, keyLength);
+            SecretKey key = skf.generateSecret(spec);
+            return key.getEncoded();
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+            throw new RuntimeException(e);
         }
     }
 

@@ -25,7 +25,8 @@
 
                         <div class="col-md-5 pt-3">
                             <label for="title">Titel:</label>
-                            <input type="text" class="form-control" name="title" pattern="[A-Za-z ]+" title="Er zijn geen cijfers of speciale tekens toegestaan" id="title" required>
+                            <input type="text" class="form-control" name="title" pattern="[A-Za-z ]+"
+                                   title="Er zijn geen cijfers of speciale tekens toegestaan" id="title" required>
                         </div>
                         <div class="col-md-5 pt-3">
                             <label for="type">Type:</label>
@@ -69,13 +70,16 @@
                                        th:if="${!t.isInactive()}" th:value="${t.getTagId()}">
                                     <input type="checkbox" name="tag" class="custom-control-input"
                                            th:if="${!t.isInactive()}" th:value="${t.getTagId()}">
-                                    <span class="custom-control-label" th:if="${!t.isInactive()}" th:text="${t.getTagName()}"></span>
+                                    <span class="custom-control-label" th:if="${!t.isInactive()}"
+                                          th:text="${t.getTagName()}"></span>
                                 </label>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-5 pt-3">
-                        <button id='saveBtn' onclick="Loading();" type="submit" class="btn btn-primary btn-lg">Opdracht aanmaken</button>
+                        <button id='saveBtn' onclick="Loading();" type="submit" class="btn btn-primary btn-lg">Opdracht
+                            aanmaken
+                        </button>
                         <div id="save" class="spinner-border text-danger" role="status">
                             <span class="sr-only">Loading...</span>
                         </div>
@@ -137,7 +141,7 @@
                 document.getElementById('startDate').value = "";
                 return false;
             } else if (endDate !== "") {
-                if(startDate > endDate) {
+                if (startDate > endDate) {
                     alert("De startdatum moet kleiner zijn dan de einddatum van uw opdracht!test");
                     document.getElementById('endDate').value = "";
                     return false;
@@ -158,9 +162,9 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
 <script>
-    function Loading(){
+    function Loading() {
         var $form = $('form')[0];
-        if($form.checkValidity()) {
+        if ($form.checkValidity()) {
             document.getElementById('saveBtn').disabled = true;
             document.getElementById('saveBtn').innerHTML = "Aanmaken...";
             document.getElementById('save').style.display = "inline-block";

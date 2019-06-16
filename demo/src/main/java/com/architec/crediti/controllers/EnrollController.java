@@ -81,7 +81,7 @@ public class EnrollController {
                     set.add(assignment);
                     assignment.setAmountStudents(counter + 1);
                     assignmentRepo.save(assignment);
-                    if (assignment.getAmountStudents() == assignment.getMaxStudents()){
+                    if (assignment.getAmountStudents() == assignment.getMaxStudents()) {
                         assignment.setFull(true);
                         assignmentRepo.save(assignment);
                     }
@@ -103,7 +103,7 @@ public class EnrollController {
         }
         //pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());
-        model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
+        model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
         return "enroll/studentenroll";
     }
 
@@ -114,7 +114,7 @@ public class EnrollController {
         model.addAttribute("unapproved", unapproved);
         //pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());
-        model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
+        model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
         return "enroll/listUnapprovedEnrollment";
     }
 

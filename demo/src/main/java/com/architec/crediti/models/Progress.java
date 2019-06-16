@@ -1,7 +1,7 @@
 package com.architec.crediti.models;
 
 public enum Progress {
-    START(0,"start"), CONTRACT(25,"contract"), PORTFOLIO(50,"portfolio"), BEWIJS(75, "bewijsdocument"), END(100, "afgerond");
+    START(0, "start"), CONTRACT(25, "contract"), PORTFOLIO(50, "portfolio"), BEWIJS(75, "bewijsdocument"), END(100, "afgerond");
     private String info;
     private int status;
 
@@ -19,7 +19,7 @@ public enum Progress {
     }
 
     public String getNext() {
-        switch (status){
+        switch (status) {
             case 0:
                 return "contract";
             case 25:

@@ -132,10 +132,9 @@ public class TagController {
 
     // set tag to inactive
     @GetMapping("/deletetag/{id}/inactivetag")
-    public String setTagInactive(@PathVariable("id") int id, Model model)
-    {
+    public String setTagInactive(@PathVariable("id") int id, Model model) {
         Tag tag = tagRepo.findBytagId(id);
-        if (!tag.isInactive()){
+        if (!tag.isInactive()) {
             tag.setInactive(true);
             tagRepo.save(tag);
         }
@@ -145,10 +144,9 @@ public class TagController {
 
     // set tag to active
     @GetMapping("/activetag/{id}")
-    public String setTagActive(@PathVariable("id") int id, Model model)
-    {
+    public String setTagActive(@PathVariable("id") int id, Model model) {
         Tag tag = tagRepo.findBytagId(id);
-        if (tag.isInactive()){
+        if (tag.isInactive()) {
             tag.setInactive(false);
             tagRepo.save(tag);
         }

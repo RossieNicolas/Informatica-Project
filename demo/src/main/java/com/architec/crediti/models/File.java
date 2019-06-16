@@ -25,7 +25,7 @@ public class File {
     @Column(name = "status")
     private Progress status;
 
-    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
 

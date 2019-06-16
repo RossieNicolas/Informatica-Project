@@ -20,7 +20,7 @@ public class CoordinatorController {
     private final UserRepository userRepo;
 
     @Autowired
-    public CoordinatorController(UserRepository userRepository){
+    public CoordinatorController(UserRepository userRepository) {
         this.userRepo = userRepository;
     }
 
@@ -31,7 +31,7 @@ public class CoordinatorController {
 
         //pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());
-        model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
+        model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
         return "coordinator/coordinator";
     }
 
@@ -39,7 +39,7 @@ public class CoordinatorController {
     public String getAddCoordinator(Model model, Principal principal) {
         //pass username to header fragment
         User currentUser = userRepo.findByEmail(principal.getName());
-        model.addAttribute("name",currentUser.getFirstname() + " " + currentUser.getLastname().substring(0,1) + ".");
+        model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
         return "coordinator/addCoordinator";
     }
 
@@ -52,11 +52,11 @@ public class CoordinatorController {
     }
 
     @GetMapping("/deletecoordinator/{id}")
-    public String deleteCoordiantor(@PathVariable("id") int id, Principal principal){
+    public String deleteCoordiantor(@PathVariable("id") int id, Principal principal) {
         User usr = userRepo.findByUserId((long) id);
         User current = userRepo.findByEmail(principal.getName());
 
-        if(usr != null) {
+        if (usr != null) {
             switch (usr.getEmail().substring(0, 1).toLowerCase()) {
                 case "s":
                     usr.setRole(Role.STUDENT);
@@ -73,7 +73,7 @@ public class CoordinatorController {
         }
 
         String output = "redirect:/coordinator";
-        if(current.getEmail().equals(usr.getEmail())){
+        if (current.getEmail().equals(usr.getEmail())) {
             output = "redirect:/login";
         }
 

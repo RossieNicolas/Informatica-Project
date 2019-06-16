@@ -24,7 +24,7 @@ public class ExternalUser {
     private String city;
     @Column(name = "postal", nullable = false)
     private String postal;
-    @Column (name = "approved")
+    @Column(name = "approved")
     private boolean approved;
 
     @Column(name = "password", nullable = false)
@@ -171,7 +171,8 @@ public class ExternalUser {
     public void setResetToken(String resetToken) {
         this.resettoken = resetToken;
     }
-    public String getEmail(){
+
+    public String getEmail() {
         return userId.getEmail();
     }
 }

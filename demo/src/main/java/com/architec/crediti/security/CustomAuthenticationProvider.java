@@ -56,7 +56,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
 
     @Override
-    public Authentication authenticate(Authentication auth)  {
+    public Authentication authenticate(Authentication auth) {
 
         String username = auth.getName();
         String password = auth.getCredentials().toString();
@@ -82,13 +82,13 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         if (userRepo.findByEmail(username) != null) {
             User user = userRepo.findByEmail(username);
 
-            if (exRepo.findByUserId(user) != null ) {
+            if (exRepo.findByUserId(user) != null) {
                 ExternalUser exUser = exRepo.findByUserId(user);
 
                 // Make sure extern is not null
                 String hash = HashPass.convertToPbkdf2Salt(password.toCharArray(), exUser.getSalt());
 
-                if(Arrays.equals(hash.toCharArray(), exUser.getPassword())){
+                if (Arrays.equals(hash.toCharArray(), exUser.getPassword())) {
                     result = true;
                 }
             }
@@ -133,11 +133,11 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
                 boolean firstLogin = false;
 
                 //check if student
-                if (findRole(username.substring(0,1)) == Role.STUDENT) {
+                if (findRole(username.substring(0, 1)) == Role.STUDENT) {
                     firstLogin = true;
                 }
 
-                User user = new User(firstname, lastname, username, findRole(username.substring(0,1)), firstLogin);
+                User user = new User(firstname, lastname, username, findRole(username.substring(0, 1)), firstLogin);
                 userRepo.save(user);
             }
 
