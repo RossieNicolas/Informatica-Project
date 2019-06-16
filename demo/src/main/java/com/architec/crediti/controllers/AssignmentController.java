@@ -13,6 +13,8 @@ import com.architec.crediti.repositories.TagRepo;
 import com.architec.crediti.repositories.UserRepository;
 
 import com.architec.crediti.security.Role;
+import com.architec.crediti.utils.AssignmentMethods;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -187,7 +189,7 @@ public class AssignmentController {
             Student student = studentRepo.findByUserId(currentUser);
             if (student.isMobility() && !student.isZap()) {
                 if (tags == null) {
-                    fiches = assignmentRepo.findByFullAndTypeEqualsOrderByAssignmentIdDesc(false, PageRequest.of(evalPage, PAGE_SIZE), "Mobility");
+                    fiches = assignmentRepo.findByValidatedAndFullAndTypeEqualsOrderByAssignmentIdDesc(true , false, PageRequest.of(evalPage, PAGE_SIZE), "Mobility");
                 } else {
                     List<Assignment> list3 = (List<Assignment>) assignmentRepo.findAll();
                     List<Long> list = new ArrayList<>();
@@ -200,7 +202,7 @@ public class AssignmentController {
                     }
                     list = list.stream().distinct().collect(Collectors.toList());
                     if (list.isEmpty()) {
-                        fiches = assignmentRepo.findByTagsAndTypeEqualsOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE), "Mobility");
+                        fiches = assignmentRepo.findByValidatedAndTagsAndTypeEqualsOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE), "Mobility",true);
                     } else {
                         List<Assignment> list54 = new ArrayList();
                         fiches = new PageImpl<>(list54);
@@ -208,7 +210,7 @@ public class AssignmentController {
                 }
             } else if (student.isZap() && !student.isMobility()) {
                 if (tags == null) {
-                    fiches = assignmentRepo.findByFullAndTypeEqualsOrderByAssignmentIdDesc(false, PageRequest.of(evalPage, PAGE_SIZE), "ZAP");
+                    fiches = assignmentRepo.findByValidatedAndFullAndTypeEqualsOrderByAssignmentIdDesc(true , false, PageRequest.of(evalPage, PAGE_SIZE), "ZAP");
                 } else {
                     List<Assignment> list3 = (List<Assignment>) assignmentRepo.findAll();
                     List<Long> list = new ArrayList<>();
@@ -221,7 +223,7 @@ public class AssignmentController {
                     }
                     list = list.stream().distinct().collect(Collectors.toList());
                     if (list.isEmpty()) {
-                        fiches = assignmentRepo.findByTagsAndTypeEqualsOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE), "ZAP");
+                        fiches = assignmentRepo.findByValidatedAndTagsAndTypeEqualsOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE), "ZAP",true);
                     } else {
                         List<Assignment> list54 = new ArrayList();
                         fiches = new PageImpl<>(list54);
@@ -229,7 +231,7 @@ public class AssignmentController {
                 }
             } else {
                 if (tags == null) {
-                    fiches = assignmentRepo.findByFullOrderByAssignmentIdDesc(false, PageRequest.of(evalPage, PAGE_SIZE));
+                    fiches = assignmentRepo.findByValidatedAndFullOrderByAssignmentIdDesc(true, false, PageRequest.of(evalPage, PAGE_SIZE));
                 } else {
                     List<Assignment> list3 = (List<Assignment>) assignmentRepo.findAll();
                     List<Long> list = new ArrayList<>();
@@ -242,7 +244,7 @@ public class AssignmentController {
                     }
                     list = list.stream().distinct().collect(Collectors.toList());
                     if (list.isEmpty()) {
-                        fiches = assignmentRepo.findByTagsOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE));
+                        fiches = assignmentRepo.findByValidatedAndTagsOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE),true);
                     } else {
                         List<Assignment> list54 = new ArrayList();
                         fiches = new PageImpl<>(list54);
@@ -264,7 +266,7 @@ public class AssignmentController {
                 }
                 list = list.stream().distinct().collect(Collectors.toList());
                 if (list.isEmpty()) {
-                    fiches = assignmentRepo.findByTagsOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE));
+                    fiches = assignmentRepo.findByValidatedAndTagsOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE),true);
                 } else {
                     List<Assignment> list54 = new ArrayList();
                     fiches = new PageImpl<>(list54);
@@ -275,12 +277,9 @@ public class AssignmentController {
 
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
 
-        List<Tag> allTags = tagRepo.findAll();
-        boolean[] status = new boolean[allTags.size()];
+        boolean[] status ;
         if (tags == null) {
-            for (int i = 0; i < allTags.size(); i++) {
-                status[i] = false;
-            }
+            status = AssignmentMethods.getStatusFalse(tagRepo.findAll());
         } else {
             ArrayList<Tag> tag = new ArrayList<>();
 
@@ -288,14 +287,7 @@ public class AssignmentController {
                 tag.add(tagRepo.findBytagId(var));
             }
 
-            for (int i = 0; i < allTags.size(); i++) {
-                for (Tag item : tag) {
-                    if (allTags.get(i).getTagId() == item.getTagId()) {
-                        status[i] = true;
-                    }
-                }
-            }
-            model.addAttribute("status", status);
+            status = AssignmentMethods.getStatus(tag, tagRepo.findAll());
         }
         model.addAttribute("status", status);
         model.addAttribute("selectedPageSize", PAGE_SIZE);
@@ -345,12 +337,9 @@ public class AssignmentController {
 
         Pager pager = new Pager(fiches.getTotalPages(), fiches.getNumber(), buttons);
 
-        List<Tag> allTags = tagRepo.findAll();
-        boolean[] status = new boolean[allTags.size()];
+        boolean[] status;
         if (tags == null) {
-            for (int i = 0; i < allTags.size(); i++) {
-                status[i] = false;
-            }
+            status = AssignmentMethods.getStatusFalse(tagRepo.findAll());
         } else {
             ArrayList<Tag> tag = new ArrayList<>();
 
@@ -358,14 +347,7 @@ public class AssignmentController {
                 tag.add(tagRepo.findBytagId(var));
             }
 
-            for (int i = 0; i < allTags.size(); i++) {
-                for (Tag item : tag) {
-                    if (allTags.get(i).getTagId() == item.getTagId()) {
-                        status[i] = true;
-                    }
-                }
-            }
-            model.addAttribute("status", status);
+            status = AssignmentMethods.getStatus(tag, tagRepo.findAll());
         }
         model.addAttribute("status", status);
         model.addAttribute("selectedPageSize", PAGE_SIZE);

@@ -58,16 +58,16 @@ public class SearchController {
         int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
         try {
             Assignment a = assignmentRepo.findByAssignmentId((Integer.parseInt(searchbar)));
-            if (a.getAmountStudents() != a.getMaxStudents()) {
+            List<Assignment> listAssignemnt = new ArrayList();
+            if (!a.isFull() && a.isValidated()) {
                 model.addAttribute("assignments", a);
-                List<Assignment> listsd = new ArrayList();
-                listsd.add(a);
-                fiches = new PageImpl<>(listsd);
+                listAssignemnt.add(a);
             }
+        fiches = new PageImpl<>(listAssignemnt);
 
         } catch (Exception e) {
 
-            fiches = assignmentRepo.findByTitleContainingAndFullOrderByAssignmentIdDesc(searchbar, false,
+            fiches = assignmentRepo.findByValidatedAndTitleContainingAndFullOrderByAssignmentIdDesc(true,searchbar, false,
                     PageRequest.of(evalPage, PAGE_SIZE));
             model.addAttribute("assignments", fiches);
         }
@@ -101,7 +101,7 @@ public class SearchController {
         }
         int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
         List<Assignment> listOfAllAssignments = assignmentRepo
-                .findByTitleContainingAndFullOrderByAssignmentIdDesc("", false);
+                .findByValidatedAndTitleContainingAndFullOrderByAssignmentIdDesc(true, "", false);
         List<Long> listoftagIds = new ArrayList<>();
         for (int item : arrayOftagIds) {
             for (Assignment a : listOfAllAssignments) {
@@ -112,8 +112,8 @@ public class SearchController {
         }
         listoftagIds = listoftagIds.stream().distinct().collect(Collectors.toList());
         if (!listoftagIds.isEmpty()) {
-            fiches = assignmentRepo.findByTagsOrderByAssignmentIdDesc(listoftagIds,
-                    PageRequest.of(evalPage, PAGE_SIZE));
+            fiches = assignmentRepo.findByValidatedAndTagsOrderByAssignmentIdDesc(listoftagIds,
+                    PageRequest.of(evalPage, PAGE_SIZE),true);
         } else {
             // als deze else verwijderd wordt dat gaat er er fout gebeuren als en geen
             // assignments gevonden worden bij een tag
@@ -152,7 +152,7 @@ public class SearchController {
         }
         int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
         List<Assignment> listOfAllAssignments = assignmentRepo
-                .findByTitleContainingAndFullOrderByAssignmentIdDesc(searchbar, false);
+                .findByValidatedAndTitleContainingAndFullOrderByAssignmentIdDesc(true ,searchbar, false);
         List<Long> list = new ArrayList<>();
         for (int item : arrayOftagIds) {
             for (Assignment a : listOfAllAssignments) {
@@ -163,7 +163,7 @@ public class SearchController {
         }
         list = list.stream().distinct().collect(Collectors.toList());
         if (!list.isEmpty()) {
-            fiches = assignmentRepo.findByTagsOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE));
+            fiches = assignmentRepo.findByValidatedAndTagsOrderByAssignmentIdDesc(list, PageRequest.of(evalPage, PAGE_SIZE),true);
         } else {
             // als deze else verwijderd wordt dat gaat er er fout gebeuren als en geen
             // assignments gevonden worden bij een tag
@@ -202,12 +202,12 @@ public class SearchController {
         int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
         try {
             Assignment a = assignmentRepo.findByAssignmentId((Integer.parseInt(searchbar)));
-            if (a.getAmountStudents() != a.getMaxStudents()) {
+            List<Assignment> listFullAssignemet = new ArrayList();
+            if (a.isFull()) {
                 model.addAttribute("assignments", a);
-                List<Assignment> listsd = new ArrayList();
-                listsd.add(a);
-                fiches = new PageImpl<>(listsd);
-            }
+                listFullAssignemet.add(a);
+               }
+        fiches = new PageImpl<>(listFullAssignemet);
 
         } catch (Exception e) {
 
