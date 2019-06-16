@@ -66,7 +66,7 @@ public class EmailTemplates {
     // Voor externe
     public static String validatedExternal() {
         return  "Beste,\n\n"+
-                "Uw registratie werd goedgekeurd. Nu kunt u inloggen op de pagina.\n\n"+
+                "Uw registratie werd goedgekeurd. U kan zich nu inloggen.\n\n"+
                 "AP-hogeschool";
     }
 
@@ -76,17 +76,14 @@ public class EmailTemplates {
                 "AP-hogeschool";
     }
 
-    public static String newExternalUser(long userId, String name, String company, String address, String phone, String email) {
+    public static String newExternalUser(String name, String company, String address, String phone, String email) {
         return  "Een externe opdrachtgever heeft zich zojuist geregistreerd.\n\n" +
                 "Enkele gegevens van de opdrachtgever:\n\n" +
                 "Volledige naam: " + name + "\n" +
                 "Bedrijf: " + company + "\n" +
                 "Adres: " + address + "\n" +
                 "Telefoon: " + phone + "\n" +
-                "E-mail: " + email + "\n\n" +
-                "VALIDEER deze externe: http://vps092.ap.be/validateexternal/" + userId + "\n" +
-                "WEIGER deze externe: http://vps092.ap.be/deleteexternal/" + userId + "\n\n" +
-                "Lijst van alle ongevalideerde externe: http://vps092.ap.be/listUnvalidatedExternal";
+                "E-mail: " + email + "\n\n";
     }
 
     public static String newExternal() {

@@ -78,7 +78,7 @@ public class ExternalController {
             List<User> coordinators = userRepository.findAllByRole(Role.COORDINATOR);
             for (User u : coordinators) {
                 mail.sendSimpleMessage(u.getEmail(), "Nieuwe externe registratie",
-                        EmailTemplates.newExternalUser(userId, name, company, fullAddress, phone, email));
+                        EmailTemplates.newExternalUser(name, company, fullAddress, phone, email));
             }
 
             mail.sendSimpleMessage(externalUser.getEmail(), "Registratie", EmailTemplates.newExternal());
@@ -173,7 +173,7 @@ public class ExternalController {
         extUser.setApproved(true);
         externalUserRepository.save(extUser);
 
-        mail.sendSimpleMessage(userRepository.findByUserId(externalId).getEmail(), "externe gevalideerd",
+        mail.sendSimpleMessage(userRepository.findByUserId(externalId).getEmail(), "Externe registratie gevalideerd",
                 EmailTemplates.validatedExternal());
 
         return "redirect:/listUnvalidatedExternal";
