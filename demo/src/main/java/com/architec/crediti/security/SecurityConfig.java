@@ -52,8 +52,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //For all but EXTERN
                 .antMatchers("/listAllAssignments","/allassignments", "/allassignments/", "/documentation", "/duplicateassignment/{id}", "/detailAssignmentEnrolled/{id}").hasAnyRole("STUDENT", "DOCENT", "COORDINATOR")
 
-                //For any role
-                .antMatchers("/externalUserProfile").hasAnyRole("STUDENT", "DOCENT", "COORDINATOR", "EXTERN")
+                //For all but roles
+                .antMatchers("/allassignments/detail/{assignmentId}").hasAnyRole("STUDENT", "DOCENT", "COORDINATOR", "EXTERN")
+
 
                 //Alle andere pagina's blokkeren
                 .anyRequest().fullyAuthenticated()
