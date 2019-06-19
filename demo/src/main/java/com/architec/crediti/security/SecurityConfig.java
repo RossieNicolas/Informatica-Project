@@ -41,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/allFullAssignments", "/listStudents", "/unapprovedEnrollments", "/approveEnroll/{id}", "/deleteEnroll/{id}").hasAnyRole("DOCENT", "COORDINATOR")
 
                 //Only for EXTERNAL
-                .antMatchers("/externalUserProfile", "/allassignments/detail/{assignmentId}").hasRole("EXTERN")
+                .antMatchers("/externalUserProfile").hasRole("EXTERN")
 
                 //Only for STUDENTS
                 .antMatchers("/portfolio", "/studentenroll/{assignmentId}").hasRole("STUDENT")
@@ -50,7 +50,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/tag", "/listAllTags", "/listUnvalidatedExternal", "/archive", "/coordinator", "/addcoordinator", "/deletecoordinator/{id}").hasRole("COORDINATOR")
 
                 //For all but EXTERN
-                .antMatchers("/listAllAssignments","/allassignments", "/allassignments/", "/documentation", "/duplicateassignment/{id}", "/detailAssignmentEnrolled/{id}", "/allassignments/detail/{assignmentId}").hasAnyRole("STUDENT", "DOCENT", "COORDINATOR")
+                .antMatchers("/listAllAssignments","/allassignments", "/allassignments/", "/documentation", "/duplicateassignment/{id}", "/detailAssignmentEnrolled/{id}").hasAnyRole("STUDENT", "DOCENT", "COORDINATOR")
+
+                //For any role
+                .antMatchers("/externalUserProfile").hasAnyRole("STUDENT", "DOCENT", "COORDINATOR", "EXTERN")
 
                 //Alle andere pagina's blokkeren
                 .anyRequest().fullyAuthenticated()
