@@ -473,9 +473,10 @@ public class AssignmentController {
     // update specific assignment
     @PostMapping(value = "/allassignments/{assignmentId}")
     public String updateAssignment(@PathVariable("assignmentId") int assignmentId, @Valid Assignment assignment,
-                                   @RequestParam(required = false, value = "tag") int[] tags) {
+                                   @RequestParam(required = false, value = "tag") int[] tags, Principal principal) {
         Set<Tag> set = new HashSet<>();
         Assignment a = assignmentRepo.findByAssignmentId(assignmentId);
+        User currentUser = userRepo.findByEmail(principal.getName());
 
         if (tags != null) {
             for (int item : tags) {
@@ -490,7 +491,11 @@ public class AssignmentController {
         assignment.setAssignerUserId(userRepo.findByUserId(a.getAssignerUserId()));
         assignment.setAssignmentId(assignmentId);
         assignmentRepo.save(assignment);
-        return "redirect:/allassignments";
+        if (externalRepo.existsByUserId(currentUser)) {
+            return "redirect:/allassignments/detail/{assignmentId}";
+        } else {
+            return "redirect:/allassignments";
+        }
     }
 
     // delete specific assignment
