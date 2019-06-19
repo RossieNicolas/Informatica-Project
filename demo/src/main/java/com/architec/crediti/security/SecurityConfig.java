@@ -50,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/tag", "/listAllTags", "/listUnvalidatedExternal", "/archive", "/coordinator", "/addcoordinator", "/deletecoordinator/{id}").hasRole("COORDINATOR")
 
                 //For all but EXTERN
-                .antMatchers("/listAllAssignments","/allassignments", "/allassignments/", "/documentation", "/duplicateassignment/{id}", "/detailAssignmentEnrolled/{id}").hasAnyRole("STUDENT", "DOCENT", "COORDINATOR")
+                .antMatchers("/listAllAssignments","/allassignments", "/allassignments/", "/documentation", "/duplicateassignment/{id}", "/detailAssignmentEnrolled/{id}", "/allassignments/detail/{assignmentId}").hasAnyRole("STUDENT", "DOCENT", "COORDINATOR")
 
                 //Alle andere pagina's blokkeren
                 .anyRequest().fullyAuthenticated()
