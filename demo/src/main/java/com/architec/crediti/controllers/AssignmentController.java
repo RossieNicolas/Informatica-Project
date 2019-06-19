@@ -487,10 +487,15 @@ public class AssignmentController {
             }
         }
 
+        if(currentUser.getRole() == Role.COORDINATOR){
+            assignment.setValidated(true);
+        }
+
         assignment.setTags(set);
         assignment.setAssignerUserId(userRepo.findByUserId(a.getAssignerUserId()));
         assignment.setAssignmentId(assignmentId);
         assignmentRepo.save(assignment);
+
         if (externalRepo.existsByUserId(currentUser)) {
             return "redirect:/allassignments/detail/{assignmentId}";
         } else {
