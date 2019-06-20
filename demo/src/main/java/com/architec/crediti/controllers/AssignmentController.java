@@ -487,7 +487,7 @@ public class AssignmentController {
             }
         }
 
-        if(currentUser.getRole() == Role.COORDINATOR){
+        if (currentUser.getRole() == Role.COORDINATOR) {
             assignment.setValidated(true);
         }
 
@@ -713,6 +713,8 @@ public class AssignmentController {
         List<Tag> allTags = tagRepo.findAll();
         long assignerId = assignment.getAssignerUserId();
         User assigner = userRepo.findByUserId(assignerId);
+        String type = assignment.getType();
+
         if (externalRepo.existsByUserId(assigner)) {
             ExternalUser external = externalRepo.findByUserId(assigner);
             String company = external.getCompany();
@@ -737,6 +739,7 @@ public class AssignmentController {
             }
         }
 
+        model.addAttribute("type", type);
         model.addAttribute("status", status);
         model.addAttribute("roles2", roles2);
         model.addAttribute("assignments", assignment);
