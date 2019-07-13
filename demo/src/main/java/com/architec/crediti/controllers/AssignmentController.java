@@ -471,7 +471,7 @@ public class AssignmentController {
     }
 
     // update specific assignment
-    @PostMapping(value = "/allassignments/{assignmentId}")
+    @PostMapping("/allassignments/{assignmentId}")
     public String updateAssignment(@PathVariable("assignmentId") int assignmentId, @Valid Assignment assignment,
                                    @RequestParam(required = false, value = "tag") int[] tags, Principal principal) {
         Set<Tag> set = new HashSet<>();

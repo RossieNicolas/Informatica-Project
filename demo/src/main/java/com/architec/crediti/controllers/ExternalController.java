@@ -198,8 +198,24 @@ public class ExternalController {
     }
 
     @GetMapping("/listexternal")
-    public String listExternal(Model model){
-        model.addAttribute("external", externalUserRepository.findByApproved(true));
+    public String listExternal(Model model, Optional<Integer> page, Principal principal){
+        int buttons = (int) externalUserRepository.count() / PAGE_SIZE;
+        if (externalUserRepository.count() % PAGE_SIZE != 0) {
+            buttons++;
+        }
+        int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
+
+        Page<ExternalUser> external = externalUserRepository.findByApproved(true, PageRequest.of(evalPage, PAGE_SIZE));
+        Pager pager = new Pager(external.getTotalPages(), external.getNumber(), buttons);
+
+        model.addAttribute("pager", pager);
+        model.addAttribute("persons", external);
+        model.addAttribute("external", external);
+        model.addAttribute("selectedPageSize", PAGE_SIZE);
+
+        //pass username to header fragment
+        User currentUser = userRepository.findByEmail(principal.getName());
+        model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
         return "external/listexternal";
     }
 
@@ -243,6 +259,6 @@ public class ExternalController {
         //pass username to header fragment
         User currentUser = userRepository.findByEmail(principal.getName());
         model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
-        return "student/listStudents";
+        return "external/listexternal";
     }
 }

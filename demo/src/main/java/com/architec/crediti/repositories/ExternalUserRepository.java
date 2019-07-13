@@ -26,7 +26,7 @@ public interface ExternalUserRepository extends JpaRepository<ExternalUser, Long
 
     Page<ExternalUser> findByUserIdContainingOrderByUserId(String userId, Pageable page);
 
-    List<ExternalUser> findByApproved(boolean bln);
+    Page<ExternalUser> findByApproved(boolean bln, Pageable pageable);
 
     boolean existsByUserId(User user);
 
