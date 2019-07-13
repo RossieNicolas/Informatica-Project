@@ -248,11 +248,10 @@ public class ExternalController {
                 usersId.add((long) 0);
                 external = externalUserRepository.findByUserids(usersId, PageRequest.of(evalPage, PAGE_SIZE));
             }
-
         }
 
         Pager pager = new Pager(external.getTotalPages(), external.getNumber(), buttons);
-        model.addAttribute("students", external);
+        model.addAttribute("external", external);
         model.addAttribute("persons", external);
         model.addAttribute("selectedPageSize", PAGE_SIZE);
         model.addAttribute("pager", pager);
