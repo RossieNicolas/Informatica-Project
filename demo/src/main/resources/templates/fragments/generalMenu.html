@@ -55,7 +55,7 @@
                        aria-haspopup="true" aria-expanded="false">Validatie</a>
                     <div class="dropdown-menu" aria-labelledby="extras">
                         <a class="dropdown-item" sec:authorize="hasRole('COORDINATOR')" href="/unvalidatedassignments">Opdrachten</a>
-                        <a class="dropdown-item" sec:authorize="hasRole('COORDINATOR')" href="/listUnvalidatedExternal">Externe</a>
+                        <a class="dropdown-item" sec:authorize="hasRole('COORDINATOR')" href="/listUnvalidatedExternal">Externe Opdrachtgevers</a>
                         <a class="dropdown-item" sec:authorize="hasAnyRole('COORDINATOR','DOCENT')"
                            href="/unapprovedEnrollments">Inschrijvingen</a>
                     </div>
@@ -69,6 +69,7 @@
                            href="/liststudents">Lijst Studenten</a>
                         <a class="dropdown-item" sec:authorize="hasRole('COORDINATOR')" href="/coordinator">Lijst
                             Coördinators</a>
+                        <a class="dropdown-item" sec:authorize="hasAnyRole('COORDINATOR','DOCENT')" href="/listexternal">Lijst Externe Opdrachtgevers</a>
                         <a class="dropdown-item" sec:authorize="hasRole('COORDINATOR')" href="/archive">Archief</a>
                     </div>
                 </li>

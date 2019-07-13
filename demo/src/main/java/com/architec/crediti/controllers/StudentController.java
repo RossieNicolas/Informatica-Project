@@ -93,7 +93,6 @@ public class StudentController {
         return "student/listStudents";
     }
 
-    //search in liststudentss
     @GetMapping("/liststudents/search/{searchbar}")
     public String searchByStudentNrOrName(@PathVariable("searchbar") String name, Model model, Optional<Integer> page, Principal principal) {
         Page students = null;
@@ -116,14 +115,11 @@ public class StudentController {
                 usersId.add(item.getUserId());
             }
             if (!usersId.isEmpty()) {
-
                 students = studentRepo.findByUserids(usersId, PageRequest.of(evalPage, PAGE_SIZE));
-
             } else {
                 usersId.add((long) 0);
                 students = studentRepo.findByUserids(usersId, PageRequest.of(evalPage, PAGE_SIZE));
             }
-
         }
 
         Pager pager = new Pager(students.getTotalPages(), students.getNumber(), buttons);

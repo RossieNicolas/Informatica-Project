@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+    <title>Crediti - lijst externe opdrachtgevers</title>
+</head>
+<body class="bg" onload="tableFill()">
+<div id="page-container">
+    <div id="content-wrap">
+        <header th:insert="fragments/generalMenu.html :: header"></header>
+        <main role="main" class="container">
+            <div class='col-md-6 mt-2 mx-auto'>
+                <div class='search-box'>
+                    <form class='search-form' th:action="@{'/listexternal/search/'${searchbar}'}"
+                          method="GET" id="searchAs">
+                        <div>
+                            <input class='form-control' name='searchbar' id='searchbar'
+                                   placeholder='Zoeken...' type='text' th:value="${searchbar}">
+                            <button class="btn search-btn" type="SUBMIT" id="zoekKnop" onclick="search()">🔍</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="mt-5 jumbotron">
+                <h1 class="pb-4">Alle externe opdrachtgevers</h1>
+                <table id="table" class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">Voornaam</th>
+                        <th scope="col">Achternaam</th>
+                        <th scope="col">Bedrijf</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Gsm</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="a : ${external}">
+                        <td th:text="${a.getFirstname()}"></td>
+                        <td th:text="${a.getLastname()}"></td>
+                        <td class="overflow" th:text="${a.getCompany()}"></td>
+                        <td class="overflow"><a th:href="'mailto:' + ${a.getEmail()}">
+                            <div th:text="${a.getEmail()}"></div>
+                        </a></td>
+                        <td class="overflow" th:text="${a.getPhone()}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="alert alert-primary" role="alert" id="empty"></div>
+                <br/><!--
+                <nav th:if="${persons.totalPages != 1}">
+                    <ul class="pagination">
+                        <li th:classappend="(${persons.number == 0} ? disabled) + ' page-item'">
+                            <a class="page-link"
+                               th:href="@{__${#httpServletRequest.requestURL}__(page=${persons.number})}"
+                               aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                        <li th:classappend="(${persons.number == (page - 1)} ? 'active pointer-disabled') + ' page-item'"
+                            th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
+                            <a class="page-link" th:href="@{__${#httpServletRequest.requestURL}__(page=${page})}"
+                               th:text="${page}"></a>
+                        </li>
+                        <li th:classappend="(${persons.number + 1 == persons.totalPages} ? disabled) + ' page-item'">
+                            <a class="page-link"
+                               th:href="@{__${#httpServletRequest.requestURL}__(page=${persons.number + 2})}"
+                               aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>-->
+            </div>
+        </main>
+        <!-- /.container -->
+    </div>
+    <div th:insert="fragments/general.html :: footer">
+    </div>
+</div>
+<!-- Optional JavaScript -->
+<script>
+    function tableFill() {
+        var tbl = document.getElementById('table');
+        if (tbl.rows.length == 1) {
+            var para = document.createElement("p");
+            var node = document.createTextNode("Er zijn momenteel geen externe opdrachtgevers om te tonen.");
+            para.appendChild(node);
+            var element = document.getElementById("empty");
+            element.style.visibility = "visible";
+            element.appendChild(para);
+        }
+    }
+
+    function search() {
+        var id = document.getElementById('searchbar').value;
+        if (id == "") {
+            document.getElementById('searchAs').action = '/listexternal/';
+        } else {
+            document.getElementById('searchAs').action = '/listexternal/search/' + id;
+        }
+    }
+</script>
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>

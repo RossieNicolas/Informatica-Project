@@ -47,7 +47,7 @@ public class SearchController {
 
     }
 
-    @GetMapping(value = "/allassignments/{searchbar}")
+    @GetMapping("/allassignments/{searchbar}")
     public String searchByTitleorId(@PathVariable(value = "searchbar", required = false) String searchbar, Model model,
                                     @RequestParam(value = "page", required = false) Optional<Integer> page, Principal principal) {
         int buttons = (int) assignmentRepo.count() / PAGE_SIZE;

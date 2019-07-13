@@ -4,6 +4,7 @@ import com.architec.crediti.email.EmailServiceImpl;
 import com.architec.crediti.email.EmailTemplates;
 import com.architec.crediti.models.Assignment;
 import com.architec.crediti.models.ExternalUser;
+import com.architec.crediti.models.Pager;
 import com.architec.crediti.models.User;
 import com.architec.crediti.repositories.AssignmentRepository;
 import com.architec.crediti.repositories.ExternalUserRepository;
@@ -11,6 +12,8 @@ import com.architec.crediti.security.HashPass;
 import com.architec.crediti.repositories.UserRepository;
 import com.architec.crediti.security.Role;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Controller
@@ -35,6 +39,9 @@ public class ExternalController {
 
     private final
     AssignmentRepository asRepo;
+
+    private static final int PAGE_SIZE = 2;
+    private static final int INITAL_PAGE = 0;
 
     @Autowired
     public ExternalController(ExternalUserRepository externalUserRepository, UserRepository userRepository, EmailServiceImpl mail, AssignmentRepository asRepo) {
@@ -190,4 +197,52 @@ public class ExternalController {
         return "redirect:/listUnvalidatedExternal";
     }
 
+    @GetMapping("/listexternal")
+    public String listExternal(Model model){
+        model.addAttribute("external", externalUserRepository.findByApproved(true));
+        return "external/listexternal";
+    }
+
+    @GetMapping("/listexternal/search/{searchbar}")
+    public String searchByStudentNrOrName(@PathVariable("searchbar") String name, Model model, Optional<Integer> page, Principal principal) {
+        Page external = null;
+
+        int buttons = (int) externalUserRepository.count() / PAGE_SIZE;
+        if (externalUserRepository.count() % PAGE_SIZE != 0) {
+            buttons++;
+        }
+        int evalPage = (page.orElse(0) < 1) ? INITAL_PAGE : page.get() - 1;
+
+        try {
+            //DEZE ONGEBRUIKTE CODE MAG NIET WEG!!
+            int studentenNummer = Integer.parseInt(name);
+            external = externalUserRepository.findByUserIdContainingOrderByUserId(name, PageRequest.of(evalPage, PAGE_SIZE));
+
+        } catch (Exception e) {
+            List<User> users = externalUserRepository.findByFirstnameContainingOrLastnameContaining(name, name);
+            List<Long> usersId = new ArrayList<>();
+            for (User item : users) {
+                usersId.add(item.getUserId());
+            }
+            if (!usersId.isEmpty()) {
+
+                external = externalUserRepository.findByUserids(usersId, PageRequest.of(evalPage, PAGE_SIZE));
+
+            } else {
+                usersId.add((long) 0);
+                external = externalUserRepository.findByUserids(usersId, PageRequest.of(evalPage, PAGE_SIZE));
+            }
+
+        }
+
+        Pager pager = new Pager(external.getTotalPages(), external.getNumber(), buttons);
+        model.addAttribute("students", external);
+        model.addAttribute("persons", external);
+        model.addAttribute("selectedPageSize", PAGE_SIZE);
+        model.addAttribute("pager", pager);
+        //pass username to header fragment
+        User currentUser = userRepository.findByEmail(principal.getName());
+        model.addAttribute("name", currentUser.getFirstname() + " " + currentUser.getLastname().substring(0, 1) + ".");
+        return "student/listStudents";
+    }
 }
