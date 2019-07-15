@@ -40,7 +40,7 @@ public class ExternalController {
     private final
     AssignmentRepository asRepo;
 
-    private static final int PAGE_SIZE = 2;
+    private static final int PAGE_SIZE = 15;
     private static final int INITAL_PAGE = 0;
 
     @Autowired
@@ -222,7 +222,6 @@ public class ExternalController {
     @GetMapping("/listexternal/search/{searchbar}")
     public String searchByStudentNrOrName(@PathVariable("searchbar") String name, Model model, Optional<Integer> page, Principal principal) {
         Page external = null;
-
         int buttons = (int) externalUserRepository.count() / PAGE_SIZE;
         if (externalUserRepository.count() % PAGE_SIZE != 0) {
             buttons++;
@@ -231,23 +230,11 @@ public class ExternalController {
 
         try {
             //DEZE ONGEBRUIKTE CODE MAG NIET WEG!!
-            int studentenNummer = Integer.parseInt(name);
-            external = externalUserRepository.findByUserIdContainingOrderByUserId(name, PageRequest.of(evalPage, PAGE_SIZE));
+            Long studentenNummer = Long.parseLong(name);
+            external = externalUserRepository.findByExternId(studentenNummer, PageRequest.of(evalPage, PAGE_SIZE));
 
         } catch (Exception e) {
-            List<User> users = externalUserRepository.findByFirstnameContainingOrLastnameContaining(name, name);
-            List<Long> usersId = new ArrayList<>();
-            for (User item : users) {
-                usersId.add(item.getUserId());
-            }
-            if (!usersId.isEmpty()) {
-
-                external = externalUserRepository.findByUserids(usersId, PageRequest.of(evalPage, PAGE_SIZE));
-
-            } else {
-                usersId.add((long) 0);
-                external = externalUserRepository.findByUserids(usersId, PageRequest.of(evalPage, PAGE_SIZE));
-            }
+            external = externalUserRepository.findByFirstnameContainingOrLastnameContaining(name, name,PageRequest.of(evalPage, PAGE_SIZE));
         }
 
         Pager pager = new Pager(external.getTotalPages(), external.getNumber(), buttons);

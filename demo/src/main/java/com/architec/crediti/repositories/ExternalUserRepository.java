@@ -17,9 +17,11 @@ public interface ExternalUserRepository extends JpaRepository<ExternalUser, Long
 
     ExternalUser findByUserId(User user);
 
+    Page<ExternalUser> findByExternId(Long id, Pageable page);
+
     ExternalUser findByResettoken(String resetToken);
 
-    List<User> findByFirstnameContainingOrLastnameContaining(String firstname, String lastname);
+    Page<ExternalUser> findByFirstnameContainingOrLastnameContaining(String firstname, String lastname, Pageable page);
 
     @Query(value = "select * from external_users s where s.user_id in :users", nativeQuery = true)
     Page<ExternalUser> findByUserids(@Param("users") List<Long> users, Pageable pageable);
